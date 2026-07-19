@@ -1,0 +1,11 @@
+"register":
+    path: /register
+    controller: App\Identity\User\Infrastructure\Controller\UserRegisterController::create
+    methods:
+        - POST
+
+"login":
+    path: /login
+    controller: App\Identity\User\Infrastructure\Controller\UserLoginController::login
+    methods:
+        - POST

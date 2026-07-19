@@ -1,15 +1,3 @@
-"user-register":
-    path: /register
-    controller: App\Identity\User\Infrastructure\Controller\UserRegisterController::create
-    methods:
-        - POST
-
-"user-login":
-    path: /login
-    controller: App\Identity\User\Infrastructure\Controller\UserLoginController::login
-    methods:
-        - POST
-
 "user-find":
     path: /api/user
     controller: App\Identity\User\Infrastructure\Controller\UserFindController::find
