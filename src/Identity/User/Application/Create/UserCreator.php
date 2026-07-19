@@ -45,7 +45,7 @@ class UserCreator
             $mobile,
             $name,
         );
-
+        
         return $this->repository->save($user);
     }
 }

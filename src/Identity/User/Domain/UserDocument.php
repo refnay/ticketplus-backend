@@ -4,11 +4,11 @@ namespace App\Identity\User\Domain;
 
 class UserDocument
 {
-    public function __construct(private string $type, private string $number)
+    public function __construct(private int $type, private string $number)
     {
     }
 
-    public static function create(string $type, string $number): self
+    public static function create(int $type, string $number): self
     {
         return new self($type, $number);
     }
@@ -18,7 +18,7 @@ class UserDocument
         return new self($data['type'], $data['number']);
     }
 
-    public function type(): string
+    public function type(): int
     {
         return $this->type;
     }

@@ -32,6 +32,7 @@ class UserDoctrineRepository implements UserRepository
 
             return $this->jwtManager->create($entity);
         } catch (Throwable $e) {
+            dd($e);
             throw new UserNotCreated();
         }
     }
