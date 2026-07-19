@@ -3,12 +3,12 @@
 namespace App\Identity\User\Infrastructure\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpFoundation\Response;
 
 class UserLoginController extends AbstractController
 {
-    #[Route('/login', name: 'user-login', methods: ['POST'])]
-    public function login(): void
+    public function login(): Response
     {
+        return new Response(status: Response::HTTP_NO_CONTENT);
     }
 }
