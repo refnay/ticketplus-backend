@@ -9,3 +9,9 @@
     controller: App\Identity\User\Infrastructure\Controller\UserLoginController::login
     methods:
         - POST
+
+"user-find":
+    path: /api/user
+    controller: App\Identity\User\Infrastructure\Controller\UserFindController::find
+    methods:
+        - GET
