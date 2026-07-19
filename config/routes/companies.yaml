@@ -1,0 +1,5 @@
+companies:
+    resource:
+        path: ../../src/Identity/Company/Infrastructure/Controller/
+        namespace: App\Identity\Company\Infrastructure\Controller
+    type: attribute

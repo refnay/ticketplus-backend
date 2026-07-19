@@ -1,0 +1,5 @@
+users:
+    resource:
+        path: ../../src/Identity/User/Infrastructure/Controller/
+        namespace: App\Identity\User\Infrastructure\Controller
+    type: attribute

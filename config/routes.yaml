@@ -1,9 +1,1 @@
-controllers:
-    resource:
-        path: ../src/Shared/Infrastructure/Controller/
-        namespace: App\Shared\Infrastructure\Controller
-    type: attribute
-
-identity_user:
-    resource: ../src/Identity/User/Infrastructure/Controller/
-    type: attribute
+# Route definitions are organized by domain in config/routes/*.yaml.
