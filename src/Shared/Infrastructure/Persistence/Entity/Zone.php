@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Entity;
+namespace App\Shared\Infrastructure\Persistence\Entity;
 
-use App\Repository\ZoneRepository;
+use App\Shared\Infrastructure\Persistence\Repository\ZoneRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
