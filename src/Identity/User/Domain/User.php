@@ -7,7 +7,7 @@ class User
     private UserId $id;
     private UserEmail $email;
     private UserPassword $password;
-    private UserBirthdate $birthdate;
+    private UserBirthDate $birthDate;
     private UserCity $city;
     private UserCountry $country;
     private UserDocument $document;
@@ -22,7 +22,7 @@ class User
         UserId $id,
         UserEmail $email,
         UserPassword $password,
-        UserBirthdate $birthdate,
+        UserBirthDate $birthDate,
         UserCity $city,
         UserCountry $country,
         UserDocument $document,
@@ -36,7 +36,7 @@ class User
         $this->id = $id;
         $this->email = $email;
         $this->password = $password;
-        $this->birthdate = $birthdate;
+        $this->birthDate = $birthDate;
         $this->city = $city;
         $this->country = $country;
         $this->document = $document;
@@ -51,7 +51,7 @@ class User
     public static function create(
         UserEmail $email,
         UserPassword $password,
-        UserBirthdate $birthdate,
+        UserBirthDate $birthDate,
         UserCity $city,
         UserCountry $country,
         UserDocument $document,
@@ -63,7 +63,7 @@ class User
             UserId::generate(),
             $email,
             $password,
-            $birthdate,
+            $birthDate,
             $city,
             $country,
             $document,
@@ -91,9 +91,9 @@ class User
         return $this->password;
     }
 
-    public function birthdate(): UserBirthdate
+    public function birthDate(): UserBirthDate
     {
-        return $this->birthdate;
+        return $this->birthDate;
     }
 
     public function city(): UserCity
@@ -151,9 +151,9 @@ class User
         $this->password = $password;
     }
 
-    public function  changeBirthdate(UserBirthdate $birthdate): void
+    public function  changeBirthDate(UserBirthDate $birthDate): void
     {
-        $this->birthdate = $birthdate;
+        $this->birthDate = $birthDate;
     }
 
     public function  changeCity(UserCity $city): void
