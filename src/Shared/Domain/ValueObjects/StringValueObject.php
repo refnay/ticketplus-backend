@@ -20,6 +20,11 @@ abstract class StringValueObject
         return new static(null);
     }
 
+    public static function fromEmpty(): static
+    {
+        return new static('');
+    }
+
     public function value(): ?string
     {
         return $this->value;
