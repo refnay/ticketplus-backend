@@ -11,11 +11,12 @@ use App\Identity\User\Domain\UserLastName;
 use App\Identity\User\Domain\UserMobile;
 use App\Identity\User\Domain\UserName;
 use App\Identity\User\Domain\UserPassword;
-use App\Shared\Domain\Services\UserPasswordHasher;
+use App\Shared\Domain\PasswordProvider;
+use App\Shared\Domain\Services\PasswordHasher;
 
 class CreateUserCommandHandler
 {
-    public function __construct(private UserCreator $creator, private UserPasswordHasher $hasher)
+    public function __construct(private UserCreator $creator, private PasswordProvider $hasher)
     {
     }
 
@@ -23,7 +24,7 @@ class CreateUserCommandHandler
     {
         return $this->creator->__invoke(
             UserEmail::fromString($command->email()),
-            UserPassword::fromString($this->hasher->__invoke($command->password())),
+            UserPassword::fromString($this->hasher->hash($command->password())),
             UserBirthDate::fromString($command->birthDate()),
             UserCity::fromString($command->city()),
             UserCountry::fromString($command->country()),
