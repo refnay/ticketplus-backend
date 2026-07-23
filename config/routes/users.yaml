@@ -3,3 +3,9 @@
     controller: App\Identity\User\Infrastructure\Controller\UserFindController::find
     methods:
         - GET
+
+"user-password-update":
+    path: /api/user/password/update
+    controller: App\Identity\User\Infrastructure\Controller\UserPasswordUpdateController::update
+    methods:
+        - PUT
