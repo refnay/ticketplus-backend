@@ -19,11 +19,6 @@ class SymfonyPasswordProvider implements PasswordProvider
 
     public function isValid(string $oldPassword, string $newPassword): bool
     {
-        return $this->hasher->isPasswordValid($this->userWithPassword($oldPassword), $newPassword);
-    }
-
-    private function userWithPassword(string $password): User
-    {
-        return new User()->setPassword($password);
+        return $this->hasher->isPasswordValid((new User())->setPassword($oldPassword), $newPassword);
     }
 }
