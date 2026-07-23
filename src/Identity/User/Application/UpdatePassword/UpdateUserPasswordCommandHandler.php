@@ -16,7 +16,7 @@ class UpdateUserPasswordCommandHandler
     {
         $this->updater->__invoke(
             UserId::fromString($command->session()->user()),
-            UserPassword::fromString($this->hasher->hash($command->oldPassword())),
+            UserPassword::fromString($command->oldPassword()),
             UserPassword::fromString($this->hasher->hash($command->newPassword())),
         );
     }
