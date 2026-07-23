@@ -20,6 +20,12 @@ class UserFinder
             $user->email()->value(),
             $user->name()->value(),
             $user->lastName()->value(),
+            $user->birthDate()->asDMY(),
+            $user->city()->value(),
+            $user->country()->value(),
+            $user->document()->toArray(),
+            $user->mobile()?->value(),
+            $user->profileImage()?->value(),
         );
     }
 }

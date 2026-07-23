@@ -27,4 +27,12 @@ class UserDocument
     {
         return $this->number;
     }
+
+    public function toArray(): array
+    {
+        return [
+            'type' => $this->type,
+            'number' => $this->number,
+        ];
+    }
 }

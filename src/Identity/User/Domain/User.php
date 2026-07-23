@@ -12,11 +12,11 @@ class User
     private UserCountry $country;
     private UserDocument $document;
     private UserLastName $lastName;
-    private ?UserMobile $mobile = null;
     private UserName $name;
-    private ?UserProfileImage $profileImage = null;
     private UserStatus $status;
     private UserType $type;
+    private ?UserMobile $mobile = null;
+    private ?UserProfileImage $profileImage = null;
 
     public function __construct(
         UserId $id,
