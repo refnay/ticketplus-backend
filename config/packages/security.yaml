@@ -26,7 +26,7 @@ security:
                 success_handler: lexik_jwt_authentication.handler.authentication_success
                 failure_handler: lexik_jwt_authentication.handler.authentication_failure
         public:
-            pattern: ^/(login|register)
+            pattern: ^/(login|register|recovery/email)
             stateless: true
             provider: app_user_provider
             security: false

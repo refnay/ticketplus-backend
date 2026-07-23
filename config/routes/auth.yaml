@@ -9,3 +9,9 @@
     controller: App\Identity\User\Infrastructure\Controller\UserLoginController::login
     methods:
         - POST
+
+"password_recovery":
+    path: /recovery/email
+    controller: App\Identity\User\Infrastructure\Controller\UserPasswordSendRecoveryEmail::create
+    methods:
+        - POST
