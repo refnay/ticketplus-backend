@@ -24,9 +24,9 @@ class SymfonyResetPasswordProvider implements ResetPasswordProvider
         return $this->resetPasswordHelper->generateResetToken($userEntity)->getToken();
     }
 
-    public function validateToken(string $token): void
+    public function validateToken(string $token): string
     {
-        $this->resetPasswordHelper->validateTokenAndFetchUser($token);
+        return $this->resetPasswordHelper->validateTokenAndFetchUser($token)->getId();
     }
 
     public function removeToken(string $token): void

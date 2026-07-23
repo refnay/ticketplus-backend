@@ -7,7 +7,7 @@ use App\Shared\Domain\Utils\PayloadMapper;
 
 class ExecuteUserPasswordRecoveryCommand extends BaseCommand
 {
-    public function __construct(private string $token, private string $email, private string $newPassword)
+    public function __construct(private string $token, private string $newPassword)
     {
     }
 
@@ -15,17 +15,12 @@ class ExecuteUserPasswordRecoveryCommand extends BaseCommand
     {
         $payload = PayloadMapper::fromData($data);
 
-        return new self($payload->string('token'), $payload->string('email'), $payload->string('newPassword'));
+        return new self($payload->string('token'), $payload->string('newPassword'));
     }
 
     public function token(): string
     {
         return $this->token;
-    }
-
-    public function email(): string
-    {
-        return $this->email;
     }
 
     public function newPassword(): string
