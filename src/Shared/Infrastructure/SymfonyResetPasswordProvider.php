@@ -4,6 +4,7 @@ namespace App\Shared\Infrastructure;
 
 use App\Identity\User\Domain\User;
 use App\Shared\Domain\ResetPasswordProvider;
+use App\Shared\Domain\UserId;
 use App\Shared\Infrastructure\Persistence\Entity\User as UserEntity;
 use Doctrine\ORM\EntityManagerInterface;
 use SymfonyCasts\Bundle\ResetPassword\ResetPasswordHelperInterface;
@@ -16,10 +17,20 @@ class SymfonyResetPasswordProvider implements ResetPasswordProvider
     ) {
     }
 
-    public function generateToken(User $user): string
+    public function generateToken(UserId $id): string
     {
-        $userEntity = $this->entityManager->getReference(UserEntity::class, $user->id()->value());
+        $userEntity = $this->entityManager->getReference(UserEntity::class, $id->value());
         
         return $this->resetPasswordHelper->generateResetToken($userEntity)->getToken();
+    }
+
+    public function validateToken(string $token): void
+    {
+        $this->resetPasswordHelper->validateTokenAndFetchUser($token);
+    }
+
+    public function removeToken(string $token): void
+    {
+        $this->resetPasswordHelper->removeResetRequest($token);
     }
 }

@@ -10,8 +10,14 @@
     methods:
         - POST
 
-"password_recovery":
+"password-recovery-send-email":
     path: /recovery/email
-    controller: App\Identity\User\Infrastructure\Controller\UserPasswordSendRecoveryEmail::create
+    controller: App\Identity\User\Infrastructure\Controller\UserPasswordSendRecoveryEmailController::send
+    methods:
+        - POST
+
+"password-recovery-execute":
+    path: /recovery/execute
+    controller: App\Identity\User\Infrastructure\Controller\UserPasswordExecuteRecoveryController::create
     methods:
         - POST

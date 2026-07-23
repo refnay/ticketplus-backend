@@ -7,6 +7,7 @@ use App\Identity\User\Domain\Services\UserByEmailFinder;
 use App\Identity\User\Domain\UserEmail;
 use App\Shared\Domain\MailProvider;
 use App\Shared\Domain\ResetPasswordProvider;
+use App\Shared\Domain\UserId;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Mime\Email;
 use Throwable;
@@ -29,7 +30,7 @@ class UserPasswordRecoveryEmailSender
         }
 
         try {
-            $token = $this->passwordResetter->generateToken($user);
+            $token = $this->passwordResetter->generateToken(UserId::fromString($user->id()->value()));
         } catch (Throwable) {
             return;
         }
