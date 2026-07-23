@@ -18,6 +18,6 @@
 
 "password-recovery-execute":
     path: /recovery/execute
-    controller: App\Identity\User\Infrastructure\Controller\UserPasswordExecuteRecoveryController::create
+    controller: App\Identity\User\Infrastructure\Controller\UserPasswordExecuteRecoveryController::execute
     methods:
         - POST
