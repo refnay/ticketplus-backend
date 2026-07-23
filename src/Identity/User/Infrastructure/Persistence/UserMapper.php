@@ -76,6 +76,11 @@ class UserMapper
         $entity->setDocumentNumber($user->document()->number());
     }
 
+    public function updatePassword(UserEntity $entity, UserPassword $newPassword): void
+    {
+        $entity->setPassword($newPassword->value());
+    }
+
     public function entityClass(): string
     {
         return UserEntity::class;

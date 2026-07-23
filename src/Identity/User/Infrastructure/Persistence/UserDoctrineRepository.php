@@ -5,21 +5,25 @@ namespace App\Identity\User\Infrastructure\Persistence;
 use App\Identity\User\Domain\Exceptions\UserNotCreated;
 use App\Identity\User\Domain\Exceptions\UserNotDeleted;
 use App\Identity\User\Domain\Exceptions\UserNotUpdated;
+use App\Identity\User\Domain\Exceptions\UserPasswordIncorrect;
 use App\Identity\User\Domain\User;
 use App\Identity\User\Domain\UserDocument;
 use App\Identity\User\Domain\UserEmail;
 use App\Identity\User\Domain\UserId;
+use App\Identity\User\Domain\UserPassword;
 use App\Identity\User\Domain\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Throwable;
 
 class UserDoctrineRepository implements UserRepository
 {
     public function __construct(
         private EntityManagerInterface $entityManager,
-        private UserMapper $mapper,
         private JWTTokenManagerInterface $jwtManager,
+        private UserPasswordHasherInterface $passwordManager,
+        private UserMapper $mapper,
     ) {
     }
     
@@ -83,5 +87,23 @@ class UserDoctrineRepository implements UserRepository
             ->findOneBy(['documentType' => $document->type(), 'documentNumber' => $document->number()]);
 
         return !is_null($entity) ? $this->mapper->newDomain($entity) : null;
+    }
+
+    public function validatePassword(UserId $id, UserPassword $oldPassword): void
+    {
+        $entity = $this->entityManager->getReference($this->mapper->entityClass(), $id->value());
+        $result = $this->passwordManager->isPasswordValid($entity, $oldPassword->value());
+        
+        if (!$result) {
+            throw new UserPasswordIncorrect();
+        }
+    }
+
+    public function updatePassword(UserId $id, UserPassword $newPassword): void
+    {
+        $entity = $this->entityManager->getReference($this->mapper->entityClass(), $id->value());
+        $this->mapper->updatePassword($entity, $newPassword);
+
+        $this->entityManager->flush();
     }
 }
