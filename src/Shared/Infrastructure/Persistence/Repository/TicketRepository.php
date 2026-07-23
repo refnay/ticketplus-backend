@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Repository;
+namespace App\Shared\Infrastructure\Persistence\Repository;
 
-use App\Entity\Ticket;
+use App\Shared\Infrastructure\Persistence\Entity\Ticket;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

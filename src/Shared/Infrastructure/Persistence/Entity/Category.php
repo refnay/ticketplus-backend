@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Entity;
+namespace App\Shared\Infrastructure\Persistence\Entity;
 
-use App\Repository\CategoryRepository;
+use App\Shared\Infrastructure\Persistence\Repository\CategoryRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 

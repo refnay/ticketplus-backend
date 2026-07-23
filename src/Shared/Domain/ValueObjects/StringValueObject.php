@@ -12,12 +12,21 @@ abstract class StringValueObject
 
     public static function fromString(?string $value): static
     {
-        return new static($value);
+        if (is_null($value)) {
+            return static::fromNull();
+        }
+
+        return new static(trim($value));
     }
 
     public static function fromNull(): static
     {
         return new static(null);
+    }
+
+    public static function fromEmpty(): static
+    {
+        return new static('');
     }
 
     public function value(): ?string

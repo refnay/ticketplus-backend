@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Entity;
+namespace App\Shared\Infrastructure\Persistence\Entity;
 
-use App\Repository\DiscountRepository;
+use App\Shared\Infrastructure\Persistence\Repository\DiscountRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\Uuid;
 

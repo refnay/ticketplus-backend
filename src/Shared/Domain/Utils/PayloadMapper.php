@@ -2,8 +2,6 @@
 
 namespace App\Shared\Domain\Utils;
 
-use InvalidArgumentException;
-
 class PayloadMapper
 {
     private array $data;
@@ -27,11 +25,7 @@ class PayloadMapper
     {
         $value = $this->get($key);
 
-        if (!is_string($value)) {
-            throw new InvalidArgumentException();
-        }
-
-        return $value;
+        return is_string($value) ? $value : '';
     }
 
     public function nullableString(string $key): ?string
@@ -42,22 +36,14 @@ class PayloadMapper
             return null;
         }
 
-        if (!is_string($value)) {
-            throw new InvalidArgumentException();
-        }
-
-        return $value;
+        return is_string($value) ? $value : null;
     }
 
     public function int(string $key): int
     {
         $value = $this->get($key);
 
-        if (!is_int($value)) {
-            throw new InvalidArgumentException();
-        }
-
-        return $value;
+        return is_int($value) ? $value : 0;
     }
 
     public function nullableInt(string $key): ?int
@@ -68,22 +54,14 @@ class PayloadMapper
             return null;
         }
 
-        if (!is_int($value)) {
-            throw new InvalidArgumentException();
-        }
-
-        return $value;
+        return is_int($value) ? $value : null;
     }
 
     public function bool(string $key): bool
     {
         $value = $this->get($key);
 
-        if (!is_bool($value)) {
-            throw new InvalidArgumentException();
-        }
-
-        return $value;
+        return is_bool($value) ? $value : false;
     }
 
     public function boolFromString(string $key): bool
@@ -91,7 +69,7 @@ class PayloadMapper
         $value = $this->get($key);
 
         if (!is_string($value)) {
-            throw new InvalidArgumentException();
+            return false;
         }
 
         return $this->stringToBool($value);
@@ -105,11 +83,7 @@ class PayloadMapper
             return null;
         }
 
-        if (!is_bool($value)) {
-            throw new InvalidArgumentException();
-        }
-
-        return $value;
+        return is_bool($value) ? $value : null;
     }
 
     private function stringToBool(string $value): bool
@@ -124,7 +98,7 @@ class PayloadMapper
             return false;
         }
 
-        throw new InvalidArgumentException();
+        return false;
     }
 
     public function float(string $key): float
@@ -132,7 +106,7 @@ class PayloadMapper
         $value = $this->get($key);
 
         if (!is_float($value) && !is_int($value)) {
-            throw new InvalidArgumentException();
+            return 0.0;
         }
 
         return (float) $value;
@@ -147,7 +121,7 @@ class PayloadMapper
         }
 
         if (!is_float($value) && !is_int($value)) {
-            throw new InvalidArgumentException();
+            return null;
         }
 
         return (float) $value;
@@ -157,11 +131,7 @@ class PayloadMapper
     {
         $value = $this->get($key);
 
-        if (!is_array($value)) {
-            return [];
-        }
-
-        return $value;
+        return is_array($value) ? $value : [];
     }
 
     public function nullableArray(string $key): ?array
@@ -172,11 +142,7 @@ class PayloadMapper
             return null;
         }
 
-        if (!is_array($value)) {
-            throw new InvalidArgumentException();
-        }
-
-        return $value;
+        return is_array($value) ? $value : null;
     }
 
     public function has(string $key): bool

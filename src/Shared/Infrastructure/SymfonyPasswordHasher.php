@@ -1,17 +1,18 @@
 <?php
 
-namespace App\Shared\Domain\Services;
+namespace App\Shared\Infrastructure;
 
+use App\Shared\Domain\Services\PasswordHasher;
 use App\Shared\Infrastructure\Persistence\Entity\User;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-class UserPasswordHasher
+class SymfonyPasswordHasher implements PasswordHasher
 {
     public function __construct(private UserPasswordHasherInterface $hasher)
     {
     }
 
-    public function __invoke(string $password): string
+    public function hash(string $password): string
     {
         return $this->hasher->hashPassword(new User(), $password);
     }

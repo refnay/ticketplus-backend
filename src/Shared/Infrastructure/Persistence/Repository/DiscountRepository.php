@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Repository;
+namespace App\Shared\Infrastructure\Persistence\Repository;
 
-use App\Entity\Discount;
+use App\Shared\Infrastructure\Persistence\Entity\Discount;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

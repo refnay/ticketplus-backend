@@ -111,11 +111,9 @@ abstract class DateValueObject
         return $this->isNull() ? '' : $this->value->format('Y-m-d');
     }
 
-    public function asDMYString(): string
+    public function asDMY(): string
     {
-        $this->ensureNotNull();
-
-        return $this->value->format('d/m/Y');
+        return $this->isNull() ? '' : $this->value->format('d/m/Y');
     }
 
     abstract function validate(): void;
