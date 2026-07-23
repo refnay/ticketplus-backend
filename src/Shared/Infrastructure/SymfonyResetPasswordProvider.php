@@ -2,7 +2,6 @@
 
 namespace App\Shared\Infrastructure;
 
-use App\Identity\User\Domain\User;
 use App\Shared\Domain\ResetPasswordProvider;
 use App\Shared\Domain\UserId;
 use App\Shared\Infrastructure\Persistence\Entity\User as UserEntity;
