@@ -1,52 +1,39 @@
 <?php
 
-namespace App\Identity\User\Application\Create;
+namespace App\Identity\User\Application\Update;
 
 use App\Shared\Application\Command\BaseCommand;
 use App\Shared\Domain\Utils\PayloadMapper;
 
-class CreateUserCommand extends BaseCommand
+class UpdateUserCommand extends BaseCommand
 {
     public function __construct(
-        private string $email,
-        private string $password,
+        private string $name,
+        private string $lastName,
         private string $birthDate,
         private string $city,
         private string $country,
+        private ?string $mobile,
         private int $documentType,
         private string $documentNumber,
-        private string $name,
-        private string $lastName,
-        private ?string $mobile,
     ) {
     }
-
+    
+    
     public static function create(array $data): self
     {
         $payload = PayloadMapper::fromData($data);
 
         return new self(
-            $payload->string('email'),
-            $payload->string('password'),
+            $payload->string('name'),
+            $payload->string('lastName'),
             $payload->string('birthDate'),
             $payload->string('city'),
             $payload->string('country'),
+            $payload->nullableString('mobile'),
             $payload->int('documentType'),
             $payload->string('documentNumber'),
-            $payload->string('name'),
-            $payload->string('lastName'),
-            $payload->nullableString('mobile'),
         );
-    }
-
-    public function email(): string
-    {
-        return $this->email;
-    }
-
-    public function password(): string
-    {
-        return $this->password;
     }
 
     public function birthDate(): string

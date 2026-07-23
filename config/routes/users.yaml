@@ -15,3 +15,9 @@
     controller: App\Identity\User\Infrastructure\Controller\UserProfileImageUploadController::upload
     methods:
         - POST
+
+"user-update":
+    path: /api/user
+    controller: App\Identity\User\Infrastructure\Controller\UserUpdateController::update
+    methods:
+        - PUT
