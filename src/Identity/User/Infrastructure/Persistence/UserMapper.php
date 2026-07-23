@@ -74,6 +74,7 @@ class UserMapper
         $entity->setMobile($user->mobile()->value());
         $entity->setDocumentType($user->document()->type());
         $entity->setDocumentNumber($user->document()->number());
+        $entity->setProfileImage($user->profileImage()->value());
     }
 
     public function updatePassword(UserEntity $entity, UserPassword $newPassword): void
