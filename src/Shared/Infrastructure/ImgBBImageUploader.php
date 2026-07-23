@@ -2,7 +2,7 @@
 
 namespace App\Shared\Infrastructure;
 
-use App\Shared\Domain\ImageUploader;
+use App\Shared\Domain\Services\ImageUploader;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class ImgBBImageUploader implements ImageUploader

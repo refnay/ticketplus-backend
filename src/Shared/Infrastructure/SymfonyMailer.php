@@ -2,13 +2,13 @@
 
 namespace App\Shared\Infrastructure;
 
-use App\Shared\Domain\MailProvider;
+use App\Shared\Domain\Services\Mailer;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 
-class SymfonyMailProvider implements MailProvider
+class SymfonyMailer implements Mailer
 {
-    public function __construct(private MailerInterface  $mailer)
+    public function __construct(private MailerInterface $mailer)
     {
     }
 

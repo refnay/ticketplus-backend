@@ -11,12 +11,11 @@ use App\Identity\User\Domain\UserLastName;
 use App\Identity\User\Domain\UserMobile;
 use App\Identity\User\Domain\UserName;
 use App\Identity\User\Domain\UserPassword;
-use App\Shared\Domain\PasswordProvider;
 use App\Shared\Domain\Services\PasswordHasher;
 
 class CreateUserCommandHandler
 {
-    public function __construct(private UserCreator $creator, private PasswordProvider $hasher)
+    public function __construct(private UserCreator $creator, private PasswordHasher $hasher)
     {
     }
 

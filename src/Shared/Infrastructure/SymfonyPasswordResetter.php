@@ -2,13 +2,13 @@
 
 namespace App\Shared\Infrastructure;
 
-use App\Shared\Domain\ResetPasswordProvider;
+use App\Shared\Domain\Services\PasswordResetter;
 use App\Shared\Domain\UserId;
 use App\Shared\Infrastructure\Persistence\Entity\User as UserEntity;
 use Doctrine\ORM\EntityManagerInterface;
 use SymfonyCasts\Bundle\ResetPassword\ResetPasswordHelperInterface;
 
-class SymfonyResetPasswordProvider implements ResetPasswordProvider
+class SymfonyPasswordResetter implements PasswordResetter
 {
     public function __construct(
         private ResetPasswordHelperInterface $resetPasswordHelper, 

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Shared\Domain;
+namespace App\Shared\Domain\Services;
 
 use Symfony\Component\Mime\Email;
 
-interface MailProvider
+interface Mailer
 {
     public function send(Email $email): void;
 }

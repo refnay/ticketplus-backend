@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Shared\Domain;
+namespace App\Shared\Domain\Services;
 
-interface PasswordProvider
+interface PasswordHasher
 {
     public function hash(string $password): string;
 }

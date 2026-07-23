@@ -5,8 +5,8 @@ namespace App\Identity\User\Application\Recovery\SendEmail;
 use App\Identity\User\Domain\Exceptions\UserNotFound;
 use App\Identity\User\Domain\Services\UserByEmailFinder;
 use App\Identity\User\Domain\UserEmail;
-use App\Shared\Domain\MailProvider;
-use App\Shared\Domain\ResetPasswordProvider;
+use App\Shared\Domain\Services\Mailer;
+use App\Shared\Domain\Services\PasswordResetter;
 use App\Shared\Domain\UserId;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mime\Address;
@@ -15,8 +15,8 @@ use Throwable;
 class UserPasswordRecoveryEmailSender
 {
     public function __construct(
-        private ResetPasswordProvider $passwordResetter,
-        private MailProvider $mailer,
+        private PasswordResetter $passwordResetter,
+        private Mailer $mailer,
         private UserByEmailFinder $finder
     ) {}
 

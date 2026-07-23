@@ -7,7 +7,7 @@ use App\Identity\User\Domain\Services\UserFinder;
 use App\Identity\User\Domain\UserId;
 use App\Identity\User\Domain\UserProfileImage;
 use App\Identity\User\Domain\UserRepository;
-use App\Shared\Domain\ImageUploader;
+use App\Shared\Domain\Services\ImageUploader;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Throwable;
 

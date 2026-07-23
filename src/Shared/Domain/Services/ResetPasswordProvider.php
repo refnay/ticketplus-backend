@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Shared\Domain;
+namespace App\Shared\Domain\Services;
 
-use App\Identity\User\Domain\User;
+use App\Shared\Domain\UserId;
 
-interface ResetPasswordProvider
+interface PasswordResetter
 {
     public function generateToken(UserId $id): string;
 

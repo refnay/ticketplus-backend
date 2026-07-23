@@ -4,11 +4,11 @@ namespace App\Identity\User\Application\UpdatePassword;
 
 use App\Identity\User\Domain\UserId;
 use App\Identity\User\Domain\UserPassword;
-use App\Shared\Domain\PasswordProvider;
+use App\Shared\Domain\Services\PasswordHasher;
 
 class UpdateUserPasswordCommandHandler
 {
-    public function __construct(private UserPasswordUpdater $updater, private PasswordProvider $hasher)
+    public function __construct(private UserPasswordUpdater $updater, private PasswordHasher $hasher)
     {
     }
 

@@ -2,11 +2,11 @@
 
 namespace App\Shared\Infrastructure;
 
-use App\Shared\Domain\PasswordProvider;
+use App\Shared\Domain\Services\PasswordHasher;
 use App\Shared\Infrastructure\Persistence\Entity\User;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-class SymfonyPasswordProvider implements PasswordProvider
+class SymfonyPasswordHasher implements PasswordHasher
 {
     public function __construct(private UserPasswordHasherInterface $hasher)
     {
