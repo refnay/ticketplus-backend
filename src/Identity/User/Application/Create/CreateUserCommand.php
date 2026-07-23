@@ -20,7 +20,7 @@ class CreateUserCommand
     ) {
     }
 
-    public static function fromRequest(array $data): self
+    public static function create(array $data): self
     {
         $payload = PayloadMapper::fromData($data);
 
