@@ -20,17 +20,20 @@ class UserProfileImageUploader
     ) {
     }
 
-    public function __invoke(UserId $id, UploadedFile $profileImage): void
+    public function __invoke(UserId $id, ?UploadedFile $profileImage): void
     {
         $user = $this->finder->__invoke($id);
-        
-        try {
-            $url = $this->uploader->upload($profileImage->getRealPath());
-        } catch (Throwable) {
-            throw new UserProfileImageNotUploaded();
+
+        if (!is_null($profileImage)) {
+            try {
+                $url = $this->uploader->upload($profileImage->getRealPath());
+                $user->changeProfileImage(UserProfileImage::fromString($url));
+            } catch (Throwable) {
+                throw new UserProfileImageNotUploaded();
+            }
+        } else {
+            $user->changeProfileImage(UserProfileImage::fromEmpty());
         }
-        
-        $user->changeProfileImage(UserProfileImage::fromString($url));
 
         $this->repository->update($user);
     }
