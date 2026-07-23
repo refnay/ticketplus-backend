@@ -2,7 +2,6 @@
 
 namespace App\Identity\User\Application\UpdatePassword;
 
-use App\Identity\User\Domain\Services\UserFinder;
 use App\Identity\User\Domain\UserId;
 use App\Identity\User\Domain\UserPassword;
 use App\Identity\User\Domain\UserRepository;
