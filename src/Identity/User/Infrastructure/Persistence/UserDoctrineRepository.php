@@ -89,21 +89,16 @@ class UserDoctrineRepository implements UserRepository
         return !is_null($entity) ? $this->mapper->newDomain($entity) : null;
     }
 
-    public function validatePassword(UserId $id, UserPassword $oldPassword): void
+
+    public function updatePassword(UserId $id, UserPassword $oldPassword, UserPassword $newPassword): void
     {
         $entity = $this->entityManager->getReference($this->mapper->entityClass(), $id->value());
-        $result = $this->passwordManager->isPasswordValid($entity, $oldPassword->value());
         
-        if (!$result) {
+        if (!$this->passwordManager->isPasswordValid($entity, $oldPassword->value())) {
             throw new UserPasswordIncorrect();
         }
-    }
 
-    public function updatePassword(UserId $id, UserPassword $newPassword): void
-    {
-        $entity = $this->entityManager->getReference($this->mapper->entityClass(), $id->value());
         $this->mapper->updatePassword($entity, $newPassword);
-
         $this->entityManager->flush();
     }
 }

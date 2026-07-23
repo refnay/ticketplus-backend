@@ -15,7 +15,6 @@ class UserPasswordUpdater
 
     public function __invoke(UserId $id, UserPassword $oldPassword, UserPassword $newPassword): void
     {
-        $this->repository->validatePassword($id, $oldPassword);
-        $this->repository->updatePassword($id, $newPassword);
+        $this->repository->updatePassword($id, $oldPassword, $newPassword);
     }
 }

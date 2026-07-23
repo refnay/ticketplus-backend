@@ -16,7 +16,5 @@ interface UserRepository
 
     public function findByDocument(UserDocument $document): ?User;
 
-    public function validatePassword(UserId $id, UserPassword $oldPassword): void;
-
-    public function updatePassword(UserId $id, UserPassword $newPassword): void;
+    public function updatePassword(UserId $id, UserPassword $oldPassword, UserPassword $newPassword): void;
 }
