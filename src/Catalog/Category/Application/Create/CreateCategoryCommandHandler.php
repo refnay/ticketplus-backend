@@ -4,6 +4,7 @@ namespace App\Catalog\Category\Application\Create;
 
 use App\Catalog\Category\Domain\CategoryName;
 use App\Catalog\Category\Domain\CategoryReference;
+use App\Catalog\Shared\Domain\CompanyId;
 
 class CreateCategoryCommandHandler
 {
@@ -16,6 +17,7 @@ class CreateCategoryCommandHandler
         return $this->creator->__invoke(
             CategoryName::fromString($command->name()),
             CategoryReference::fromInt($command->reference()),
+            CompanyId::fromString($command->session()->company()),
         );
     }
 }

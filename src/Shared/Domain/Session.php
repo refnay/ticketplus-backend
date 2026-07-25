@@ -12,4 +12,9 @@ final class Session
     {
         return $this->provider->user();
     }
+
+    public function company(): ?string
+    {
+        return $this->provider->company();
+    }
 } 
