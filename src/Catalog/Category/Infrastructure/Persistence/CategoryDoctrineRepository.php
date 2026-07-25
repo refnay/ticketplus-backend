@@ -9,15 +9,20 @@ use App\Catalog\Category\Domain\Exceptions\CategoryNotCreated;
 use App\Catalog\Category\Domain\Exceptions\CategoryNotDeleted;
 use App\Catalog\Category\Domain\Exceptions\CategoryNotUpdated;
 use App\Catalog\Shared\Domain\CompanyId;
+use App\Shared\Infrastructure\Persistence\Doctrine\QueryBuilder;
 use Doctrine\ORM\EntityManagerInterface;
+use Override;
 use Throwable;
 
 class CategoryDoctrineRepository implements CategoryRepository
 {
+    private const string CATEGORY_PREFIX = 'c';
+
     public function __construct(private EntityManagerInterface $entityManager, private CategoryMapper $mapper)
     {
     }
     
+    #[Override]
     public function save(Category $category): void
     {
         try {
@@ -29,6 +34,7 @@ class CategoryDoctrineRepository implements CategoryRepository
         }
     }
 
+    #[Override]
     public function update(Category $category): void
     {
         try {
@@ -40,6 +46,7 @@ class CategoryDoctrineRepository implements CategoryRepository
         }
     }
 
+    #[Override]
     public function delete(Category $category): void
     {
         try {
@@ -51,6 +58,7 @@ class CategoryDoctrineRepository implements CategoryRepository
         }
     }
 
+    #[Override]
     public function findById(CategoryId $id, CompanyId $companyId): ?Category
     {
         $entity = $this->entityManager
@@ -59,4 +67,36 @@ class CategoryDoctrineRepository implements CategoryRepository
 
         return !is_null($entity) ? $this->mapper->newDomain($entity) : null;
     }
+    
+    #[Override]
+    public function searchByFilters(array $filters, string $orderBy, string $order): array
+    {
+        $queryBuilder = QueryBuilder::from(
+            $this->entityManager->getRepository($this->mapper->entityClass())->createQueryBuilder(self::CATEGORY_PREFIX)
+        );
+
+        $queryBuilder->equals('company', $filters['company'] ?? null)
+            ->likeMultiple(['name'], $filters['name'] ?? null, true)
+            ->applyOrder($orderBy, $order);
+
+        $entities = $queryBuilder->queryBuilder()->getQuery()->getResult();
+        
+        return array_map(fn($entity) => $this->mapper->newDomain($entity), $entities);
+    }
+
+    #[Override]
+    public function countByFilters(array $filters): int
+    {
+        $queryBuilder = QueryBuilder::from(
+            $this->entityManager->getRepository($this->mapper->entityClass())->createQueryBuilder(self::CATEGORY_PREFIX)
+        );
+
+        $queryBuilder->equals('company', $filters['company'] ?? null)
+            ->likeMultiple(['name'], $filters['name'] ?? null, true);
+
+        return (int) $queryBuilder->queryBuilder()
+            ->select('COUNT(' . self::CATEGORY_PREFIX . '.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    } 
 }

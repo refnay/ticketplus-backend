@@ -13,4 +13,8 @@ interface CategoryRepository
     public function delete(Category $category): void;
 
     public function findById(CategoryId $id, CompanyId $companyId): ?Category;
+
+    public function searchByFilters(array $filters, string $orderBy, string $order): array;
+
+    public function countByFilters(array $filters): int;
 }
