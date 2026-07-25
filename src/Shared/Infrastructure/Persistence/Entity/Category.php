@@ -3,7 +3,6 @@
 namespace App\Shared\Infrastructure\Persistence\Entity;
 
 use App\Shared\Infrastructure\Persistence\Repository\CategoryRepository;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
@@ -17,11 +16,8 @@ class Category
     #[ORM\Column(length: 25)]
     private ?string $name = null;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $description = null;
-
-    #[ORM\Column(length: 5, nullable: true)]
-    private ?string $icon = null;
+    #[ORM\Column]
+    private ?int $reference = null;
 
     public function getId(): ?int
     {
@@ -40,26 +36,14 @@ class Category
         return $this;
     }
 
-    public function getDescription(): ?string
+    public function getReference(): ?int
     {
-        return $this->description;
+        return $this->reference;
     }
 
-    public function setDescription(?string $description): static
+    public function setReference(int $reference): static
     {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    public function getIcon(): ?string
-    {
-        return $this->icon;
-    }
-
-    public function setIcon(?string $icon): static
-    {
-        $this->icon = $icon;
+        $this->reference = $reference;
 
         return $this;
     }
