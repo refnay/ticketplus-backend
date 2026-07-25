@@ -43,4 +43,14 @@ class Category
     {
         return $this->companyId;
     }
+
+    public function changeName(CategoryName $name): void 
+    {
+        $this->name = $name;
+    }
+
+    public function changeReference(CategoryReference $reference): void 
+    {
+        $this->reference = $reference;
+    }
 }
