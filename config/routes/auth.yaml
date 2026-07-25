@@ -1,23 +1,23 @@
 "register":
     path: /register
-    controller: App\Identity\User\Infrastructure\Controller\UserRegisterController::create
+    controller: App\Account\User\Infrastructure\Controller\UserRegisterController::create
     methods:
         - POST
 
 "login":
     path: /login
-    controller: App\Identity\User\Infrastructure\Controller\UserLoginController::login
+    controller: App\Account\User\Infrastructure\Controller\UserLoginController::login
     methods:
         - POST
 
 "password-recovery-send-email":
     path: /recovery/email
-    controller: App\Identity\User\Infrastructure\Controller\UserPasswordSendRecoveryEmailController::send
+    controller: App\Account\User\Infrastructure\Controller\UserPasswordSendRecoveryEmailController::send
     methods:
         - POST
 
 "password-recovery-execute":
     path: /recovery/execute
-    controller: App\Identity\User\Infrastructure\Controller\UserPasswordExecuteRecoveryController::execute
+    controller: App\Account\User\Infrastructure\Controller\UserPasswordExecuteRecoveryController::execute
     methods:
         - POST
