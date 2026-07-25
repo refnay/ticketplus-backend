@@ -5,7 +5,7 @@ namespace App\Catalog\Category\Domain\Exceptions;
 use Exception;
 use Throwable;
 
-class CategoryNotUpdated extends Exception
+class CategoryNotDeleted extends Exception
 {
     public function __construct(?Throwable $previous = null)
     {
