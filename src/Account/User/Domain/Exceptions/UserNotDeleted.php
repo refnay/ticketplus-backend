@@ -1,0 +1,14 @@
+<?php
+
+namespace App\Account\User\Domain\Exceptions;
+
+use Exception;
+use Throwable;
+
+class UserNotDeleted extends Exception
+{
+    public function __construct(?Throwable $previous = null)
+    {
+        parent::__construct('user.user_not_deleted', 0, $previous);
+    }
+}
