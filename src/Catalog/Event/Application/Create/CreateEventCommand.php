@@ -16,7 +16,7 @@ class CreateEventCommand extends BaseCommand
         private string $city,
         private string $category,
         private int $status,
-        private array $items,
+        private array $days,
     ) {}
 
     public static function create(array $data): self
@@ -75,8 +75,8 @@ class CreateEventCommand extends BaseCommand
         return $this->status;
     }
 
-    public function items(): array
+    public function days(): array
     {
-        return $this->items;
+        return $this->days;
     }
 }
