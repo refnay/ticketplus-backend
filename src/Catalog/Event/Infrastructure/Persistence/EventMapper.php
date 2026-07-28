@@ -111,7 +111,6 @@ class EventMapper
     public function update(EventEntity $entity, Event $event): void
     {
         $entity->setName($event->name()->value());
-        $entity->setSlug($event->slug()->value());
         $entity->setDescription($event->description()->value());
         $entity->setCoverImage($event->coverImage()->value());
         $entity->setBannerImage($event->bannerImage()->value());
