@@ -63,7 +63,7 @@ class CategoryDoctrineRepository implements CategoryRepository
     {
         $entity = $this->entityManager
             ->getRepository($this->mapper->entityClass())
-            ->find($id->value());
+            ->findOneBy(['id' => $id->value(), 'company' => $companyId->value()]);
 
         return !is_null($entity) ? $this->mapper->newDomain($entity) : null;
     }
