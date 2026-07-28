@@ -19,6 +19,6 @@ class UserFindController extends AbstractController
         /** @var UserResponse $response */
         $response = $messageBus->ask($query);
 
-        return new JsonResponse($response->toArray());
+        return new JsonResponse($response->jsonSerialize());
     }
 }

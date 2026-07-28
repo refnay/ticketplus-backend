@@ -2,7 +2,10 @@
 
 namespace App\Account\User\Application\Find;
 
-final class UserResponse
+use JsonSerializable;
+use Override;
+
+final class UserResponse implements JsonSerializable
 {
     public function __construct(
         private readonly string $id,
@@ -18,7 +21,8 @@ final class UserResponse
     ) {
     }
     
-    public function toArray(): array
+    #[Override]
+    public function jsonSerialize(): mixed
     {
         return get_object_vars($this);
     } 

@@ -53,4 +53,12 @@ class Category
     {
         $this->reference = $reference;
     }
+
+    public function toChooser(): array
+    {
+        return [
+            'code' => $this->id()->value(),
+            'label' => $this->name()->value(),
+        ];
+    }
 }
