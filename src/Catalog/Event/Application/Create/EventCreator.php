@@ -7,6 +7,12 @@ use App\Catalog\Category\Domain\Services\CategoryFinder;
 use App\Catalog\Event\Domain\Event;
 use App\Catalog\Event\Domain\EventCity;
 use App\Catalog\Event\Domain\EventCountry;
+use App\Catalog\Event\Domain\EventDay;
+use App\Catalog\Event\Domain\EventDayDate;
+use App\Catalog\Event\Domain\EventDayDescription;
+use App\Catalog\Event\Domain\EventDayEndTime;
+use App\Catalog\Event\Domain\EventDayStartTime;
+use App\Catalog\Event\Domain\EventDayStatus;
 use App\Catalog\Event\Domain\EventDescription;
 use App\Catalog\Event\Domain\EventLocation;
 use App\Catalog\Event\Domain\EventName;
@@ -37,7 +43,8 @@ class EventCreator
         EventCity $city,
         EventStatus $status,
         CategoryId $categoryId, 
-        CompanyId $companyId
+        CompanyId $companyId,
+        array $days,
     ): string {
         $category = $this->categoryFinder->__invoke($categoryId, $companyId);
         $slug = EventSlug::fromString($this->slugGenerator->generate($name->value()));
@@ -59,6 +66,20 @@ class EventCreator
             $category,
             $companyId,
         );
+
+        /** @var EventDayCommand $dayCommand */
+        foreach ($days as $dayCommand) {
+            $day = EventDay::create(
+                EventDayDate::fromString($dayCommand->date()),
+                EventDayStartTime::fromString($dayCommand->startTime()),
+                EventDayEndTime::fromString($dayCommand->endTime()),
+                EventDayDescription::fromString($dayCommand->description()),
+                EventDayStatus::fromInt($dayCommand->status()),
+                $event,
+            );
+
+            $event->addDay($day);
+        }
 
         $this->repository->save($event);
 

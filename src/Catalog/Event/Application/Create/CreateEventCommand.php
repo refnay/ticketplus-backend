@@ -4,6 +4,7 @@ namespace App\Catalog\Event\Application\Create;
 
 use App\Shared\Application\Command\BaseCommand;
 use App\Shared\Domain\Utils\PayloadMapper;
+use App\Shared\Domain\Utils\Primitive\ArrayBuilder;
 
 class CreateEventCommand extends BaseCommand
 {
@@ -15,11 +16,17 @@ class CreateEventCommand extends BaseCommand
         private string $city,
         private string $category,
         private int $status,
+        private array $items,
     ) {}
 
     public static function create(array $data): self
     {
         $payload = PayloadMapper::fromData($data);
+        $days = ArrayBuilder::generate();
+
+        foreach ($payload->array('days') as $day) {
+            $days->add(EventDayCommand::create($day));
+        }
 
         return new self(
             $payload->string('name'),
@@ -29,6 +36,7 @@ class CreateEventCommand extends BaseCommand
             $payload->string('city'),
             $payload->string('category'),
             $payload->int('status'),
+            $days->items()
         );
     }
 
@@ -65,5 +73,10 @@ class CreateEventCommand extends BaseCommand
     public function status(): int
     {
         return $this->status;
+    }
+
+    public function items(): array
+    {
+        return $this->items;
     }
 }
