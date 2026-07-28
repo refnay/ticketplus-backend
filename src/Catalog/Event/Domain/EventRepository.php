@@ -14,6 +14,8 @@ interface EventRepository
 
     public function findById(EventId $id, CompanyId $companyId): ?Event;
 
+    public function findBySlug(EventSlug $slug, CompanyId $companyId): ?Event;
+
     public function searchByFilters(array $filters, string $orderBy, string $order): array;
 
     public function countByFilters(array $filters): int;

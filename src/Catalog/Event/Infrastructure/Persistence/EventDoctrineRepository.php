@@ -5,6 +5,7 @@ namespace App\Catalog\Event\Infrastructure\Persistence;
 use App\Catalog\Event\Domain\Event;
 use App\Catalog\Event\Domain\EventId;
 use App\Catalog\Event\Domain\EventRepository;
+use App\Catalog\Event\Domain\EventSlug;
 use App\Catalog\Event\Domain\Exceptions\EventNotCreated;
 use App\Catalog\Event\Domain\Exceptions\EventNotDeleted;
 use App\Catalog\Event\Domain\Exceptions\EventNotUpdated;
@@ -63,7 +64,17 @@ class EventDoctrineRepository implements EventRepository
     {
         $entity = $this->entityManager
             ->getRepository($this->mapper->entityClass())
-            ->find($id->value());
+            ->findOneBy(['id' => $id->value(), 'company' => $companyId->value()]);
+
+        return !is_null($entity) ? $this->mapper->newDomain($entity) : null;
+    }
+
+    #[Override]
+    public function findBySlug(EventSlug $slug, CompanyId $companyId): ?Event
+    {
+        $entity = $this->entityManager
+            ->getRepository($this->mapper->entityClass())
+            ->findOneBy(['slug' => $slug->value(), 'company' => $companyId->value()]);
 
         return !is_null($entity) ? $this->mapper->newDomain($entity) : null;
     }
