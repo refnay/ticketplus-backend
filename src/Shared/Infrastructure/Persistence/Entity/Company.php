@@ -60,17 +60,17 @@ class Company
     private ?string $location = null;
 
     /**
-     * @var Collection<int, User>
+     * @var Collection<int, CompanyMember>
      */
-    #[ORM\OneToMany(targetEntity: User::class, mappedBy: 'company')]
+    #[ORM\OneToMany(targetEntity: CompanyMember::class, mappedBy: 'company', orphanRemoval: true)]
     private Collection $members;
-
+    
     /**
      * @var Collection<int, Event>
      */
     #[ORM\OneToMany(targetEntity: Event::class, mappedBy: 'company', orphanRemoval: true)]
     private Collection $events;
-    
+
     /**
      * @var Collection<int, Category>
      */
@@ -88,7 +88,7 @@ class Company
     {
         return $this->id;
     }
-    
+
     public function setId(Uuid $id): static
     {
         $this->id = $id;
@@ -241,14 +241,14 @@ class Company
     }
 
     /**
-     * @return Collection<int, User>
+     * @return Collection<int, CompanyMember>
      */
     public function getMembers(): Collection
     {
         return $this->members;
     }
 
-    public function addMember(User $member): static
+    public function addMember(CompanyMember $member): static
     {
         if (!$this->members->contains($member)) {
             $this->members->add($member);
@@ -258,7 +258,7 @@ class Company
         return $this;
     }
 
-    public function removeMember(User $member): static
+    public function removeMember(CompanyMember $member): static
     {
         if ($this->members->removeElement($member)) {
             // set the owning side to null (unless already changed)
@@ -299,7 +299,7 @@ class Company
 
         return $this;
     }
-    
+
     /**
      * @return Collection<int, Category>
      */
@@ -329,7 +329,7 @@ class Company
 
         return $this;
     }
-    
+
     #[ORM\PrePersist]
     public function createTimestamps(): void
     {
@@ -344,7 +344,7 @@ class Company
     {
         $this->updatedAt = new \DateTimeImmutable();
     }
-    
+
     public function getDocumentType(): ?int
     {
         return $this->documentType;
@@ -367,5 +367,5 @@ class Company
         $this->documentNumber = $documentNumber;
 
         return $this;
-    } 
+    }
 }
