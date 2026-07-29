@@ -76,6 +76,7 @@ class CategoryDoctrineRepository implements CategoryRepository
         );
 
         $queryBuilder->equals('company', $filters['company'] ?? null)
+            ->equals('reference', $filters['reference'] ?? null)
             ->likeMultiple(['name'], $filters['name'] ?? null, true)
             ->applyOrder($orderBy, $order)
             ->paginate($limit, $offset);
@@ -93,6 +94,7 @@ class CategoryDoctrineRepository implements CategoryRepository
         );
 
         $queryBuilder->equals('company', $filters['company'] ?? null)
+            ->equals('reference', $filters['reference'] ?? null)
             ->likeMultiple(['name'], $filters['name'] ?? null, true);
 
         return (int) $queryBuilder->queryBuilder()
