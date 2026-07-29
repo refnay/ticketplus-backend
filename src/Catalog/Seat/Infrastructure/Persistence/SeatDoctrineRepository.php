@@ -6,6 +6,7 @@ use App\Catalog\Seat\Domain\Exceptions\SeatNotCreated;
 use App\Catalog\Seat\Domain\Exceptions\SeatNotDeleted;
 use App\Catalog\Seat\Domain\Exceptions\SeatNotUpdated;
 use App\Catalog\Seat\Domain\Seat;
+use App\Catalog\Seat\Domain\SeatCode;
 use App\Catalog\Seat\Domain\SeatId;
 use App\Catalog\Seat\Domain\SeatRepository;
 use App\Catalog\Zone\Domain\ZoneId;
@@ -67,6 +68,16 @@ class SeatDoctrineRepository implements SeatRepository
 
         return !is_null($entity) ? $this->mapper->newDomain($entity) : null;
     }
+
+    #[Override]
+    public function findByCode(SeatCode $code, ZoneId $zoneId): ?Seat
+    {
+        $entity = $this->entityManager
+            ->getRepository($this->mapper->entityClass())
+            ->findOneBy(['code' => $code->value(), 'zone' => $zoneId->value()]);
+
+        return !is_null($entity) ? $this->mapper->newDomain($entity) : null;
+    }
     
     #[Override]
     public function searchByFilters(array $filters, string $orderBy, string $order, ?int $limit, ?int $offset): array
@@ -76,6 +87,7 @@ class SeatDoctrineRepository implements SeatRepository
         );
 
         $queryBuilder->equals('zone', $filters['zone'] ?? null)
+            ->likeMultiple(['code'], $filters['code'] ?? null, true)
             ->applyOrder($orderBy, $order)
             ->paginate($limit, $offset);
 
@@ -91,7 +103,8 @@ class SeatDoctrineRepository implements SeatRepository
             $this->entityManager->getRepository($this->mapper->entityClass())->createQueryBuilder(self::SEAT_PREFIX)
         );
 
-        $queryBuilder->equals('zone', $filters['zone'] ?? null);
+        $queryBuilder->equals('zone', $filters['zone'] ?? null)
+            ->likeMultiple(['code'], $filters['code'] ?? null, true);
 
         return (int) $queryBuilder->queryBuilder()
             ->select('COUNT(' . self::SEAT_PREFIX . '.id)')

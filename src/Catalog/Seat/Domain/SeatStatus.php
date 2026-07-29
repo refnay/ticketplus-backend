@@ -7,6 +7,11 @@ use Override;
 
 class SeatStatus extends IntValueObject
 {
+    public static function available(): self
+    {
+        return new self(SeatStatusList::AVAILABLE->value);
+    }
+
     #[Override]
     public function validate(): void
     {

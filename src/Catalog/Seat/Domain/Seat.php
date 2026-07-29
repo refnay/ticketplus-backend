@@ -19,9 +19,9 @@ class Seat
         $this->zone = $zone;
     }
 
-    public static function create(SeatCode $code, SeatStatus $status, Zone $zone): self
+    public static function create(SeatCode $code, Zone $zone): self
     {
-        return new self(SeatId::generate(), $code, $status, $zone);
+        return new self(SeatId::generate(), $code, SeatStatus::available(), $zone);
     }
 
     public function id(): SeatId

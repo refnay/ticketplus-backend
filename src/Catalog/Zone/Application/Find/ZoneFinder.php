@@ -25,8 +25,8 @@ class ZoneFinder
             throw new EventDayNotFound();
         }
 
-        $day = $this->zoneFinder->__invoke($id, $day->id());
+        $zone = $this->zoneFinder->__invoke($id, $day->id());
 
-        return ZoneResponse::create($day);
+        return ZoneResponse::create($zone);
     }
 }
