@@ -38,7 +38,7 @@ class ZoneUpdater
         ZoneNumberedSeating $numberedSeating,
         EventId $eventId,
         EventDayId $dayId,
-        CompanyId $companyId
+        CompanyId $companyId,
     ): void {
         $event = $this->eventFinder->__invoke($eventId, $companyId);
         $day = $event->findDayById($dayId);
