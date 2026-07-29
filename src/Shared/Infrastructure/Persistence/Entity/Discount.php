@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: DiscountRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Discount
 {
     #[ORM\Id]
@@ -189,5 +190,20 @@ class Discount
         $this->event = $event;
 
         return $this;
+    }
+    
+    #[ORM\PrePersist]
+    public function createTimestamps(): void
+    {
+        $now = new \DateTimeImmutable();
+
+        $this->createdAt = $now;
+        $this->updatedAt = $now;
+    }
+
+    #[ORM\PreUpdate]
+    public function updateTimestamp(): void
+    {
+        $this->updatedAt = new \DateTimeImmutable();
     }
 }

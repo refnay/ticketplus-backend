@@ -50,6 +50,12 @@ class Company
     #[ORM\Column]
     private ?\DateTimeImmutable $updatedAt = null;
 
+    #[ORM\Column]
+    private ?int $documentType = null;
+
+    #[ORM\Column(length: 50)]
+    private ?string $documentNumber = null;
+
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $location = null;
 
@@ -338,4 +344,28 @@ class Company
     {
         $this->updatedAt = new \DateTimeImmutable();
     }
+    
+    public function getDocumentType(): ?int
+    {
+        return $this->documentType;
+    }
+
+    public function setDocumentType(int $documentType): static
+    {
+        $this->documentType = $documentType;
+
+        return $this;
+    }
+
+    public function getDocumentNumber(): ?string
+    {
+        return $this->documentNumber;
+    }
+
+    public function setDocumentNumber(string $documentNumber): static
+    {
+        $this->documentNumber = $documentNumber;
+
+        return $this;
+    } 
 }

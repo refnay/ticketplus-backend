@@ -4,11 +4,11 @@ namespace App\Shared\Infrastructure;
 
 use App\Shared\Domain\Services\SlugGenerator;
 use Override;
-use Symfony\Component\String\Slugger\AsciiSlugger;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 class SymfonySlugGenerator implements SlugGenerator
 {
-    public function __construct(private AsciiSlugger $slugger)
+    public function __construct(private SluggerInterface $slugger)
     {
     }
 
