@@ -16,6 +16,11 @@ abstract class FloatValueObject
         return new static($value);
     }
 
+    public static function fromZero(): static
+    {
+        return new static(0.00);
+    }
+
     public static function fromNull(): static
     {
         return new static(null);
@@ -33,7 +38,14 @@ abstract class FloatValueObject
 
     public function isZero(): bool
     {
-        return $this->value === 0.0;
+        return $this->value === 0.00;
+    }
+
+    public function decimal(): float
+    {
+        $this->ensureNotNull();
+
+        return $this->value / 100.00;
     }
 
     public function equals(self $other, float $epsilon = 0.00001): bool
