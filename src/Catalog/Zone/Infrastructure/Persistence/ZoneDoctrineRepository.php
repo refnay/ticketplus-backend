@@ -16,7 +16,7 @@ use Throwable;
 
 class ZoneDoctrineRepository implements ZoneRepository
 {
-    private const string CATEGORY_PREFIX = 'z';
+    private const string ZONE_PREFIX = 'z';
 
     public function __construct(private EntityManagerInterface $entityManager, private ZoneMapper $mapper)
     {
@@ -72,7 +72,7 @@ class ZoneDoctrineRepository implements ZoneRepository
     public function searchByFilters(array $filters, string $orderBy, string $order): array
     {
         $queryBuilder = QueryBuilder::from(
-            $this->entityManager->getRepository($this->mapper->entityClass())->createQueryBuilder(self::CATEGORY_PREFIX)
+            $this->entityManager->getRepository($this->mapper->entityClass())->createQueryBuilder(self::ZONE_PREFIX)
         );
 
         $queryBuilder->equals('day', $filters['day'] ?? null)
@@ -88,14 +88,14 @@ class ZoneDoctrineRepository implements ZoneRepository
     public function countByFilters(array $filters): int
     {
         $queryBuilder = QueryBuilder::from(
-            $this->entityManager->getRepository($this->mapper->entityClass())->createQueryBuilder(self::CATEGORY_PREFIX)
+            $this->entityManager->getRepository($this->mapper->entityClass())->createQueryBuilder(self::ZONE_PREFIX)
         );
 
         $queryBuilder->equals('day', $filters['day'] ?? null)
             ->likeMultiple(['name'], $filters['name'] ?? null, true);
 
         return (int) $queryBuilder->queryBuilder()
-            ->select('COUNT(' . self::CATEGORY_PREFIX . '.id)')
+            ->select('COUNT(' . self::ZONE_PREFIX . '.id)')
             ->getQuery()
             ->getSingleScalarResult();
     } 

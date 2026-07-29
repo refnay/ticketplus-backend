@@ -17,7 +17,7 @@ use Throwable;
 
 class EventDoctrineRepository implements EventRepository
 {
-    private const string CATEGORY_PREFIX = 'e';
+    private const string EVENT_PREFIX = 'e';
 
     public function __construct(private EntityManagerInterface $entityManager, private EventMapper $mapper)
     {
@@ -83,7 +83,7 @@ class EventDoctrineRepository implements EventRepository
     public function searchByFilters(array $filters, string $orderBy, string $order): array
     {
         $queryBuilder = QueryBuilder::from(
-            $this->entityManager->getRepository($this->mapper->entityClass())->createQueryBuilder(self::CATEGORY_PREFIX)
+            $this->entityManager->getRepository($this->mapper->entityClass())->createQueryBuilder(self::EVENT_PREFIX)
         );
 
         $queryBuilder->equals('company', $filters['company'] ?? null)
@@ -102,7 +102,7 @@ class EventDoctrineRepository implements EventRepository
     public function countByFilters(array $filters): int
     {
         $queryBuilder = QueryBuilder::from(
-            $this->entityManager->getRepository($this->mapper->entityClass())->createQueryBuilder(self::CATEGORY_PREFIX)
+            $this->entityManager->getRepository($this->mapper->entityClass())->createQueryBuilder(self::EVENT_PREFIX)
         );
 
         $queryBuilder->equals('company', $filters['company'] ?? null)
@@ -112,7 +112,7 @@ class EventDoctrineRepository implements EventRepository
             ->equals('status', $filters['status'] ?? null);
 
         return (int) $queryBuilder->queryBuilder()
-            ->select('COUNT(' . self::CATEGORY_PREFIX . '.id)')
+            ->select('COUNT(' . self::EVENT_PREFIX . '.id)')
             ->getQuery()
             ->getSingleScalarResult();
     } 
