@@ -24,7 +24,6 @@ class NewUserValidator
     {
         try {
             $this->byEmailFinder->__invoke($email);
-            
             throw new UserEmailAlreadyExists();
         } catch (UserNotFound) {}
     }
@@ -33,7 +32,6 @@ class NewUserValidator
     {
         try {
             $this->byDocumentFinder->__invoke($document);
-            
             throw new UserDocumentAlreadyExists();
         } catch (UserNotFound) {}
     }
