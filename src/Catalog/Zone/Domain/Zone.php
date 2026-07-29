@@ -140,4 +140,9 @@ class Zone
     {
         $this->taxRate = $taxRate;
     }
+
+    public function total(): float
+    {
+        return $this->price()->value() + $this->price()->value() * $this->taxRate()->decimal();
+    }
 }
