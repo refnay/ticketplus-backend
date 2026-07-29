@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Catalog\Zone\Infrastructure\Persistence;
+namespace App\Catalog\Seat\Infrastructure\Persistence;
 
 use App\Catalog\Category\Domain\Category;
 use App\Catalog\Category\Domain\CategoryId;
@@ -25,6 +25,10 @@ use App\Catalog\Event\Domain\EventName;
 use App\Catalog\Event\Domain\EventSlug;
 use App\Catalog\Event\Domain\EventStatus;
 use App\Catalog\Event\Domain\Exceptions\EventDayNotFound;
+use App\Catalog\Seat\Domain\Seat;
+use App\Catalog\Seat\Domain\SeatCode;
+use App\Catalog\Seat\Domain\SeatId;
+use App\Catalog\Seat\Domain\SeatStatus;
 use App\Catalog\Shared\Domain\CompanyId;
 use App\Catalog\Zone\Domain\Zone;
 use App\Catalog\Zone\Domain\ZoneCurrency;
@@ -35,34 +39,30 @@ use App\Catalog\Zone\Domain\ZoneNumberedSeating;
 use App\Catalog\Zone\Domain\ZonePrice;
 use App\Catalog\Zone\Domain\ZoneQuantity;
 use App\Catalog\Zone\Domain\ZoneTaxRate;
-use App\Shared\Infrastructure\Persistence\Entity\Zone as ZoneEntity;
+use App\Shared\Infrastructure\Persistence\Entity\Seat as SeatEntity;
 
-class ZoneMapper
+class SeatMapper
 {
     public function __construct(private RelationFetcher $fetcher) {}
 
-    public function newEntity(Zone $zone): ZoneEntity
+    public function newEntity(Seat $seat): SeatEntity
     {
-        $entity = new ZoneEntity();
+        $entity = new SeatEntity();
 
-        $entity->setId($zone->id()->toUuid());
-        $entity->setName($zone->name()->value());
-        $entity->setTotalQuantity($zone->quantity()->total());
-        $entity->setSoldQuantity($zone->quantity()->sold());
-        $entity->setPrice($zone->price()->value());
-        $entity->setHierarchy($zone->hierarchy()->value());
-        $entity->setTaxRate($zone->taxRate()->value());
-        $entity->setCurrency($zone->currency()->value());
-        $entity->setNumberedSeating($zone->numberedSeating()->value());
-        $entity->setDay($this->fetcher->day($zone->day()->id()));
+        $entity->setId($seat->id()->toUuid());
+        $entity->setCode($seat->code()->value());
+        $entity->setStatus($seat->status()->value());
+        $entity->setZone($this->fetcher->zone($seat->zone()->id()));
 
         return $entity;
     }
 
-    public function newDomain(ZoneEntity $entity): Zone
+    public function newDomain(SeatEntity $entity): Seat
     {
-        $categoryEntity = $entity->getDay()->getEvent()->getCategory();
-        $eventEntity = $entity->getDay()->getEvent();
+        $zoneEntity = $entity->getZone();
+        $dayEntity = $zoneEntity->getDay();
+        $eventEntity = $dayEntity->getEvent();
+        $categoryEntity = $eventEntity->getCategory();
 
         $category = new Category(
             CategoryId::fromString($categoryEntity->getId()),
@@ -98,41 +98,45 @@ class ZoneMapper
             ));
         }
 
-        $day = $event->findDayById(EventDayId::fromString($entity->getDay()->getId()));
+        $day = $event->findDayById(EventDayId::fromString($zoneEntity->getDay()->getId()));
 
         if (is_null($day)) {
             throw new EventDayNotFound();
         }
 
         $zone = new Zone(
-            ZoneId::fromString($entity->getId()),
-            ZoneName::fromString($entity->getName()),
-            ZoneCurrency::fromString($entity->getCurrency()),
-            ZoneHierarchy::fromInt($entity->getHierarchy()),
-            ZoneNumberedSeating::fromBool($entity->isNumberedSeating()),
-            ZonePrice::fromFloat($entity->getPrice()),
-            ZoneQuantity::create($entity->getTotalQuantity(), $entity->getSoldQuantity()),
-            ZoneTaxRate::fromFloat($entity->getTaxRate()),
+            ZoneId::fromString($zoneEntity->getId()),
+            ZoneName::fromString($zoneEntity->getName()),
+            ZoneCurrency::fromString($zoneEntity->getCurrency()),
+            ZoneHierarchy::fromInt($zoneEntity->getHierarchy()),
+            ZoneNumberedSeating::fromBool($zoneEntity->isNumberedSeating()),
+            ZonePrice::fromFloat($zoneEntity->getPrice()),
+            ZoneQuantity::create(
+                $zoneEntity->getTotalQuantity(),
+                $zoneEntity->getSoldQuantity(),
+            ),
+            ZoneTaxRate::fromFloat($zoneEntity->getTaxRate()),
             $day,
         );
 
-        return $zone;
+        $seat = new Seat(
+            SeatId::fromString($entity->getId()),
+            SeatCode::fromString($entity->getCode()),
+            SeatStatus::fromInt($entity->getStatus()),
+            $zone,
+        );
+
+        return $seat;
     }
 
-    public function update(ZoneEntity $entity, Zone $zone): void
+    public function update(SeatEntity $entity, Seat $seat): void
     {
-        $entity->setName($zone->name()->value());
-        $entity->setTotalQuantity($zone->quantity()->total());
-        $entity->setSoldQuantity($zone->quantity()->sold());
-        $entity->setPrice($zone->price()->value());
-        $entity->setHierarchy($zone->hierarchy()->value());
-        $entity->setTaxRate($zone->taxRate()->value());
-        $entity->setCurrency($zone->currency()->value());
-        $entity->setNumberedSeating($zone->numberedSeating()->value());
+        $entity->setCode($seat->code()->value());
+        $entity->setStatus($seat->status()->value());
     }
 
     public function entityClass(): string
     {
-        return ZoneEntity::class;
+        return SeatEntity::class;
     }
 }
