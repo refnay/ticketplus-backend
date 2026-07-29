@@ -69,14 +69,15 @@ class SeatDoctrineRepository implements SeatRepository
     }
     
     #[Override]
-    public function searchByFilters(array $filters, string $orderBy, string $order): array
+    public function searchByFilters(array $filters, string $orderBy, string $order, ?int $limit, ?int $offset): array
     {
         $queryBuilder = QueryBuilder::from(
             $this->entityManager->getRepository($this->mapper->entityClass())->createQueryBuilder(self::SEAT_PREFIX)
         );
 
         $queryBuilder->equals('zone', $filters['zone'] ?? null)
-            ->applyOrder($orderBy, $order);
+            ->applyOrder($orderBy, $order)
+            ->paginate($limit, $offset);
 
         $entities = $queryBuilder->queryBuilder()->getQuery()->getResult();
         

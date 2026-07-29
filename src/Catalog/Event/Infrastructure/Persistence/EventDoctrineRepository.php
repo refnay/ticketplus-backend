@@ -80,7 +80,7 @@ class EventDoctrineRepository implements EventRepository
     }
     
     #[Override]
-    public function searchByFilters(array $filters, string $orderBy, string $order): array
+    public function searchByFilters(array $filters, string $orderBy, string $order, ?int $limit, ?int $offset): array
     {
         $queryBuilder = QueryBuilder::from(
             $this->entityManager->getRepository($this->mapper->entityClass())->createQueryBuilder(self::EVENT_PREFIX)
@@ -91,7 +91,8 @@ class EventDoctrineRepository implements EventRepository
             ->equals('country', $filters['country'] ?? null)
             ->equals('city', $filters['city'] ?? null)
             ->equals('status', $filters['status'] ?? null)
-            ->applyOrder($orderBy, $order);
+            ->applyOrder($orderBy, $order)
+            ->paginate($limit, $offset);
 
         $entities = $queryBuilder->queryBuilder()->getQuery()->getResult();
         

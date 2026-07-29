@@ -14,7 +14,7 @@ interface CategoryRepository
 
     public function findById(CategoryId $id, CompanyId $companyId): ?Category;
 
-    public function searchByFilters(array $filters, string $orderBy, string $order): array;
+    public function searchByFilters(array $filters, string $orderBy, string $order, ?int $limit, ?int $offset): array;
 
     public function countByFilters(array $filters): int;
 }
