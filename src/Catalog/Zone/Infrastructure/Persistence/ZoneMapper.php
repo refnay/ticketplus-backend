@@ -61,8 +61,8 @@ class ZoneMapper
 
     public function newDomain(ZoneEntity $entity): Zone
     {
-        $categoryEntity = $entity->getDay()->getEvent()->getCategory();
         $eventEntity = $entity->getDay()->getEvent();
+        $categoryEntity = $eventEntity->getCategory();
 
         $category = new Category(
             CategoryId::fromString($categoryEntity->getId()),
