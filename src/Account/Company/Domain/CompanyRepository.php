@@ -4,11 +4,11 @@ namespace App\Account\Company\Domain;
 
 interface CompanyRepository
 {
-    public function save(Company $user): string;
+    public function save(Company $company): void;
 
-    public function update(Company $user): void;
+    public function update(Company $company): void;
 
-    public function delete(Company $user): void;
+    public function delete(Company $company): void;
 
     public function findById(CompanyId $id): ?Company;
 
