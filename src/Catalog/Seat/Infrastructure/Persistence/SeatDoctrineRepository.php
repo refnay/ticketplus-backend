@@ -16,7 +16,7 @@ use Throwable;
 
 class SeatDoctrineRepository implements SeatRepository
 {
-    private const string CATEGORY_PREFIX = 's';
+    private const string SEAT_PREFIX = 's';
 
     public function __construct(private EntityManagerInterface $entityManager, private SeatMapper $mapper)
     {
@@ -72,7 +72,7 @@ class SeatDoctrineRepository implements SeatRepository
     public function searchByFilters(array $filters, string $orderBy, string $order): array
     {
         $queryBuilder = QueryBuilder::from(
-            $this->entityManager->getRepository($this->mapper->entityClass())->createQueryBuilder(self::CATEGORY_PREFIX)
+            $this->entityManager->getRepository($this->mapper->entityClass())->createQueryBuilder(self::SEAT_PREFIX)
         );
 
         $queryBuilder->equals('zone', $filters['zone'] ?? null)
@@ -87,13 +87,13 @@ class SeatDoctrineRepository implements SeatRepository
     public function countByFilters(array $filters): int
     {
         $queryBuilder = QueryBuilder::from(
-            $this->entityManager->getRepository($this->mapper->entityClass())->createQueryBuilder(self::CATEGORY_PREFIX)
+            $this->entityManager->getRepository($this->mapper->entityClass())->createQueryBuilder(self::SEAT_PREFIX)
         );
 
         $queryBuilder->equals('zone', $filters['zone'] ?? null);
 
         return (int) $queryBuilder->queryBuilder()
-            ->select('COUNT(' . self::CATEGORY_PREFIX . '.id)')
+            ->select('COUNT(' . self::SEAT_PREFIX . '.id)')
             ->getQuery()
             ->getSingleScalarResult();
     } 
