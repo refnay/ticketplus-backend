@@ -69,7 +69,7 @@ class ZoneDoctrineRepository implements ZoneRepository
     }
     
     #[Override]
-    public function searchByFilters(array $filters, string $orderBy, string $order): array
+    public function searchByFilters(array $filters, string $orderBy, string $order, ?int $limit, ?int $offset): array
     {
         $queryBuilder = QueryBuilder::from(
             $this->entityManager->getRepository($this->mapper->entityClass())->createQueryBuilder(self::ZONE_PREFIX)
@@ -77,7 +77,8 @@ class ZoneDoctrineRepository implements ZoneRepository
 
         $queryBuilder->equals('day', $filters['day'] ?? null)
             ->likeMultiple(['name'], $filters['name'] ?? null, true)
-            ->applyOrder($orderBy, $order);
+            ->applyOrder($orderBy, $order)
+            ->paginate($limit, $offset);
 
         $entities = $queryBuilder->queryBuilder()->getQuery()->getResult();
         

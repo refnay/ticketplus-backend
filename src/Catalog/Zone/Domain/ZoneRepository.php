@@ -14,7 +14,7 @@ interface ZoneRepository
 
     public function findById(ZoneId $id, EventDayId $dayId): ?Zone;
 
-    public function searchByFilters(array $filters, string $orderBy, string $order): array;
+    public function searchByFilters(array $filters, string $orderBy, string $order, ?int $limit, ?int $offset): array;
 
     public function countByFilters(array $filters): int;
 }
