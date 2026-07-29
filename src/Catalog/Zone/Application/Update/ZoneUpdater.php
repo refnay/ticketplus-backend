@@ -23,7 +23,7 @@ class ZoneUpdater
     public function __construct(
         private ZoneRepository $repository,
         private EventFinder $eventFinder,
-        private ZoneFinder $zoneFinder
+        private ZoneFinder $zoneFinder,
     ) {
     }
 
