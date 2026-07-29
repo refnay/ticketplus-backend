@@ -2,7 +2,6 @@
 
 namespace App\Account\User\Domain;
 
-
 enum UserStatusList: int
 {
     case PENDING = 0;

@@ -19,4 +19,12 @@ class SymfonySessionProvider implements SessionProvider
 
         return $user->getId()->toRfc4122();
     }
+
+    public function company(): ?string
+    {
+        /** @var User $user */
+        $user = $this->security->getUser();
+
+        return $user->getCompany()?->getId()->toRfc4122();
+    }
 }

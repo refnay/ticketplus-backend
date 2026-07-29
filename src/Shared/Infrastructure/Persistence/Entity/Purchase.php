@@ -10,6 +10,7 @@ use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: PurchaseRepository::class)]
 #[ORM\Table(name: '`purchase`')]
+#[ORM\HasLifecycleCallbacks]
 class Purchase
 {
     #[ORM\Id]
@@ -240,5 +241,20 @@ class Purchase
         $this->discount = $discount;
 
         return $this;
+    }
+    
+    #[ORM\PrePersist]
+    public function createTimestamps(): void
+    {
+        $now = new \DateTimeImmutable();
+
+        $this->createdAt = $now;
+        $this->updatedAt = $now;
+    }
+
+    #[ORM\PreUpdate]
+    public function updateTimestamp(): void
+    {
+        $this->updatedAt = new \DateTimeImmutable();
     }
 }

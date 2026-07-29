@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: CompanyRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Company
 {
     #[ORM\Id]
@@ -49,6 +50,12 @@ class Company
     #[ORM\Column]
     private ?\DateTimeImmutable $updatedAt = null;
 
+    #[ORM\Column]
+    private ?int $documentType = null;
+
+    #[ORM\Column(length: 50)]
+    private ?string $documentNumber = null;
+
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $location = null;
 
@@ -63,11 +70,18 @@ class Company
      */
     #[ORM\OneToMany(targetEntity: Event::class, mappedBy: 'company', orphanRemoval: true)]
     private Collection $events;
+    
+    /**
+     * @var Collection<int, Category>
+     */
+    #[ORM\OneToMany(targetEntity: Category::class, mappedBy: 'category', orphanRemoval: true)]
+    private Collection $categories;
 
     public function __construct()
     {
         $this->members = new ArrayCollection();
         $this->events = new ArrayCollection();
+        $this->categories = new ArrayCollection();
     }
 
     public function getId(): ?Uuid
@@ -285,4 +299,73 @@ class Company
 
         return $this;
     }
+    
+    /**
+     * @return Collection<int, Category>
+     */
+    public function getCategories(): Collection
+    {
+        return $this->categories;
+    }
+
+    public function addCategory(Category $category): static
+    {
+        if (!$this->categories->contains($category)) {
+            $this->categories->add($category);
+            $category->setCompany($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCategory(Category $category): static
+    {
+        if ($this->categories->removeElement($category)) {
+            // set the owning side to null (unless already changed)
+            if ($category->getCompany() === $this) {
+                $category->setCompany(null);
+            }
+        }
+
+        return $this;
+    }
+    
+    #[ORM\PrePersist]
+    public function createTimestamps(): void
+    {
+        $now = new \DateTimeImmutable();
+
+        $this->createdAt = $now;
+        $this->updatedAt = $now;
+    }
+
+    #[ORM\PreUpdate]
+    public function updateTimestamp(): void
+    {
+        $this->updatedAt = new \DateTimeImmutable();
+    }
+    
+    public function getDocumentType(): ?int
+    {
+        return $this->documentType;
+    }
+
+    public function setDocumentType(int $documentType): static
+    {
+        $this->documentType = $documentType;
+
+        return $this;
+    }
+
+    public function getDocumentNumber(): ?string
+    {
+        return $this->documentNumber;
+    }
+
+    public function setDocumentNumber(string $documentNumber): static
+    {
+        $this->documentNumber = $documentNumber;
+
+        return $this;
+    } 
 }

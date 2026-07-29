@@ -113,7 +113,7 @@ abstract class TimeValueObject
         return $this->isNull() ? '' : $this->value->format('H:i:s');
     }
 
-    public function asHMString(): string
+    public function asHM(): string
     {
         $this->ensureNotNull();
 
