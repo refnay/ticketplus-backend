@@ -36,7 +36,6 @@ use App\Catalog\Zone\Domain\ZonePrice;
 use App\Catalog\Zone\Domain\ZoneQuantity;
 use App\Catalog\Zone\Domain\ZoneTaxRate;
 use App\Shared\Infrastructure\Persistence\Entity\Zone as ZoneEntity;
-use App\Shared\Infrastructure\Persistence\Entity\Day as EventDayEntity;
 
 class ZoneMapper
 {
