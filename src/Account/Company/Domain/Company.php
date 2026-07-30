@@ -2,8 +2,8 @@
 
 namespace App\Account\Company\Domain;
 
-use App\Account\User\Domain\User;
-use App\Account\User\Domain\UserId;
+use App\Account\CompanyMember\Domain\CompanyMember;
+use App\Account\CompanyMember\Domain\CompanyMemberId;
 
 class Company
 {
@@ -19,7 +19,7 @@ class Company
     private ?CompanyDescription $description = null;
     private ?CompanyTelephone $telephone = null;
     private ?CompanyWebSite $webSite = null;
-    /** @var User[] $members */
+    /** @var CompanyMember[] $members */
     private $members = [];
 
     public function __construct( 
@@ -137,7 +137,7 @@ class Company
         return $this->webSite ?? CompanyWebSite::fromNull();
     }
     
-    /** @return User[] */
+    /** @return CompanyMember[] */
     public function members()
     {
         return $this->members;
@@ -198,12 +198,12 @@ class Company
         $this->webSite = $webSite;
     }
 
-    public function addMember(User $member): void
+    public function addMember(CompanyMember $member): void
     {
         $this->members[] = $member;
     }
 
-    public function findMemberById(UserId $id): ?User
+    public function findMemberById(CompanyMemberId $id): ?CompanyMember
     {
         foreach ($this->members() as $member) {
             if ($member->id()->equals($id)) {
@@ -214,7 +214,7 @@ class Company
         return null;
     }
 
-    public function removeMemberById(UserId $id): bool
+    public function removeMemberById(CompanyMemberId $id): bool
     {
         foreach ($this->members() as $index => $member) {
             if ($member->id()->equals($id)) {

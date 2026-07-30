@@ -2,6 +2,10 @@
 
 namespace App\Account\User\Domain;
 
+use App\Account\Company\Domain\Company;
+use App\Account\CompanyMember\Domain\CompanyMember;
+use App\Account\CompanyMember\Domain\CompanyMemberId;
+
 class User
 {
     private UserId $id;
@@ -17,6 +21,8 @@ class User
     private UserType $type;
     private ?UserMobile $mobile = null;
     private ?UserProfileImage $profileImage = null;
+    /** @var CompanyMember[] $companies */
+    private $companies = [];
 
     public function __construct(
         UserId $id,
@@ -140,6 +146,12 @@ class User
     {
         return $this->type;
     }
+    
+    /** @return CompanyMember[] */
+    public function companies()
+    {
+        return $this->companies;
+    }
 
     public function  changeEmail(UserEmail $email): void
     {
@@ -199,5 +211,45 @@ class User
     public function  changeType(UserType $type): void
     {
         $this->type = $type;
+    }
+    
+    public function addCompany(CompanyMember $company): void
+    {
+        $this->companies[] = $company;
+    }
+
+    public function findCompanyById(CompanyMemberId $id): ?CompanyMember
+    {
+        foreach ($this->companies() as $company) {
+            if ($company->id()->equals($id)) {
+                return $company;
+            }
+        }
+
+        return null;
+    }
+
+    public function removeCompanyById(CompanyMemberId $id): bool
+    {
+        foreach ($this->companies() as $index => $company) {
+            if ($company->id()->equals($id)) {
+                unset($this->company[$index]);
+                
+                return true;
+            }
+        }
+
+        return false;
+    }
+    
+    public function currentCompany(): ?Company
+    {
+        foreach ($this->companies() as $company) {
+            if ($company->current()->isEnable()) {
+                return $company->company();
+            }
+        }
+
+        return null;
     }
 }

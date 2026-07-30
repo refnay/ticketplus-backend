@@ -15,6 +15,10 @@ use App\Account\Company\Domain\CompanyName;
 use App\Account\Company\Domain\CompanyStatus;
 use App\Account\Company\Domain\CompanyTelephone;
 use App\Account\Company\Domain\CompanyWebSite;
+use App\Account\CompanyMember\Domain\CompanyMember;
+use App\Account\CompanyMember\Domain\CompanyMemberCurrent;
+use App\Account\CompanyMember\Domain\CompanyMemberId;
+use App\Account\CompanyMember\Domain\CompanyMemberRole;
 use App\Account\User\Domain\User;
 use App\Account\User\Domain\UserBirthDate;
 use App\Account\User\Domain\UserCity;
@@ -30,6 +34,7 @@ use App\Account\User\Domain\UserProfileImage;
 use App\Account\User\Domain\UserStatus;
 use App\Account\User\Domain\UserType;
 use App\Shared\Infrastructure\Persistence\Entity\Company as CompanyEntity;
+use App\Shared\Infrastructure\Persistence\Entity\CompanyMember as CompanyMemberEntity;
 
 class CompanyMapper
 {
@@ -54,8 +59,16 @@ class CompanyMapper
         $entity->setDocumentNumber($company->document()->number());
         $entity->setLocation($company->location()->value());
 
-        foreach ($company->members() as $user) {
-            $entity->addMember($this->fetcher->user($user->id()));
+        foreach ($company->members() as $member) {
+            $memberEntity = new CompanyMemberEntity();
+
+            $memberEntity->setId($member->id()->toUuid());
+            $memberEntity->setRole($member->role()->value());
+            $memberEntity->setCurrent($member->current()->value());
+            $memberEntity->setCompany($entity);
+            $memberEntity->setMember($this->fetcher->user($member->user()->id()));
+
+            $entity->addMember($memberEntity);
         }
 
         return $entity;
@@ -78,8 +91,9 @@ class CompanyMapper
             CompanyWebSite::fromString($entity->getWebSite()),
         );
 
-        foreach ($entity->getMembers() as $userEntity) {
-            $member = new User(
+        foreach ($entity->getMembers() as $memberEntity) {
+            $userEntity = $memberEntity->getMember();
+            $user = new User(
                 UserId::fromString($userEntity->getId()),
                 UserEmail::fromString($userEntity->getEmail()),
                 UserPassword::fromString($userEntity->getPassword()),
@@ -93,6 +107,14 @@ class CompanyMapper
                 UserProfileImage::fromString($userEntity->getProfileImage()),
                 UserStatus::fromInt($userEntity->getStatus()),
                 UserType::fromInt($userEntity->getType()),
+            );
+
+            $member = new CompanyMember(
+                CompanyMemberId::fromString($memberEntity->getId()),
+                CompanyMemberRole::fromInt($memberEntity->getRole()),
+                CompanyMemberCurrent::fromBool($memberEntity->isCurrent()),
+                $user,
+                $company,
             );
 
             $company->addMember($member);

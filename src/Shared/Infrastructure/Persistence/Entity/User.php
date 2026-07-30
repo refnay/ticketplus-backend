@@ -75,10 +75,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?\DateTimeImmutable $updatedAt = null;
 
-    
-    #[ORM\Column(length: 36, nullable: true)]
-    private ?string $currentCompany = null;
-
     /**
      * @var Collection<int, CompanyMember>
      */
@@ -266,18 +262,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setProfileImage(?string $profileImage): static
     {
         $this->profileImage = $profileImage;
-
-        return $this;
-    }
-
-    public function getCurrentCompany(): ?string
-    {
-        return $this->currentCompany;
-    }
-
-    public function setCurrentCompany(?string $currentCompany): static
-    {
-        $this->currentCompany = $currentCompany;
 
         return $this;
     }
