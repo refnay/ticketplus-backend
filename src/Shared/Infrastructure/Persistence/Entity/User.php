@@ -442,4 +442,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $this->updatedAt = new \DateTimeImmutable();
     }
+
+    public function currentCompany(): ?Company
+    {
+        foreach ($this->getCompanies() as $company) {
+            if ($company->isCurrent()) {
+                return $company->getCompany();
+            }
+        }
+
+        return null;
+    }
 }
