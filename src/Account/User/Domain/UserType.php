@@ -16,4 +16,9 @@ class UserType extends IntValueObject
     {
         return new self(UserTypesList::SIMPLE->value);
     }
+
+    public static function worker(): self
+    {
+        return new self(UserTypesList::WORKER->value);
+    }
 }

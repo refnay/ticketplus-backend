@@ -57,6 +57,7 @@ class UserMapper
         $entity->setDocumentNumber($user->document()->number());
         $entity->setType($user->type()->value());
         $entity->setStatus($user->status()->value());
+        $entity->setCurrentCompany($user->currentCompany()->value());
         $entity->setRoles(['ROLE_USER']);
 
         return $entity;
@@ -96,6 +97,7 @@ class UserMapper
         $entity->setDocumentType($user->document()->type());
         $entity->setDocumentNumber($user->document()->number());
         $entity->setProfileImage($user->profileImage()->value());
+        $entity->setCurrentCompany($user->currentCompany()->value());
     }
 
     public function updatePassword(UserEntity $entity, UserPassword $newPassword): void

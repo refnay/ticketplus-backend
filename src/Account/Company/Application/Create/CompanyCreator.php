@@ -15,14 +15,19 @@ use App\Account\Company\Domain\CompanyName;
 use App\Account\Company\Domain\CompanyRepository;
 use App\Account\Company\Domain\CompanyTelephone;
 use App\Account\Company\Domain\CompanyWebSite;
+use App\Account\Company\Domain\Events\CompanyCreatedEvent;
 use App\Account\User\Domain\Exceptions\UserNotOwner;
 use App\Account\User\Domain\Services\UserFinder;
 use App\Account\User\Domain\UserId;
+use App\Shared\Application\MessageBus;
 
 class CompanyCreator
 {
-    public function __construct(private CompanyRepository $repository, private UserFinder $userFinder)
-    {
+    public function __construct(
+        private CompanyRepository $repository,
+        private UserFinder $userFinder,
+        private MessageBus $messageBus,
+    ) {
     }
 
     public function __invoke(
@@ -63,6 +68,10 @@ class CompanyCreator
         $company->addMember($member);
 
         $this->repository->save($company);
+
+        $this->messageBus->dispatch(
+            new CompanyCreatedEvent($user->id()->value(), $company->id()->value())
+        );
 
         return $company->id()->value();
     }
