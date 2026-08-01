@@ -70,7 +70,7 @@ class CompanyCreator
             $company->id()
         );
         $company->addMember($member);
-        
+
         $this->repository->save($company);
 
         $this->events->add(new CompanyCreatedEvent($user->id()->value(), $company->id()->value()));
