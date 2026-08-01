@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Account\CompanyMember\Domain;
+namespace App\Account\Company\Domain;
 
 enum CompanyMemberRoleList: int
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Account\CompanyMember\Domain;
+namespace App\Account\Company\Domain;
 
 use App\Shared\Domain\ValueObjects\IntValueObject;
 use Override;

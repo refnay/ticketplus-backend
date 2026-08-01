@@ -118,7 +118,8 @@ class CompanyMapper
                 $user,
                 $company,
             );
-
+            
+            $user->addCompany($member);
             $company->addMember($member);
         }
 

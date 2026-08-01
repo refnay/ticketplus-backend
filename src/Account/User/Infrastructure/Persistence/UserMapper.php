@@ -2,6 +2,23 @@
 
 namespace App\Account\User\Infrastructure\Persistence;
 
+use App\Account\Company\Domain\Company;
+use App\Account\Company\Domain\CompanyCity;
+use App\Account\Company\Domain\CompanyCountry;
+use App\Account\Company\Domain\CompanyDescription;
+use App\Account\Company\Domain\CompanyDocument;
+use App\Account\Company\Domain\CompanyEmail;
+use App\Account\Company\Domain\CompanyId;
+use App\Account\Company\Domain\CompanyLocation;
+use App\Account\Company\Domain\CompanyLogo;
+use App\Account\Company\Domain\CompanyName;
+use App\Account\Company\Domain\CompanyStatus;
+use App\Account\Company\Domain\CompanyTelephone;
+use App\Account\Company\Domain\CompanyWebSite;
+use App\Account\CompanyMember\Domain\CompanyMember;
+use App\Account\CompanyMember\Domain\CompanyMemberCurrent;
+use App\Account\CompanyMember\Domain\CompanyMemberId;
+use App\Account\CompanyMember\Domain\CompanyMemberRole;
 use App\Account\User\Domain\User;
 use App\Account\User\Domain\UserBirthDate;
 use App\Account\User\Domain\UserCity;
@@ -24,7 +41,7 @@ class UserMapper
     public function newEntity(User $user): UserEntity
     {
         $entity = new UserEntity();
-        
+
         $entity->setId($user->id()->toUuid());
         $entity->setEmail($user->email()->value());
         $entity->setPassword($user->password()->value());
@@ -62,6 +79,33 @@ class UserMapper
             UserType::fromInt($entity->getType()),
             UserOwner::fromBool($entity->isOwner()),
         );
+
+        foreach ($entity->getCompanies() as $companyMemberEntity) {
+            $companyEntity = $companyMemberEntity->getCompany();
+
+            $companyMember = new CompanyMember(
+                CompanyMemberId::fromString($companyMemberEntity->getId()),
+                CompanyMemberRole::fromInt($companyMemberEntity->getRole()),
+                CompanyMemberCurrent::fromBool($companyMemberEntity->isCurrent()),
+                $user,
+                new Company(
+                    CompanyId::fromString($companyEntity->getId()),
+                    CompanyCity::fromString($companyEntity->getCity()),
+                    CompanyCountry::fromString($companyEntity->getCountry()),
+                    CompanyDocument::create($companyEntity->getDocumentType(), $companyEntity->getDocumentNumber()),
+                    CompanyEmail::fromString($companyEntity->getEmail()),
+                    CompanyName::fromString($companyEntity->getName()),
+                    CompanyStatus::fromInt($companyEntity->getStatus()),
+                    CompanyLocation::fromString($companyEntity->getLocation()),
+                    CompanyLogo::fromString($companyEntity->getLogo()),
+                    CompanyDescription::fromString($companyEntity->getDescription()),
+                    CompanyTelephone::fromString($companyEntity->getTelephone()),
+                    CompanyWebSite::fromString($companyEntity->getWebSite()),
+                ),
+            );
+
+            $user->addCompany($companyMember);
+        }
 
         return $user;
     }

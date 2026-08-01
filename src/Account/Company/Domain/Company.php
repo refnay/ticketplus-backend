@@ -2,9 +2,6 @@
 
 namespace App\Account\Company\Domain;
 
-use App\Account\CompanyMember\Domain\CompanyMember;
-use App\Account\CompanyMember\Domain\CompanyMemberId;
-
 class Company
 {
     private CompanyId $id;

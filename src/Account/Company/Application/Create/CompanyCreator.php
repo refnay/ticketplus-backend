@@ -9,13 +9,12 @@ use App\Account\Company\Domain\CompanyDescription;
 use App\Account\Company\Domain\CompanyDocument;
 use App\Account\Company\Domain\CompanyEmail;
 use App\Account\Company\Domain\CompanyLocation;
+use App\Account\Company\Domain\CompanyMember;
+use App\Account\Company\Domain\CompanyMemberRole;
 use App\Account\Company\Domain\CompanyName;
 use App\Account\Company\Domain\CompanyRepository;
 use App\Account\Company\Domain\CompanyTelephone;
 use App\Account\Company\Domain\CompanyWebSite;
-use App\Account\CompanyMember\Domain\CompanyMember;
-use App\Account\CompanyMember\Domain\CompanyMemberCurrent;
-use App\Account\CompanyMember\Domain\CompanyMemberRole;
 use App\Account\User\Domain\Exceptions\UserNotOwner;
 use App\Account\User\Domain\Services\UserFinder;
 use App\Account\User\Domain\UserId;
@@ -58,9 +57,8 @@ class CompanyCreator
 
         $member = CompanyMember::create(
             CompanyMemberRole::owner(),
-            CompanyMemberCurrent::enable(),
-            $user,
-            $company
+            $user->id(),
+            $company->id()
         );
         $company->addMember($member);
 
