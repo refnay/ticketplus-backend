@@ -62,7 +62,7 @@ class Company
     /**
      * @var Collection<int, CompanyMember>
      */
-    #[ORM\OneToMany(targetEntity: CompanyMember::class, mappedBy: 'company', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: CompanyMember::class, mappedBy: 'company', cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $members;
     
     /**

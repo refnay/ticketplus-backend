@@ -84,7 +84,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var Collection<int, CompanyMember>
      */
-    #[ORM\OneToMany(targetEntity: CompanyMember::class, mappedBy: 'user', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: CompanyMember::class, mappedBy: 'member', orphanRemoval: true)]
     private Collection $companies;
 
     /**
