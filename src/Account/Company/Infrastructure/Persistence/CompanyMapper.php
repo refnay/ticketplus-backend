@@ -58,6 +58,7 @@ class CompanyMapper
         $entity->setDocumentType($company->document()->type());
         $entity->setDocumentNumber($company->document()->number());
         $entity->setLocation($company->location()->value());
+        $entity->setStatus($company->status()->value());
 
         foreach ($company->members() as $member) {
             $memberEntity = new CompanyMemberEntity();
