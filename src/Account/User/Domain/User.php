@@ -18,6 +18,7 @@ class User
     private UserOwner $owner;
     private ?UserMobile $mobile = null;
     private ?UserProfileImage $profileImage = null;
+    private ?UserCurrentCompany $currentCompany = null;
 
     public function __construct(
         UserId $id,
@@ -33,7 +34,8 @@ class User
         UserProfileImage $profileImage,
         UserStatus $status,
         UserType $type,
-        UserOwner $owner
+        UserOwner $owner,
+        UserCurrentCompany $currentCompany,
     ) {
         $this->id = $id;
         $this->email = $email;
@@ -49,6 +51,7 @@ class User
         $this->status = $status;
         $this->type = $type;
         $this->owner = $owner;
+        $this->currentCompany = $currentCompany;
     }
 
     public static function create(
@@ -77,6 +80,7 @@ class User
             UserStatus::pending(),
             UserType::simple(),
             UserOwner::disable(),
+            UserCurrentCompany::fromNull(),
         );
     }
 
@@ -150,6 +154,11 @@ class User
         return $this->type;
     }
 
+    public function currentCompany(): UserCurrentCompany
+    {
+        return $this->currentCompany ?? UserCurrentCompany::fromNull();
+    }
+
     public function  changeEmail(UserEmail $email): void
     {
         $this->email = $email;
@@ -213,5 +222,10 @@ class User
     public function changeOwner(UserOwner $owner): void
     {
         $this->owner = $owner;
+    }
+
+    public function changeCurrentCompany(UserCurrentCompany $currentCompany): void
+    {
+        $this->currentCompany = $currentCompany;
     }
 }

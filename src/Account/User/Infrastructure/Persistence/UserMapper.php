@@ -23,6 +23,7 @@ use App\Account\User\Domain\User;
 use App\Account\User\Domain\UserBirthDate;
 use App\Account\User\Domain\UserCity;
 use App\Account\User\Domain\UserCountry;
+use App\Account\User\Domain\UserCurrentCompany;
 use App\Account\User\Domain\UserDocument;
 use App\Account\User\Domain\UserEmail;
 use App\Account\User\Domain\UserId;
@@ -78,6 +79,7 @@ class UserMapper
             UserStatus::fromInt($entity->getStatus()),
             UserType::fromInt($entity->getType()),
             UserOwner::fromBool($entity->isOwner()),
+            UserCurrentCompany::fromString($entity->getCurrentCompany())
         );
 
         return $user;
