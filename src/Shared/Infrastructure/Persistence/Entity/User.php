@@ -78,6 +78,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?bool $owner = null;
 
+    #[ORM\Column(length: 36, nullable: true)]
+    private ?string $currentCompany = null;
+
     /**
      * @var Collection<int, CompanyMember>
      */
@@ -269,6 +272,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function getCurrentCompany(): ?string
+    {
+        return $this->currentCompany;
+    }
+
+    public function setCurrentCompany(?string $currentCompany): static
+    {
+        $this->currentCompany = $currentCompany;
+
+        return $this;
+    }
+
     public function getDocumentType(): ?int
     {
         return $this->documentType;
@@ -444,17 +459,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function updateTimestamp(): void
     {
         $this->updatedAt = new \DateTimeImmutable();
-    }
-
-    public function currentCompany(): ?Company
-    {
-        foreach ($this->getCompanies() as $company) {
-            if ($company->isCurrent()) {
-                return $company->getCompany();
-            }
-        }
-
-        return null;
     }
 
     public function isOwner(): ?bool

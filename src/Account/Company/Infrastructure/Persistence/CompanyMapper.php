@@ -11,14 +11,13 @@ use App\Account\Company\Domain\CompanyEmail;
 use App\Account\Company\Domain\CompanyId;
 use App\Account\Company\Domain\CompanyLocation;
 use App\Account\Company\Domain\CompanyLogo;
+use App\Account\Company\Domain\CompanyMember;
+use App\Account\Company\Domain\CompanyMemberId;
+use App\Account\Company\Domain\CompanyMemberRole;
 use App\Account\Company\Domain\CompanyName;
 use App\Account\Company\Domain\CompanyStatus;
 use App\Account\Company\Domain\CompanyTelephone;
 use App\Account\Company\Domain\CompanyWebSite;
-use App\Account\CompanyMember\Domain\CompanyMember;
-use App\Account\CompanyMember\Domain\CompanyMemberCurrent;
-use App\Account\CompanyMember\Domain\CompanyMemberId;
-use App\Account\CompanyMember\Domain\CompanyMemberRole;
 use App\Account\User\Domain\User;
 use App\Account\User\Domain\UserBirthDate;
 use App\Account\User\Domain\UserCity;
@@ -65,9 +64,8 @@ class CompanyMapper
 
             $memberEntity->setId($member->id()->toUuid());
             $memberEntity->setRole($member->role()->value());
-            $memberEntity->setCurrent($member->current()->value());
             $memberEntity->setCompany($entity);
-            $memberEntity->setMember($this->fetcher->user($member->user()->id()));
+            $memberEntity->setMember($this->fetcher->user($member->userId()));
 
             $entity->addMember($memberEntity);
         }
@@ -93,33 +91,13 @@ class CompanyMapper
         );
 
         foreach ($entity->getMembers() as $memberEntity) {
-            $userEntity = $memberEntity->getMember();
-            $user = new User(
-                UserId::fromString($userEntity->getId()),
-                UserEmail::fromString($userEntity->getEmail()),
-                UserPassword::fromString($userEntity->getPassword()),
-                UserBirthDate::fromDate($userEntity->getBirthDate()),
-                UserCity::fromString($userEntity->getCity()),
-                UserCountry::fromString($userEntity->getCountry()),
-                UserDocument::create($userEntity->getDocumentType(), $userEntity->getDocumentNumber()),
-                UserLastName::fromString($userEntity->getLastName()),
-                UserMobile::fromString($userEntity->getMobile()),
-                UserName::fromString($userEntity->getName()),
-                UserProfileImage::fromString($userEntity->getProfileImage()),
-                UserStatus::fromInt($userEntity->getStatus()),
-                UserType::fromInt($userEntity->getType()),
-                UserOwner::fromBool($userEntity->isOwner()),
-            );
-
             $member = new CompanyMember(
                 CompanyMemberId::fromString($memberEntity->getId()),
                 CompanyMemberRole::fromInt($memberEntity->getRole()),
-                CompanyMemberCurrent::fromBool($memberEntity->isCurrent()),
-                $user,
-                $company,
+                UserId::fromString($memberEntity->getMember()->getId()),
+                $company->id(),
             );
             
-            $user->addCompany($member);
             $company->addMember($member);
         }
 

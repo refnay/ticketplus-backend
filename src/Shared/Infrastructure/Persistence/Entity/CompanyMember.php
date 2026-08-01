@@ -24,9 +24,6 @@ class CompanyMember
 
     #[ORM\Column]
     private ?int $role = null;
-    
-    #[ORM\Column]
-    private ?bool $current = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
@@ -90,18 +87,6 @@ class CompanyMember
     public function setCreatedAt(\DateTimeImmutable $createdAt): static
     {
         $this->createdAt = $createdAt;
-
-        return $this;
-    }
-    
-    public function isCurrent(): ?bool
-    {
-        return $this->current;
-    }
-
-    public function setCurrent(bool $current): static
-    {
-        $this->current = $current;
 
         return $this;
     }

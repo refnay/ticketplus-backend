@@ -80,33 +80,6 @@ class UserMapper
             UserOwner::fromBool($entity->isOwner()),
         );
 
-        foreach ($entity->getCompanies() as $companyMemberEntity) {
-            $companyEntity = $companyMemberEntity->getCompany();
-
-            $companyMember = new CompanyMember(
-                CompanyMemberId::fromString($companyMemberEntity->getId()),
-                CompanyMemberRole::fromInt($companyMemberEntity->getRole()),
-                CompanyMemberCurrent::fromBool($companyMemberEntity->isCurrent()),
-                $user,
-                new Company(
-                    CompanyId::fromString($companyEntity->getId()),
-                    CompanyCity::fromString($companyEntity->getCity()),
-                    CompanyCountry::fromString($companyEntity->getCountry()),
-                    CompanyDocument::create($companyEntity->getDocumentType(), $companyEntity->getDocumentNumber()),
-                    CompanyEmail::fromString($companyEntity->getEmail()),
-                    CompanyName::fromString($companyEntity->getName()),
-                    CompanyStatus::fromInt($companyEntity->getStatus()),
-                    CompanyLocation::fromString($companyEntity->getLocation()),
-                    CompanyLogo::fromString($companyEntity->getLogo()),
-                    CompanyDescription::fromString($companyEntity->getDescription()),
-                    CompanyTelephone::fromString($companyEntity->getTelephone()),
-                    CompanyWebSite::fromString($companyEntity->getWebSite()),
-                ),
-            );
-
-            $user->addCompany($companyMember);
-        }
-
         return $user;
     }
 
