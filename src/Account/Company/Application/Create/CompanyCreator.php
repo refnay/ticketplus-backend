@@ -16,6 +16,9 @@ use App\Account\Company\Domain\CompanyRepository;
 use App\Account\Company\Domain\CompanyTelephone;
 use App\Account\Company\Domain\CompanyWebSite;
 use App\Account\Company\Domain\Events\CompanyCreatedEvent;
+use App\Account\Company\Domain\Exceptions\CompanyDocumentAlreadyExists;
+use App\Account\Company\Domain\Exceptions\CompanyNotFound;
+use App\Account\Company\Domain\Services\CompanyByDocumentFinder;
 use App\Account\User\Domain\Exceptions\UserNotOwner;
 use App\Account\User\Domain\Services\UserFinder;
 use App\Account\User\Domain\UserId;
@@ -30,6 +33,7 @@ class CompanyCreator
         private CompanyRepository $repository,
         private UserFinder $userFinder, 
         private EventBus $eventBus,
+        private CompanyByDocumentFinder $companyFinder,
     ) {
         $this->events = ArrayBuilder::generate();
     }
@@ -51,7 +55,13 @@ class CompanyCreator
         if ($user->owner()->isDisable()) {
             throw new UserNotOwner();
         }
-
+        
+        try {
+            $this->companyFinder->__invoke($document);
+            throw new CompanyDocumentAlreadyExists();
+        } catch (CompanyNotFound) {
+        }
+        
         $company = Company::create(
             $city,
             $country,
