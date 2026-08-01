@@ -1,0 +1,25 @@
+framework:
+    messenger:
+        default_bus: command_bus
+        buses:
+            command_bus:
+                middleware:
+                    - doctrine_transaction
+            event_bus:
+                middleware:
+                    - doctrine_transaction
+
+        transports:
+            async: '%env(MESSENGER_TRANSPORT_DSN)%'
+            sync: 'sync://'
+
+        routing:
+            App\Account\Company\Domain\Events\CompanyCreatedEvent: async
+
+# when@test:
+#    framework:
+#        messenger:
+#            transports:
+#                # replace with your transport name here (e.g., my_transport: 'in-memory://')
+#                # For more Messenger testing tools, see https://github.com/zenstruck/messenger-test
+#                async: 'in-memory://'

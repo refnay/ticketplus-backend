@@ -19,14 +19,14 @@ use App\Account\Company\Domain\Events\CompanyCreatedEvent;
 use App\Account\User\Domain\Exceptions\UserNotOwner;
 use App\Account\User\Domain\Services\UserFinder;
 use App\Account\User\Domain\UserId;
-use App\Shared\Application\MessageBus;
+use App\Shared\Application\Messenger\EventBus;
 
 class CompanyCreator
 {
     public function __construct(
         private CompanyRepository $repository,
-        private UserFinder $userFinder,
-        private MessageBus $messageBus,
+        private UserFinder $userFinder, 
+        private EventBus $eventBus,
     ) {
     }
 
@@ -69,7 +69,7 @@ class CompanyCreator
 
         $this->repository->save($company);
 
-        $this->messageBus->dispatch(
+        $this->eventBus->dispatch(
             new CompanyCreatedEvent($user->id()->value(), $company->id()->value())
         );
 
