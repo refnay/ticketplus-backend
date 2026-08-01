@@ -74,7 +74,6 @@ class CompanyCreator
         $this->repository->save($company);
 
         $this->events->add(new CompanyCreatedEvent($user->id()->value(), $company->id()->value()));
-
         $this->eventBus->dispatch(...$this->events->items());
 
         return $company->id()->value();
