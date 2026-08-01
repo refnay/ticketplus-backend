@@ -12,6 +12,7 @@ use App\Account\User\Domain\UserId;
 use App\Account\User\Domain\UserLastName;
 use App\Account\User\Domain\UserMobile;
 use App\Account\User\Domain\UserName;
+use App\Account\User\Domain\UserOwner;
 use App\Account\User\Domain\UserPassword;
 use App\Account\User\Domain\UserProfileImage;
 use App\Account\User\Domain\UserStatus;
@@ -59,6 +60,7 @@ class UserMapper
             UserProfileImage::fromString($entity->getProfileImage()),
             UserStatus::fromInt($entity->getStatus()),
             UserType::fromInt($entity->getType()),
+            UserOwner::fromBool($entity->isOwner()),
         );
 
         return $user;

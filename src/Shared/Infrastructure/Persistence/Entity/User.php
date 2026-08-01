@@ -75,6 +75,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?\DateTimeImmutable $updatedAt = null;
 
+    #[ORM\Column]
+    private ?bool $owner = null;
+
     /**
      * @var Collection<int, CompanyMember>
      */
@@ -452,5 +455,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
 
         return null;
+    }
+
+    public function isOwner(): ?bool
+    {
+        return $this->owner;
+    }
+
+    public function setOwner(bool $owner): static
+    {
+        $this->owner = $owner;
+
+        return $this;
     }
 }

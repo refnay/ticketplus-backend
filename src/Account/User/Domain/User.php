@@ -19,6 +19,7 @@ class User
     private UserName $name;
     private UserStatus $status;
     private UserType $type;
+    private UserOwner $owner;
     private ?UserMobile $mobile = null;
     private ?UserProfileImage $profileImage = null;
     /** @var CompanyMember[] $companies */
@@ -38,6 +39,7 @@ class User
         UserProfileImage $profileImage,
         UserStatus $status,
         UserType $type,
+        UserOwner $owner
     ) {
         $this->id = $id;
         $this->email = $email;
@@ -52,6 +54,7 @@ class User
         $this->profileImage = $profileImage;
         $this->status = $status;
         $this->type = $type;
+        $this->owner = $owner;
     }
 
     public static function create(
@@ -79,6 +82,7 @@ class User
             UserProfileImage::fromNull(),
             UserStatus::pending(),
             UserType::simple(),
+            UserOwner::disable(),
         );
     }
 
@@ -130,6 +134,11 @@ class User
     public function name(): UserName
     {
         return $this->name;
+    }
+
+    public function owner(): UserOwner
+    {
+        return $this->owner;
     }
 
     public function profileImage(): UserProfileImage
@@ -211,6 +220,11 @@ class User
     public function  changeType(UserType $type): void
     {
         $this->type = $type;
+    }
+
+    public function changeOwner(UserOwner $owner): void
+    {
+        $this->owner = $owner;
     }
     
     public function addCompany(CompanyMember $company): void

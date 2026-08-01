@@ -29,6 +29,7 @@ use App\Account\User\Domain\UserId;
 use App\Account\User\Domain\UserLastName;
 use App\Account\User\Domain\UserMobile;
 use App\Account\User\Domain\UserName;
+use App\Account\User\Domain\UserOwner;
 use App\Account\User\Domain\UserPassword;
 use App\Account\User\Domain\UserProfileImage;
 use App\Account\User\Domain\UserStatus;
@@ -107,6 +108,7 @@ class CompanyMapper
                 UserProfileImage::fromString($userEntity->getProfileImage()),
                 UserStatus::fromInt($userEntity->getStatus()),
                 UserType::fromInt($userEntity->getType()),
+                UserOwner::fromBool($userEntity->isOwner()),
             );
 
             $member = new CompanyMember(
