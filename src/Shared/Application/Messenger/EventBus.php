@@ -10,8 +10,10 @@ class EventBus
     {
     }
 
-    public function dispatch(object $message): mixed
+    public function dispatch(object ...$messages): void
     {
-        return $this->messageBus->dispatch($message);
+        foreach ($messages as $message) {
+            $this->messageBus->dispatch($message);
+        }
     }
 }

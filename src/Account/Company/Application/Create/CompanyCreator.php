@@ -20,14 +20,18 @@ use App\Account\User\Domain\Exceptions\UserNotOwner;
 use App\Account\User\Domain\Services\UserFinder;
 use App\Account\User\Domain\UserId;
 use App\Shared\Application\Messenger\EventBus;
+use App\Shared\Domain\Utils\Primitive\ArrayBuilder;
 
 class CompanyCreator
 {
+    private ArrayBuilder $events;
+
     public function __construct(
         private CompanyRepository $repository,
         private UserFinder $userFinder, 
         private EventBus $eventBus,
     ) {
+        $this->events = ArrayBuilder::generate();
     }
 
     public function __invoke(
@@ -69,9 +73,9 @@ class CompanyCreator
 
         $this->repository->save($company);
 
-        $this->eventBus->dispatch(
-            new CompanyCreatedEvent($user->id()->value(), $company->id()->value())
-        );
+        $this->events->add(new CompanyCreatedEvent($user->id()->value(), $company->id()->value()));
+
+        $this->eventBus->dispatch(...$this->events->items());
 
         return $company->id()->value();
     }
