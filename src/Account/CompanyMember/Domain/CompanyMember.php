@@ -27,9 +27,9 @@ class CompanyMember
         $this->company = $company;
     }
 
-    public static function create(CompanyMemberCurrent $current, User $user, Company $company): self
+    public static function create(CompanyMemberRole $role, CompanyMemberCurrent $current, User $user, Company $company): self
     {
-        return new self(CompanyMemberId::generate(), CompanyMemberRole::owner(), $current, $user, $company);
+        return new self(CompanyMemberId::generate(), $role, $current, $user, $company);
     }
 
     public function id(): CompanyMemberId
