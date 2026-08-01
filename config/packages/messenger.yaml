@@ -8,11 +8,9 @@ framework:
             event_bus:
                 middleware:
                     - doctrine_transaction
-
         transports:
             async: '%env(MESSENGER_TRANSPORT_DSN)%'
             sync: 'sync://'
-
         routing:
             App\Account\Company\Domain\Events\CompanyCreatedEvent: async
 
