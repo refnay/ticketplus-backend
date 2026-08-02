@@ -2,19 +2,19 @@
 
 namespace App\Shared\Domain;
 
-use App\Shared\Domain\ValueObjects\DateValueObject;
+use App\Shared\Domain\ValueObjects\DateTimeValueObject;
 
 trait Audit
 {
-    private DateValueObject $createdAt;
-    private DateValueObject $updatedAt;
+    private DateTimeValueObject $createdAt;
+    private DateTimeValueObject $updatedAt;
 
-    public function createdAt(): DateValueObject
+    public function createdAt(): DateTimeValueObject
     {
         return $this->createdAt;
     }
 
-    public function updatedAt(): DateValueObject
+    public function updatedAt(): DateTimeValueObject
     {
         return $this->updatedAt;
     }
@@ -22,11 +22,11 @@ trait Audit
     public function initialize(object $original): void
     {
         if (method_exists($original, 'getCreatedAt')) {
-            $this->createdAt = DateValueObject::fromDate($original->getCreatedAt());
+            $this->createdAt = DateTimeValueObject::fromDateTime($original->getCreatedAt());
         }
 
         if (method_exists($original, 'getUpdatedAt')) {
-            $this->updatedAt = DateValueObject::fromDate($original->getUpdatedAt());
+            $this->updatedAt = DateTimeValueObject::fromDateTime($original->getUpdatedAt());
         }
     }
 } 

@@ -30,7 +30,7 @@ class EventResponse implements JsonSerializable
             $event->city()->value(),
             $event->status()->value(),
             $event->category()->name(),
-            $event->firstDay()?->date()->asDMY(),
+            $event->createdAt()->__toString(),
         );
     }
 
