@@ -212,6 +212,19 @@ class Event
         $this->days[] = $day;
     }
 
+    public function firstDay(): ?EventDay
+    {
+        $firstDay = null;
+
+        foreach ($this->days() as $day) {
+            if (is_null($firstDay) || $day->date()->before($firstDay->date())) {
+                $firstDay = $day;
+            }
+        }
+
+        return $firstDay;
+    }
+
     public function findDayById(EventDayId $id): ?EventDay
     {
         foreach ($this->days() as $day) {

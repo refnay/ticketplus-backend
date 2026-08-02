@@ -2,3 +2,8 @@ event-create:
     path: /api/event
     controller: App\Catalog\Event\Infrastructure\Controller\EventCreateController::create
     methods: POST
+
+event-search:
+    path: /api/event
+    controller: App\Catalog\Event\Infrastructure\Controller\EventSearchController::search
+    methods: GET

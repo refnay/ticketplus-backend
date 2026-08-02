@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Catalog\Event\Application\List;
+namespace App\Catalog\Event\Application\Search;
 
 use App\Catalog\Event\Domain\Event;
 use App\Catalog\Event\Domain\EventRepository;
 
-class EventLister
+class EventSearcher
 {
     public function __construct(private EventRepository $repository)
     {
