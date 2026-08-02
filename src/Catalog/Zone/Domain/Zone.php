@@ -157,6 +157,6 @@ class Zone
 
     public function total(): float
     {
-        return $this->price()->value() + $this->price()->value() * $this->taxRate()->decimal();
+        return $this->price()->value() + ($this->price()->value() * $this->taxRate()->decimal());
     }
 }
