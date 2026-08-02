@@ -2,19 +2,19 @@
 
 namespace App\Shared\Domain;
 
-use App\Shared\Domain\ValueObjects\DateTimeValueObject;
+use DateTimeImmutable;
 
 trait Audit
 {
-    private DateTimeValueObject $createdAt;
-    private DateTimeValueObject $updatedAt;
+    private ?DateTimeImmutable $createdAt = null;
+    private ?DateTimeImmutable $updatedAt = null;
 
-    public function createdAt(): DateTimeValueObject
+    public function createdAt(): ?DateTimeImmutable
     {
         return $this->createdAt;
     }
 
-    public function updatedAt(): DateTimeValueObject
+    public function updatedAt(): ?DateTimeImmutable
     {
         return $this->updatedAt;
     }
@@ -22,11 +22,11 @@ trait Audit
     public function initialize(object $original): void
     {
         if (method_exists($original, 'getCreatedAt')) {
-            $this->createdAt = DateTimeValueObject::fromDateTime($original->getCreatedAt());
+            $this->createdAt = $original->getCreatedAt();
         }
 
         if (method_exists($original, 'getUpdatedAt')) {
-            $this->updatedAt = DateTimeValueObject::fromDateTime($original->getUpdatedAt());
+            $this->updatedAt = $original->getUpdatedAt();
         }
     }
 } 

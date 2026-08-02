@@ -16,7 +16,7 @@ class EventResponse implements JsonSerializable
         readonly private string $city,
         readonly private int $status,
         readonly private string $category,
-        readonly private string $date,
+        readonly private ?string $date,
     ) {
     }
 
@@ -30,7 +30,7 @@ class EventResponse implements JsonSerializable
             $event->city()->value(),
             $event->status()->value(),
             $event->category()->name(),
-            $event->createdAt()->__toString(),
+            $event->firstDay()?->date()->asDMY(),
         );
     }
 
