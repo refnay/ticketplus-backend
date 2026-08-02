@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Account\User\Application\Company\List;
+namespace App\Account\User\Application\Company\Search;
 
 use App\Account\Company\Domain\CompanyMember;
 use App\Account\Company\Domain\CompanyMemberRepository;
 use App\Account\Company\Domain\Services\CompanyFinder;
 
-class UserCompaniesLister
+class UserCompanySearcher
 {
     public function __construct(private CompanyMemberRepository $repository, private CompanyFinder $companyFinder)
     {
