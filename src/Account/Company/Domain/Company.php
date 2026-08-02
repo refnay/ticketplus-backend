@@ -67,7 +67,7 @@ class Company
             $name,
             CompanyStatus::pending(),
             $location,
-            CompanyLogo::fromEmpty(),
+            CompanyLogo::fromNull(),
             $description,
             $telephone,
             $webSite,

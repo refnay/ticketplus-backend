@@ -32,7 +32,7 @@ class UserProfileImageUploader
                 throw new UserProfileImageNotUploaded();
             }
         } else {
-            $user->changeProfileImage(UserProfileImage::fromEmpty());
+            $user->changeProfileImage(UserProfileImage::fromNull());
         }   
         
         $this->repository->update($user);

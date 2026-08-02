@@ -11,8 +11,8 @@ class Event
     private EventName $name;
     private EventSlug $slug;
     private EventDescription $description;
-    private EventCoverImage $coverImage;
-    private EventBannerImage $bannerImage;
+    private ?EventCoverImage $coverImage = null;
+    private ?EventBannerImage $bannerImage = null;
     private EventLocation $location;
     private EventCountry $country;
     private EventCity $city;
@@ -66,8 +66,8 @@ class Event
             $name,
             $slug,
             $description,
-            EventCoverImage::fromEmpty(),
-            EventBannerImage::fromEmpty(),
+            EventCoverImage::fromNull(),
+            EventBannerImage::fromNull(),
             $location,
             $country,
             $city,
@@ -99,12 +99,12 @@ class Event
 
     public function coverImage(): EventCoverImage
     {
-        return $this->coverImage;
+        return $this->coverImage ?? EventCoverImage::fromNull();
     }
 
     public function bannerImage(): EventBannerImage
     {
-        return $this->bannerImage;
+        return $this->bannerImage ?? EventBannerImage::fromNull();
     }
 
     public function location(): EventLocation
