@@ -24,11 +24,17 @@ final class Session
 
     public function allowed(): void
     {
+        $this->companyRequired();
+        $this->typeAllowed();
+
+        return;
+    }
+
+    public function companyRequired(): void
+    {
         if (is_null($this->company())) {
             throw new CompanyRequired();
         }
-
-        $this->typeAllowed();
 
         return;
     }
