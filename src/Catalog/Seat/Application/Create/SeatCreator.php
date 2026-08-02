@@ -13,6 +13,7 @@ use App\Catalog\Seat\Domain\SeatCode;
 use App\Catalog\Seat\Domain\SeatRepository;
 use App\Catalog\Seat\Domain\Services\SeatByCodeFinder;
 use App\Catalog\Shared\Domain\CompanyId;
+use App\Catalog\Zone\Domain\Exceptions\ZoneNotNumberedSeating;
 use App\Catalog\Zone\Domain\Services\ZoneFinder;
 use App\Catalog\Zone\Domain\ZoneId;
 
@@ -41,6 +42,10 @@ class SeatCreator
         }
 
         $zone = $this->zoneFinder->__invoke($zoneId, $day->id());
+
+        if ($zone->numberedSeating()->isDisable()) {
+            throw new ZoneNotNumberedSeating();
+        }
 
         try {
             $this->seatFinder->__invoke($code, $zone->id());
