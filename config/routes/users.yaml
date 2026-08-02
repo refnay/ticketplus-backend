@@ -27,3 +27,8 @@ user-company-switch:
     path: /api/user/company
     controller: App\Account\User\Infrastructure\Controller\UserCompanySwitchController::switch
     methods: PUT
+
+user-company-find:
+    path: /api/user/company
+    controller: App\Account\User\Infrastructure\Controller\UserCompanyFindController::find
+    methods: GET

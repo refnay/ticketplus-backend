@@ -82,7 +82,7 @@ final class Session
 
     public function memberStatusAllowed(): void
     {
-        if (!IntegerHelper::isEqual($this->provider->userStatus(), CompanyMemberStatusList::INACTIVE->value)) {
+        if (IntegerHelper::isEqual($this->provider->userStatus(), CompanyMemberStatusList::INACTIVE->value)) {
             throw new CompanyMemberNotAllowed();
         }
 
