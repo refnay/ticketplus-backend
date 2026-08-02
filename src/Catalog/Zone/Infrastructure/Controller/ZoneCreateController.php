@@ -13,7 +13,7 @@ class ZoneCreateController extends AbstractController
 {
     public function create(string $event, string $day, Request $request, Session $session, MessageBus $messageBus): JsonResponse
     {
-        $session->allowed();
+        $session->allPermissions();
 
         $command = CreateZoneCommand::create($event, $day, $request->toArray());
         $command->setSession($session);

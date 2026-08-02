@@ -2,6 +2,7 @@
 
 namespace App\Shared\Domain;
 
+use App\Account\User\Domain\UserStatusList;
 use App\Shared\Domain\Exceptions\CompanyRequired;
 use App\Shared\Domain\Exceptions\UserNotAllowed;
 use App\Shared\Domain\Utils\IntegerHelper;
@@ -22,10 +23,12 @@ final class Session
         return $this->provider->company();
     }
 
-    public function allowed(): void
+    public function allPermissions(): void
     {
         $this->companyRequired();
+        
         $this->typeAllowed();
+        $this->statusAllowed();
 
         return;
     }
@@ -42,6 +45,15 @@ final class Session
     public function typeAllowed(): void
     {
         if (!IntegerHelper::isEqual(UserTypesList::WORKER->value, $this->provider->type())) {
+            throw new UserNotAllowed();
+        }
+
+        return;
+    }
+
+    public function statusAllowed(): void
+    {
+        if (in_array($this->provider->status(), UserStatusList::blocked(), true)) {
             throw new UserNotAllowed();
         }
 

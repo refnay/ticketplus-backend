@@ -35,4 +35,12 @@ class SymfonySessionProvider implements SessionProvider
 
         return $user->getType();
     }
+
+    public function status(): int
+    {
+        /** @var User $user */
+        $user = $this->security->getUser();
+
+        return $user->getStatus();
+    }
 }

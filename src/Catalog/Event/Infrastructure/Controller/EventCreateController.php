@@ -13,7 +13,7 @@ class EventCreateController extends AbstractController
 {
     public function create(Request $request, Session $session, MessageBus $messageBus): JsonResponse
     {
-        $session->allowed();
+        $session->allPermissions();
 
         $command = CreateEventCommand::create($request->toArray());
         $command->setSession($session);

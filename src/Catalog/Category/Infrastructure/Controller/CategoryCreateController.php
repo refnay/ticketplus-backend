@@ -13,7 +13,7 @@ class CategoryCreateController extends AbstractController
 {
     public function create(Request $request, Session $session, MessageBus $messageBus): JsonResponse
     {
-        $session->allowed();
+        $session->allPermissions();
 
         $command = CreateCategoryCommand::create($request->toArray());
         $command->setSession($session);
