@@ -4,9 +4,11 @@ namespace App\Catalog\Event\Domain;
 
 use App\Catalog\Category\Domain\Category;
 use App\Catalog\Shared\Domain\CompanyId;
+use App\Shared\Domain\Audit;
 
 class Event
 {
+    use Audit;
     private EventId $id;
     private EventName $name;
     private EventSlug $slug;

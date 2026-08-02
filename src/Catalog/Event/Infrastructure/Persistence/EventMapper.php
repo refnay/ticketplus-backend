@@ -93,6 +93,7 @@ class EventMapper
             $category,
             CompanyId::fromString($entity->getCompany()->getId()),
         );
+        $event->initialize($entity);
 
         foreach ($entity->getDays() as $dayEntity) {
             $day = new EventDay(
