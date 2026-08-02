@@ -22,3 +22,8 @@ user-companies-list:
     path: /api/user/companies
     controller: App\Account\User\Infrastructure\Controller\UserCompaniesListController::list
     methods: GET
+
+user-company-switch:
+    path: /api/user/company
+    controller: App\Account\User\Infrastructure\Controller\UserCompanySwitchController::switch
+    methods: PUT
