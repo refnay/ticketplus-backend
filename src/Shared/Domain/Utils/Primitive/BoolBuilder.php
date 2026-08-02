@@ -18,6 +18,11 @@ class BoolBuilder
         return new self(false);
     }
 
+    public function equals(self $other): bool
+    {
+        return $this->value === $other->value();
+    }
+
     public function enabled(): void
     {
         $this->value = true;
@@ -26,6 +31,11 @@ class BoolBuilder
     public function disabled(): void
     {
         $this->value = false;
+    }
+
+    public static function fromBool(bool $value): self
+    {
+        return new self($value);
     }
 
     public function value(): bool

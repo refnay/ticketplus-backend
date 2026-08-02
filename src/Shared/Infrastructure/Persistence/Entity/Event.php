@@ -73,7 +73,7 @@ class Event
     /**
      * @var Collection<int, Day>
      */
-    #[ORM\OneToMany(targetEntity: Day::class, mappedBy: 'event', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Day::class, mappedBy: 'event', cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $days;
 
     public function __construct()
