@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Account\User\Application\ListCompanies;
+namespace App\Account\User\Application\Company\List;
 
 use JsonSerializable;
 use Override;

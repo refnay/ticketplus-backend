@@ -2,8 +2,8 @@
 
 namespace App\Account\User\Infrastructure\Controller;
 
-use App\Account\User\Application\ListCompanies\ListUserCompaniesQuery;
-use App\Account\User\Application\ListCompanies\UserCompaniesResponse;
+use App\Account\User\Application\Company\List\ListUserCompaniesQuery;
+use App\Account\User\Application\Company\List\UserCompaniesResponse;
 use App\Shared\Application\MessageBus;
 use App\Shared\Domain\Session;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Account\User\Application\ListCompanies;
+namespace App\Account\User\Application\Company\List;
 
 use App\Shared\Application\Query\ListQuery;
 use App\Shared\Domain\Utils\PayloadMapper;
