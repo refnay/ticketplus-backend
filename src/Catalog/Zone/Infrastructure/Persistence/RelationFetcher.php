@@ -17,7 +17,7 @@ class RelationFetcher
     public function day(EventDayId $id): DayEntity
     {
         try {
-            return $this->entityManager->getReference(DayEntity::class, $id->value());
+            return $this->entityManager->getReference(DayEntity::class, $id->toUuid());
         } catch (Throwable) {
             throw new EventDayNotFound();
         }

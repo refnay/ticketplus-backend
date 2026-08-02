@@ -17,7 +17,7 @@ class RelationFetcher
     public function user(UserId $id): UserEntity
     {
         try {
-            return $this->entityManager->getReference(UserEntity::class, $id->value());
+            return $this->entityManager->getReference(UserEntity::class, $id->toUuid());
         } catch (Throwable) {
             throw new UserNotFound();
         }

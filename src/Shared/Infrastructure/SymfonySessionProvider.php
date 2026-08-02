@@ -25,6 +25,14 @@ class SymfonySessionProvider implements SessionProvider
         /** @var User $user */
         $user = $this->security->getUser();
 
-        return $user->currentCompany()?->getId()->toRfc4122();
+        return $user->getCurrentCompany();
+    }
+
+    public function type(): int
+    {
+        /** @var User $user */
+        $user = $this->security->getUser();
+
+        return $user->getType();
     }
 }

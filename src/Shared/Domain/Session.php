@@ -3,6 +3,8 @@
 namespace App\Shared\Domain;
 
 use App\Shared\Domain\Exceptions\CompanyRequired;
+use App\Shared\Domain\Exceptions\UserNotAllowed;
+use App\Shared\Domain\Utils\IntegerHelper;
 
 final class Session
 {
@@ -20,12 +22,16 @@ final class Session
         return $this->provider->company();
     }
 
-    public function ensureCompany(): void
+    public function allowed(): void
     {
-        if (!is_null($this->company())) {
-            return;
+        if (is_null($this->company())) {
+            throw new CompanyRequired();
         }
 
-        throw new CompanyRequired();
+        if (!IntegerHelper::isEqual(UserTypesList::WORKER->value, $this->provider->type())) {
+            throw new UserNotAllowed();
+        }
+
+        return;
     }
 } 

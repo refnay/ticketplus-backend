@@ -17,7 +17,7 @@ class RelationFetcher
     public function company(CompanyId $id): CompanyEntity
     {
         try {
-            return $this->entityManager->getReference(CompanyEntity::class, $id->value());
+            return $this->entityManager->getReference(CompanyEntity::class, $id->toUuid());
         } catch (Throwable) {
             throw new CompanyNotFound();
         }

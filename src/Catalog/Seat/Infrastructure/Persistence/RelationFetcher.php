@@ -17,7 +17,7 @@ class RelationFetcher
     public function zone(ZoneId $id): ZoneEntity
     {
         try {
-            return $this->entityManager->getReference(ZoneEntity::class, $id->value());
+            return $this->entityManager->getReference(ZoneEntity::class, $id->toUuid());
         } catch (Throwable) {
             throw new ZoneNotFound();
         }

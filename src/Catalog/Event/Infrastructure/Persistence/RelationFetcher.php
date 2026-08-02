@@ -19,7 +19,7 @@ class RelationFetcher
     public function company(CompanyId $id): CompanyEntity
     {
         try {
-            return $this->entityManager->getReference(CompanyEntity::class, $id->value());
+            return $this->entityManager->getReference(CompanyEntity::class, $id->toUuid());
         } catch (Throwable) {
             throw new CompanyNotFound();
         }
@@ -28,7 +28,7 @@ class RelationFetcher
     public function category(CategoryId $id): CategoryEntity
     {
         try {
-            return $this->entityManager->getReference(CategoryEntity::class, $id->value());
+            return $this->entityManager->getReference(CategoryEntity::class, $id->toUuid());
         } catch (Throwable) {
             throw new CompanyNotFound();
         }
