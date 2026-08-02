@@ -8,6 +8,7 @@ use App\Catalog\Category\Domain\CategoryName;
 use App\Catalog\Category\Domain\CategoryReference;
 use App\Catalog\Event\Domain\Event;
 use App\Catalog\Event\Domain\EventBannerImage;
+use App\Catalog\Event\Domain\EventCanvas;
 use App\Catalog\Event\Domain\EventCity;
 use App\Catalog\Event\Domain\EventCountry;
 use App\Catalog\Event\Domain\EventCoverImage;
@@ -27,6 +28,7 @@ use App\Catalog\Event\Domain\EventStatus;
 use App\Catalog\Event\Domain\Exceptions\EventDayNotFound;
 use App\Catalog\Shared\Domain\CompanyId;
 use App\Catalog\Zone\Domain\Zone;
+use App\Catalog\Zone\Domain\ZoneCanvas;
 use App\Catalog\Zone\Domain\ZoneCurrency;
 use App\Catalog\Zone\Domain\ZoneHierarchy;
 use App\Catalog\Zone\Domain\ZoneId;
@@ -82,6 +84,7 @@ class ZoneMapper
             EventCountry::fromString($eventEntity->getCountry()),
             EventCity::fromString($eventEntity->getCity()),
             EventStatus::fromInt($eventEntity->getStatus()),
+            EventCanvas::fromArray($eventEntity->getCanvas()),
             $category,
             CompanyId::fromString($eventEntity->getCompany()->getId()),
         );
@@ -113,6 +116,7 @@ class ZoneMapper
             ZonePrice::fromFloat($entity->getPrice()),
             ZoneQuantity::create($entity->getTotalQuantity(), $entity->getSoldQuantity()),
             ZoneTaxRate::fromFloat($entity->getTaxRate()),
+            ZoneCanvas::fromArray($entity->getCanvas()),
             $day,
         );
 

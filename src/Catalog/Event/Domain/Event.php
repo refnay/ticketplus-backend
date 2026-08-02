@@ -13,6 +13,7 @@ class Event
     private EventDescription $description;
     private ?EventCoverImage $coverImage = null;
     private ?EventBannerImage $bannerImage = null;
+    private ?EventCanvas $canvas = null;
     private EventLocation $location;
     private EventCountry $country;
     private EventCity $city;
@@ -33,6 +34,7 @@ class Event
         EventCountry $country,
         EventCity $city,
         EventStatus $status,
+        EventCanvas $canvas,
         Category $category,
         CompanyId $companyId,
     ) {
@@ -46,6 +48,7 @@ class Event
         $this->country = $country;
         $this->city = $city;
         $this->status = $status;
+        $this->canvas = $canvas;
         $this->category = $category;
         $this->companyId = $companyId;
     }
@@ -72,6 +75,7 @@ class Event
             $country,
             $city,
             $status,
+            EventCanvas::fromNull(),
             $category,
             $companyId,
         );
@@ -100,6 +104,11 @@ class Event
     public function coverImage(): EventCoverImage
     {
         return $this->coverImage ?? EventCoverImage::fromNull();
+    }
+
+    public function canvas(): EventCanvas
+    {
+        return $this->canvas ?? EventCanvas::fromNull();
     }
 
     public function bannerImage(): EventBannerImage
@@ -191,6 +200,11 @@ class Event
     public function changeCategory(Category $category): void
     {
         $this->category = $category;
+    }
+
+    public function changeCanvas(EventCanvas $canvas): void
+    {
+        $this->canvas = $canvas;
     }
 
     public function addDay(EventDay $day): void

@@ -26,6 +26,9 @@ class Event
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
+    #[ORM\Column(type: Types::JSON, nullable: true)]
+    private ?array $canvas = null;
+
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $coverImage = null;
 
@@ -127,6 +130,18 @@ class Event
     public function setDescription(?string $description): static
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getCanvas(): ?array
+    {
+        return $this->canvas;
+    }
+
+    public function setCanvas(?array $canvas): static
+    {
+        $this->canvas = $canvas;
 
         return $this;
     }

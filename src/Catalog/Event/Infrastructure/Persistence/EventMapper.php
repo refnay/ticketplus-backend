@@ -8,6 +8,7 @@ use App\Catalog\Category\Domain\CategoryName;
 use App\Catalog\Category\Domain\CategoryReference;
 use App\Catalog\Event\Domain\Event;
 use App\Catalog\Event\Domain\EventBannerImage;
+use App\Catalog\Event\Domain\EventCanvas;
 use App\Catalog\Event\Domain\EventCity;
 use App\Catalog\Event\Domain\EventCountry;
 use App\Catalog\Event\Domain\EventCoverImage;
@@ -48,6 +49,7 @@ class EventMapper
         $entity->setStatus($event->status()->value());
         $entity->setCompany($this->fetcher->company($event->companyId()));
         $entity->setCategory($this->fetcher->category($event->category()->id()));
+        $entity->setCanvas($event->canvas()->value());
 
         foreach ($event->days() as $day) {
             $dayEntity = new EventDayEntity();
@@ -87,6 +89,7 @@ class EventMapper
             EventCountry::fromString($entity->getCountry()),
             EventCity::fromString($entity->getCity()),
             EventStatus::fromInt($entity->getStatus()),
+            EventCanvas::fromArray($entity->getCanvas()),
             $category,
             CompanyId::fromString($entity->getCompany()->getId()),
         );
@@ -119,6 +122,7 @@ class EventMapper
         $entity->setCity($event->city()->value());
         $entity->setStatus($event->status()->value());
         $entity->setCategory($this->fetcher->category($event->category()->id()));
+        $entity->setCanvas($event->canvas()->value());
 
         $currentDays = [];
 

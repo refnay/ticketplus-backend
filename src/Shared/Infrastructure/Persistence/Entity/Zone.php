@@ -5,6 +5,7 @@ namespace App\Shared\Infrastructure\Persistence\Entity;
 use App\Shared\Infrastructure\Persistence\Repository\ZoneRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\Uuid;
 
@@ -39,6 +40,9 @@ class Zone
 
     #[ORM\Column]
     private ?bool $numberedSeating = null;
+
+    #[ORM\Column(type: Types::JSON, nullable: true)]
+    private ?array $canvas = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
@@ -248,5 +252,17 @@ class Zone
     public function updateTimestamp(): void
     {
         $this->updatedAt = new \DateTimeImmutable();
+    }
+    
+    public function getCanvas(): ?array
+    {
+        return $this->canvas;
+    }
+
+    public function setCanvas(?array $canvas): static
+    {
+        $this->canvas = $canvas;
+
+        return $this;
     }
 }
