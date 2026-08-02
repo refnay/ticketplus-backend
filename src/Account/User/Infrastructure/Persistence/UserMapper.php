@@ -2,23 +2,6 @@
 
 namespace App\Account\User\Infrastructure\Persistence;
 
-use App\Account\Company\Domain\Company;
-use App\Account\Company\Domain\CompanyCity;
-use App\Account\Company\Domain\CompanyCountry;
-use App\Account\Company\Domain\CompanyDescription;
-use App\Account\Company\Domain\CompanyDocument;
-use App\Account\Company\Domain\CompanyEmail;
-use App\Account\Company\Domain\CompanyId;
-use App\Account\Company\Domain\CompanyLocation;
-use App\Account\Company\Domain\CompanyLogo;
-use App\Account\Company\Domain\CompanyName;
-use App\Account\Company\Domain\CompanyStatus;
-use App\Account\Company\Domain\CompanyTelephone;
-use App\Account\Company\Domain\CompanyWebSite;
-use App\Account\CompanyMember\Domain\CompanyMember;
-use App\Account\CompanyMember\Domain\CompanyMemberCurrent;
-use App\Account\CompanyMember\Domain\CompanyMemberId;
-use App\Account\CompanyMember\Domain\CompanyMemberRole;
 use App\Account\User\Domain\User;
 use App\Account\User\Domain\UserBirthDate;
 use App\Account\User\Domain\UserCity;
