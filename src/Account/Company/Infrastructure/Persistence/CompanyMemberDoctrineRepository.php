@@ -2,7 +2,10 @@
 
 namespace App\Account\Company\Infrastructure\Persistence;
 
+use App\Account\Company\Domain\CompanyId;
+use App\Account\Company\Domain\CompanyMember;
 use App\Account\Company\Domain\CompanyMemberRepository;
+use App\Account\User\Domain\UserId;
 use App\Shared\Infrastructure\Persistence\Doctrine\QueryBuilder;
 use Doctrine\ORM\EntityManagerInterface;
 use Override;
@@ -13,6 +16,16 @@ class CompanyMemberDoctrineRepository implements CompanyMemberRepository
 
     public function __construct(private EntityManagerInterface $entityManager, private CompanyMemberMapper $mapper)
     {
+    }
+
+    #[Override]
+    public function findByUserAndCompany(UserId $userId, CompanyId $companyId): ?CompanyMember
+    {
+        $entity = $this->entityManager
+            ->getRepository($this->mapper->entityClass())
+            ->findOneBy(['user' => $userId->value(), 'company' => $companyId->value()]);
+
+        return !is_null($entity) ? $this->mapper->newDomain($entity) : null;
     }
 
     #[Override]
