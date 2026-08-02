@@ -1,5 +1,4 @@
-"category-create":
+category-create:
     path: /api/category
     controller: App\Catalog\Category\Infrastructure\Controller\CategoryCreateController::create
-    methods:
-        - POST
+    methods: POST

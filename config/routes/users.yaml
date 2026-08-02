@@ -1,23 +1,19 @@
-"user-find":
+user-find:
     path: /api/user
     controller: App\Account\User\Infrastructure\Controller\UserFindController::find
-    methods:
-        - GET
+    methods: GET
 
-"user-password-update":
+user-password-update:
     path: /api/user/password
     controller: App\Account\User\Infrastructure\Controller\UserPasswordUpdateController::update
-    methods:
-        - PUT
+    methods: PUT
 
-"user-profile-image-upload":
+user-profile-image-upload:
     path: /api/user/upload
     controller: App\Account\User\Infrastructure\Controller\UserProfileImageUploadController::upload
-    methods:
-        - POST
+    methods: POST
 
-"user-update":
+user-update:
     path: /api/user
     controller: App\Account\User\Infrastructure\Controller\UserUpdateController::update
-    methods:
-        - PUT
+    methods: PUT

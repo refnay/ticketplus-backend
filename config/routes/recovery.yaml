@@ -1,0 +1,9 @@
+password-recovery-send-email:
+    path: /recovery/email
+    controller: App\Account\User\Infrastructure\Controller\UserPasswordSendRecoveryEmailController::send
+    methods: POST
+
+password-recovery-execute:
+    path: /recovery/execute
+    controller: App\Account\User\Infrastructure\Controller\UserPasswordExecuteRecoveryController::execute
+    methods: POST

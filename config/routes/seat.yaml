@@ -1,0 +1,4 @@
+seat-create:
+    path: /api/seat/event/{event}/day/{day}/zone/{zone}
+    controller: App\Catalog\Seat\Infrastructure\Controller\SeatCreateController::create
+    methods: POST
