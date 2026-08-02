@@ -75,8 +75,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?\DateTimeImmutable $updatedAt = null;
 
-    #[ORM\ManyToOne(inversedBy: 'members')]
-    private ?Company $company = null;
+    #[ORM\Column]
+    private ?bool $owner = null;
+
+    #[ORM\Column(length: 36, nullable: true)]
+    private ?string $currentCompany = null;
+
+    /**
+     * @var Collection<int, CompanyMember>
+     */
+    #[ORM\OneToMany(targetEntity: CompanyMember::class, mappedBy: 'member', orphanRemoval: true)]
+    private Collection $companies;
 
     /**
      * @var Collection<int, Purchase>
@@ -94,13 +103,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $this->purchases = new ArrayCollection();
         $this->reviews = new ArrayCollection();
+        $this->companies = new ArrayCollection();
     }
 
     public function getId(): ?Uuid
     {
         return $this->id;
     }
-    
+
     public function setId(Uuid $id): static
     {
         $this->id = $id;
@@ -173,7 +183,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __serialize(): array
     {
         $data = (array) $this;
-        $data["\0".self::class."\0password"] = hash('crc32c', $this->password);
+        $data["\0" . self::class . "\0password"] = hash('crc32c', $this->password);
 
         return $data;
     }
@@ -262,6 +272,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function getCurrentCompany(): ?string
+    {
+        return $this->currentCompany;
+    }
+
+    public function setCurrentCompany(?string $currentCompany): static
+    {
+        $this->currentCompany = $currentCompany;
+
+        return $this;
+    }
+
     public function getDocumentType(): ?int
     {
         return $this->documentType;
@@ -334,14 +356,32 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getCompany(): ?Company
+    /**
+     * @return Collection<int, CompanyMember>
+     */
+    public function getCompanies(): Collection
     {
-        return $this->company;
+        return $this->companies;
     }
 
-    public function setCompany(?Company $company): static
+    public function addCompany(CompanyMember $company): static
     {
-        $this->company = $company;
+        if (!$this->companies->contains($company)) {
+            $this->companies->add($company);
+            $company->setMember($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCompany(CompanyMember $company): static
+    {
+        if ($this->companies->removeElement($company)) {
+            // set the owning side to null (unless already changed)
+            if ($company->getMember() === $this) {
+                $company->setMember(null);
+            }
+        }
 
         return $this;
     }
@@ -405,7 +445,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-    
+
     #[ORM\PrePersist]
     public function createTimestamps(): void
     {
@@ -419,5 +459,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function updateTimestamp(): void
     {
         $this->updatedAt = new \DateTimeImmutable();
+    }
+
+    public function isOwner(): ?bool
+    {
+        return $this->owner;
+    }
+
+    public function setOwner(bool $owner): static
+    {
+        $this->owner = $owner;
+
+        return $this;
     }
 }

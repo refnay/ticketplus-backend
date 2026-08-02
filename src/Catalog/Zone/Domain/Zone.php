@@ -14,6 +14,7 @@ class Zone
     private ZonePrice $price;
     private ZoneQuantity $quantity;
     private ZoneTaxRate $taxRate;
+    private ?ZoneCanvas $canvas = null;
     private EventDay $day;
 
     public function __construct(
@@ -25,6 +26,7 @@ class Zone
         ZonePrice $price,
         ZoneQuantity $quantity,
         ZoneTaxRate $taxRate,
+        ZoneCanvas $canvas,
         EventDay $day,
     ) {
         $this->id = $id;
@@ -35,6 +37,7 @@ class Zone
         $this->price = $price;
         $this->quantity = $quantity;
         $this->taxRate = $taxRate;
+        $this->canvas = $canvas;
         $this->day = $day;
     }
 
@@ -57,6 +60,7 @@ class Zone
             $price,
             $quantity,
             $taxRate,
+            ZoneCanvas::fromNull(),
             $day,
         );
     }
@@ -106,6 +110,11 @@ class Zone
         return $this->day;
     }
 
+    public function canvas(): ZoneCanvas
+    {
+        return $this->canvas ?? ZoneCanvas::fromNull();
+    }
+
     public function changeName(ZoneName $name): void
     {
         $this->name = $name;
@@ -141,8 +150,13 @@ class Zone
         $this->taxRate = $taxRate;
     }
 
+    public function changeCanvas(ZoneCanvas $canvas): void
+    {
+        $this->canvas = $canvas;
+    }
+
     public function total(): float
     {
-        return $this->price()->value() + $this->price()->value() * $this->taxRate()->decimal();
+        return $this->price()->value() + ($this->price()->value() * $this->taxRate()->decimal());
     }
 }

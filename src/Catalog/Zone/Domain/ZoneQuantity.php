@@ -13,6 +13,11 @@ class ZoneQuantity
         return new self($total, $sold);
     }
 
+    public static function fromTotal(int $total): self
+    {
+        return new self($total, 0);
+    }
+
     public static function fromData(array $data): self
     {
         return new self($data['total'], $data['sold']);

@@ -6,12 +6,14 @@ use App\Account\User\Domain\User;
 use App\Account\User\Domain\UserBirthDate;
 use App\Account\User\Domain\UserCity;
 use App\Account\User\Domain\UserCountry;
+use App\Account\User\Domain\UserCurrentCompany;
 use App\Account\User\Domain\UserDocument;
 use App\Account\User\Domain\UserEmail;
 use App\Account\User\Domain\UserId;
 use App\Account\User\Domain\UserLastName;
 use App\Account\User\Domain\UserMobile;
 use App\Account\User\Domain\UserName;
+use App\Account\User\Domain\UserOwner;
 use App\Account\User\Domain\UserPassword;
 use App\Account\User\Domain\UserProfileImage;
 use App\Account\User\Domain\UserStatus;
@@ -23,7 +25,7 @@ class UserMapper
     public function newEntity(User $user): UserEntity
     {
         $entity = new UserEntity();
-        
+
         $entity->setId($user->id()->toUuid());
         $entity->setEmail($user->email()->value());
         $entity->setPassword($user->password()->value());
@@ -38,6 +40,8 @@ class UserMapper
         $entity->setDocumentNumber($user->document()->number());
         $entity->setType($user->type()->value());
         $entity->setStatus($user->status()->value());
+        $entity->setOwner($user->owner()->value());
+        $entity->setCurrentCompany($user->currentCompany()->value());
         $entity->setRoles(['ROLE_USER']);
 
         return $entity;
@@ -59,6 +63,8 @@ class UserMapper
             UserProfileImage::fromString($entity->getProfileImage()),
             UserStatus::fromInt($entity->getStatus()),
             UserType::fromInt($entity->getType()),
+            UserOwner::fromBool($entity->isOwner()),
+            UserCurrentCompany::fromString($entity->getCurrentCompany())
         );
 
         return $user;
@@ -75,6 +81,8 @@ class UserMapper
         $entity->setDocumentType($user->document()->type());
         $entity->setDocumentNumber($user->document()->number());
         $entity->setProfileImage($user->profileImage()->value());
+        $entity->setCurrentCompany($user->currentCompany()->value());
+        $entity->setType($user->type()->value());
     }
 
     public function updatePassword(UserEntity $entity, UserPassword $newPassword): void

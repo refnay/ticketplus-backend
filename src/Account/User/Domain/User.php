@@ -15,8 +15,10 @@ class User
     private UserName $name;
     private UserStatus $status;
     private UserType $type;
+    private UserOwner $owner;
     private ?UserMobile $mobile = null;
     private ?UserProfileImage $profileImage = null;
+    private ?UserCurrentCompany $currentCompany = null;
 
     public function __construct(
         UserId $id,
@@ -32,6 +34,8 @@ class User
         UserProfileImage $profileImage,
         UserStatus $status,
         UserType $type,
+        UserOwner $owner,
+        UserCurrentCompany $currentCompany,
     ) {
         $this->id = $id;
         $this->email = $email;
@@ -46,6 +50,8 @@ class User
         $this->profileImage = $profileImage;
         $this->status = $status;
         $this->type = $type;
+        $this->owner = $owner;
+        $this->currentCompany = $currentCompany;
     }
 
     public static function create(
@@ -73,6 +79,8 @@ class User
             UserProfileImage::fromNull(),
             UserStatus::pending(),
             UserType::simple(),
+            UserOwner::disable(),
+            UserCurrentCompany::fromNull(),
         );
     }
 
@@ -126,6 +134,11 @@ class User
         return $this->name;
     }
 
+    public function owner(): UserOwner
+    {
+        return $this->owner;
+    }
+
     public function profileImage(): UserProfileImage
     {
         return $this->profileImage ?? UserProfileImage::fromNull();
@@ -139,6 +152,11 @@ class User
     public function type(): UserType
     {
         return $this->type;
+    }
+
+    public function currentCompany(): UserCurrentCompany
+    {
+        return $this->currentCompany ?? UserCurrentCompany::fromNull();
     }
 
     public function  changeEmail(UserEmail $email): void
@@ -199,5 +217,15 @@ class User
     public function  changeType(UserType $type): void
     {
         $this->type = $type;
+    }
+
+    public function changeOwner(UserOwner $owner): void
+    {
+        $this->owner = $owner;
+    }
+
+    public function changeCurrentCompany(UserCurrentCompany $currentCompany): void
+    {
+        $this->currentCompany = $currentCompany;
     }
 }

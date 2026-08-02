@@ -14,6 +14,7 @@ use App\Account\User\Domain\UserPassword;
 use App\Account\User\Domain\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
+use Override;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Throwable;
 
@@ -27,6 +28,7 @@ class UserDoctrineRepository implements UserRepository
     ) {
     }
     
+    #[Override]
     public function save(User $user): string
     {
         try {
@@ -40,6 +42,7 @@ class UserDoctrineRepository implements UserRepository
         }
     }
 
+    #[Override]
     public function update(User $user): void
     {
         try {
@@ -51,6 +54,7 @@ class UserDoctrineRepository implements UserRepository
         }
     }
 
+    #[Override]
     public function delete(User $user): void
     {
         try {
@@ -62,6 +66,7 @@ class UserDoctrineRepository implements UserRepository
         }
     }
 
+    #[Override]
     public function findById(UserId $id): ?User
     {
         $entity = $this->entityManager
@@ -71,6 +76,7 @@ class UserDoctrineRepository implements UserRepository
         return !is_null($entity) ? $this->mapper->newDomain($entity) : null;
     }
 
+    #[Override]
     public function findByEmail(UserEmail $email): ?User
     {
         $entity = $this->entityManager
@@ -80,6 +86,7 @@ class UserDoctrineRepository implements UserRepository
         return !is_null($entity) ? $this->mapper->newDomain($entity) : null;
     }
 
+    #[Override]
     public function findByDocument(UserDocument $document): ?User
     {
         $entity = $this->entityManager
@@ -89,7 +96,7 @@ class UserDoctrineRepository implements UserRepository
         return !is_null($entity) ? $this->mapper->newDomain($entity) : null;
     }
 
-
+    #[Override]
     public function updatePassword(UserId $id, UserPassword $oldPassword, UserPassword $newPassword): void
     {
         $entity = $this->entityManager->getReference($this->mapper->entityClass(), $id->value());
@@ -102,6 +109,7 @@ class UserDoctrineRepository implements UserRepository
         $this->entityManager->flush();
     }
 
+    #[Override]
     public function resetPassword(UserId $id, UserPassword $newPassword): void
     {
         $entity = $this->entityManager->getReference($this->mapper->entityClass(), $id->value());

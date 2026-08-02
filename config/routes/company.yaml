@@ -1,0 +1,4 @@
+company-create:
+    path: /api/company
+    controller: App\Account\Company\Infrastructure\Controller\CompanyCreateController::create
+    methods: POST

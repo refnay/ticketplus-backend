@@ -6,6 +6,7 @@ use DateTimeImmutable;
 use DateTimeInterface;
 use DateTime;
 use App\Shared\Domain\Exceptions\ValueObjectUsedWhileNull;
+use App\Shared\Domain\Utils\Primitive\BoolBuilder;
 
 abstract class TimeValueObject
 {
@@ -25,6 +26,10 @@ abstract class TimeValueObject
         }
 
         $dateTime = DateTimeImmutable::createFromFormat('H:i:s', $time);
+    
+        if (is_bool($dateTime)) {
+            $dateTime = DateTimeImmutable::createFromFormat('H:i', $time);
+        }
 
         return new static($dateTime ?: null);
     }

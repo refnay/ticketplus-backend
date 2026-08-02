@@ -36,6 +36,11 @@ class ListQuery extends BaseQuery
     {
         return $this->session()->company();
     }
+    
+    public function user(): string
+    {
+        return $this->session()->user();
+    }
 
     public function offset(): ?int
     {
