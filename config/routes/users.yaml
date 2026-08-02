@@ -17,3 +17,8 @@ user-update:
     path: /api/user
     controller: App\Account\User\Infrastructure\Controller\UserUpdateController::update
     methods: PUT
+
+user-companies-list:
+    path: /api/user/companies
+    controller: App\Account\User\Infrastructure\Controller\UserCompaniesListController::list
+    methods: GET
