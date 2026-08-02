@@ -2,12 +2,10 @@
 
 namespace App\Account\User\Application\Company\Find;
 
-use App\Account\Company\Domain\CompanyId;
 use App\Account\Company\Domain\CompanyMemberId;
 use App\Account\Company\Domain\Services\CompanyFinder;
 use App\Account\Company\Domain\Services\CompanyMemberFinder;
 use App\Account\User\Domain\Services\UserFinder as ServicesUserFinder;
-use App\Account\User\Domain\UserId;
 
 class UserCompanyFinder
 {
