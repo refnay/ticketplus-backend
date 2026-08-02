@@ -14,25 +14,12 @@ use App\Account\Company\Domain\CompanyLogo;
 use App\Account\Company\Domain\CompanyMember;
 use App\Account\Company\Domain\CompanyMemberId;
 use App\Account\Company\Domain\CompanyMemberRole;
+use App\Account\Company\Domain\CompanyMemberStatus;
 use App\Account\Company\Domain\CompanyName;
 use App\Account\Company\Domain\CompanyStatus;
 use App\Account\Company\Domain\CompanyTelephone;
 use App\Account\Company\Domain\CompanyWebSite;
-use App\Account\User\Domain\User;
-use App\Account\User\Domain\UserBirthDate;
-use App\Account\User\Domain\UserCity;
-use App\Account\User\Domain\UserCountry;
-use App\Account\User\Domain\UserDocument;
-use App\Account\User\Domain\UserEmail;
 use App\Account\User\Domain\UserId;
-use App\Account\User\Domain\UserLastName;
-use App\Account\User\Domain\UserMobile;
-use App\Account\User\Domain\UserName;
-use App\Account\User\Domain\UserOwner;
-use App\Account\User\Domain\UserPassword;
-use App\Account\User\Domain\UserProfileImage;
-use App\Account\User\Domain\UserStatus;
-use App\Account\User\Domain\UserType;
 use App\Shared\Infrastructure\Persistence\Entity\Company as CompanyEntity;
 use App\Shared\Infrastructure\Persistence\Entity\CompanyMember as CompanyMemberEntity;
 
@@ -95,6 +82,7 @@ class CompanyMapper
             $member = new CompanyMember(
                 CompanyMemberId::fromString($memberEntity->getId()),
                 CompanyMemberRole::fromInt($memberEntity->getRole()),
+                CompanyMemberStatus::fromInt($memberEntity->getStatus()),
                 UserId::fromString($memberEntity->getMember()->getId()),
                 $company->id(),
             );

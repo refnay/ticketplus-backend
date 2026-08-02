@@ -26,6 +26,9 @@ class CompanyMember
     private ?int $role = null;
 
     #[ORM\Column]
+    private ?int $status = null;
+
+    #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
     
     #[ORM\Column]
@@ -51,6 +54,18 @@ class CompanyMember
     public function setRole(int $role): static
     {
         $this->role = $role;
+
+        return $this;
+    }
+
+    public function getStatus(): ?int
+    {
+        return $this->status;
+    }
+
+    public function setStatus(int $status): static
+    {
+        $this->status = $status;
 
         return $this;
     }
