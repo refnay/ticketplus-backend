@@ -28,6 +28,13 @@ final class Session
             throw new CompanyRequired();
         }
 
+        $this->typeAllowed();
+
+        return;
+    }
+
+    public function typeAllowed(): void
+    {
         if (!IntegerHelper::isEqual(UserTypesList::WORKER->value, $this->provider->type())) {
             throw new UserNotAllowed();
         }

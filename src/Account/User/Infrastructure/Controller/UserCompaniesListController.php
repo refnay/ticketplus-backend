@@ -14,6 +14,8 @@ class UserCompaniesListController extends AbstractController
 {
     public function list(Request $request, Session $session, MessageBus $messageBus): JsonResponse
     {
+        $session->typeAllowed();
+        
         $query = ListUserCompaniesQuery::fromQuery($request->query->all());
         $query->setSession($session);
         
