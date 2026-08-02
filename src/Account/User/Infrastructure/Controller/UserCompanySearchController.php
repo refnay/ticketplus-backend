@@ -14,8 +14,8 @@ class UserCompanySearchController extends AbstractController
 {
     public function search(Request $request, Session $session, MessageBus $messageBus): JsonResponse
     {
-        $session->typeAllowed();
-        $session->statusAllowed();
+        $session->userTypeAllowed();
+        $session->userStatusAllowed();
 
         $query = SearchUserCompanyQuery::fromQuery($request->query->all());
         $query->setSession($session);

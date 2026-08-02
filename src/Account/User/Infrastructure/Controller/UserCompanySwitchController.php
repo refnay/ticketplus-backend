@@ -13,8 +13,8 @@ class UserCompanySwitchController extends AbstractController
 {
     public function switch(Request $request, Session $session, MessageBus $messageBus): JsonResponse
     {
-        $session->typeAllowed();
-        $session->statusAllowed();
+        $session->userTypeAllowed();
+        $session->userStatusAllowed();
         
         $command = SwitchUserCompanyCommand::create($request->toArray());
         $command->setSession($session);

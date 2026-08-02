@@ -8,7 +8,9 @@ interface SessionProvider
 
     public function company(): ?string;
 
-    public function type(): int;
+    public function member(): ?string;
 
-    public function status(): int;
+    public function userType(): int;
+
+    public function userStatus(): int;
 }
