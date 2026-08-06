@@ -2,31 +2,26 @@
 
 namespace App\Shared\Domain;
 
-use DateTimeImmutable;
+use DateTimeInterface;
 
 trait Audit
 {
-    private ?DateTimeImmutable $createdAt = null;
-    private ?DateTimeImmutable $updatedAt = null;
+    private ?AuditCreatedAt $createdAt = null;
+    private ?AuditUpdatedAt $updatedAt = null;
 
-    public function createdAt(): ?DateTimeImmutable
+    public function createdAt(): AuditCreatedAt
     {
-        return $this->createdAt;
+        return $this->createdAt ?? AuditCreatedAt::fromNull();
     }
 
-    public function updatedAt(): ?DateTimeImmutable
+    public function updatedAt(): AuditUpdatedAt
     {
-        return $this->updatedAt;
+        return $this->updatedAt ?? AuditUpdatedAt::fromNull();
     }
 
-    public function initialize(object $original): void
+    public function assignAudit(DateTimeInterface $createdAt, DateTimeInterface $updatedAt): void
     {
-        if (method_exists($original, 'getCreatedAt')) {
-            $this->createdAt = $original->getCreatedAt();
-        }
-
-        if (method_exists($original, 'getUpdatedAt')) {
-            $this->updatedAt = $original->getUpdatedAt();
-        }
+        $this->createdAt = AuditCreatedAt::fromDateTime($createdAt);
+        $this->updatedAt = AuditUpdatedAt::fromDateTime($updatedAt);
     }
-} 
+}
