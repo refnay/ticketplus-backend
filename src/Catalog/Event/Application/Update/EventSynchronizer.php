@@ -32,7 +32,6 @@ class EventSynchronizer
                     $startTime,
                     $endTime,
                     $description,
-                    $status,
                     $event,
                 );
 

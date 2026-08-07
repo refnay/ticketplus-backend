@@ -11,4 +11,9 @@ class EventStatus extends IntValueObject
     public function validate(): void
     {
     }
+
+    public static function draft(): self
+    {
+        return new self(EventStatusList::DRAFT->value);
+    }
 }

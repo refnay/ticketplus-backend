@@ -62,7 +62,6 @@ class Event
         EventLocation $location,
         EventCountry $country,
         EventCity $city,
-        EventStatus $status,
         Category $category,
         CompanyId $companyId,
     ): self {
@@ -76,7 +75,7 @@ class Event
             $location,
             $country,
             $city,
-            $status,
+            EventStatus::draft(),
             EventCanvas::fromNull(),
             $category,
             $companyId,

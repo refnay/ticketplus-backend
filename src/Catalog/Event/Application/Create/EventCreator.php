@@ -41,7 +41,6 @@ class EventCreator
         EventLocation $location,
         EventCountry $country,
         EventCity $city,
-        EventStatus $status,
         CategoryId $categoryId, 
         CompanyId $companyId,
         array $days,
@@ -62,7 +61,6 @@ class EventCreator
             $location,
             $country,
             $city,
-            $status,
             $category,
             $companyId,
         );
@@ -74,7 +72,6 @@ class EventCreator
                 EventDayStartTime::fromString($dayCommand->startTime()),
                 EventDayEndTime::fromString($dayCommand->endTime()),
                 EventDayDescription::fromString($dayCommand->description()),
-                EventDayStatus::fromInt($dayCommand->status()),
                 $event,
             );
 

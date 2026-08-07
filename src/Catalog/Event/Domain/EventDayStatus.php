@@ -11,4 +11,9 @@ class EventDayStatus extends IntValueObject
     public function validate(): void
     {
     }
+
+    public static function scheduled(): self
+    {
+        return new self(EventDayStatusList::SCHEDULED->value);
+    }
 }
