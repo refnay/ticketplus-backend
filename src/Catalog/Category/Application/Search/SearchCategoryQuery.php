@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Catalog\Category\Application\List;
+namespace App\Catalog\Category\Application\Search;
 
 use App\Shared\Application\Query\ListQuery;
 use App\Shared\Domain\Utils\PayloadMapper;
 
-class ListCategoryQuery extends ListQuery
+class SearchCategoryQuery extends ListQuery
 {
     public function __construct(
         private ?string $name,

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Catalog\Category\Application\List;
+namespace App\Catalog\Category\Application\Search;
 
 use App\Catalog\Category\Domain\Category;
 use App\Catalog\Category\Domain\CategoryRepository;
 
-class CategoryLister
+class CategorySearcher
 {
     public function __construct(private CategoryRepository $repository)
     {
