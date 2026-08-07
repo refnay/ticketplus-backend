@@ -22,9 +22,9 @@ class CompanyMember
         $this->companyId = $companyId;
     }
 
-    public static function create(CompanyMemberRole $role, CompanyMemberStatus $status, UserId $userId, CompanyId $companyId): self
+    public static function create(CompanyMemberRole $role, UserId $userId, CompanyId $companyId): self
     {
-        return new self(CompanyMemberId::generate(), $role, $status, $userId, $companyId);
+        return new self(CompanyMemberId::generate(), $role, CompanyMemberStatus::active(), $userId, $companyId);
     }
 
     public function id(): CompanyMemberId

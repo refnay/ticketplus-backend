@@ -11,4 +11,9 @@ class CompanyMemberStatus extends IntValueObject
     public function validate(): void
     {
     }
+
+    public static function active(): self
+    {
+        return new self(CompanyMemberStatusList::ACTIVE->value);
+    } 
 }
