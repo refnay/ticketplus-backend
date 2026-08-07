@@ -35,7 +35,6 @@ class EventDay
         EventDayStartTime $startTime,
         EventDayEndTime $endTime,
         EventDayDescription $description,
-        EventDayStatus $status,
         Event $event,
     ): self {
         return new self(
@@ -44,7 +43,7 @@ class EventDay
             $startTime,
             $endTime,
             $description,
-            $status,
+            EventDayStatus::scheduled(),
             $event,
         );
     }

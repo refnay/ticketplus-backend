@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Catalog\Event\Application\List;
+namespace App\Catalog\Event\Application\Search;
 
 use App\Catalog\Event\Domain\Event;
 use JsonSerializable;
@@ -15,7 +15,8 @@ class EventResponse implements JsonSerializable
         readonly private string $country,
         readonly private string $city,
         readonly private int $status,
-        readonly private array $category,
+        readonly private string $category,
+        readonly private ?string $date,
     ) {
     }
 
@@ -28,7 +29,8 @@ class EventResponse implements JsonSerializable
             $event->country()->value(),
             $event->city()->value(),
             $event->status()->value(),
-            $event->category()->toChooser(),
+            $event->category()->name(),
+            $event->firstDay()?->date()->asDMY(),
         );
     }
 

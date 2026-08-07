@@ -3,7 +3,7 @@
 namespace App\Catalog\Event\Domain;
 
 
-enum EventStatusList: int
+enum EventDayStatusList: int
 {
     case SCHEDULED = 0;
     case IN_PROGRESS = 1;

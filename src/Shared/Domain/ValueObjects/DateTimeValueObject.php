@@ -37,7 +37,7 @@ abstract class DateTimeValueObject
         $immutable = $dateTime instanceof DateTimeImmutable
             ? $dateTime
             : DateTimeImmutable::createFromMutable($dateTime);
-
+            
         return new static($immutable);
     }
 

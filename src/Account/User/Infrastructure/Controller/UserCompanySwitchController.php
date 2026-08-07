@@ -2,7 +2,7 @@
 
 namespace App\Account\User\Infrastructure\Controller;
 
-use App\Account\User\Application\SwitchCompany\SwitchUserCompanyCommand;
+use App\Account\User\Application\Company\Switch\SwitchUserCompanyCommand;
 use App\Shared\Application\MessageBus;
 use App\Shared\Domain\Session;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -13,8 +13,8 @@ class UserCompanySwitchController extends AbstractController
 {
     public function switch(Request $request, Session $session, MessageBus $messageBus): JsonResponse
     {
-        $session->typeAllowed();
-        $session->statusAllowed();
+        $session->userTypeAllowed();
+        $session->userStatusAllowed();
         
         $command = SwitchUserCompanyCommand::create($request->toArray());
         $command->setSession($session);

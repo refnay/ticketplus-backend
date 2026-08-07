@@ -18,12 +18,17 @@ user-update:
     controller: App\Account\User\Infrastructure\Controller\UserUpdateController::update
     methods: PUT
 
-user-companies-list:
-    path: /api/user/companies
-    controller: App\Account\User\Infrastructure\Controller\UserCompaniesListController::list
+user-company-search:
+    path: /api/user/company/search
+    controller: App\Account\User\Infrastructure\Controller\UserCompanySearchController::search
     methods: GET
 
 user-company-switch:
     path: /api/user/company
     controller: App\Account\User\Infrastructure\Controller\UserCompanySwitchController::switch
     methods: PUT
+
+user-company-find:
+    path: /api/user/company
+    controller: App\Account\User\Infrastructure\Controller\UserCompanyFindController::find
+    methods: GET

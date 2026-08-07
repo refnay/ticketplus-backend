@@ -4,9 +4,11 @@ namespace App\Catalog\Event\Domain;
 
 use App\Catalog\Category\Domain\Category;
 use App\Catalog\Shared\Domain\CompanyId;
+use App\Shared\Domain\Audit;
 
 class Event
 {
+    use Audit;
     private EventId $id;
     private EventName $name;
     private EventSlug $slug;
@@ -60,7 +62,6 @@ class Event
         EventLocation $location,
         EventCountry $country,
         EventCity $city,
-        EventStatus $status,
         Category $category,
         CompanyId $companyId,
     ): self {
@@ -74,7 +75,7 @@ class Event
             $location,
             $country,
             $city,
-            $status,
+            EventStatus::draft(),
             EventCanvas::fromNull(),
             $category,
             $companyId,
@@ -210,6 +211,19 @@ class Event
     public function addDay(EventDay $day): void
     {
         $this->days[] = $day;
+    }
+
+    public function firstDay(): ?EventDay
+    {
+        $firstDay = null;
+
+        foreach ($this->days() as $day) {
+            if (is_null($firstDay) || $day->date()->before($firstDay->date())) {
+                $firstDay = $day;
+            }
+        }
+
+        return $firstDay;
     }
 
     public function findDayById(EventDayId $id): ?EventDay

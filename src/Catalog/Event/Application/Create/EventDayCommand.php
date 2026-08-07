@@ -11,7 +11,6 @@ class EventDayCommand
         private string $startTime,
         private string $endTime,
         private ?string $description,
-        private int $status,
     ) {}
 
     public static function create(array $data): self
@@ -23,7 +22,6 @@ class EventDayCommand
             $payload->string('startTime'),
             $payload->string('endTime'),
             $payload->nullableString('description'),
-            $payload->int('status'),
         );
     }
 
@@ -45,10 +43,5 @@ class EventDayCommand
     public function endTime(): string
     {
         return $this->endTime;
-    }
-
-    public function status(): int
-    {
-        return $this->status;
     }
 }

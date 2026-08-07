@@ -15,7 +15,6 @@ class CreateEventCommand extends BaseCommand
         private string $country,
         private string $city,
         private string $category,
-        private int $status,
         private array $days,
     ) {}
 
@@ -35,7 +34,6 @@ class CreateEventCommand extends BaseCommand
             $payload->string('country'),
             $payload->string('city'),
             $payload->string('category'),
-            $payload->int('status'),
             $days->items()
         );
     }
@@ -68,11 +66,6 @@ class CreateEventCommand extends BaseCommand
     public function category(): string
     {
         return $this->category;
-    }
-
-    public function status(): int
-    {
-        return $this->status;
     }
 
     public function days(): array

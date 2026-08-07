@@ -25,7 +25,6 @@ class CreateEventCommandHandler
             EventLocation::fromString($command->location()),
             EventCountry::fromString($command->country()),
             EventCity::fromString($command->city()),
-            EventStatus::fromInt($command->status()),
             CategoryId::fromString($command->category()),
             CompanyId::fromString($command->session()->company()),
             $command->days(),

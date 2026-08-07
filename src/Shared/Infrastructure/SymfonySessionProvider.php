@@ -28,7 +28,25 @@ class SymfonySessionProvider implements SessionProvider
         return $user->getCurrentCompany();
     }
 
-    public function type(): int
+    public function member(): ?string
+    {
+        if (is_null($this->company())) {
+            return null;
+        }
+
+        /** @var User $user */
+        $user = $this->security->getUser();
+
+        foreach ($user->getCompanies() as $company) {
+            if ($company->getCompany()->getId()->toRfc4122() === $this->company()) {
+                return $company->getId()->toRfc4122();
+            } 
+        }
+        
+        return null;
+    }
+
+    public function userType(): int
     {
         /** @var User $user */
         $user = $this->security->getUser();
@@ -36,7 +54,7 @@ class SymfonySessionProvider implements SessionProvider
         return $user->getType();
     }
 
-    public function status(): int
+    public function userStatus(): int
     {
         /** @var User $user */
         $user = $this->security->getUser();

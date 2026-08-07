@@ -2,19 +2,26 @@
 
 namespace App\Shared\Domain;
 
-final class Audit
+use DateTimeInterface;
+
+trait Audit
 {
-    public function __construct(private string $createdAt, private string $updatedAt)
+    private ?AuditCreatedAt $createdAt = null;
+    private ?AuditUpdatedAt $updatedAt = null;
+
+    public function createdAt(): AuditCreatedAt
     {
+        return $this->createdAt ?? AuditCreatedAt::fromNull();
     }
 
-    public function createdAt(): string
+    public function updatedAt(): AuditUpdatedAt
     {
-        return $this->createdAt;
+        return $this->updatedAt ?? AuditUpdatedAt::fromNull();
     }
 
-    public function updatedAt(): string
+    public function assignAudit(DateTimeInterface $createdAt, DateTimeInterface $updatedAt): void
     {
-        return $this->updatedAt;
+        $this->createdAt = AuditCreatedAt::fromDateTime($createdAt);
+        $this->updatedAt = AuditUpdatedAt::fromDateTime($updatedAt);
     }
-} 
+}
