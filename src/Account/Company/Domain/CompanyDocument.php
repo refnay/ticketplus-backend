@@ -35,4 +35,9 @@ class CompanyDocument
             'number' => $this->number,
         ];
     }
+
+    public function equals(int $type, string $number): bool
+    {
+        return $this->type === $type && $this->number === $number;
+    }
 }
