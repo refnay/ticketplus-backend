@@ -26,6 +26,9 @@ class Purchase
     #[ORM\Column]
     private ?float $total = null;
 
+    #[ORM\Column(length: 3)]
+    private ?string $currency = null;
+
     #[ORM\Column]
     private ?int $status = null;
 
@@ -256,5 +259,17 @@ class Purchase
     public function updateTimestamp(): void
     {
         $this->updatedAt = new \DateTimeImmutable();
+    }
+    
+    public function getCurrency(): ?string
+    {
+        return $this->currency;
+    }
+
+    public function setCurrency(string $currency): static
+    {
+        $this->currency = $currency;
+
+        return $this;
     }
 }
