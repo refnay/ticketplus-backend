@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Account\User\Application\Company\Switch;
+namespace App\Account\User\Application\Switch;
 
 use App\Account\User\Domain\Services\UserFinder;
 use App\Account\User\Domain\UserCurrentCompany;
