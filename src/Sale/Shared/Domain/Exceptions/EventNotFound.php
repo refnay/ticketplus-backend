@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Sale\Event\Domain\Exceptions;
+namespace App\Sale\Shared\Domain\Exceptions;
 
 use Exception;
 use Throwable;

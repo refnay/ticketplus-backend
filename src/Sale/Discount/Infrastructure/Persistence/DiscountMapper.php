@@ -11,11 +11,7 @@ use App\Sale\Discount\Domain\DiscountStartDate;
 use App\Sale\Discount\Domain\DiscountType;
 use App\Sale\Discount\Domain\DiscountUsage;
 use App\Sale\Discount\Domain\DiscountValue;
-use App\Sale\Event\Domain\Event;
-use App\Sale\Event\Domain\EventId;
-use App\Sale\Event\Domain\EventName;
-use App\Sale\Event\Domain\EventStatus;
-use App\Sale\Purchase\Domain\CompanyId;
+use App\Sale\Purchase\Domain\EventId;
 use App\Shared\Infrastructure\Persistence\Entity\Discount as DiscountEntity;
 
 class DiscountMapper
@@ -37,22 +33,13 @@ class DiscountMapper
         $entity->setUsageLimit($discount->usage()->limit());
         $entity->setUsageCount($discount->usage()->count());
         $entity->setActive($discount->active()->value());
-        $entity->setEvent($this->fetcher->event($discount->event()->id()));
+        $entity->setEvent($this->fetcher->event($discount->eventId()));
 
         return $entity;
     }
 
     public function newDomain(DiscountEntity $entity): Discount
     {
-        $eventEntity = $entity->getEvent();
-
-        $event = new Event(
-            EventId::fromString($eventEntity->getId()),
-            EventName::fromString($eventEntity->getName()),
-            EventStatus::fromInt($eventEntity->getStatus()),
-            CompanyId::fromString($eventEntity->getCompany()->getId()),
-        );
-
         $discount = new Discount(
             DiscountId::fromString($entity->getId()),
             DiscountActive::fromBool($entity->isActive()),
@@ -62,8 +49,8 @@ class DiscountMapper
             DiscountType::fromInt($entity->getType()),
             DiscountUsage::create($entity->getUsageLimit(), $entity->getUsageCount()),
             DiscountValue::fromFloat($entity->getValue()),
+            EventId::fromString($entity->getEvent()->getId()),
         );
-        $discount->changeEvent($event);
 
         return $discount;
     }

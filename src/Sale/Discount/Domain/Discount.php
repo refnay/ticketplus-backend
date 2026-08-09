@@ -2,7 +2,7 @@
 
 namespace App\Sale\Discount\Domain;
 
-use App\Sale\Event\Domain\Event;
+use App\Sale\Purchase\Domain\EventId;
 
 class Discount
 {
@@ -14,7 +14,7 @@ class Discount
     private DiscountType $type;
     private DiscountUsage $usage;
     private DiscountValue $value;
-    private Event $event;
+    private EventId $eventId;
 
     public function __construct(
         DiscountId $id,
@@ -25,6 +25,7 @@ class Discount
         DiscountType $type,
         DiscountUsage $usage,
         DiscountValue $value,
+        EventId $eventId,
     ) {
         $this->id = $id;
         $this->active = $active;
@@ -34,6 +35,7 @@ class Discount
         $this->type = $type;
         $this->usage = $usage;
         $this->value = $value;
+        $this->eventId = $eventId;
     }
 
     public static function create(
@@ -44,6 +46,7 @@ class Discount
         DiscountType $type,
         DiscountUsage $usage,
         DiscountValue $value,
+        EventId $eventId,
     ): self {
         return new self(
             DiscountId::generate(),
@@ -54,6 +57,7 @@ class Discount
             $type,
             $usage,
             $value,
+            $eventId,
         );
     }
 
@@ -97,9 +101,9 @@ class Discount
         return $this->value;
     }
 
-    public function event(): Event
+    public function eventId(): EventId
     {
-        return $this->event;
+        return $this->eventId;
     }
 
     public function changeActive(DiscountActive $active): void
@@ -135,10 +139,5 @@ class Discount
     public function changeValue(DiscountValue $value): void
     {
         $this->value = $value;
-    }
-
-    public function changeEvent(Event $event): void
-    {
-        $this->event = $event;
     }
 }
