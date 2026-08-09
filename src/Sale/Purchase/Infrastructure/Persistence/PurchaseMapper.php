@@ -2,6 +2,16 @@
 
 namespace App\Sale\Purchase\Infrastructure\Persistence;
 
+use App\Sale\Discount\Domain\Discount;
+use App\Sale\Discount\Domain\DiscountActive;
+use App\Sale\Discount\Domain\DiscountCode;
+use App\Sale\Discount\Domain\DiscountEndDate;
+use App\Sale\Discount\Domain\DiscountId;
+use App\Sale\Discount\Domain\DiscountStartDate;
+use App\Sale\Discount\Domain\DiscountType;
+use App\Sale\Discount\Domain\DiscountUsage;
+use App\Sale\Discount\Domain\DiscountValue;
+use App\Sale\Purchase\Domain\EventId;
 use App\Sale\Purchase\Domain\Purchase;
 use App\Sale\Purchase\Domain\PurchaseCurrency;
 use App\Sale\Purchase\Domain\PurchaseId;
@@ -32,10 +42,10 @@ class PurchaseMapper
         $entity->setPaymentMethod($purchase->paymentMethod()->value());
         $entity->setAttendee($this->fetcher->user($purchase->userId()));
 
-        $discountId = $purchase->discountId();
+        $discount = $purchase->discount();
 
-        if (!is_null($discountId)) {
-            $entity->setDiscount($this->fetcher->discount($discountId));
+        if (!is_null($discount)) {
+            $entity->setDiscount($this->fetcher->discount($discount->id()));
         }
 
         return $entity;
@@ -43,6 +53,20 @@ class PurchaseMapper
 
     public function newDomain(PurchaseEntity $entity): Purchase
     {
+        $discountEntity = $entity->getDiscount();
+
+        $discount = new Discount(
+            DiscountId::fromString($discountEntity->getId()),
+            DiscountActive::fromBool($discountEntity->isActive()),
+            DiscountCode::fromString($discountEntity->getCode()),
+            DiscountStartDate::fromDateTime($discountEntity->getStartDate()),
+            DiscountEndDate::fromDateTime($discountEntity->getEndDate()),
+            DiscountType::fromInt($discountEntity->getType()),
+            DiscountUsage::create($discountEntity->getUsageLimit(), $discountEntity->getUsageCount()),
+            DiscountValue::fromFloat($discountEntity->getValue()),
+            EventId::fromString($discountEntity->getEvent()->getId()),
+        );
+        
         $purchase = new Purchase(
             PurchaseId::fromString($entity->getId()),
             PurchaseCurrency::fromString($entity->getCurrency()),
@@ -53,7 +77,7 @@ class PurchaseMapper
             PurchaseTotal::fromFloat($entity->getTotal()),
             UserId::fromString($entity->getAttendee()->getId())
         );
-        $purchase->changeDiscountId($entity->getDiscount()->getId());
+        $purchase->changeDiscount($discount);
 
         return $purchase;
     }
