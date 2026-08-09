@@ -31,7 +31,8 @@ class SearchMemberCompanyQuery extends ListQuery
     public function filters(): array
     {
         $filters = get_object_vars($this);
-
+        $filters['user'] = $this->user();
+        
         return $filters; 
     }
 }

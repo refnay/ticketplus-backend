@@ -48,7 +48,7 @@ class MemberDoctrineRepository implements MemberRepository
             $this->entityManager->getRepository($this->mapper->entityClass())->createQueryBuilder(self::MEMBER_PREFIX)
         );
 
-        $queryBuilder->equals('user', $filters['user'] ?? null)
+        $queryBuilder->equals('member', $filters['user'] ?? null)
             ->equals('company', $filters['company'] ?? null)
             ->applyOrder($orderBy, $order)
             ->paginate($limit, $offset);
@@ -65,7 +65,7 @@ class MemberDoctrineRepository implements MemberRepository
             $this->entityManager->getRepository($this->mapper->entityClass())->createQueryBuilder(self::MEMBER_PREFIX)
         );
 
-        $queryBuilder->equals('user', $filters['user'] ?? null)
+        $queryBuilder->equals('member', $filters['user'] ?? null)
             ->equals('company', $filters['company'] ?? null);
 
         return (int) $queryBuilder->queryBuilder()
