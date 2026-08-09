@@ -8,7 +8,7 @@ use App\Account\Member\Domain\MemberRepository;
 use App\Account\Member\Domain\MemberRole;
 use App\Account\User\Domain\UserId;
 
-class CompanyMemberCreator
+class MemberCreator
 {
     public function __construct(private MemberRepository $repository)
     {

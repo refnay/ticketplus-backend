@@ -1,9 +1,9 @@
-company-member-company-search:
+member-company-search:
     path: /api/member/company
     controller: App\Account\Member\Infrastructure\Controller\MemberCompanySearchController::search
     methods: GET
 
-company-member-find:
+member-find:
     path: /api/member
     controller: App\Account\Member\Infrastructure\Controller\MemberFindController::find
     methods: GET

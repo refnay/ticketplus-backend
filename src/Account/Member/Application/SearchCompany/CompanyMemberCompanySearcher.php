@@ -27,14 +27,14 @@ class MemberCompanySearcher
 
     private function makeResponse(): callable
     {
-        return function (Member $companyMember): MemberCompanyResponse {
-            $company = $this->companyFinder->__invoke($companyMember->companyId());
+        return function (Member $member): MemberCompanyResponse {
+            $company = $this->companyFinder->__invoke($member->companyId());
             return new MemberCompanyResponse(
-                $companyMember->id()->value(),
-                $companyMember->companyId()->value(),
+                $member->id()->value(),
+                $member->companyId()->value(),
                 $company->name()->value(),
-                $companyMember->role()->value(),
-                $companyMember->status()->value(),
+                $member->role()->value(),
+                $member->status()->value(),
             );
         };
     }
