@@ -5,7 +5,7 @@ namespace App\Sale\Discount\Domain\Exceptions;
 use Exception;
 use Throwable;
 
-class DiscountNoDeleted extends Exception
+class DiscountNotDeleted extends Exception
 {
     public function __construct(?Throwable $previous = null)
     {

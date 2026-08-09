@@ -2,7 +2,7 @@
 
 namespace App\Sale\Discount\Domain;
 
-use App\Sale\Purchase\Domain\CompanyId;
+use App\Sale\Event\Domain\EventId;
 
 interface DiscountRepository
 {
@@ -12,7 +12,7 @@ interface DiscountRepository
 
     public function delete(Discount $discount): void;
 
-    public function findById(DiscountId $id, CompanyId $companyId): ?Discount;
+    public function findById(DiscountId $id, EventId $eventId): ?Discount;
 
     public function searchByFilters(array $filters, string $orderBy, string $order, ?int $limit, ?int $offset): array;
 

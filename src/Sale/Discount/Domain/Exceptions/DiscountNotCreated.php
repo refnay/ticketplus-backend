@@ -5,10 +5,10 @@ namespace App\Sale\Discount\Domain\Exceptions;
 use Exception;
 use Throwable;
 
-class DiscountNotFound extends Exception
+class DiscountNotCreated extends Exception
 {
     public function __construct(?Throwable $previous = null)
     {
-        parent::__construct('discount.discount_not_found', 0, $previous);
+        parent::__construct('discount.discount_not_created', 0, $previous);
     }
 }
