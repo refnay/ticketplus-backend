@@ -2,12 +2,12 @@
 
 namespace App\s\Zone\Domain;
 
-use DateTimeImmutable;
+use DateTimeInterface;
 
 class TicketInformation
 {
     public function __construct(
-        private DateTimeImmutable $date,
+        private DateTimeInterface $date,
         private string $eventName,
         private string $zoneName,
         private string $seatCode,
@@ -15,7 +15,7 @@ class TicketInformation
     }
 
     public static function create(
-        DateTimeImmutable $date,
+        DateTimeInterface $date,
         string $eventName,
         string $zoneName,
         string $seatCode
@@ -28,7 +28,7 @@ class TicketInformation
         return new self($data['date'], $data['eventName'], $data['zoneName'], $data['seatCode']);
     }
 
-    public function date(): DateTimeImmutable
+    public function date(): DateTimeInterface 
     {
         return $this->date;
     }

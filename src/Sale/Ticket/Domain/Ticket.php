@@ -15,8 +15,8 @@ class Ticket
     private TicketQRCode $qrCode;
     private TicketStatus $status;
     private ZoneId $zoneId;
-    private SeatId $seatId;
     private Purchase $purchase;
+    private ?SeatId $seatId = null;
 
     public function __construct(
         TicketId $id,
@@ -25,7 +25,6 @@ class Ticket
         TicketQRCode $qrCode,
         TicketStatus $status,
         ZoneId $zoneId,
-        SeatId $seatId,
     ) {
         $this->id = $id;
         $this->information = $information;
@@ -33,7 +32,6 @@ class Ticket
         $this->qrCode = $qrCode;
         $this->status = $status;
         $this->zoneId = $zoneId;
-        $this->seatId = $seatId;
     }
 
     public static function create(
@@ -42,7 +40,6 @@ class Ticket
         TicketQRCode $qrCode,
         TicketStatus $status,
         ZoneId $zoneId,
-        SeatId $seatId,
     ): self {
         return new self(
             TicketId::generate(),
@@ -51,7 +48,6 @@ class Ticket
             $qrCode,
             $status,
             $zoneId,
-            $seatId,
         );
     }
 
@@ -90,7 +86,7 @@ class Ticket
         return $this->zoneId;
     }
 
-    public function seatId(): SeatId
+    public function seatId(): ?SeatId
     {
         return $this->seatId;
     }
@@ -113,5 +109,10 @@ class Ticket
     public function changePurchase(Purchase $purchase): void
     {
         $this->purchase = $purchase;
+    }
+
+    public function changeSeatId(?SeatId $seatId): void
+    {
+        $this->seatId = $seatId;
     }
 }
