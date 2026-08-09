@@ -2,11 +2,11 @@
 
 namespace App\Shared\Domain;
 
-use App\Account\CompanyMember\Domain\CompanyMemberStatusList;
-use App\Account\CompanyMember\Domain\Exceptions\CompanyMemberNotAllowed;
-use App\Account\User\Domain\UserStatusList;
-use App\Shared\Domain\Exceptions\CompanyMemberRequired;
+use App\Shared\Domain\Enums\MemberStatusList;
+use App\Shared\Domain\Enums\UserStatusList;
+use App\Shared\Domain\Exceptions\MemberRequired;
 use App\Shared\Domain\Exceptions\CompanyRequired;
+use App\Shared\Domain\Exceptions\MemberNotAllowed;
 use App\Shared\Domain\Exceptions\UserNotAllowed;
 use App\Shared\Domain\Utils\IntegerHelper;
 
@@ -56,7 +56,7 @@ final class Session
     public function memberRequired(): void
     {
         if (is_null($this->company())) {
-            throw new CompanyMemberRequired();
+            throw new MemberRequired();
         }
 
         return;
@@ -82,8 +82,8 @@ final class Session
 
     public function memberStatusAllowed(): void
     {
-        if (IntegerHelper::isEqual($this->provider->userStatus(), CompanyMemberStatusList::INACTIVE->value)) {
-            throw new CompanyMemberNotAllowed();
+        if (IntegerHelper::isEqual($this->provider->userStatus(), MemberStatusList::INACTIVE->value)) {
+            throw new MemberNotAllowed();
         }
 
         return;
