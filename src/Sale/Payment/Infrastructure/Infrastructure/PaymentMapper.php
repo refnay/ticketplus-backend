@@ -8,7 +8,7 @@ use App\Sale\Payment\Domain\PaymentExternalReference;
 use App\Sale\Payment\Domain\PaymentId;
 use App\Sale\Payment\Domain\PaymentMethod;
 use App\Sale\Payment\Domain\PaymentStatus;
-use App\Sale\Purchase\Domain\PurchaseId;
+use App\Sale\Order\Domain\OrderId;
 use App\Shared\Infrastructure\Persistence\Entity\Payment as PaymentEntity;
 
 class PaymentMapper
@@ -26,7 +26,7 @@ class PaymentMapper
         $entity->setPaymentMethod($payment->method()->value());
         $entity->setStatus($payment->status()->value());
         $entity->setExternalReference($payment->externalReference()->value());
-        $entity->setPurchase($this->fetcher->purchase($payment->purchaseId()));
+        $entity->setPurchase($this->fetcher->order($payment->orderId()));
 
         return $entity;
     }
@@ -39,7 +39,7 @@ class PaymentMapper
             PaymentExternalReference::fromString($entity->getExternalReference()),
             PaymentMethod::fromInt($entity->getPaymentMethod()),
             PaymentStatus::fromInt($entity->getStatus()),
-            PurchaseId::fromString($entity->getPurchase()->getId()),
+            OrderId::fromString($entity->getPurchase()->getId()),
         );
 
         return $payment;

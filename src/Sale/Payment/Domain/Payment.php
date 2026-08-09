@@ -2,7 +2,7 @@
 
 namespace App\Sale\Payment\Domain;
 
-use App\Sale\Purchase\Domain\PurchaseId;
+use App\Sale\Order\Domain\OrderId;
 
 class Payment
 {
@@ -11,7 +11,7 @@ class Payment
     private ?PaymentExternalReference $externalReference = null;
     private PaymentMethod $method;
     private PaymentStatus $status;
-    private PurchaseId $purchaseId;
+    private OrderId $orderId;
 
     public function __construct(
         PaymentId $id,
@@ -19,14 +19,14 @@ class Payment
         PaymentExternalReference $externalReference,
         PaymentMethod $method,
         PaymentStatus $status,
-        PurchaseId $purchaseId,
+        OrderId $orderId,
     ) {
         $this->id = $id;
         $this->amount = $amount;
         $this->externalReference = $externalReference;
         $this->method = $method;
         $this->status = $status;
-        $this->purchaseId = $purchaseId;
+        $this->orderId = $orderId;
     }
 
     public static function create(
@@ -34,9 +34,9 @@ class Payment
         PaymentExternalReference $externalReference,
         PaymentMethod $method,
         PaymentStatus $status,
-        PurchaseId $purchaseId,
+        OrderId $orderId,
     ): self {
-        return new self(PaymentId::generate(), $amount, $externalReference, $method, $status, $purchaseId);
+        return new self(PaymentId::generate(), $amount, $externalReference, $method, $status, $orderId);
     }
 
     public function id(): PaymentId
@@ -64,9 +64,9 @@ class Payment
         return $this->status;
     }
 
-    public function purchaseId(): PurchaseId
+    public function orderId(): OrderId
     {
-        return $this->purchaseId;
+        return $this->orderId;
     }
 
     public function changeAmount(PaymentAmount $amount): void

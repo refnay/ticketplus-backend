@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Sale\Purchase\Domain;
+namespace App\Sale\Order\Domain;
 
 use App\Shared\Domain\ValueObjects\StringValueObject;
 use Override;
 
-class PurchaseCurrency extends StringValueObject
+class OrderCurrency extends StringValueObject
 {
     #[Override]
     public function validate(): void

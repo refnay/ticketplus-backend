@@ -2,9 +2,9 @@
 
 namespace App\Sale\Payment\Infrastructure\Persistence;
 
-use App\Sale\Purchase\Domain\Exceptions\PurchaseNotFound;
-use App\Sale\Purchase\Domain\PurchaseId;
-use App\Shared\Infrastructure\Persistence\Entity\Purchase as PurchaseEntity;
+use App\Sale\Order\Domain\Exceptions\OrderNotFound;
+use App\Sale\Order\Domain\OrderId;
+use App\Shared\Infrastructure\Persistence\Entity\Purchase as OrderEntity;
 use Doctrine\ORM\EntityManagerInterface;
 use Throwable;
 
@@ -14,12 +14,12 @@ class RelationFetcher
     {
     }
 
-    public function purchase(PurchaseId $id): PurchaseEntity
+    public function order(OrderId $id): OrderEntity
     {
         try {
-            return $this->entityManager->getReference(PurchaseEntity::class, $id->toUuid());
+            return $this->entityManager->getReference(OrderEntity::class, $id->toUuid());
         } catch (Throwable) {
-            throw new PurchaseNotFound();
+            throw new OrderNotFound();
         }
     }
 }

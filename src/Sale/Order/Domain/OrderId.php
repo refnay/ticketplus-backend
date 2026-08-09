@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Sale\Purchase\Domain;
+namespace App\Sale\Order\Domain;
 
 use App\Shared\Domain\ValueObjects\UuidValueObject;
 use Override;
 
-class PurchaseId extends UuidValueObject 
+class OrderId extends UuidValueObject 
 {
     #[Override]
     public function validate(): void

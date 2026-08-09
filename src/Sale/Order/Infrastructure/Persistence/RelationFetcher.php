@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Sale\Purchase\Infrastructure\Persistence;
+namespace App\Sale\Order\Infrastructure\Persistence;
 
 use App\Sale\Discount\Domain\DiscountId;
 use App\Sale\Discount\Domain\Exceptions\DiscountNotFound;

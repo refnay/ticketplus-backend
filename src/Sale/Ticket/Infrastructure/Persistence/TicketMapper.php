@@ -2,7 +2,7 @@
 
 namespace App\Sale\Ticket\Infrastructure\Persistence;
 
-use App\Sale\Purchase\Domain\PurchaseId;
+use App\Sale\Order\Domain\OrderId;
 use App\Sale\Shared\Domain\ZoneId;
 use App\Sale\Ticket\Domain\Ticket;
 use App\Sale\Ticket\Domain\TicketId;
@@ -30,7 +30,7 @@ class TicketMapper
         $entity->setSeatCode($ticket->information()->seatCode());
         $entity->setPrice($ticket->price()->value());
         $entity->setStatus($ticket->status()->value());
-        $entity->setPurchase($this->fetcher->purchase($ticket->purchaseId()));
+        $entity->setPurchase($this->fetcher->order($ticket->orderId()));
         $entity->setZone($this->fetcher->zone($ticket->zoneId()));
 
         if (!is_null($ticket->seatId())) {
@@ -53,7 +53,7 @@ class TicketMapper
             TicketPrice::fromFloat($entity->getPrice()),
             TicketQRCode::fromString($entity->getQRCode()),
             TicketStatus::fromInt($entity->getStatus()),
-            PurchaseId::fromString($entity->getPurchase()->getId()),
+            OrderId::fromString($entity->getPurchase()->getId()),
             ZoneId::fromString($entity->getZone()->getId()),
         );
         $ticket->changeSeatId($entity->getSeat()?->getId());

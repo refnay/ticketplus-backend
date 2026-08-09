@@ -1,65 +1,65 @@
 <?php
 
-namespace App\Sale\Purchase\Infrastructure\Persistence;
+namespace App\Sale\Order\Infrastructure\Persistence;
 
-use App\Sale\Purchase\Domain\Exceptions\PurchaseNotCreated;
-use App\Sale\Purchase\Domain\Exceptions\PurchaseNotDeleted;
-use App\Sale\Purchase\Domain\Exceptions\PurchaseNotUpdated;
-use App\Sale\Purchase\Domain\Purchase;
-use App\Sale\Purchase\Domain\PurchaseId;
-use App\Sale\Purchase\Domain\PurchaseRepository;
+use App\Sale\Order\Domain\Exceptions\OrderNotCreated;
+use App\Sale\Order\Domain\Exceptions\OrderNotDeleted;
+use App\Sale\Order\Domain\Exceptions\OrderNotUpdated;
+use App\Sale\Order\Domain\Order;
+use App\Sale\Order\Domain\OrderId;
+use App\Sale\Order\Domain\OrderRepository;
 use App\Sale\Shared\Domain\UserId;
 use App\Shared\Infrastructure\Persistence\Doctrine\QueryBuilder;
 use Doctrine\ORM\EntityManagerInterface;
 use Override;
 use Throwable;
 
-class PurchaseDoctrineRepository implements PurchaseRepository
+class OrderDoctrineRepository implements OrderRepository
 {
-    private const string PURCHASE_PREFIX = 'p';
+    private const string ORDER_PREFIX = 'o';
 
-    public function __construct(private EntityManagerInterface $entityManager, private PurchaseMapper $mapper)
+    public function __construct(private EntityManagerInterface $entityManager, private OrderMapper $mapper)
     {
     }
     
     #[Override]
-    public function save(Purchase $purchase): void
+    public function save(Order $order): void
     {
         try {
-            $entity = $this->mapper->newEntity($purchase);
+            $entity = $this->mapper->newEntity($order);
             $this->entityManager->persist($entity);
             $this->entityManager->flush();
         } catch (Throwable) {
-            throw new PurchaseNotCreated();
+            throw new OrderNotCreated();
         }
     }
 
     #[Override]
-    public function update(Purchase $purchase): void
+    public function update(Order $order): void
     {
         try {
-            $entity = $this->entityManager->getReference($this->mapper->entityClass(), $purchase->id()->value());
-            $this->mapper->update($entity, $purchase);
+            $entity = $this->entityManager->getReference($this->mapper->entityClass(), $order->id()->value());
+            $this->mapper->update($entity, $order);
             $this->entityManager->flush();
         } catch (Throwable) {
-            throw new PurchaseNotUpdated();
+            throw new OrderNotUpdated();
         }
     }
 
     #[Override]
-    public function delete(Purchase $purchase): void
+    public function delete(Order $order): void
     {
         try {
-            $entity = $this->entityManager->getReference($this->mapper->entityClass(), $purchase->id()->value());
+            $entity = $this->entityManager->getReference($this->mapper->entityClass(), $order->id()->value());
             $this->entityManager->remove($entity);
             $this->entityManager->flush();
         } catch (Throwable) {
-            throw new PurchaseNotDeleted();
+            throw new OrderNotDeleted();
         }
     }
 
     #[Override]
-    public function findById(PurchaseId $id, UserId $userId): ?Purchase
+    public function findById(OrderId $id, UserId $userId): ?Order
     {
         $entity = $this->entityManager
             ->getRepository($this->mapper->entityClass())
@@ -72,7 +72,7 @@ class PurchaseDoctrineRepository implements PurchaseRepository
     public function searchByFilters(array $filters, string $orderBy, string $order, ?int $limit, ?int $offset): array
     {
         $queryBuilder = QueryBuilder::from(
-            $this->entityManager->getRepository($this->mapper->entityClass())->createQueryBuilder(self::PURCHASE_PREFIX)
+            $this->entityManager->getRepository($this->mapper->entityClass())->createQueryBuilder(self::ORDER_PREFIX)
         );
 
         $queryBuilder->equals('attendee', $filters['attendee'] ?? null)
@@ -88,13 +88,13 @@ class PurchaseDoctrineRepository implements PurchaseRepository
     public function countByFilters(array $filters): int
     {
         $queryBuilder = QueryBuilder::from(
-            $this->entityManager->getRepository($this->mapper->entityClass())->createQueryBuilder(self::PURCHASE_PREFIX)
+            $this->entityManager->getRepository($this->mapper->entityClass())->createQueryBuilder(self::ORDER_PREFIX)
         );
 
         $queryBuilder->equals('attendee', $filters['attendee'] ?? null);
 
         return (int) $queryBuilder->queryBuilder()
-            ->select('COUNT(' . self::PURCHASE_PREFIX . '.id)')
+            ->select('COUNT(' . self::ORDER_PREFIX . '.id)')
             ->getQuery()
             ->getSingleScalarResult();
     } 

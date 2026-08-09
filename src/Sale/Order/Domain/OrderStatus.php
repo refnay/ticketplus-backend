@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Sale\Purchase\Domain;
+namespace App\Sale\Order\Domain;
 
 use App\Shared\Domain\ValueObjects\IntValueObject;
 use Override;
 
-class PurchaseStatus extends IntValueObject  
+class OrderStatus extends IntValueObject  
 {
     #[Override]
     public function validate(): void

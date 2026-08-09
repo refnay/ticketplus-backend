@@ -2,7 +2,7 @@
 
 namespace App\Sale\Ticket\Infrastructure\Persistence;
 
-use App\Sale\Purchase\Domain\PurchaseId;
+use App\Sale\Order\Domain\OrderId;
 use App\Sale\Ticket\Domain\Exceptions\TicketNotCreated;
 use App\Sale\Ticket\Domain\Exceptions\TicketNotDeleted;
 use App\Sale\Ticket\Domain\Exceptions\TicketNotUpdated;
@@ -59,11 +59,11 @@ class TicketDoctrineRepository implements TicketRepository
     }
 
     #[Override]
-    public function findById(TicketId $id, PurchaseId $purchaseId): ?Ticket
+    public function findById(TicketId $id, OrderId $orderId): ?Ticket
     {
         $entity = $this->entityManager
             ->getRepository($this->mapper->entityClass())
-            ->findOneBy(['id' => $id->value(), 'purchase' => $purchaseId->value()]);
+            ->findOneBy(['id' => $id->value(), 'purchase' => $orderId->value()]);
 
         return !is_null($entity) ? $this->mapper->newDomain($entity) : null;
     }
@@ -75,7 +75,7 @@ class TicketDoctrineRepository implements TicketRepository
             $this->entityManager->getRepository($this->mapper->entityClass())->createQueryBuilder(self::TICKET_PREFIX)
         );
 
-        $queryBuilder->equals('purchase', $filters['purchase'] ?? null)
+        $queryBuilder->equals('purchase', $filters['order'] ?? null)
             ->applyOrder($orderBy, $order)
             ->paginate($limit, $offset);
 
@@ -91,7 +91,7 @@ class TicketDoctrineRepository implements TicketRepository
             $this->entityManager->getRepository($this->mapper->entityClass())->createQueryBuilder(self::TICKET_PREFIX)
         );
 
-        $queryBuilder->equals('purchase', $filters['purchase'] ?? null);
+        $queryBuilder->equals('purchase', $filters['order'] ?? null);
 
         return (int) $queryBuilder->queryBuilder()
             ->select('COUNT(' . self::TICKET_PREFIX . '.id)')

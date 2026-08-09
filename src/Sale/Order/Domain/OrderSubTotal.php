@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Sale\Purchase\Domain;
+namespace App\Sale\Order\Domain;
 
 use App\Shared\Domain\ValueObjects\FloatValueObject;
 use Override;
 
-class PurchaseSubTotal extends FloatValueObject  
+class OrderSubTotal extends FloatValueObject  
 {
     #[Override]
     public function validate(): void

@@ -2,7 +2,7 @@
 
 namespace App\Sale\Ticket\Domain;
 
-use App\Sale\Purchase\Domain\PurchaseId;
+use App\Sale\Order\Domain\OrderId;
 use App\Sale\Shared\Domain\SeatId;
 use App\Sale\Shared\Domain\ZoneId;
 
@@ -14,7 +14,7 @@ class Ticket
     private TicketQRCode $qrCode;
     private TicketStatus $status;
     private ZoneId $zoneId;
-    private PurchaseId $purchaseId;
+    private OrderId $orderId;
     private ?SeatId $seatId = null;
 
     public function __construct(
@@ -23,7 +23,7 @@ class Ticket
         TicketPrice $price,
         TicketQRCode $qrCode,
         TicketStatus $status,
-        PurchaseId $purchaseId,
+        OrderId $orderId,
         ZoneId $zoneId,
     ) {
         $this->id = $id;
@@ -31,7 +31,7 @@ class Ticket
         $this->price = $price;
         $this->qrCode = $qrCode;
         $this->status = $status;
-        $this->purchaseId = $purchaseId;
+        $this->orderId = $orderId;
         $this->zoneId = $zoneId;
     }
 
@@ -40,7 +40,7 @@ class Ticket
         TicketPrice $price,
         TicketQRCode $qrCode,
         TicketStatus $status,
-        PurchaseId $purchaseId,
+        OrderId $orderId,
         ZoneId $zoneId,
     ): self {
         return new self(
@@ -49,7 +49,7 @@ class Ticket
             $price,
             $qrCode,
             $status,
-            $purchaseId,
+            $orderId,
             $zoneId,
         );
     }
@@ -79,9 +79,9 @@ class Ticket
         return $this->status;
     }
 
-    public function purchaseId(): PurchaseId
+    public function orderId(): OrderId
     {
-        return $this->purchaseId;
+        return $this->orderId;
     }
 
     public function zoneId(): ZoneId

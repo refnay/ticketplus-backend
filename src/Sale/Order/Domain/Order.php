@@ -1,30 +1,30 @@
 <?php
 
-namespace App\Sale\Purchase\Domain;
+namespace App\Sale\Order\Domain;
 
 use App\Sale\Discount\Domain\DiscountId;
 use App\Sale\Shared\Domain\UserId;
 
-class Purchase
+class Order
 {
-    private PurchaseId $id;
-    private PurchaseCurrency $currency;
-    private PurchasePaymentMethod $paymentMethod;
-    private PurchaseStatus $status;
-    private PurchaseSubTotal $subTotal;
-    private PurchaseTax $tax;
-    private PurchaseTotal $total;
+    private OrderId $id;
+    private OrderCurrency $currency;
+    private OrderPaymentMethod $paymentMethod;
+    private OrderStatus $status;
+    private OrderSubTotal $subTotal;
+    private OrderTax $tax;
+    private OrderTotal $total;
     private UserId $userId;
     private ?DiscountId $discountId = null;
 
     public function __construct(
-        PurchaseId $id,
-        PurchaseCurrency $currency,
-        PurchasePaymentMethod $paymentMethod,
-        PurchaseStatus $status,
-        PurchaseSubTotal $subTotal,
-        PurchaseTax $tax,
-        PurchaseTotal $total,
+        OrderId $id,
+        OrderCurrency $currency,
+        OrderPaymentMethod $paymentMethod,
+        OrderStatus $status,
+        OrderSubTotal $subTotal,
+        OrderTax $tax,
+        OrderTotal $total,
         UserId $userId,
     ) {
         $this->id = $id;
@@ -38,16 +38,16 @@ class Purchase
     }
 
     public static function create(
-        PurchaseCurrency $currency,
-        PurchasePaymentMethod $paymentMethod,
-        PurchaseStatus $status,
-        PurchaseSubTotal $subTotal,
-        PurchaseTax $tax,
-        PurchaseTotal $total,
+        OrderCurrency $currency,
+        OrderPaymentMethod $paymentMethod,
+        OrderStatus $status,
+        OrderSubTotal $subTotal,
+        OrderTax $tax,
+        OrderTotal $total,
         UserId $userId,
     ): self {
         return new self(
-            PurchaseId::generate(),
+            OrderId::generate(),
             $currency,
             $paymentMethod,
             $status,
@@ -58,37 +58,37 @@ class Purchase
         );
     }
 
-    public function id(): PurchaseId
+    public function id(): OrderId
     {
         return $this->id;
     }
 
-    public function currency(): PurchaseCurrency
+    public function currency(): OrderCurrency
     {
         return $this->currency;
     }
 
-    public function paymentMethod(): PurchasePaymentMethod
+    public function paymentMethod(): OrderPaymentMethod
     {
         return $this->paymentMethod;
     }
 
-    public function status(): PurchaseStatus
+    public function status(): OrderStatus
     {
         return $this->status;
     }
 
-    public function subTotal(): PurchaseSubTotal
+    public function subTotal(): OrderSubTotal
     {
         return $this->subTotal;
     }
 
-    public function tax(): PurchaseTax
+    public function tax(): OrderTax
     {
         return $this->tax;
     }
 
-    public function total(): PurchaseTotal
+    public function total(): OrderTotal
     {
         return $this->total;
     }
@@ -103,32 +103,32 @@ class Purchase
         return $this->discountId;
     }
 
-    public function changeCurrency(PurchaseCurrency $currency): void
+    public function changeCurrency(OrderCurrency $currency): void
     {
         $this->currency = $currency;
     }
 
-    public function changePaymentMethod(PurchasePaymentMethod $paymentMethod): void
+    public function changePaymentMethod(OrderPaymentMethod $paymentMethod): void
     {
         $this->paymentMethod = $paymentMethod;
     }
 
-    public function changeStatus(PurchaseStatus $status): void
+    public function changeStatus(OrderStatus $status): void
     {
         $this->status = $status;
     }
 
-    public function changeSubTotal(PurchaseSubTotal $subTotal): void
+    public function changeSubTotal(OrderSubTotal $subTotal): void
     {
         $this->subTotal = $subTotal;
     }
 
-    public function changeTax(PurchaseTax $tax): void
+    public function changeTax(OrderTax $tax): void
     {
         $this->tax = $tax;
     }
 
-    public function changeTotal(PurchaseTotal $total): void
+    public function changeTotal(OrderTotal $total): void
     {
         $this->total = $total;
     }

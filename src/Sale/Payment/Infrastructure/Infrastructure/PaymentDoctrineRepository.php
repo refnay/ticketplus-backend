@@ -8,7 +8,7 @@ use App\Sale\Payment\Domain\Exceptions\PaymentNotUpdated;
 use App\Sale\Payment\Domain\Payment;
 use App\Sale\Payment\Domain\PaymentId;
 use App\Sale\Payment\Domain\PaymentRepository;
-use App\Sale\Purchase\Domain\PurchaseId;
+use App\Sale\Order\Domain\OrderId;
 use App\Shared\Infrastructure\Persistence\Doctrine\QueryBuilder;
 use Doctrine\ORM\EntityManagerInterface;
 use Override;
@@ -59,11 +59,11 @@ class PaymentDoctrineRepository implements PaymentRepository
     }
 
     #[Override]
-    public function findById(PaymentId $id, PurchaseId $purchaseId): ?Payment
+    public function findById(PaymentId $id, OrderId $orderId): ?Payment
     {
         $entity = $this->entityManager
             ->getRepository($this->mapper->entityClass())
-            ->findOneBy(['id' => $id->value(), 'purchase' => $purchaseId->value()]);
+            ->findOneBy(['id' => $id->value(), 'purchase' => $orderId->value()]);
 
         return !is_null($entity) ? $this->mapper->newDomain($entity) : null;
     }
@@ -75,7 +75,7 @@ class PaymentDoctrineRepository implements PaymentRepository
             $this->entityManager->getRepository($this->mapper->entityClass())->createQueryBuilder(self::PAYMENT_PREFIX)
         );
 
-        $queryBuilder->equals('purchase', $filters['purchase'] ?? null)
+        $queryBuilder->equals('purchase', $filters['order'] ?? null)
             ->applyOrder($orderBy, $order)
             ->paginate($limit, $offset);
 
@@ -91,7 +91,7 @@ class PaymentDoctrineRepository implements PaymentRepository
             $this->entityManager->getRepository($this->mapper->entityClass())->createQueryBuilder(self::PAYMENT_PREFIX)
         );
 
-        $queryBuilder->equals('purchase', $filters['purchase'] ?? null);
+        $queryBuilder->equals('purchase', $filters['order'] ?? null);
 
         return (int) $queryBuilder->queryBuilder()
             ->select('COUNT(' . self::PAYMENT_PREFIX . '.id)')
