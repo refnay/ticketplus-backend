@@ -2,8 +2,8 @@
 
 namespace App\Shared\Domain;
 
-use App\Account\Company\Domain\CompanyMemberStatusList;
-use App\Account\Company\Domain\Exceptions\CompanyMemberNotAllowed;
+use App\Account\CompanyMember\Domain\CompanyMemberStatusList;
+use App\Account\CompanyMember\Domain\Exceptions\CompanyMemberNotAllowed;
 use App\Account\User\Domain\UserStatusList;
 use App\Shared\Domain\Exceptions\CompanyMemberRequired;
 use App\Shared\Domain\Exceptions\CompanyRequired;
