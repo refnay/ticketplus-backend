@@ -100,4 +100,4 @@ class ReviewDoctrineRepository implements ReviewRepository
             ->getQuery()
             ->getSingleScalarResult();
     } 
-}s
+}
