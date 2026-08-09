@@ -19,10 +19,10 @@ class Ticket
     private ?Uuid $QRCode = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $name = null;
+    private ?string $eventName = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTime $dayDate = null;
+    private ?\DateTime $date = null;
 
     #[ORM\Column(length: 50)]
     private ?string $zoneName = null;
@@ -77,26 +77,26 @@ class Ticket
         return $this;
     }
 
-    public function getName(): ?string
+    public function getEventName(): ?string
     {
-        return $this->name;
+        return $this->eventName;
     }
 
-    public function setName(string $name): static
+    public function setEventName(string $eventName): static
     {
-        $this->name = $name;
+        $this->eventName = $eventName;
 
         return $this;
     }
 
-    public function getDayDate(): ?\DateTime
+    public function getDate(): ?\DateTime
     {
-        return $this->dayDate;
+        return $this->date;
     }
 
-    public function setDayDate(\DateTime $dayDate): static
+    public function setDate(\DateTime $date): static
     {
-        $this->dayDate = $dayDate;
+        $this->date = $date;
 
         return $this;
     }
