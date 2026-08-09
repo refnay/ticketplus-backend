@@ -2,6 +2,7 @@
 
 namespace App\Catalog\Event\Application\Find;
 
+use App\Catalog\Category\Domain\Category;
 use App\Catalog\Event\Domain\Event;
 use App\Catalog\Event\Domain\EventDay;
 use JsonSerializable;
@@ -28,7 +29,7 @@ class EventResponse implements JsonSerializable
         $this->days = $days;
     }
 
-    public static function create(Event $event): self
+    public static function create(Event $event, Category $category): self
     {
         return new self(
             $event->id()->value(),
@@ -41,7 +42,7 @@ class EventResponse implements JsonSerializable
             $event->country()->value(),
             $event->city()->value(),
             $event->status()->value(),
-            $event->category()->toChooser(),
+            $category->toChooser(),
             ...array_map(self::dayResponse(...), $event->days()),
         );
     }

@@ -2,10 +2,7 @@
 
 namespace App\Catalog\Event\Infrastructure\Persistence;
 
-use App\Catalog\Category\Domain\Category;
 use App\Catalog\Category\Domain\CategoryId;
-use App\Catalog\Category\Domain\CategoryName;
-use App\Catalog\Category\Domain\CategoryReference;
 use App\Catalog\Event\Domain\Event;
 use App\Catalog\Event\Domain\EventBannerImage;
 use App\Catalog\Event\Domain\EventCanvas;
@@ -48,7 +45,7 @@ class EventMapper
         $entity->setCity($event->city()->value());
         $entity->setStatus($event->status()->value());
         $entity->setCompany($this->fetcher->company($event->companyId()));
-        $entity->setCategory($this->fetcher->category($event->category()->id()));
+        $entity->setCategory($this->fetcher->category($event->categoryId()));
         $entity->setCanvas($event->canvas()->value());
 
         foreach ($event->days() as $day) {
@@ -69,15 +66,6 @@ class EventMapper
 
     public function newDomain(EventEntity $entity): Event
     {
-        $categoryEntity = $entity->getCategory();
-
-        $category = new Category(
-            CategoryId::fromString($categoryEntity->getId()),
-            CategoryName::fromString($categoryEntity->getName()),
-            CategoryReference::fromInt($categoryEntity->getReference()),
-            CompanyId::fromString($categoryEntity->getCompany()->getId()),
-        );
-
         $event = new Event(
             EventId::fromString($entity->getId()),
             EventName::fromString($entity->getName()),
@@ -90,7 +78,7 @@ class EventMapper
             EventCity::fromString($entity->getCity()),
             EventStatus::fromInt($entity->getStatus()),
             EventCanvas::fromArray($entity->getCanvas()),
-            $category,
+            CategoryId::fromString($entity->getCategory()->getId()),
             CompanyId::fromString($entity->getCompany()->getId()),
         );
         $event->assignAudit($entity->getCreatedAt(), $entity->getUpdatedAt());
@@ -122,7 +110,7 @@ class EventMapper
         $entity->setCountry($event->country()->value());
         $entity->setCity($event->city()->value());
         $entity->setStatus($event->status()->value());
-        $entity->setCategory($this->fetcher->category($event->category()->id()));
+        $entity->setCategory($this->fetcher->category($event->categoryId()));
         $entity->setCanvas($event->canvas()->value());
 
         $currentDays = [];

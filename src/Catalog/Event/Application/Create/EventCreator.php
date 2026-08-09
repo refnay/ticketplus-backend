@@ -12,13 +12,11 @@ use App\Catalog\Event\Domain\EventDayDate;
 use App\Catalog\Event\Domain\EventDayDescription;
 use App\Catalog\Event\Domain\EventDayEndTime;
 use App\Catalog\Event\Domain\EventDayStartTime;
-use App\Catalog\Event\Domain\EventDayStatus;
 use App\Catalog\Event\Domain\EventDescription;
 use App\Catalog\Event\Domain\EventLocation;
 use App\Catalog\Event\Domain\EventName;
 use App\Catalog\Event\Domain\EventRepository;
 use App\Catalog\Event\Domain\EventSlug;
-use App\Catalog\Event\Domain\EventStatus;
 use App\Catalog\Event\Domain\Exceptions\EventAlreadyExists;
 use App\Catalog\Event\Domain\Exceptions\EventNotFound;
 use App\Catalog\Event\Domain\Services\EventBySlugFinder;
@@ -61,7 +59,7 @@ class EventCreator
             $location,
             $country,
             $city,
-            $category,
+            $category->id(),
             $companyId,
         );
 

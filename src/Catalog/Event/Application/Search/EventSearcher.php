@@ -2,12 +2,13 @@
 
 namespace App\Catalog\Event\Application\Search;
 
+use App\Catalog\Category\Domain\Services\CategoryFinder;
 use App\Catalog\Event\Domain\Event;
 use App\Catalog\Event\Domain\EventRepository;
 
 class EventSearcher
 {
-    public function __construct(private EventRepository $repository)
+    public function __construct(private EventRepository $repository, private CategoryFinder $categoryFinder)
     {
     }
 
@@ -26,6 +27,10 @@ class EventSearcher
 
     private function makeResponse(): callable
     {
-        return fn(Event $event) => EventResponse::create($event);
+        return function (Event $event) {
+            $category = $this->categoryFinder->__invoke($event->categoryId(), $event->companyId());
+
+            return EventResponse::create($event, $category);
+        };
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Catalog\Event\Domain;
 
-use App\Catalog\Category\Domain\Category;
+use App\Catalog\Category\Domain\CategoryId;
 use App\Catalog\Shared\Domain\CompanyId;
 use App\Shared\Domain\Audit;
 
@@ -20,10 +20,10 @@ class Event
     private EventCountry $country;
     private EventCity $city;
     private EventStatus $status;
-    private Category $category;
+    private CategoryId $categoryId;
     private CompanyId $companyId;
     /** @var EventDay[] $days */
-    private $days = [];
+    private array $days = [];
 
     public function __construct(
         EventId $id,
@@ -37,7 +37,7 @@ class Event
         EventCity $city,
         EventStatus $status,
         EventCanvas $canvas,
-        Category $category,
+        CategoryId $categoryId,
         CompanyId $companyId,
     ) {
         $this->id = $id;
@@ -51,7 +51,7 @@ class Event
         $this->city = $city;
         $this->status = $status;
         $this->canvas = $canvas;
-        $this->category = $category;
+        $this->categoryId = $categoryId;
         $this->companyId = $companyId;
     }
 
@@ -62,7 +62,7 @@ class Event
         EventLocation $location,
         EventCountry $country,
         EventCity $city,
-        Category $category,
+        CategoryId $categoryId,
         CompanyId $companyId,
     ): self {
         return new self(
@@ -77,7 +77,7 @@ class Event
             $city,
             EventStatus::draft(),
             EventCanvas::fromNull(),
-            $category,
+            $categoryId,
             $companyId,
         );
     }
@@ -137,9 +137,9 @@ class Event
         return $this->status;
     }
 
-    public function category(): Category
+    public function categoryId(): CategoryId
     {
-        return $this->category;
+        return $this->categoryId;
     }
 
     public function companyId(): CompanyId
@@ -198,9 +198,9 @@ class Event
         $this->status = $status;
     }
 
-    public function changeCategory(Category $category): void
+    public function changeCategoryId(CategoryId $categoryId): void
     {
-        $this->category = $category;
+        $this->categoryId = $categoryId;
     }
 
     public function changeCanvas(EventCanvas $canvas): void

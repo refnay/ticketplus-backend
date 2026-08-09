@@ -2,6 +2,7 @@
 
 namespace App\Catalog\Event\Application\Search;
 
+use App\Catalog\Category\Domain\Category;
 use App\Catalog\Event\Domain\Event;
 use JsonSerializable;
 use Override;
@@ -20,7 +21,7 @@ class EventResponse implements JsonSerializable
     ) {
     }
 
-    public static function create(Event $event): self
+    public static function create(Event $event, Category $category): self
     {
         return new self(
             $event->id()->value(),
@@ -29,7 +30,7 @@ class EventResponse implements JsonSerializable
             $event->country()->value(),
             $event->city()->value(),
             $event->status()->value(),
-            $event->category()->name(),
+            $category->name()->value(),
             $event->firstDay()?->date()->asDMY(),
         );
     }

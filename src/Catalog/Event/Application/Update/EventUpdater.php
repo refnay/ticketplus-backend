@@ -45,7 +45,7 @@ class EventUpdater
         $event->changeCountry($country);
         $event->changeCity($city);
         $event->changeStatus($status);
-        $event->changeCategory($category);
+        $event->changeCategoryId($category->id());
 
         $this->synchronizer->days($event, $days);
 
