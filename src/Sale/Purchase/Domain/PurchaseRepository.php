@@ -10,7 +10,7 @@ interface PurchaseRepository
 
     public function delete(Purchase $category): void;
 
-    public function findById(PurchaseId $id, UserId $companyId): ?Purchase;
+    public function findById(PurchaseId $id, UserId $userId): ?Purchase;
 
     public function searchByFilters(array $filters, string $orderBy, string $order, ?int $limit, ?int $offset): array;
 

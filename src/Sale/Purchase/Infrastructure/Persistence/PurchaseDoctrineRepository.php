@@ -59,11 +59,11 @@ class PurchaseDoctrineRepository implements PurchaseRepository
     }
 
     #[Override]
-    public function findById(PurchaseId $id, UserId $companyId): ?Purchase
+    public function findById(PurchaseId $id, UserId $userId): ?Purchase
     {
         $entity = $this->entityManager
             ->getRepository($this->mapper->entityClass())
-            ->findOneBy(['id' => $id->value(), 'company' => $companyId->value()]);
+            ->findOneBy(['id' => $id->value(), 'attendee' => $userId->value()]);
 
         return !is_null($entity) ? $this->mapper->newDomain($entity) : null;
     }
