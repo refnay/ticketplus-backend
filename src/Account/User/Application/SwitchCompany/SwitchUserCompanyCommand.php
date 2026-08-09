@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Account\User\Application\Switch;
+namespace App\Account\User\Application\SwitchCompany;
 
 use App\Shared\Application\Command\BaseCommand;
 use App\Shared\Domain\Utils\PayloadMapper;

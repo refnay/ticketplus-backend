@@ -2,7 +2,7 @@
 
 namespace App\Account\User\Infrastructure\Controller;
 
-use App\Account\User\Application\Switch\SwitchUserCompanyCommand;
+use App\Account\User\Application\SwitchCompany\SwitchUserCompanyCommand;
 use App\Shared\Application\MessageBus;
 use App\Shared\Domain\Session;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

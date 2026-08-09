@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Account\User\Application\Switch;
+namespace App\Account\User\Application\SwitchCompany;
 
 use App\Account\User\Domain\UserCurrentCompany;
 use App\Account\User\Domain\UserId;
