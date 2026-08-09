@@ -6,6 +6,8 @@ use App\Account\Member\Domain\Member;
 use App\Account\Member\Domain\MemberId;
 use App\Account\Member\Domain\MemberRepository;
 use App\Account\Member\Domain\Exceptions\MemberNotCreated;
+use App\Account\Member\Domain\Exceptions\MemberNotDeleted;
+use App\Account\Member\Domain\Exceptions\MemberNotUpdated;
 use App\Shared\Infrastructure\Persistence\Doctrine\QueryBuilder;
 use Doctrine\ORM\EntityManagerInterface;
 use Override;
@@ -28,6 +30,30 @@ class MemberDoctrineRepository implements MemberRepository
             $this->entityManager->flush();
         } catch (Throwable) {
             throw new MemberNotCreated();
+        }
+    }
+
+    #[Override]
+    public function update(Member $member): void
+    {
+        try {
+            $entity = $this->entityManager->getReference($this->mapper->entityClass(), $member->id()->value());
+            $this->mapper->update($entity, $member);
+            $this->entityManager->flush();
+        } catch (Throwable) {
+            throw new MemberNotUpdated();
+        }
+    }
+
+    #[Override]
+    public function delete(Member $member): void
+    {
+        try {
+            $entity = $this->entityManager->getReference($this->mapper->entityClass(), $member->id()->value());
+            $this->entityManager->remove($entity);
+            $this->entityManager->flush();
+        } catch (Throwable) {
+            throw new MemberNotDeleted();
         }
     }
 

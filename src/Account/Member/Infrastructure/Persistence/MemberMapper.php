@@ -42,6 +42,12 @@ class MemberMapper
         return $member;
     }
 
+    public function update(MemberEntity $entity, Member $member): void
+    {
+        $entity->setRole($member->role()->value());
+        $entity->setStatus($member->status()->value());
+    }
+
     public function entityClass(): string
     {
         return MemberEntity::class;
