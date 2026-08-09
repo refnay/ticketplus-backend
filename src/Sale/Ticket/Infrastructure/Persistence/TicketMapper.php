@@ -62,18 +62,21 @@ class TicketMapper
     {   
         $purchaseEntity = $entity->getPurchase();
         $discountEntity = $purchaseEntity->getDiscount();
-
-        $discount = new Discount(
-            DiscountId::fromString($discountEntity->getId()),
-            DiscountActive::fromBool($discountEntity->isActive()),
-            DiscountCode::fromString($discountEntity->getCode()),
-            DiscountStartDate::fromDateTime($discountEntity->getStartDate()),
-            DiscountEndDate::fromDateTime($discountEntity->getEndDate()),
-            DiscountType::fromInt($discountEntity->getType()),
-            DiscountUsage::create($discountEntity->getUsageLimit(), $discountEntity->getUsageCount()),
-            DiscountValue::fromFloat($discountEntity->getValue()),
-            EventId::fromString($discountEntity->getEvent()->getId()),
-        );
+        $discount = null;
+        
+        if (!is_null($discountEntity)) {
+            $discount = new Discount(
+                DiscountId::fromString($discountEntity->getId()),
+                DiscountActive::fromBool($discountEntity->isActive()),
+                DiscountCode::fromString($discountEntity->getCode()),
+                DiscountStartDate::fromDateTime($discountEntity->getStartDate()),
+                DiscountEndDate::fromDateTime($discountEntity->getEndDate()),
+                DiscountType::fromInt($discountEntity->getType()),
+                DiscountUsage::create($discountEntity->getUsageLimit(), $discountEntity->getUsageCount()),
+                DiscountValue::fromFloat($discountEntity->getValue()),
+                EventId::fromString($discountEntity->getEvent()->getId()),
+            );
+        }
         
         $purchase = new Purchase(
             PurchaseId::fromString($purchaseEntity->getId()),
