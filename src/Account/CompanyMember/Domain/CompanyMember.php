@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Account\Company\Domain;
+namespace App\Account\CompanyMember\Domain;
 
 use App\Account\Company\Domain\CompanyId;
 use App\Account\User\Domain\UserId;

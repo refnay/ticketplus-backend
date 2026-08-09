@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Account\User\Application\Company\Search;
+namespace App\Account\CompanyMember\Application\Company\SearchCompany;
 
 use App\Shared\Application\Query\ListQuery;
 use App\Shared\Domain\Utils\PayloadMapper;
 
-class SearchUserCompanyQuery extends ListQuery
+class SearchMemberCompanyQuery extends ListQuery
 {
     public function __construct(
         string $orderBy,

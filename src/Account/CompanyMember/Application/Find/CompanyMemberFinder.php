@@ -1,28 +1,28 @@
 <?php
 
-namespace App\Account\User\Application\Company\Find;
+namespace App\Account\CompanyMember\Application\Company\Find;
 
-use App\Account\Company\Domain\CompanyMemberId;
+use App\Account\CompanyMember\Domain\CompanyMemberId;
 use App\Account\Company\Domain\Services\CompanyFinder;
-use App\Account\Company\Domain\Services\CompanyMemberFinder;
-use App\Account\User\Domain\Services\UserFinder as ServicesUserFinder;
+use App\Account\CompanyMember\Domain\Services\CompanyMemberFinder as ServicesCompanyMemberFinder;
+use App\Account\User\Domain\Services\UserFinder;
 
-class UserCompanyFinder
+class CompanyMemberFinder
 {
     public function __construct(
-        private ServicesUserFinder $userFinder,
+        private UserFinder $userFinder,
         private CompanyFinder $companyFinder,
-        private CompanyMemberFinder $companyMemberFinder,
+        private ServicesCompanyMemberFinder $companyMemberFinder,
     ) {}
 
-    public function __invoke(CompanyMemberId $id): UserCompanyResponse
+    public function __invoke(CompanyMemberId $id): CompanyMemberResponse
     {
         $member = $this->companyMemberFinder->__invoke($id);
         
         $user = $this->userFinder->__invoke($member->userId());
         $company = $this->companyFinder->__invoke($member->companyId());
 
-        return new UserCompanyResponse(
+        return new CompanyMemberResponse(
             $user->id()->value(),
             $user->name()->value(),
             $user->lastName()->value(),

@@ -9,8 +9,6 @@ use App\Account\Company\Domain\CompanyDescription;
 use App\Account\Company\Domain\CompanyDocument;
 use App\Account\Company\Domain\CompanyEmail;
 use App\Account\Company\Domain\CompanyLocation;
-use App\Account\Company\Domain\CompanyMember;
-use App\Account\Company\Domain\CompanyMemberRole;
 use App\Account\Company\Domain\CompanyName;
 use App\Account\Company\Domain\CompanyRepository;
 use App\Account\Company\Domain\CompanyTelephone;
@@ -73,13 +71,6 @@ class CompanyCreator
             $telephone,
             $webSite,
         );
-
-        $member = CompanyMember::create(
-            CompanyMemberRole::owner(),
-            $user->id(),
-            $company->id()
-        );
-        $company->addMember($member);
 
         $this->repository->save($company);
 

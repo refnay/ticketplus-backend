@@ -16,8 +16,6 @@ class Company
     private ?CompanyDescription $description = null;
     private ?CompanyTelephone $telephone = null;
     private ?CompanyWebSite $webSite = null;
-    /** @var CompanyMember[] $members */
-    private $members = [];
 
     public function __construct( 
         CompanyId $id,
@@ -133,12 +131,6 @@ class Company
     {
         return $this->webSite ?? CompanyWebSite::fromNull();
     }
-    
-    /** @return CompanyMember[] */
-    public function members()
-    {
-        return $this->members;
-    }
 
     public function changeCity(CompanyCity $city): void
     {
@@ -193,34 +185,5 @@ class Company
     public function changeWebSite(CompanyWebSite $webSite): void
     {
         $this->webSite = $webSite;
-    }
-
-    public function addMember(CompanyMember $member): void
-    {
-        $this->members[] = $member;
-    }
-
-    public function findMemberById(CompanyMemberId $id): ?CompanyMember
-    {
-        foreach ($this->members() as $member) {
-            if ($member->id()->equals($id)) {
-                return $member;
-            }
-        }
-
-        return null;
-    }
-
-    public function removeMemberById(CompanyMemberId $id): bool
-    {
-        foreach ($this->members() as $index => $member) {
-            if ($member->id()->equals($id)) {
-                unset($this->members[$index]);
-                
-                return true;
-            }
-        }
-
-        return false;
     }
 }

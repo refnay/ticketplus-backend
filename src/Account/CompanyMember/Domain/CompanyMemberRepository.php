@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Account\Company\Domain;
+namespace App\Account\CompanyMember\Domain;
 
 interface CompanyMemberRepository
 {

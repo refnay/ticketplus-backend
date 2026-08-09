@@ -1,12 +1,10 @@
 <?php
 
-namespace App\Account\Company\Infrastructure\Persistence;
+namespace App\Account\CompanyMember\Infrastructure\Persistence;
 
-use App\Account\Company\Domain\CompanyId;
-use App\Account\Company\Domain\CompanyMember;
-use App\Account\Company\Domain\CompanyMemberId;
-use App\Account\Company\Domain\CompanyMemberRepository;
-use App\Account\User\Domain\UserId;
+use App\Account\CompanyMember\Domain\CompanyMember;
+use App\Account\CompanyMember\Domain\CompanyMemberId;
+use App\Account\CompanyMember\Domain\CompanyMemberRepository;
 use App\Shared\Infrastructure\Persistence\Doctrine\QueryBuilder;
 use Doctrine\ORM\EntityManagerInterface;
 use Override;

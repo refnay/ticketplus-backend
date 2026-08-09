@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Account\Company\Infrastructure\Persistence;
+namespace App\Account\CompanyMember\Infrastructure\Persistence;
 
 use App\Account\Company\Domain\CompanyId;
-use App\Account\Company\Domain\CompanyMember;
-use App\Account\Company\Domain\CompanyMemberId;
-use App\Account\Company\Domain\CompanyMemberRole;
-use App\Account\Company\Domain\CompanyMemberStatus;
+use App\Account\CompanyMember\Domain\CompanyMember;
+use App\Account\CompanyMember\Domain\CompanyMemberId;
+use App\Account\CompanyMember\Domain\CompanyMemberRole;
+use App\Account\CompanyMember\Domain\CompanyMemberStatus;
 use App\Account\User\Domain\UserId;
 use App\Shared\Infrastructure\Persistence\Entity\CompanyMember as CompanyMemberEntity;
 

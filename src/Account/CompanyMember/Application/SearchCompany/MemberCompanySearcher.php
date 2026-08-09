@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Account\User\Application\Company\Search;
+namespace App\Account\CompanyMember\Application\Company\SearchCompany;
 
-use App\Account\Company\Domain\CompanyMember;
-use App\Account\Company\Domain\CompanyMemberRepository;
+use App\Account\CompanyMember\Domain\CompanyMember;
+use App\Account\CompanyMember\Domain\CompanyMemberRepository;
 use App\Account\Company\Domain\Services\CompanyFinder;
 
-class UserCompanySearcher
+class MemberCompanySearcher
 {
     public function __construct(private CompanyMemberRepository $repository, private CompanyFinder $companyFinder)
     {
@@ -18,18 +18,18 @@ class UserCompanySearcher
         string $order,
         ?int $limit,
         ?int $offset,
-    ): UserCompaniesResponse {
+    ): MemberCompaniesResponse {
         $companies = $this->repository->searchByFilters($filters, $orderBy, $order, $limit, $offset);
         $total = $this->repository->countByFilters($filters);
 
-        return new UserCompaniesResponse($total, ...array_map($this->makeResponse(), $companies));
+        return new MemberCompaniesResponse($total, ...array_map($this->makeResponse(), $companies));
     }
 
     private function makeResponse(): callable
     {
-        return function (CompanyMember $companyMember): UserCompanyResponse {
+        return function (CompanyMember $companyMember): MemberCompanyResponse {
             $company = $this->companyFinder->__invoke($companyMember->companyId());
-            return new UserCompanyResponse(
+            return new MemberCompanyResponse(
                 $companyMember->id()->value(),
                 $companyMember->companyId()->value(),
                 $company->name()->value(),

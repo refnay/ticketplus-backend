@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Account\User\Application\Company\Search;
+namespace App\Account\CompanyMember\Application\Company\SearchCompany;
 
 use JsonSerializable;
 use Override;
 
-class UserCompanyResponse implements JsonSerializable
+class MemberCompanyResponse implements JsonSerializable
 {
     public function __construct(
         readonly private string $id,

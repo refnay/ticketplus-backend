@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Account\Company\Domain\Services;
+namespace App\Account\CompanyMember\Domain\Services;
 
-use App\Account\Company\Domain\CompanyMember;
-use App\Account\Company\Domain\CompanyMemberId;
-use App\Account\Company\Domain\CompanyMemberRepository;
-use App\Account\Company\Domain\Exceptions\CompanyMemberNotFound;
+use App\Account\CompanyMember\Domain\CompanyMember;
+use App\Account\CompanyMember\Domain\CompanyMemberId;
+use App\Account\CompanyMember\Domain\CompanyMemberRepository;
+use App\Account\CompanyMember\Domain\Exceptions\CompanyMemberNotFound;
 
 class CompanyMemberFinder
 {

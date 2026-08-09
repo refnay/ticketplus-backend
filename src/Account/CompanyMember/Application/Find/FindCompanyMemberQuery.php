@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Account\User\Application\Company\Find;
+namespace App\Account\CompanyMember\Application\Company\Find;
 
 use App\Shared\Application\Query\BaseQuery;
 
-class FindUserCompanyQuery extends BaseQuery
+class FindCompanyMemberQuery extends BaseQuery
 {
     public function __construct()
     {

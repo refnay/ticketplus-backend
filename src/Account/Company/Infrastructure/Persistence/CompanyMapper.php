@@ -11,17 +11,11 @@ use App\Account\Company\Domain\CompanyEmail;
 use App\Account\Company\Domain\CompanyId;
 use App\Account\Company\Domain\CompanyLocation;
 use App\Account\Company\Domain\CompanyLogo;
-use App\Account\Company\Domain\CompanyMember;
-use App\Account\Company\Domain\CompanyMemberId;
-use App\Account\Company\Domain\CompanyMemberRole;
-use App\Account\Company\Domain\CompanyMemberStatus;
 use App\Account\Company\Domain\CompanyName;
 use App\Account\Company\Domain\CompanyStatus;
 use App\Account\Company\Domain\CompanyTelephone;
 use App\Account\Company\Domain\CompanyWebSite;
-use App\Account\User\Domain\UserId;
 use App\Shared\Infrastructure\Persistence\Entity\Company as CompanyEntity;
-use App\Shared\Infrastructure\Persistence\Entity\CompanyMember as CompanyMemberEntity;
 
 class CompanyMapper
 {
@@ -47,17 +41,6 @@ class CompanyMapper
         $entity->setLocation($company->location()->value());
         $entity->setStatus($company->status()->value());
 
-        foreach ($company->members() as $member) {
-            $memberEntity = new CompanyMemberEntity();
-
-            $memberEntity->setId($member->id()->toUuid());
-            $memberEntity->setRole($member->role()->value());
-            $memberEntity->setCompany($entity);
-            $memberEntity->setMember($this->fetcher->user($member->userId()));
-
-            $entity->addMember($memberEntity);
-        }
-
         return $entity;
     }
 
@@ -77,18 +60,6 @@ class CompanyMapper
             CompanyTelephone::fromString($entity->getTelephone()),
             CompanyWebSite::fromString($entity->getWebSite()),
         );
-
-        foreach ($entity->getMembers() as $memberEntity) {
-            $member = new CompanyMember(
-                CompanyMemberId::fromString($memberEntity->getId()),
-                CompanyMemberRole::fromInt($memberEntity->getRole()),
-                CompanyMemberStatus::fromInt($memberEntity->getStatus()),
-                UserId::fromString($memberEntity->getMember()->getId()),
-                $company->id(),
-            );
-            
-            $company->addMember($member);
-        }
 
         return $company;
     }

@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Account\User\Application\Company\Search;
+namespace App\Account\CompanyMember\Application\Company\SearchCompany;
 
 use JsonSerializable;
 use Override;
 
-class UserCompaniesResponse implements JsonSerializable 
+class MemberCompaniesResponse implements JsonSerializable 
 {
     private array $companies = [];
 
-    public function __construct(private int $total, UserCompanyResponse ...$companies)
+    public function __construct(private int $total, MemberCompanyResponse ...$companies)
     {
         $this->companies = $companies;
     }
