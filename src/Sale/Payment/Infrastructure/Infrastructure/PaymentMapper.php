@@ -15,7 +15,7 @@ use App\Sale\Payment\Domain\Payment;
 use App\Sale\Payment\Domain\PaymentAmount;
 use App\Sale\Payment\Domain\PaymentExternalReference;
 use App\Sale\Payment\Domain\PaymentId;
-use App\Sale\Payment\Domain\PaymentPaymentMethod;
+use App\Sale\Payment\Domain\PaymentMethod;
 use App\Sale\Payment\Domain\PaymentStatus;
 use App\Sale\Purchase\Domain\EventId;
 use App\Sale\Purchase\Domain\Purchase;
@@ -41,7 +41,7 @@ class PaymentMapper
         
         $entity->setId($payment->id()->toUuid());
         $entity->setAmount($payment->amount()->value());
-        $entity->setPaymentMethod($payment->paymentMethod()->value());
+        $entity->setPaymentMethod($payment->method()->value());
         $entity->setStatus($payment->status()->value());
         $entity->setExternalReference($payment->externalReference()->value());
         $entity->setPurchase($this->fetcher->purchase($payment->purchase()->id()));
@@ -85,7 +85,7 @@ class PaymentMapper
             PaymentId::fromString($entity->getId()),
             PaymentAmount::fromFloat($entity->getAmount()),
             PaymentExternalReference::fromString($entity->getExternalReference()),
-            PaymentPaymentMethod::fromInt($entity->getPaymentMethod()),
+            PaymentMethod::fromInt($entity->getPaymentMethod()),
             PaymentStatus::fromInt($entity->getStatus()),
             $purchase,
         );
@@ -96,7 +96,7 @@ class PaymentMapper
     public function update(PaymentEntity $entity, Payment $payment): void
     {
         $entity->setAmount($payment->amount()->value());
-        $entity->setPaymentMethod($payment->paymentMethod()->value());
+        $entity->setPaymentMethod($payment->method()->value());
         $entity->setStatus($payment->status()->value());
         $entity->setExternalReference($payment->externalReference()->value());
     }

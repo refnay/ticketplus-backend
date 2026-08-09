@@ -9,7 +9,7 @@ class Payment
     private PaymentId $id;
     private PaymentAmount $amount;
     private ?PaymentExternalReference $externalReference = null;
-    private PaymentPaymentMethod $paymentMethod;
+    private PaymentMethod $method;
     private PaymentStatus $status;
     private Purchase $purchase;
 
@@ -17,14 +17,14 @@ class Payment
         PaymentId $id,
         PaymentAmount $amount,
         PaymentExternalReference $externalReference,
-        PaymentPaymentMethod $paymentMethod,
+        PaymentMethod $method,
         PaymentStatus $status,
         Purchase $purchase,
     ) {
         $this->id = $id;
         $this->amount = $amount;
         $this->externalReference = $externalReference;
-        $this->paymentMethod = $paymentMethod;
+        $this->method = $method;
         $this->status = $status;
         $this->purchase = $purchase;
     }
@@ -32,11 +32,11 @@ class Payment
     public static function create(
         PaymentAmount $amount,
         PaymentExternalReference $externalReference,
-        PaymentPaymentMethod $paymentMethod,
+        PaymentMethod $method,
         PaymentStatus $status,
         Purchase $purchase,
     ): self {
-        return new self(PaymentId::generate(), $amount, $externalReference, $paymentMethod, $status, $purchase);
+        return new self(PaymentId::generate(), $amount, $externalReference, $method, $status, $purchase);
     }
 
     public function id(): PaymentId
@@ -54,9 +54,9 @@ class Payment
         return $this->externalReference ?? PaymentExternalReference::fromNull();
     }
 
-    public function paymentMethod(): PaymentPaymentMethod
+    public function method(): PaymentMethod
     {
-        return $this->paymentMethod;
+        return $this->method;
     }
 
     public function status(): PaymentStatus
@@ -79,9 +79,9 @@ class Payment
         $this->externalReference = $externalReference;
     }
 
-    public function changePaymentMethod(PaymentPaymentMethod $paymentMethod): void
+    public function changeMethod(PaymentMethod $method): void
     {
-        $this->paymentMethod = $paymentMethod;
+        $this->method = $method;
     }
 
     public function changeStatus(PaymentStatus $status): void
