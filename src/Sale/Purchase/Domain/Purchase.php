@@ -2,6 +2,8 @@
 
 namespace App\Sale\Purchase\Domain;
 
+use App\Sale\Discount\Domain\Discount;
+
 class Purchase
 {
     private PurchaseId $id;
@@ -12,6 +14,7 @@ class Purchase
     private PurchaseTax $tax;
     private PurchaseTotal $total;
     private UserId $userId;
+    private ?Discount $discount = null;
 
     public function __construct(
         PurchaseId $id,
@@ -96,6 +99,11 @@ class Purchase
         return $this->userId;
     }
 
+    public function discount(): ?Discount
+    {
+        return $this->discount;
+    }
+
     public function changeCurrency(PurchaseCurrency $currency): void
     {
         $this->currency = $currency;
@@ -124,5 +132,10 @@ class Purchase
     public function changeTotal(PurchaseTotal $total): void
     {
         $this->total = $total;
+    }
+
+    public function changeDiscount(?Discount $discount): void
+    {
+        $this->discount = $discount;
     }
 }
