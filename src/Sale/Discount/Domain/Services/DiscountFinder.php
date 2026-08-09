@@ -6,7 +6,7 @@ use App\Sale\Discount\Domain\Discount;
 use App\Sale\Discount\Domain\DiscountId;
 use App\Sale\Discount\Domain\DiscountRepository;
 use App\Sale\Discount\Domain\Exceptions\DiscountNotFound;
-use App\Sale\Purchase\Domain\EventId;
+use App\Sale\Shared\Domain\EventId;
 
 class DiscountFinder
 {

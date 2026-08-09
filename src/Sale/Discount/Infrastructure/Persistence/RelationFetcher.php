@@ -2,7 +2,7 @@
 
 namespace App\Sale\Discount\Infrastructure\Persistence;
 
-use App\Sale\Purchase\Domain\EventId;
+use App\Sale\Shared\Domain\EventId;
 use App\Sale\Shared\Domain\Exceptions\EventNotFound;
 use App\Shared\Infrastructure\Persistence\Entity\Event as EventEntity;
 use Doctrine\ORM\EntityManagerInterface;

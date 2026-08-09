@@ -11,7 +11,7 @@ use App\Sale\Discount\Domain\DiscountStartDate;
 use App\Sale\Discount\Domain\DiscountType;
 use App\Sale\Discount\Domain\DiscountUsage;
 use App\Sale\Discount\Domain\DiscountValue;
-use App\Sale\Purchase\Domain\EventId;
+use App\Sale\Shared\Domain\EventId;
 use App\Shared\Infrastructure\Persistence\Entity\Discount as DiscountEntity;
 
 class DiscountMapper

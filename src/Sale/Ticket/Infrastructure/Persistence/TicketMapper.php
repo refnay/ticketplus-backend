@@ -2,26 +2,8 @@
 
 namespace App\Sale\Ticket\Infrastructure\Persistence;
 
-use App\Sale\Discount\Domain\Discount;
-use App\Sale\Discount\Domain\DiscountActive;
-use App\Sale\Discount\Domain\DiscountCode;
-use App\Sale\Discount\Domain\DiscountEndDate;
-use App\Sale\Discount\Domain\DiscountId;
-use App\Sale\Discount\Domain\DiscountStartDate;
-use App\Sale\Discount\Domain\DiscountType;
-use App\Sale\Discount\Domain\DiscountUsage;
-use App\Sale\Discount\Domain\DiscountValue;
-use App\Sale\Purchase\Domain\EventId;
-use App\Sale\Purchase\Domain\Purchase;
-use App\Sale\Purchase\Domain\PurchaseCurrency;
 use App\Sale\Purchase\Domain\PurchaseId;
-use App\Sale\Purchase\Domain\PurchasePaymentMethod;
-use App\Sale\Purchase\Domain\PurchaseStatus;
-use App\Sale\Purchase\Domain\PurchaseSubTotal;
-use App\Sale\Purchase\Domain\PurchaseTax;
-use App\Sale\Purchase\Domain\PurchaseTotal;
-use App\Sale\Purchase\Domain\UserId;
-use App\Sale\Purchase\Domain\ZoneId;
+use App\Sale\Shared\Domain\ZoneId;
 use App\Sale\Ticket\Domain\Ticket;
 use App\Sale\Ticket\Domain\TicketId;
 use App\Sale\Ticket\Domain\TicketPrice;
@@ -48,7 +30,7 @@ class TicketMapper
         $entity->setSeatCode($ticket->information()->seatCode());
         $entity->setPrice($ticket->price()->value());
         $entity->setStatus($ticket->status()->value());
-        $entity->setPurchase($this->fetcher->purchase($ticket->purchase()->id()));
+        $entity->setPurchase($this->fetcher->purchase($ticket->purchaseId()));
         $entity->setZone($this->fetcher->zone($ticket->zoneId()));
 
         if (!is_null($ticket->seatId())) {
@@ -59,37 +41,7 @@ class TicketMapper
     }
 
     public function newDomain(TicketEntity $entity): Ticket
-    {   
-        $purchaseEntity = $entity->getPurchase();
-        $discountEntity = $purchaseEntity->getDiscount();
-        $discount = null;
-        
-        if (!is_null($discountEntity)) {
-            $discount = new Discount(
-                DiscountId::fromString($discountEntity->getId()),
-                DiscountActive::fromBool($discountEntity->isActive()),
-                DiscountCode::fromString($discountEntity->getCode()),
-                DiscountStartDate::fromDateTime($discountEntity->getStartDate()),
-                DiscountEndDate::fromDateTime($discountEntity->getEndDate()),
-                DiscountType::fromInt($discountEntity->getType()),
-                DiscountUsage::create($discountEntity->getUsageLimit(), $discountEntity->getUsageCount()),
-                DiscountValue::fromFloat($discountEntity->getValue()),
-                EventId::fromString($discountEntity->getEvent()->getId()),
-            );
-        }
-        
-        $purchase = new Purchase(
-            PurchaseId::fromString($purchaseEntity->getId()),
-            PurchaseCurrency::fromString($purchaseEntity->getCurrency()),
-            PurchasePaymentMethod::fromInt($purchaseEntity->getPaymentMethod()),
-            PurchaseStatus::fromInt($purchaseEntity->getStatus()),
-            PurchaseSubTotal::fromFloat($purchaseEntity->getSubTotal()),
-            PurchaseTax::fromFloat($purchaseEntity->getTax()),
-            PurchaseTotal::fromFloat($purchaseEntity->getTotal()),
-            UserId::fromString($purchaseEntity->getAttendee()->getId())
-        );
-        $purchase->changeDiscount($discount);
-
+    { 
         $ticket = new Ticket(
             TicketId::fromString($entity->getId()),
             TicketInformation::create(
@@ -101,7 +53,7 @@ class TicketMapper
             TicketPrice::fromFloat($entity->getPrice()),
             TicketQRCode::fromString($entity->getQRCode()),
             TicketStatus::fromInt($entity->getStatus()),
-            $purchase,
+            PurchaseId::fromString($entity->getPurchase()->getId()),
             ZoneId::fromString($entity->getZone()->getId()),
         );
         $ticket->changeSeatId($entity->getSeat()?->getId());

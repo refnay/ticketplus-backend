@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Sale\Purchase\Domain;
+namespace App\Sale\Shared\Domain;
 
 use App\Shared\Domain\ValueObjects\UuidValueObject;
 use Override;

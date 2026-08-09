@@ -8,7 +8,7 @@ use App\Sale\Purchase\Domain\Exceptions\PurchaseNotUpdated;
 use App\Sale\Purchase\Domain\Purchase;
 use App\Sale\Purchase\Domain\PurchaseId;
 use App\Sale\Purchase\Domain\PurchaseRepository;
-use App\Sale\Purchase\Domain\UserId;
+use App\Sale\Shared\Domain\UserId;
 use App\Shared\Infrastructure\Persistence\Doctrine\QueryBuilder;
 use Doctrine\ORM\EntityManagerInterface;
 use Override;

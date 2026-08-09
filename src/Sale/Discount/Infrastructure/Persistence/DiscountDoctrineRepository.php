@@ -8,7 +8,7 @@ use App\Sale\Discount\Domain\DiscountRepository;
 use App\Sale\Discount\Domain\Exceptions\DiscountNotCreated;
 use App\Sale\Discount\Domain\Exceptions\DiscountNotDeleted;
 use App\Sale\Discount\Domain\Exceptions\DiscountNotUpdated;
-use App\Sale\Purchase\Domain\EventId;
+use App\Sale\Shared\Domain\EventId;
 use App\Shared\Infrastructure\Persistence\Doctrine\QueryBuilder;
 use Doctrine\ORM\EntityManagerInterface;
 use Override;

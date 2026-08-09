@@ -2,6 +2,8 @@
 
 namespace App\Sale\Purchase\Domain;
 
+use App\Sale\Shared\Domain\UserId;
+
 interface PurchaseRepository
 {
     public function save(Purchase $category): void;

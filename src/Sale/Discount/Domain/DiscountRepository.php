@@ -2,7 +2,7 @@
 
 namespace App\Sale\Discount\Domain;
 
-use App\Sale\Purchase\Domain\EventId;
+use App\Sale\Shared\Domain\EventId;
 
 interface DiscountRepository
 {

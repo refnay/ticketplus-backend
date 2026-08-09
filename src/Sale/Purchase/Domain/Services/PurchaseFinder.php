@@ -6,7 +6,7 @@ use App\Sale\Purchase\Domain\Exceptions\PurchaseNotFound;
 use App\Sale\Purchase\Domain\Purchase;
 use App\Sale\Purchase\Domain\PurchaseId;
 use App\Sale\Purchase\Domain\PurchaseRepository;
-use App\Sale\Purchase\Domain\UserId;
+use App\Sale\Shared\Domain\UserId;
 
 class PurchaseFinder
 {
