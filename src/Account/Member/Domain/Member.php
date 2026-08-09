@@ -51,4 +51,14 @@ class Member
     {
         return $this->companyId;
     }
+
+    public function changeRole(MemberRole $role): void 
+    {
+        $this->role = $role;
+    }
+
+    public function changeStatus(MemberStatus $status): void 
+    {
+        $this->status = $status;
+    }
 }
