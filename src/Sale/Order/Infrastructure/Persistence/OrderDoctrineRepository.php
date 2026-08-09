@@ -75,7 +75,7 @@ class OrderDoctrineRepository implements OrderRepository
             $this->entityManager->getRepository($this->mapper->entityClass())->createQueryBuilder(self::ORDER_PREFIX)
         );
 
-        $queryBuilder->equals('attendee', $filters['attendee'] ?? null)
+        $queryBuilder->equals('attendee', $filters['user'] ?? null)
             ->applyOrder($orderBy, $order)
             ->paginate($limit, $offset);
 
@@ -91,7 +91,7 @@ class OrderDoctrineRepository implements OrderRepository
             $this->entityManager->getRepository($this->mapper->entityClass())->createQueryBuilder(self::ORDER_PREFIX)
         );
 
-        $queryBuilder->equals('attendee', $filters['attendee'] ?? null);
+        $queryBuilder->equals('attendee', $filters['user'] ?? null);
 
         return (int) $queryBuilder->queryBuilder()
             ->select('COUNT(' . self::ORDER_PREFIX . '.id)')
