@@ -35,6 +35,7 @@ class SearchCategoryQuery extends ListQuery
     public function filters(): array
     {
         $filters = get_object_vars($this);
+        $filters['company'] = $this->company();
 
         return $filters; 
     }
