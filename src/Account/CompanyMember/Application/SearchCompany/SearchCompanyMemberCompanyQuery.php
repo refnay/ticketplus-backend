@@ -5,7 +5,7 @@ namespace App\Account\CompanyMember\Application\Company\SearchCompany;
 use App\Shared\Application\Query\ListQuery;
 use App\Shared\Domain\Utils\PayloadMapper;
 
-class SearchMemberCompanyQuery extends ListQuery
+class SearchCompanyMemberCompanyQuery extends ListQuery
 {
     public function __construct(
         string $orderBy,

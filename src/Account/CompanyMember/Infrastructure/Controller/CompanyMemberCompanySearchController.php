@@ -2,25 +2,25 @@
 
 namespace App\Account\CompanyMember\Infrastructure\Controller;
 
-use App\Account\CompanyMember\Application\Company\SearchCompany\MemberCompaniesResponse;
-use App\Account\CompanyMember\Application\Company\SearchCompany\SearchMemberCompanyQuery;
+use App\Account\CompanyMember\Application\Company\SearchCompany\CompanyMemberCompanyResponse;
+use App\Account\CompanyMember\Application\Company\SearchCompany\SearchCompanyMemberCompanyQuery;
 use App\Shared\Application\MessageBus;
 use App\Shared\Domain\Session;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-class MemberCompanySearchController extends AbstractController
+class CompanyMemberCompanySearchController extends AbstractController
 {
     public function search(Request $request, Session $session, MessageBus $messageBus): JsonResponse
     {
         $session->userTypeAllowed();
         $session->userStatusAllowed();
 
-        $query = SearchMemberCompanyQuery::fromQuery($request->query->all());
+        $query = SearchCompanyMemberCompanyQuery::fromQuery($request->query->all());
         $query->setSession($session);
         
-        /** @var MemberCompaniesResponse $response */
+        /** @var CompanyMemberCompanyResponse $response */
         $response = $messageBus->ask($query);
 
         return new JsonResponse($response->jsonSerialize());

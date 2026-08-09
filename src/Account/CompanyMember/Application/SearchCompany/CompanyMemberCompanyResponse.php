@@ -5,7 +5,7 @@ namespace App\Account\CompanyMember\Application\Company\SearchCompany;
 use JsonSerializable;
 use Override;
 
-class MemberCompanyResponse implements JsonSerializable
+class CompanyMemberCompanyResponse implements JsonSerializable
 {
     public function __construct(
         readonly private string $id,

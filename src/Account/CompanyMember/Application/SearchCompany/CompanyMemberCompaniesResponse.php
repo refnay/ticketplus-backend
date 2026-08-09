@@ -5,11 +5,11 @@ namespace App\Account\CompanyMember\Application\Company\SearchCompany;
 use JsonSerializable;
 use Override;
 
-class MemberCompaniesResponse implements JsonSerializable 
+class CompanyMemberCompaniesResponse implements JsonSerializable 
 {
     private array $companies = [];
 
-    public function __construct(private int $total, MemberCompanyResponse ...$companies)
+    public function __construct(private int $total, CompanyMemberCompanyResponse ...$companies)
     {
         $this->companies = $companies;
     }

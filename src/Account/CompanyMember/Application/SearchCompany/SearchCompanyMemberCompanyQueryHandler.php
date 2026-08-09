@@ -2,13 +2,13 @@
 
 namespace App\Account\CompanyMember\Application\Company\SearchCompany;
 
-class SearchMemberCompanyQueryHandler
+class SearchCompanyMemberCompanyQueryHandler
 {
-    public function __construct(private MemberCompanySearcher $seacher)
+    public function __construct(private CompanyMemberCompanySearcher $seacher)
     {
     }
 
-    public function __invoke(SearchMemberCompanyQuery $query): MemberCompaniesResponse
+    public function __invoke(SearchCompanyMemberCompanyQuery $query): CompanyMemberCompaniesResponse
     {
         return $this->seacher->__invoke(
             $query->filters(),
