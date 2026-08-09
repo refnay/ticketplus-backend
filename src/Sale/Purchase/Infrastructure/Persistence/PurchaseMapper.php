@@ -25,14 +25,12 @@ use App\Shared\Infrastructure\Persistence\Entity\Purchase as PurchaseEntity;
 
 class PurchaseMapper
 {
-    public function __construct(private RelationFetcher $fetcher)
-    {
-    }
+    public function __construct(private RelationFetcher $fetcher) {}
 
     public function newEntity(Purchase $purchase): PurchaseEntity
     {
         $entity = new PurchaseEntity();
-        
+
         $entity->setId($purchase->id()->toUuid());
         $entity->setSubTotal($purchase->subTotal()->value());
         $entity->setTax($purchase->tax()->value());
@@ -54,19 +52,22 @@ class PurchaseMapper
     public function newDomain(PurchaseEntity $entity): Purchase
     {
         $discountEntity = $entity->getDiscount();
+        $discount = null;
 
-        $discount = new Discount(
-            DiscountId::fromString($discountEntity->getId()),
-            DiscountActive::fromBool($discountEntity->isActive()),
-            DiscountCode::fromString($discountEntity->getCode()),
-            DiscountStartDate::fromDateTime($discountEntity->getStartDate()),
-            DiscountEndDate::fromDateTime($discountEntity->getEndDate()),
-            DiscountType::fromInt($discountEntity->getType()),
-            DiscountUsage::create($discountEntity->getUsageLimit(), $discountEntity->getUsageCount()),
-            DiscountValue::fromFloat($discountEntity->getValue()),
-            EventId::fromString($discountEntity->getEvent()->getId()),
-        );
-        
+        if (!is_null($discountEntity)) {
+            $discount = new Discount(
+                DiscountId::fromString($discountEntity->getId()),
+                DiscountActive::fromBool($discountEntity->isActive()),
+                DiscountCode::fromString($discountEntity->getCode()),
+                DiscountStartDate::fromDateTime($discountEntity->getStartDate()),
+                DiscountEndDate::fromDateTime($discountEntity->getEndDate()),
+                DiscountType::fromInt($discountEntity->getType()),
+                DiscountUsage::create($discountEntity->getUsageLimit(), $discountEntity->getUsageCount()),
+                DiscountValue::fromFloat($discountEntity->getValue()),
+                EventId::fromString($discountEntity->getEvent()->getId()),
+            );
+        }
+
         $purchase = new Purchase(
             PurchaseId::fromString($entity->getId()),
             PurchaseCurrency::fromString($entity->getCurrency()),
