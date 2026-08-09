@@ -5,9 +5,11 @@ namespace App\Account\CompanyMember\Infrastructure\Persistence;
 use App\Account\CompanyMember\Domain\CompanyMember;
 use App\Account\CompanyMember\Domain\CompanyMemberId;
 use App\Account\CompanyMember\Domain\CompanyMemberRepository;
+use App\Account\CompanyMember\Domain\Exceptions\CompanyMemberNotCreated;
 use App\Shared\Infrastructure\Persistence\Doctrine\QueryBuilder;
 use Doctrine\ORM\EntityManagerInterface;
 use Override;
+use Throwable;
 
 class CompanyMemberDoctrineRepository implements CompanyMemberRepository
 {
@@ -15,6 +17,18 @@ class CompanyMemberDoctrineRepository implements CompanyMemberRepository
 
     public function __construct(private EntityManagerInterface $entityManager, private CompanyMemberMapper $mapper)
     {
+    }
+    
+    #[Override]
+    public function save(CompanyMember $companyMember): void
+    {
+        try {
+            $entity = $this->mapper->newEntity($companyMember);
+            $this->entityManager->persist($entity);
+            $this->entityManager->flush();
+        } catch (Throwable) {
+            throw new CompanyMemberNotCreated();
+        }
     }
 
     #[Override]
@@ -35,6 +49,7 @@ class CompanyMemberDoctrineRepository implements CompanyMemberRepository
         );
 
         $queryBuilder->equals('user', $filters['user'] ?? null)
+            ->equals('company', $filters['company'] ?? null)
             ->applyOrder($orderBy, $order)
             ->paginate($limit, $offset);
 
@@ -50,7 +65,8 @@ class CompanyMemberDoctrineRepository implements CompanyMemberRepository
             $this->entityManager->getRepository($this->mapper->entityClass())->createQueryBuilder(self::COMPANY_MEMBER_PREFIX)
         );
 
-        $queryBuilder->equals('user', $filters['user'] ?? null);
+        $queryBuilder->equals('user', $filters['user'] ?? null)
+            ->equals('company', $filters['company'] ?? null);
 
         return (int) $queryBuilder->queryBuilder()
             ->select('COUNT(' . self::COMPANY_MEMBER_PREFIX . '.id)')

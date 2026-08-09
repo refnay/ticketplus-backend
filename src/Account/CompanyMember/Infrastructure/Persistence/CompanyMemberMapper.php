@@ -12,6 +12,23 @@ use App\Shared\Infrastructure\Persistence\Entity\CompanyMember as CompanyMemberE
 
 class CompanyMemberMapper
 {
+    public function __construct(private RelationFetcher $fetcher)
+    {
+    }
+
+    public function newEntity(CompanyMember $companyMember): CompanyMemberEntity
+    {
+        $entity = new CompanyMemberEntity();
+        
+        $entity->setId($companyMember->id()->toUuid());
+        $entity->setRole($companyMember->role()->value());
+        $entity->setStatus($companyMember->status()->value());
+        $entity->setCompany($this->fetcher->company($companyMember->companyId()));
+        $entity->setMember($this->fetcher->user($companyMember->userId()));
+
+        return $entity;
+    }
+
     public function newDomain(CompanyMemberEntity $entity): CompanyMember
     {
         $companyMember = new CompanyMember(
