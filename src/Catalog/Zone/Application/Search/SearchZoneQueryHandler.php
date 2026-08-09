@@ -1,24 +1,22 @@
 <?php
 
-namespace App\Catalog\Seat\Application\List;
+namespace App\Catalog\Zone\Application\Search;
 
 use App\Catalog\Event\Domain\EventDayId;
 use App\Catalog\Event\Domain\EventId;
 use App\Catalog\Shared\Domain\CompanyId;
-use App\Catalog\Zone\Domain\ZoneId;
 
-class ListSeatQueryHandler
+class SearchZoneQueryHandler
 {
-    public function __construct(private SeatLister $lister)
+    public function __construct(private ZoneSearcher $searcher)
     {
     }
 
-    public function __invoke(ListSeatQuery $query): SeatsResponse
+    public function __invoke(SearchZoneQuery $query): ZonesResponse
     {
-        return $this->lister->__invoke(
+        return $this->searcher->__invoke(
             EventId::fromString($query->event()),
             EventDayId::fromString($query->day()),
-            ZoneId::fromString($query->zone()),
             CompanyId::fromString($query->company()),
             $query->filters(),
             $query->orderBy(),

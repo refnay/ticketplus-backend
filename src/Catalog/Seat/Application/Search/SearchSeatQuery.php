@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Catalog\Seat\Application\List;
+namespace App\Catalog\Seat\Application\Search;
 
 use App\Shared\Application\Query\ListQuery;
 use App\Shared\Domain\Utils\PayloadMapper;
 
-class ListSeatQuery extends ListQuery
+class SearchSeatQuery extends ListQuery
 {
     public function __construct(
         private string $event,

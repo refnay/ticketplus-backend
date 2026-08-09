@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Catalog\Zone\Application\List;
+namespace App\Catalog\Zone\Application\Search;
 
 use App\Catalog\Zone\Domain\Zone;
 use JsonSerializable;

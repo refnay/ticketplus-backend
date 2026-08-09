@@ -2,26 +2,26 @@
 
 namespace App\Catalog\Seat\Domain;
 
-use App\Catalog\Zone\Domain\Zone;
+use App\Catalog\Zone\Domain\ZoneId;
 
 class Seat
 {
     private SeatId $id;
     private SeatCode $code;
     private SeatStatus $status;
-    private Zone $zone;
+    private ZoneId $zoneId;
 
-    public function __construct(SeatId $id, SeatCode $code, SeatStatus $status, Zone $zone)
+    public function __construct(SeatId $id, SeatCode $code, SeatStatus $status, ZoneId $zoneId)
     {
         $this->id = $id;
         $this->code = $code;
         $this->status = $status;
-        $this->zone = $zone;
+        $this->zoneId = $zoneId;
     }
 
-    public static function create(SeatCode $code, Zone $zone): self
+    public static function create(SeatCode $code, ZoneId $zoneId): self
     {
-        return new self(SeatId::generate(), $code, SeatStatus::available(), $zone);
+        return new self(SeatId::generate(), $code, SeatStatus::available(), $zoneId);
     }
 
     public function id(): SeatId
@@ -39,9 +39,9 @@ class Seat
         return $this->status;
     }
     
-    public function zone(): Zone
+    public function zoneId(): ZoneId
     {
-        return $this->zone;
+        return $this->zoneId;
     }
 
     public function changeCode(SeatCode $code): void 

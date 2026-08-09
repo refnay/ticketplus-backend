@@ -50,7 +50,7 @@ class ZoneCreator
             $price,
             $quantity,
             $taxRate,
-            $day,
+            $day->id(),
         );
 
         $this->repository->save($zone);

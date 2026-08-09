@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Catalog\Seat\Application\List;
+namespace App\Catalog\Seat\Application\Search;
 
 use App\Catalog\Event\Domain\EventDayId;
 use App\Catalog\Event\Domain\EventId;
@@ -12,7 +12,7 @@ use App\Catalog\Shared\Domain\CompanyId;
 use App\Catalog\Zone\Domain\Services\ZoneFinder;
 use App\Catalog\Zone\Domain\ZoneId;
 
-class SeatLister
+class SeatSearcher
 {
     public function __construct(private SeatRepository $repository, private EventFinder $eventFinder, private ZoneFinder $zoneFinder)
     {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Catalog\Seat\Application\List;
+namespace App\Catalog\Seat\Application\Search;
 
 use JsonSerializable;
 use Override;

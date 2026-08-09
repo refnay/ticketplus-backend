@@ -53,7 +53,7 @@ class SeatCreator
         } catch (SeatNotFound) {
         }
 
-        $seat = Seat::create($code, $zone);
+        $seat = Seat::create($code, $zone->id());
 
         $this->repository->save($seat);
 

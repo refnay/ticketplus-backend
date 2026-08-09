@@ -2,7 +2,7 @@
 
 namespace App\Catalog\Zone\Domain;
 
-use App\Catalog\Event\Domain\EventDay;
+use App\Catalog\Event\Domain\EventDayId;
 
 class Zone
 {
@@ -15,7 +15,7 @@ class Zone
     private ZoneQuantity $quantity;
     private ZoneTaxRate $taxRate;
     private ?ZoneCanvas $canvas = null;
-    private EventDay $day;
+    private EventDayId $dayId;
 
     public function __construct(
         ZoneId $id,
@@ -27,7 +27,7 @@ class Zone
         ZoneQuantity $quantity,
         ZoneTaxRate $taxRate,
         ZoneCanvas $canvas,
-        EventDay $day,
+        EventDayId $dayId,
     ) {
         $this->id = $id;
         $this->name = $name;
@@ -38,7 +38,7 @@ class Zone
         $this->quantity = $quantity;
         $this->taxRate = $taxRate;
         $this->canvas = $canvas;
-        $this->day = $day;
+        $this->dayId = $dayId;
     }
 
     public static function create(
@@ -49,7 +49,7 @@ class Zone
         ZonePrice $price,
         ZoneQuantity $quantity,
         ZoneTaxRate $taxRate,
-        EventDay $day,
+        EventDayId $dayId,
     ): self {
         return new self(
             ZoneId::generate(),
@@ -61,7 +61,7 @@ class Zone
             $quantity,
             $taxRate,
             ZoneCanvas::fromNull(),
-            $day,
+            $dayId,
         );
     }
 
@@ -105,9 +105,9 @@ class Zone
         return $this->taxRate;
     }
     
-    public function day(): EventDay
+    public function dayId(): EventDayId
     {
-        return $this->day;
+        return $this->dayId;
     }
 
     public function canvas(): ZoneCanvas

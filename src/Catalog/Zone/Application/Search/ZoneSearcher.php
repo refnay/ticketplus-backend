@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Catalog\Zone\Application\List;
+namespace App\Catalog\Zone\Application\Search;
 
 use App\Catalog\Event\Domain\EventDayId;
 use App\Catalog\Event\Domain\EventId;
@@ -10,7 +10,7 @@ use App\Catalog\Shared\Domain\CompanyId;
 use App\Catalog\Zone\Domain\Zone;
 use App\Catalog\Zone\Domain\ZoneRepository;
 
-class ZoneLister
+class ZoneSearcher
 {
     public function __construct(private ZoneRepository $repository, private EventFinder $eventFinder)
     {
