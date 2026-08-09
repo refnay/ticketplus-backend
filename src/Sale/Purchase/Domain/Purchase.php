@@ -25,8 +25,7 @@ class Purchase
         PurchaseTax $tax,
         PurchaseTotal $total,
         UserId $userId,
-    )
-    {
+    ) {
         $this->id = $id;
         $this->currency = $currency;
         $this->paymentMethod = $paymentMethod;
@@ -45,8 +44,7 @@ class Purchase
         PurchaseTax $tax,
         PurchaseTotal $total,
         UserId $userId,
-    ): self
-    {
+    ): self {
         return new self(
             PurchaseId::generate(),
             $currency,
