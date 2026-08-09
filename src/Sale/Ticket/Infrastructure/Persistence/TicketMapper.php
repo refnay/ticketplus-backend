@@ -2,7 +2,6 @@
 
 namespace App\Sale\Ticket\Infrastructure\Persistence;
 
-use App\s\Zone\Domain\TicketInformation;
 use App\Sale\Discount\Domain\Discount;
 use App\Sale\Discount\Domain\DiscountActive;
 use App\Sale\Discount\Domain\DiscountCode;
@@ -27,6 +26,7 @@ use App\Sale\Ticket\Domain\Ticket;
 use App\Sale\Ticket\Domain\TicketId;
 use App\Sale\Ticket\Domain\TicketPrice;
 use App\Sale\Ticket\Domain\TicketQRCode;
+use App\Sale\Ticket\Domain\TicketInformation;
 use App\Sale\Ticket\Domain\TicketStatus;
 use App\Shared\Infrastructure\Persistence\Entity\Ticket as TicketEntity;
 
@@ -101,9 +101,9 @@ class TicketMapper
             TicketPrice::fromFloat($entity->getPrice()),
             TicketQRCode::fromString($entity->getQRCode()),
             TicketStatus::fromInt($entity->getStatus()),
+            $purchase,
             ZoneId::fromString($entity->getZone()->getId()),
         );
-        $ticket->changePurchase($purchase);
         $ticket->changeSeatId($entity->getSeat()?->getId());
 
         return $ticket;

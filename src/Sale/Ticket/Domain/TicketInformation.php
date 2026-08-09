@@ -1,6 +1,6 @@
 <?php
 
-namespace App\s\Zone\Domain;
+namespace App\Sale\Ticket\Domain;
 
 use DateTimeInterface;
 

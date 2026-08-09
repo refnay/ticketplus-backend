@@ -2,7 +2,6 @@
 
 namespace App\Sale\Ticket\Domain;
 
-use App\s\Zone\Domain\TicketInformation;
 use App\Sale\Purchase\Domain\Purchase;
 use App\Sale\Purchase\Domain\SeatId;
 use App\Sale\Purchase\Domain\ZoneId;
@@ -24,6 +23,7 @@ class Ticket
         TicketPrice $price,
         TicketQRCode $qrCode,
         TicketStatus $status,
+        Purchase $purchase,
         ZoneId $zoneId,
     ) {
         $this->id = $id;
@@ -31,6 +31,7 @@ class Ticket
         $this->price = $price;
         $this->qrCode = $qrCode;
         $this->status = $status;
+        $this->purchase = $purchase;
         $this->zoneId = $zoneId;
     }
 
@@ -39,6 +40,7 @@ class Ticket
         TicketPrice $price,
         TicketQRCode $qrCode,
         TicketStatus $status,
+        Purchase $purchase,
         ZoneId $zoneId,
     ): self {
         return new self(
@@ -47,6 +49,7 @@ class Ticket
             $price,
             $qrCode,
             $status,
+            $purchase,
             $zoneId,
         );
     }
@@ -104,11 +107,6 @@ class Ticket
     public function changeStatus(TicketStatus $status): void
     {
         $this->status = $status;
-    }
-
-    public function changePurchase(Purchase $purchase): void
-    {
-        $this->purchase = $purchase;
     }
 
     public function changeSeatId(?SeatId $seatId): void
