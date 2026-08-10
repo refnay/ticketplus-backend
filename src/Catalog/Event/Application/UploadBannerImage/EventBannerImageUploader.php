@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Catalog\Event\Application\UplaodBannerImage;
+namespace App\Catalog\Event\Application\UploadBannerImage;
 
 use App\Catalog\Event\Domain\EventBannerImage;
 use App\Catalog\Event\Domain\EventId;

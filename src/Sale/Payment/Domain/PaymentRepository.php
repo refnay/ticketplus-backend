@@ -8,11 +8,11 @@ use App\Sale\Order\Domain\OrderId;
 
 interface PaymentRepository
 {
-    public function save(Payment $discount): void;
+    public function save(Payment $payment): void;
 
-    public function update(Payment $discount): void;
+    public function update(Payment $payment): void;
 
-    public function delete(Payment $discount): void;
+    public function delete(Payment $payment): void;
 
     public function findById(PaymentId $id, OrderId $orderId): ?Payment;
 

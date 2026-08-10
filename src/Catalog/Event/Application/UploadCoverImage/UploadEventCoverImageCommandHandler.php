@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Catalog\Event\Application\UplaodCoverImage;
+namespace App\Catalog\Event\Application\UploadCoverImage;
 
 use App\Catalog\Event\Domain\EventId;
 use App\Catalog\Shared\Domain\CompanyId;

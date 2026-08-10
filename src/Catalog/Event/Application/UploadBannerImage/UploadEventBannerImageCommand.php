@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Catalog\Event\Application\UplaodBannerImage;
+namespace App\Catalog\Event\Application\UploadBannerImage;
 
 use App\Shared\Application\Command\BaseCommand;
 use Symfony\Component\HttpFoundation\File\UploadedFile;

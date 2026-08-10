@@ -4,13 +4,13 @@ namespace App\Account\Member\Application\SearchCompany;
 
 class SearchMemberCompanyQueryHandler
 {
-    public function __construct(private MemberCompanySearcher $seacher)
+    public function __construct(private MemberCompanySearcher $searcher)
     {
     }
 
     public function __invoke(SearchMemberCompanyQuery $query): MemberCompaniesResponse
     {
-        return $this->seacher->__invoke(
+        return $this->searcher->__invoke(
             $query->filters(),
             $query->orderBy(),
             $query->order(),

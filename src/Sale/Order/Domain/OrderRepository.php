@@ -6,11 +6,11 @@ use App\Sale\Shared\Domain\UserId;
 
 interface OrderRepository
 {
-    public function save(Order $category): void;
+    public function save(Order $order): void;
 
-    public function update(Order $category): void;
+    public function update(Order $order): void;
 
-    public function delete(Order $category): void;
+    public function delete(Order $order): void;
 
     public function findById(OrderId $id, UserId $userId): ?Order;
 
