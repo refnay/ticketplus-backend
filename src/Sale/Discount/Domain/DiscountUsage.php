@@ -18,6 +18,11 @@ class DiscountUsage
         return new self($limit, 0);
     }
 
+    public function isAvailable(): bool
+    {
+        return $this->count < $this->limit;
+    }
+
     public static function fromData(array $data): self
     {
         return new self($data['limit'], $data['count']);

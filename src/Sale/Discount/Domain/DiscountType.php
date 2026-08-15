@@ -11,4 +11,9 @@ class DiscountType extends IntValueObject
     public function validate(): void
     {
     }
+
+    public function isPercentage(): bool
+    {
+        return DiscountTypeList::PERCENTAGE->value === $this->value;
+    }
 }

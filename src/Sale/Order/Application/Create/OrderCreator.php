@@ -3,10 +3,13 @@
 namespace App\Sale\Order\Application\Create;
 
 use App\Sale\Discount\Domain\DiscountId;
+use App\Sale\Discount\Domain\Services\DiscountApply;
 use App\Sale\Discount\Domain\Services\DiscountFinder;
 use App\Sale\Order\Domain\Events\OrderSeatsReservedDomainEvent;
 use App\Sale\Order\Domain\Order;
 use App\Sale\Order\Domain\OrderCurrency;
+use App\Sale\Order\Domain\OrderDetails;
+use App\Sale\Order\Domain\OrderPrice;
 use App\Sale\Order\Domain\OrderRepository;
 use App\Sale\Order\Domain\OrderSubTotal;
 use App\Sale\Order\Domain\OrderTax;
@@ -33,6 +36,7 @@ class OrderCreator
         private ZoneFinder $zoneFinder,
         private SeatFinder $seatFinder,
         private DiscountFinder $discountFinder,
+        private DiscountApply $applyDiscount,
         private OrderRepository $repository,
         private EventBus $eventBus,
     ) {
@@ -56,11 +60,11 @@ class OrderCreator
             throw new ZoneQuantityExceeded();
         }
 
-        if (!is_null($discountId)) {
-            $this->discountFinder->__invoke($discountId, $eventId);
-        }
+        $discount = null;
 
-        $subTotal = $tax = $total = 0.00;
+        if (!is_null($discountId)) {
+            $discount = $this->discountFinder->__invoke($discountId, $eventId);
+        }
 
         if ($zone->numberedSeating()) {
             foreach ($seatIds as $seatId) {
@@ -70,16 +74,19 @@ class OrderCreator
                 }
             }
         }
-
-        $subTotal = $zone->price() * $quantity;
+        
+        $price = $zone->price() * $quantity;
+        $subTotal = !is_null($discount) ? $this->applyDiscount->__invoke($price, $discount) : $price;
         $tax = $subTotal * $zone->taxRate();
         $total = $subTotal + $tax;
         
         $order = Order::create(
             OrderCurrency::fromString($zone->currency()),
+            OrderPrice::fromFloat($price),
             OrderSubTotal::fromFloat($subTotal),
             OrderTax::fromFloat($tax),
             OrderTotal::fromFloat($total),
+            OrderDetails::fromArray([]),
             $userId,
         );
         $order->changeDiscountId($discountId);
