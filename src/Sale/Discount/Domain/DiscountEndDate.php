@@ -11,4 +11,9 @@ class DiscountEndDate extends DateTimeValueObject
     public function validate(): void
     {
     }
+
+    public function isEffective(): bool
+    {
+        return $this->before(DiscountEndDate::now());
+    }
 }

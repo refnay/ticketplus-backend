@@ -3,7 +3,9 @@
 namespace App\Sale\Discount\Domain\Services;
 
 use App\Sale\Discount\Domain\Discount;
+use App\Sale\Discount\Domain\Exceptions\DiscountExpired;
 use App\Sale\Discount\Domain\Exceptions\DiscountNotActive;
+use App\Sale\Discount\Domain\Exceptions\DiscountNotStarted;
 use App\Sale\Discount\Domain\Exceptions\DiscountUsageLimitReached;
 
 class DiscountApply
@@ -12,6 +14,14 @@ class DiscountApply
     {
         if ($discount->active()->isDisable()) {
             throw new DiscountNotActive();
+        }
+
+        if ($discount->startDate()->isEffective()) {
+            throw new DiscountNotStarted();
+        }
+
+        if ($discount->endDate()->isEffective()) {
+            throw new DiscountExpired();
         }
 
         if ($discount->usage()->isAvailable()) {
