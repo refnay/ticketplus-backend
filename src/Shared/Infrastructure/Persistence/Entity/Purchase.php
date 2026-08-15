@@ -18,6 +18,9 @@ class Purchase
     private ?Uuid $id = null;
 
     #[ORM\Column]
+    private ?float $price = null;
+
+    #[ORM\Column]
     private ?float $subTotal = null;
 
     #[ORM\Column]
@@ -34,6 +37,9 @@ class Purchase
 
     #[ORM\Column]
     private ?int $paymentMethod = null;
+
+    #[ORM\Column(type: 'json')]
+    private array $details = [];
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
@@ -77,6 +83,18 @@ class Purchase
     public function setId(Uuid $id): static
     {
         $this->id = $id;
+
+        return $this;
+    }
+
+    public function getPrice(): ?float
+    {
+        return $this->price;
+    }
+
+    public function setPrice(float $price): static
+    {
+        $this->price = $price;
 
         return $this;
     }
@@ -137,6 +155,24 @@ class Purchase
     public function setPaymentMethod(int $paymentMethod): static
     {
         $this->paymentMethod = $paymentMethod;
+
+        return $this;
+    }
+
+    /**
+     * @return array<mixed>
+     */
+    public function getDetails(): array
+    {
+        return $this->details;
+    }
+
+    /**
+     * @param array<mixed> $details
+     */
+    public function setDetails(array $details): static
+    {
+        $this->details = $details;
 
         return $this;
     }
