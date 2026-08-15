@@ -4,9 +4,11 @@ namespace App\Sale\Order\Infrastructure\Persistence;
 
 use App\Sale\Order\Domain\Order;
 use App\Sale\Order\Domain\OrderCurrency;
+use App\Sale\Order\Domain\OrderDetails;
 use App\Sale\Order\Domain\OrderExpiresAt;
 use App\Sale\Order\Domain\OrderId;
 use App\Sale\Order\Domain\OrderPaymentMethod;
+use App\Sale\Order\Domain\OrderPrice;
 use App\Sale\Order\Domain\OrderStatus;
 use App\Sale\Order\Domain\OrderSubTotal;
 use App\Sale\Order\Domain\OrderTax;
@@ -30,6 +32,8 @@ class OrderMapper
         $entity->setStatus($order->status()->value());
         $entity->setPaymentMethod($order->paymentMethod()->value());
         $entity->setExpiresdAt($order->expiresAt()->value());
+        $entity->setPrice($order->price()->value());
+        $entity->setDetails($order->details()->value());
         $entity->setAttendee($this->fetcher->user($order->userId()));
 
         if (!is_null($order->discountId())) {
@@ -46,10 +50,12 @@ class OrderMapper
             OrderCurrency::fromString($entity->getCurrency()),
             OrderPaymentMethod::fromInt($entity->getPaymentMethod()),
             OrderStatus::fromInt($entity->getStatus()),
+            OrderPrice::fromFloat($entity->getPrice()),
             OrderSubTotal::fromFloat($entity->getSubTotal()),
             OrderTax::fromFloat($entity->getTax()),
             OrderTotal::fromFloat($entity->getTotal()),
             OrderExpiresAt::fromDateTime($entity->getExpiresAt()),
+            OrderDetails::fromArray($entity->getDetails()),
             UserId::fromString($entity->getAttendee()->getId())
         );
         $order->changeDiscountId($entity->getDiscount()?->getId());

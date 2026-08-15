@@ -11,10 +11,12 @@ class Order
     private OrderCurrency $currency;
     private OrderPaymentMethod $paymentMethod;
     private OrderStatus $status;
+    private OrderPrice $price;
     private OrderSubTotal $subTotal;
     private OrderTax $tax;
     private OrderTotal $total;
     private OrderExpiresAt $expiresAt;
+    private OrderDetails $details;
     private UserId $userId;
     private ?DiscountId $discountId = null;
 
@@ -23,28 +25,34 @@ class Order
         OrderCurrency $currency,
         OrderPaymentMethod $paymentMethod,
         OrderStatus $status,
+        OrderPrice $price,
         OrderSubTotal $subTotal,
         OrderTax $tax,
         OrderTotal $total,
         OrderExpiresAt $expiresAt,
+        OrderDetails $details,
         UserId $userId,
     ) {
         $this->id = $id;
         $this->currency = $currency;
         $this->paymentMethod = $paymentMethod;
         $this->status = $status;
+        $this->price = $price;
         $this->subTotal = $subTotal;
         $this->tax = $tax;
         $this->total = $total;
         $this->expiresAt = $expiresAt;
+        $this->details = $details;
         $this->userId = $userId;
     }
 
     public static function create(
         OrderCurrency $currency,
+        OrderPrice $price,
         OrderSubTotal $subTotal,
         OrderTax $tax,
         OrderTotal $total,
+        OrderDetails $details,
         UserId $userId,
     ): self {
         return new self(
@@ -52,10 +60,12 @@ class Order
             $currency,
             OrderPaymentMethod::undefined(),
             OrderStatus::pending(),
+            $price,
             $subTotal,
             $tax,
             $total,
             OrderExpiresAt::start(),
+            $details,
             $userId,
         );
     }
@@ -78,6 +88,16 @@ class Order
     public function status(): OrderStatus
     {
         return $this->status;
+    }
+
+    public function price(): OrderPrice
+    {
+        return $this->price;
+    }
+
+    public function details(): OrderDetails
+    {
+        return $this->details;
     }
 
     public function subTotal(): OrderSubTotal
@@ -133,6 +153,16 @@ class Order
     public function changeSubTotal(OrderSubTotal $subTotal): void
     {
         $this->subTotal = $subTotal;
+    }
+
+    public function changePrice(OrderPrice $price): void
+    {
+        $this->price = $price;
+    }
+
+    public function changeDetails(OrderDetails $details): void
+    {
+        $this->details = $details;
     }
 
     public function changeTax(OrderTax $tax): void
