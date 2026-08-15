@@ -14,6 +14,7 @@ class Order
     private OrderSubTotal $subTotal;
     private OrderTax $tax;
     private OrderTotal $total;
+    private OrderExpiresAt $expiresAt;
     private UserId $userId;
     private ?DiscountId $discountId = null;
 
@@ -25,6 +26,7 @@ class Order
         OrderSubTotal $subTotal,
         OrderTax $tax,
         OrderTotal $total,
+        OrderExpiresAt $expiresAt,
         UserId $userId,
     ) {
         $this->id = $id;
@@ -34,26 +36,28 @@ class Order
         $this->subTotal = $subTotal;
         $this->tax = $tax;
         $this->total = $total;
+        $this->expiresAt = $expiresAt;
         $this->userId = $userId;
     }
 
     public static function create(
         OrderCurrency $currency,
         OrderPaymentMethod $paymentMethod,
-        OrderStatus $status,
         OrderSubTotal $subTotal,
         OrderTax $tax,
         OrderTotal $total,
+        OrderExpiresAt $expiresAt,
         UserId $userId,
     ): self {
         return new self(
             OrderId::generate(),
             $currency,
             $paymentMethod,
-            $status,
+            OrderStatus::pending(),
             $subTotal,
             $tax,
             $total,
+            $expiresAt,
             $userId,
         );
     }
@@ -93,6 +97,11 @@ class Order
         return $this->total;
     }
 
+    public function expiresAt(): OrderExpiresAt
+    {
+        return $this->expiresAt;
+    }
+
     public function userId(): UserId
     {
         return $this->userId;
@@ -111,6 +120,11 @@ class Order
     public function changePaymentMethod(OrderPaymentMethod $paymentMethod): void
     {
         $this->paymentMethod = $paymentMethod;
+    }
+
+    public function changeExpiresAt(OrderExpiresAt $expiresAt): void
+    {
+        $this->expiresAt = $expiresAt;
     }
 
     public function changeStatus(OrderStatus $status): void

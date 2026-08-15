@@ -11,4 +11,9 @@ class OrderStatus extends IntValueObject
     public function validate(): void
     {
     }
+
+    public static function pending(): self
+    {
+        return new self(OrderStatusList::PENDING->value); 
+    }
 }
