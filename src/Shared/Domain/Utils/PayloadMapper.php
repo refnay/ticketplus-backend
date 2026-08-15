@@ -32,7 +32,7 @@ class PayloadMapper
     {
         $value = $this->get($key);
 
-        if ($value === null) {
+        if ($value === null || $value === '') {
             return null;
         }
 
@@ -138,7 +138,7 @@ class PayloadMapper
     {
         $value = $this->get($key);
 
-        if ($value === null) {
+        if ($value === null || $value === []) {
             return null;
         }
 
