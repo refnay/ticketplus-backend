@@ -1,0 +1,37 @@
+<?php
+
+namespace App\Sale\Shared\Domain;
+
+class Seat
+{
+    private string $id;
+    private string $code;
+    private string $status;
+
+    public function __construct(string $id, string $code, string $status)
+    {
+        $this->id = $id;
+        $this->code = $code;
+        $this->status = $status;
+    }
+
+    public static function create(string $id, string $code, string $status): self
+    {
+        return new self($id, $code, $status);
+    }
+
+    public function id(): string
+    {
+        return $this->id;
+    }
+
+    public function code(): string
+    {
+        return $this->code;
+    }
+
+    public function status(): string
+    {
+        return $this->status;
+    }
+}

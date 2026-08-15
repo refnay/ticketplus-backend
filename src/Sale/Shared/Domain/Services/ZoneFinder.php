@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Sale\Shared\Domain\Services\Zone\Domain\Services;
+namespace App\Sale\Shared\Domain\Services;
 
 use App\Sale\Shared\Domain\EventDayId;
 use App\Sale\Shared\Domain\EventId;
