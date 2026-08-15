@@ -13,7 +13,7 @@ use App\Account\Company\Domain\CompanyName;
 use App\Account\Company\Domain\CompanyRepository;
 use App\Account\Company\Domain\CompanyTelephone;
 use App\Account\Company\Domain\CompanyWebSite;
-use App\Account\Company\Domain\Events\CompanyCreatedEvent;
+use App\Account\Company\Domain\Events\CompanyCreatedDomainEvent;
 use App\Account\Company\Domain\Exceptions\CompanyDocumentAlreadyExists;
 use App\Account\Company\Domain\Exceptions\CompanyNotFound;
 use App\Account\Company\Domain\Services\CompanyByDocumentFinder;
@@ -74,7 +74,7 @@ class CompanyCreator
 
         $this->repository->save($company);
 
-        $this->events->add(new CompanyCreatedEvent($user->id()->value(), $company->id()->value()));
+        $this->events->add(new CompanyCreatedDomainEvent($user->id()->value(), $company->id()->value()));
         $this->eventBus->dispatch(...$this->events->items());
 
         return $company->id()->value();

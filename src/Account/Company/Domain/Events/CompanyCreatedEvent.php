@@ -4,7 +4,7 @@ namespace App\Account\Company\Domain\Events;
 
 use App\Shared\Domain\Events\DomainEvent;
 
-class CompanyCreatedEvent extends DomainEvent
+class CompanyCreatedDomainEvent extends DomainEvent
 {
     public function __construct(
         private string $user,
