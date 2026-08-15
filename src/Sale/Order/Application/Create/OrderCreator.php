@@ -4,6 +4,7 @@ namespace App\Sale\Order\Application\Create;
 
 use App\Sale\Shared\Domain\EventDayId;
 use App\Sale\Shared\Domain\EventId;
+use App\Sale\Shared\Domain\UserId;
 use App\Sale\Shared\Domain\ZoneId;
 
 class OrderCreator
@@ -16,6 +17,7 @@ class OrderCreator
         EventId $eventId,
         EventDayId $dayId,
         ZoneId $zoneId,
+        UserId $userId,
         int $quantity,
         ?array $seats
     ): string {

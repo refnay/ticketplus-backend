@@ -4,6 +4,7 @@ namespace App\Sale\Order\Application\Create;
 
 use App\Sale\Shared\Domain\EventDayId;
 use App\Sale\Shared\Domain\EventId;
+use App\Sale\Shared\Domain\UserId;
 use App\Sale\Shared\Domain\ZoneId;
 
 class CreateOrderCommandHandler
@@ -18,6 +19,7 @@ class CreateOrderCommandHandler
             EventId::fromString($command->event()),
             EventDayId::fromString($command->day()),
             ZoneId::fromString($command->zone()),
+            UserId::fromString($command->session()->user()),
             $command->quantity(),
             $command->seats(),
         );
