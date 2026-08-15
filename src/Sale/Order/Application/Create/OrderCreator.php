@@ -86,7 +86,7 @@ class OrderCreator
             OrderSubTotal::fromFloat($subTotal),
             OrderTax::fromFloat($tax),
             OrderTotal::fromFloat($total),
-            OrderDetails::fromArray([]),
+            OrderDetails::fromPattern($eventId->value(), $dayId->value(), $zoneId->value(), $seatIds),
             $userId,
         );
         $order->changeDiscountId($discountId);

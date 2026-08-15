@@ -12,13 +12,13 @@ class OrderDetails extends ArrayValueObject
     {
     }
 
-    public function fromPattern(string $event, string $day, string $zone): self
+    public static function fromPattern(string $event, string $day, string $zone, ?array $seats): self
     {
         return new self([
             'event' => $event,
             'day' => $day,
             'zone' => $zone,
-            'seats' => [],
+            'seats' => $seats,
         ]);
     }
 
@@ -35,5 +35,12 @@ class OrderDetails extends ArrayValueObject
     public function day(): ?string
     {
         return isset($this->value['day']) ? (string) $this->value['day'] : null;
+    }
+
+    public function seats(): ?array
+    {
+        return isset($this->value['seats']) && is_array($this->value['seats']) && count($this->value['seats']) > 0
+            ? (array) $this->value['seats']
+            : null;
     }
 }
