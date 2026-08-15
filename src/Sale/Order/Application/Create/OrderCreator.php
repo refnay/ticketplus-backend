@@ -4,8 +4,10 @@ namespace App\Sale\Order\Application\Create;
 
 use App\Sale\Discount\Domain\DiscountId;
 use App\Sale\Discount\Domain\Services\DiscountFinder;
+use App\Sale\Order\Domain\Events\OrderSeatsReservedDomainEvent;
 use App\Sale\Order\Domain\Order;
 use App\Sale\Order\Domain\OrderCurrency;
+use App\Sale\Order\Domain\OrderRepository;
 use App\Sale\Order\Domain\OrderSubTotal;
 use App\Sale\Order\Domain\OrderTax;
 use App\Sale\Order\Domain\OrderTotal;
@@ -20,14 +22,21 @@ use App\Sale\Shared\Domain\Services\SeatFinder;
 use App\Sale\Shared\Domain\Services\ZoneFinder;
 use App\Sale\Shared\Domain\UserId;
 use App\Sale\Shared\Domain\ZoneId;
+use App\Shared\Application\Messenger\EventBus;
+use App\Shared\Domain\Utils\Primitive\ArrayBuilder;
 
 class OrderCreator
 {
+    private ArrayBuilder $events;
+    
     public function __construct(
         private ZoneFinder $zoneFinder,
         private SeatFinder $seatFinder,
-        private DiscountFinder $discountFinder
+        private DiscountFinder $discountFinder,
+        private OrderRepository $repository,
+        private EventBus $eventBus,
     ) {
+        $this->events = ArrayBuilder::generate();
     }
 
     public function __invoke(
@@ -75,6 +84,14 @@ class OrderCreator
         );
         $order->changeDiscountId($discountId);
 
-        return '';
+        $this->repository->save($order);
+
+        if (!is_null($seatIds)) {
+            $this->events->add(new OrderSeatsReservedDomainEvent($seatIds, $zoneId->value()));
+        }
+
+        $this->eventBus->dispatch(...$this->events->items());
+
+        return $order->id()->value();
     }
 }
