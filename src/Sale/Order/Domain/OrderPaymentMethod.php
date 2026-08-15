@@ -11,4 +11,9 @@ class OrderPaymentMethod extends IntValueObject
     public function validate(): void
     {
     }
+
+    public static function undefined(): self
+    {
+        return new self (OrderPaymentMethodList::UNDEFINED->value);
+    }
 }

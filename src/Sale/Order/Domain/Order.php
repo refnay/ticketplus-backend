@@ -42,7 +42,6 @@ class Order
 
     public static function create(
         OrderCurrency $currency,
-        OrderPaymentMethod $paymentMethod,
         OrderSubTotal $subTotal,
         OrderTax $tax,
         OrderTotal $total,
@@ -52,7 +51,7 @@ class Order
         return new self(
             OrderId::generate(),
             $currency,
-            $paymentMethod,
+            OrderPaymentMethod::undefined(),
             OrderStatus::pending(),
             $subTotal,
             $tax,
