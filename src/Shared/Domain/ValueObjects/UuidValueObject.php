@@ -20,6 +20,15 @@ abstract class UuidValueObject
         return new static($value);
     }
 
+    public static function fromNullable(?string $value): ?static
+    {
+        if (is_null($value)) {
+            return null;
+        }
+
+        return new static($value);
+    }
+
     public static function fromNull(): static
     {
         return new static(null);

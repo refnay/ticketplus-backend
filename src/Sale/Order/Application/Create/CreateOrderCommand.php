@@ -11,6 +11,7 @@ class CreateOrderCommand extends BaseCommand
         private string $event,
         private string $day,
         private string $zone,
+        private ?string $discount,
         private int $quantity,
         private ?array $seats,
     ) {
@@ -24,6 +25,7 @@ class CreateOrderCommand extends BaseCommand
             $payload->string('event'),
             $payload->string('day'),
             $payload->string('zone'),
+            $payload->nullableString('discount'),
             $payload->int('quantity'),
             $payload->nullableArray('seats'),
         );
@@ -42,6 +44,11 @@ class CreateOrderCommand extends BaseCommand
     public function zone(): string
     {
         return $this->zone;
+    }
+
+    public function discount(): ?string
+    {
+        return $this->discount;
     }
 
     public function quantity(): int

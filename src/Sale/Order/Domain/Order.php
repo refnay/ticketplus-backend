@@ -45,7 +45,6 @@ class Order
         OrderSubTotal $subTotal,
         OrderTax $tax,
         OrderTotal $total,
-        OrderExpiresAt $expiresAt,
         UserId $userId,
     ): self {
         return new self(
@@ -56,7 +55,7 @@ class Order
             $subTotal,
             $tax,
             $total,
-            $expiresAt,
+            OrderExpiresAt::start(),
             $userId,
         );
     }
