@@ -16,6 +16,8 @@ interface OrderRepository
 
     public function findById(OrderId $id, UserId $userId): ?Order;
 
+    public function findExpireds(): array;
+
     public function searchByFilters(array $filters, string $orderBy, string $order, ?int $limit, ?int $offset): array;
 
     public function countByFilters(array $filters): int;

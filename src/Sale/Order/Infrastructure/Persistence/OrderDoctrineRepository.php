@@ -6,8 +6,10 @@ use App\Sale\Order\Domain\Exceptions\OrderNotCreated;
 use App\Sale\Order\Domain\Exceptions\OrderNotDeleted;
 use App\Sale\Order\Domain\Exceptions\OrderNotUpdated;
 use App\Sale\Order\Domain\Order;
+use App\Sale\Order\Domain\OrderExpiresAt;
 use App\Sale\Order\Domain\OrderId;
 use App\Sale\Order\Domain\OrderRepository;
+use App\Sale\Order\Domain\OrderStatusList;
 use App\Sale\Shared\Domain\UserId;
 use App\Shared\Infrastructure\Persistence\Doctrine\QueryBuilder;
 use Doctrine\ORM\EntityManagerInterface;
@@ -76,6 +78,21 @@ class OrderDoctrineRepository implements OrderRepository
             ->findOneBy(['id' => $id->value(), 'attendee' => $userId->value()]);
 
         return !is_null($entity) ? $this->mapper->newDomain($entity) : null;
+    }
+
+    #[Override]
+    public function findExpireds(): array
+    {
+        $queryBuilder = QueryBuilder::from(
+            $this->entityManager->getRepository($this->mapper->entityClass())->createQueryBuilder(self::ORDER_PREFIX)
+        );
+        
+        $queryBuilder->equals('status', OrderStatusList::PENDING->value)
+            ->lessOrEqual('expiresAt', OrderExpiresAt::now()->value());
+
+        $entities = $queryBuilder->queryBuilder()->getQuery()->getResult();
+
+        return array_map(fn($entity) => $this->mapper->newDomain($entity), $entities);
     }
     
     #[Override]
