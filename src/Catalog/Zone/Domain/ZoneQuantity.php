@@ -4,23 +4,23 @@ namespace App\Catalog\Zone\Domain;
 
 class ZoneQuantity
 {
-    public function __construct(private int $total, private int $sold)
+    public function __construct(private int $total, private int $sold, private int $reserved)
     {
     }
 
-    public static function create(int $total, int $sold): self
+    public static function create(int $total, int $sold, int $reserved): self
     {
-        return new self($total, $sold);
+        return new self($total, $sold, $reserved);
     }
 
     public static function fromTotal(int $total): self
     {
-        return new self($total, 0);
+        return new self($total, 0, 0);
     }
 
     public static function fromData(array $data): self
     {
-        return new self($data['total'], $data['sold']);
+        return new self($data['total'], $data['sold'], $data['reserved']);
     }
 
     public function total(): int
@@ -33,11 +33,17 @@ class ZoneQuantity
         return $this->sold;
     }
 
+    public function reserved(): int
+    {
+        return $this->reserved;
+    }
+
     public function toArray(): array
     {
         return [
             'total' => $this->total,
             'sold' => $this->sold,
+            'reserved' => $this->reserved,
         ];
     }
 }

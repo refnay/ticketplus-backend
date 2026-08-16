@@ -27,6 +27,9 @@ class Zone
     private ?int $soldQuantity = null;
 
     #[ORM\Column]
+    private ?int $reservedQuantity = null;
+
+    #[ORM\Column]
     private ?float $price = null;
 
     #[ORM\Column]
@@ -109,6 +112,18 @@ class Zone
     public function setSoldQuantity(int $soldQuantity): static
     {
         $this->soldQuantity = $soldQuantity;
+
+        return $this;
+    }
+    
+    public function getReservedQuantity(): ?int
+    {
+        return $this->reservedQuantity;
+    }
+
+    public function setReservedQuantity(int $reservedQuantity): static
+    {
+        $this->reservedQuantity = $reservedQuantity;
 
         return $this;
     }

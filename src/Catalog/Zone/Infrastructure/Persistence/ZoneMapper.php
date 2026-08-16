@@ -27,6 +27,7 @@ class ZoneMapper
         $entity->setName($zone->name()->value());
         $entity->setTotalQuantity($zone->quantity()->total());
         $entity->setSoldQuantity($zone->quantity()->sold());
+        $entity->setReservedQuantity($zone->quantity()->reserved());
         $entity->setPrice($zone->price()->value());
         $entity->setHierarchy($zone->hierarchy()->value());
         $entity->setTaxRate($zone->taxRate()->value());
@@ -46,7 +47,7 @@ class ZoneMapper
             ZoneHierarchy::fromInt($entity->getHierarchy()),
             ZoneNumberedSeating::fromBool($entity->isNumberedSeating()),
             ZonePrice::fromFloat($entity->getPrice()),
-            ZoneQuantity::create($entity->getTotalQuantity(), $entity->getSoldQuantity()),
+            ZoneQuantity::create($entity->getTotalQuantity(), $entity->getSoldQuantity(), $entity->getReservedQuantity()),
             ZoneTaxRate::fromFloat($entity->getTaxRate()),
             ZoneCanvas::fromArray($entity->getCanvas()),
             EventDayId::fromString($entity->getDay()->getId()),

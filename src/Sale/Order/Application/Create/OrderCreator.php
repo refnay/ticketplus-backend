@@ -17,6 +17,7 @@ use App\Sale\Order\Domain\OrderTotal;
 use App\Sale\Shared\Domain\EventDayId;
 use App\Sale\Shared\Domain\EventId;
 use App\Sale\Shared\Domain\Exceptions\SeatNotAvailable;
+use App\Sale\Shared\Domain\Exceptions\SeatNotFound;
 use App\Sale\Shared\Domain\Exceptions\ZoneQuantityExceeded;
 use App\Sale\Shared\Domain\Exceptions\ZoneQuantitySoldOut;
 use App\Sale\Shared\Domain\SeatId;
@@ -67,6 +68,10 @@ class OrderCreator
         }
 
         if ($zone->numberedSeating()) {
+            if (is_null($seatIds)) {
+                throw new SeatNotFound();
+            }
+
             foreach ($seatIds as $seatId) {
                 $seat = $this->seatFinder->__invoke(SeatId::fromString($seatId), $zoneId);
                 if (!SeatStatusList::AVAILABLE->sameValue($seat->status())) {
@@ -86,7 +91,7 @@ class OrderCreator
             OrderSubTotal::fromFloat($subTotal),
             OrderTax::fromFloat($tax),
             OrderTotal::fromFloat($total),
-            OrderDetails::fromPattern($eventId->value(), $dayId->value(), $zoneId->value(), $seatIds),
+            OrderDetails::fromPattern($eventId->value(), $dayId->value(), $zoneId->value(), $quantity, $seatIds),
             $userId,
         );
         $order->changeDiscountId($discountId);
