@@ -2,10 +2,8 @@
 
 namespace App\Sale\Ticket\Application\Create;
 
-use App\Sale\Order\Domain\OrderId;
-use App\Sale\Order\Domain\Services\OrderFinder;
-use App\Sale\Payment\Domain\PaymentId;
-use App\Sale\Payment\Domain\Services\PaymentFinder;
+use App\Sale\Order\Domain\Order;
+use App\Sale\Payment\Domain\Payment;
 use App\Sale\Shared\Domain\EventDayId;
 use App\Sale\Shared\Domain\EventId;
 use App\Sale\Shared\Domain\Exceptions\SeatNotFound;
@@ -13,19 +11,15 @@ use App\Sale\Shared\Domain\SeatId;
 use App\Sale\Shared\Domain\Services\EventDayFinder;
 use App\Sale\Shared\Domain\Services\SeatFinder;
 use App\Sale\Shared\Domain\Services\ZoneFinder;
-use App\Sale\Shared\Domain\UserId;
 use App\Sale\Shared\Domain\ZoneId;
 use App\Sale\Ticket\Domain\Ticket;
 use App\Sale\Ticket\Domain\TicketInformation;
 use App\Sale\Ticket\Domain\TicketPrice;
 use App\Sale\Ticket\Domain\TicketRepository;
-use DateTimeImmutable;
 
 class TicketCreator
 {
     public function __construct(
-        private PaymentFinder $paymentFinder,
-        private OrderFinder $orderFinder,
         private EventDayFinder $dayFinder,
         private TicketRepository $repository,
         private ZoneFinder $zoneFinder,
@@ -34,15 +28,11 @@ class TicketCreator
     }
 
     public function __invoke(
-        PaymentId $paymentId,
-        OrderId $orderId,
-        UserId $userId,
+        Payment $payment,
+        Order $order,
         ZoneId $zoneId,
         ?SeatId $seatId
     ): void {
-        $order = $this->orderFinder->__invoke($orderId, $userId);
-        $payment = $this->paymentFinder->__invoke($paymentId, $orderId);
-
         if ($payment->status()->isApproved()) {
             return;
         }
@@ -65,16 +55,10 @@ class TicketCreator
         } catch (SeatNotFound) {
         }
 
-        $date = DateTimeImmutable::createFromFormat('Y-m-d', $day->date());
-        $eventName = $day->eventName();
-        $zoneName = $zone->name();
-        $seatCode = is_null($seat) ? null : $seat->code();
-        $price = $order->price()->value() / $details->quantity();
-
         $ticket = Ticket::create(
-            TicketInformation::create($date, $eventName, $zoneName, $seatCode),
-            TicketPrice::fromFloat($price),
-            $orderId,
+            TicketInformation::create($day->date(), $day->eventName(), $zone->name(), is_null($seat) ? null : $seat->code()),
+            TicketPrice::fromFloat($order->price()->value() / $details->quantity()),
+            $order->id(),
             $zoneId,
         );
         $ticket->changeSeatId($seatId);

@@ -2,15 +2,17 @@
 
 namespace App\Sale\Shared\Domain;
 
+use DateTimeImmutable;
+
 class EventDay
 {
     private string $id;
-    private string $date;
+    private DateTimeImmutable $date;
     private string $eventName;
 
     public function __construct(
         string $id,
-        string $date,
+        DateTimeImmutable $date,
         string $eventName,
     ) {
         $this->id = $id;
@@ -23,7 +25,7 @@ class EventDay
         string $date,
         string $eventName,
     ): self {
-        return new self($id, $date, $eventName);
+        return new self($id, DateTimeImmutable::createFromFormat('Y-m-d', $date), $eventName);
     }
 
     public function id(): string
@@ -31,7 +33,7 @@ class EventDay
         return $this->id;
     }
 
-    public function date(): string
+    public function date(): DateTimeImmutable
     {
         return $this->date;
     }
