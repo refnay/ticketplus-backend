@@ -100,7 +100,7 @@ class OrderCreator
 
         $this->repository->save($order);
 
-        $this->events->add(new OrderReservedDomainEvent($dayId->value(), $zoneId->value(), $quantity, $seatIds));
+        $this->events->add(new OrderReservedDomainEvent($eventId->value(), $dayId->value(), $zoneId->value(), $quantity, $seatIds));
         $this->eventBus->dispatch(...$this->events->items());
 
         return $order->id()->value();
