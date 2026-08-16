@@ -9,6 +9,11 @@ enum PaymentStatusList: int
     case APPROVED = 2;
     case DECLINED = 3;
 
+    public function sameValue(int $value): bool
+    {
+        return $this->value === $value;
+    }
+
     public static function fromMercadoPago(string $status): self
     {
         return match ($status) {
