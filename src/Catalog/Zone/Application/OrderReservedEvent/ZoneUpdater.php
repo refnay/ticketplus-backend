@@ -16,7 +16,7 @@ class ZoneUpdater
     public function __invoke(EventDayId $dayId, ZoneId $id, int $quantity): void
     {
         $zone = $this->finder->__invoke($id, $dayId);
-        $reserved = $zone->quantity()->reserved() * $quantity;
+        $reserved = $zone->quantity()->reserved() + $quantity;
 
         $zone->changeReservedQuantity($reserved);
 
