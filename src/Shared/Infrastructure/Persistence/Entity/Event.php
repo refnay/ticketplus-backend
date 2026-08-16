@@ -44,6 +44,12 @@ class Event
     #[ORM\Column(length: 10)]
     private ?string $city = null;
 
+    #[ORM\Column(length: 3)]
+    private ?string $currency = null;
+
+    #[ORM\Column]
+    private ?float $taxRate = null;
+
     #[ORM\Column]
     private ?int $status = null;
 
@@ -202,6 +208,30 @@ class Event
     public function setCity(string $city): static
     {
         $this->city = $city;
+
+        return $this;
+    }
+
+    public function getCurrency(): ?string
+    {
+        return $this->currency;
+    }
+
+    public function setCurrency(string $currency): static
+    {
+        $this->currency = $currency;
+
+        return $this;
+    }
+
+    public function getTaxRate(): ?float
+    {
+        return $this->taxRate;
+    }
+
+    public function setTaxRate(float $taxRate): static
+    {
+        $this->taxRate = $taxRate;
 
         return $this;
     }

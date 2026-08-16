@@ -36,12 +36,6 @@ class Zone
     private ?int $hierarchy = null;
 
     #[ORM\Column]
-    private ?float $taxRate = null;
-
-    #[ORM\Column(length: 3)]
-    private ?string $currency = null;
-
-    #[ORM\Column]
     private ?bool $numberedSeating = null;
 
     #[ORM\Column(type: Types::JSON, nullable: true)]
@@ -148,30 +142,6 @@ class Zone
     public function setHierarchy(int $hierarchy): static
     {
         $this->hierarchy = $hierarchy;
-
-        return $this;
-    }
-
-    public function getTaxRate(): ?float
-    {
-        return $this->taxRate;
-    }
-
-    public function setTaxRate(float $taxRate): static
-    {
-        $this->taxRate = $taxRate;
-
-        return $this;
-    }
-
-    public function getCurrency(): ?string
-    {
-        return $this->currency;
-    }
-
-    public function setCurrency(string $currency): static
-    {
-        $this->currency = $currency;
 
         return $this;
     }
