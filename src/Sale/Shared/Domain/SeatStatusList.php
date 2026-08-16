@@ -12,6 +12,6 @@ enum SeatStatusList: int
 
     public function sameValue(int $value): bool
     {
-        return $this === $value;
+        return $this->value === $value;
     }
 }
