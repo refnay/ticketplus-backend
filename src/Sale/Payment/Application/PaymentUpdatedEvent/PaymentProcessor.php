@@ -47,17 +47,13 @@ class PaymentProcessor
 
         $this->repository->save($payment);
 
-        if ($payment->status()->isApproved()) {
-            $this->events->add(new PaymentProcessedDomainEvent(
-                $order->details()->event(),
-                $order->details()->zone(),
-                $order->details()->day(),
-                $order->details()->quantity(),
-                $payment->status()->value(),
-                $order->details()->seats(),
-            ));
-        }
-
+        $this->events->add(new PaymentProcessedDomainEvent(
+            $order->details()->zone(),
+            $order->details()->day(),
+            $order->details()->quantity(),
+            $payment->status()->value(),
+            $order->details()->seats(),
+        ));
         $this->eventBus->dispatch(...$this->events->items());
     }
 }

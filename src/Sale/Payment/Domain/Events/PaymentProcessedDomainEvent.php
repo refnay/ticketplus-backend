@@ -7,18 +7,12 @@ use App\Shared\Domain\Events\DomainEvent;
 class PaymentProcessedDomainEvent extends DomainEvent
 {
     public function __construct(
-        private string $eventId,
         private string $zoneId,
         private string $dayId,
         private int $quantity,
         private int $status,
         private ?array $seatIds,
     ) {
-    }
-
-    public function eventId(): string
-    {
-        return $this->eventId;
     }
 
     public function zoneId(): string
@@ -49,7 +43,6 @@ class PaymentProcessedDomainEvent extends DomainEvent
     public function payload(): array
     {
         return [
-            'eventId' => $this->eventId,
             'zoneId' => $this->zoneId,
             'dayId' => $this->dayId,
             'quantity' => $this->quantity,
