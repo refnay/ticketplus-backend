@@ -22,6 +22,8 @@ class EventDayDoctrineRepository implements EventDayRepository
         $row = $this->entityManager->createNativeQuery(
             'SELECT
                 d.date,
+                e.currency,
+                e.tax_rate,
                 e.name AS event_name
             FROM day d
             INNER JOIN event e ON e.id = d.event_id
@@ -40,6 +42,8 @@ class EventDayDoctrineRepository implements EventDayRepository
         return EventDay::create(
             $id->value(),
             (string) $row['date'],
+            (string) $row['currency'],
+            (float) $row['tax_rate'],
             (string) $row['eventName'],
         );
     }
@@ -48,6 +52,8 @@ class EventDayDoctrineRepository implements EventDayRepository
     {
         $mapping = new ResultSetMapping();
         $mapping->addScalarResult('date', 'date');
+        $mapping->addScalarResult('currency', 'currency');
+        $mapping->addScalarResult('tax_rate', 'tax_rate');
         $mapping->addScalarResult('event_name', 'eventName');
 
         return $mapping;

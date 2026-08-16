@@ -23,9 +23,7 @@ class ZoneDoctrineRepository implements ZoneRepository
         $row = $this->entityManager->createNativeQuery(
             'SELECT
                 z.name,
-                z.currency,
                 z.price,
-                z.tax_rate,
                 (z.total_quantity - z.sold_quantity - z.reserved_quantity) AS quantity,
                 z.numbered_seating
             FROM zone z
@@ -48,9 +46,7 @@ class ZoneDoctrineRepository implements ZoneRepository
         return Zone::create(
             $id->value(),
             (string) $row['name'],
-            (string) $row['currency'],
             (float) $row['price'],
-            (float) $row['tax_rate'],
             (int) $row['quantity'],
             (bool) $row['numbered_seating'],
         );
@@ -59,9 +55,7 @@ class ZoneDoctrineRepository implements ZoneRepository
     private function resultSetMapping(): ResultSetMapping
     {
         $mapping = new ResultSetMapping();
-        $mapping->addScalarResult('currency', 'currency');
         $mapping->addScalarResult('price', 'price');
-        $mapping->addScalarResult('tax_rate', 'tax_rate');
         $mapping->addScalarResult('quantity', 'quantity');
         $mapping->addScalarResult('numbered_seating', 'numbered_seating');
 
