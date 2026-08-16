@@ -9,6 +9,7 @@ class PaymentWithOrderProcessedDomainEvent extends DomainEvent
     public function __construct(
         private string $orderId,
         private string $userId,
+        private int $status,
     ) {
     }
 
@@ -22,11 +23,17 @@ class PaymentWithOrderProcessedDomainEvent extends DomainEvent
         return $this->userId;
     }
 
+    public function status(): int
+    {
+        return $this->status;
+    }
+
     public function payload(): array
     {
         return [
             'orderId' => $this->orderId,
             'userId' => $this->userId,
+            'status' => $this->status,
         ];
     }
 }
