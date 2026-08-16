@@ -25,7 +25,7 @@ class ZoneDoctrineRepository implements ZoneRepository
                 z.currency,
                 z.price,
                 z.tax_rate,
-                (z.total_quantity - z.sold_quantity) AS quantity,
+                (z.total_quantity - z.sold_quantity - z.reserved_quantity) AS quantity,
                 z.numbered_seating
             FROM zone z
             INNER JOIN day d ON d.id = z.day_id
