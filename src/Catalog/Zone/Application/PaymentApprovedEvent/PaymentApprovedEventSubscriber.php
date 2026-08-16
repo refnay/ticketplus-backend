@@ -1,26 +1,25 @@
 <?php
 
-namespace App\Catalog\Zone\Application\PaymentProcessedEvent;
+namespace App\Catalog\Zone\Application\PaymentApprovedEvent;
 
 use App\Catalog\Event\Domain\EventDayId;
 use App\Catalog\Zone\Domain\ZoneId;
-use App\Sale\Payment\Domain\Events\PaymentWithEventProcessedDomainEvent;
+use App\Sale\Payment\Domain\Events\PaymentWithEvenApprovedDomainEvent;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]
-class PaymentProcessedEventSubscriber
+class PaymentApprovedEventSubscriber
 {
     public function __construct(private ZoneUpdater $updater)
     {
     }
 
-    public function __invoke(PaymentWithEventProcessedDomainEvent $event): void
+    public function __invoke(PaymentWithEvenApprovedDomainEvent $event): void
     {
         $this->updater->__invoke(
             EventDayId::fromString($event->dayId()),
             ZoneId::fromString($event->zoneId()),
             $event->quantity(),
-            $event->status(),
         );
     }
 }

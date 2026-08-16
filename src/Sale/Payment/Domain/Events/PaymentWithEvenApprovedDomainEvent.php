@@ -4,14 +4,13 @@ namespace App\Sale\Payment\Domain\Events;
 
 use App\Shared\Domain\Events\DomainEvent;
 
-class PaymentWithEventProcessedDomainEvent extends DomainEvent
+class PaymentWithEvenApprovedDomainEvent extends DomainEvent
 {
     public function __construct(
         private string $eventId,
         private string $dayId,
         private string $zoneId,
         private int $quantity,
-        private int $status,
         private ?array $seatIds,
     ) {
     }
@@ -36,11 +35,6 @@ class PaymentWithEventProcessedDomainEvent extends DomainEvent
         return $this->quantity;
     }
 
-    public function status(): int
-    {
-        return $this->status;
-    }
-
     public function seatIds(): ?array
     {
         return $this->seatIds;
@@ -52,7 +46,6 @@ class PaymentWithEventProcessedDomainEvent extends DomainEvent
             'zoneId' => $this->zoneId,
             'dayId' => $this->dayId,
             'quantity' => $this->quantity,
-            'status' => $this->status,
             'seatIds' => $this->seatIds,
         ];
     }

@@ -1,13 +1,11 @@
 <?php
 
-namespace App\Sale\Order\Application\PaymentProcessedEvent;
+namespace App\Sale\Order\Application\PaymentApprovedEvent;
 
 use App\Sale\Order\Domain\OrderId;
 use App\Sale\Order\Domain\OrderRepository;
 use App\Sale\Order\Domain\OrderStatus;
 use App\Sale\Order\Domain\Services\OrderFinder;
-use App\Sale\Payment\Domain\PaymentStatus;
-use App\Sale\Payment\Domain\PaymentStatusList;
 use App\Sale\Shared\Domain\UserId;
 
 class OrderUpdater
@@ -16,17 +14,10 @@ class OrderUpdater
     {
     }
 
-    public function __invoke(OrderId $id, UserId $userId, PaymentStatus $status): void
+    public function __invoke(OrderId $id, UserId $userId): void
     {
         $order = $this->finder->__invoke($id, $userId);
-
-        switch ($status->value()) {
-            case PaymentStatusList::APPROVED:
-                $order->changeStatus(OrderStatus::paid());
-                break;
-            default:
-                return;
-        }
+        $order->changeStatus(OrderStatus::paid());
 
         $this->repository->update($order);
     }
