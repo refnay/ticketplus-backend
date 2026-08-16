@@ -4,13 +4,14 @@ namespace App\Sale\Order\Domain\Events;
 
 use App\Shared\Domain\Events\DomainEvent;
 
-class OrderReservedDomainEvent extends DomainEvent
+class OrderProcessedDomainEvent extends DomainEvent
 {
     public function __construct(
         private string $eventId,
         private string $dayId,
         private string $zoneId,
         private int $quantity,
+        private int $status,
         private ?array $seatIds,
     ) {
     }
@@ -40,6 +41,11 @@ class OrderReservedDomainEvent extends DomainEvent
         return $this->quantity;
     }
 
+    public function status(): int
+    {
+        return $this->status;
+    }
+
     public function payload(): array
     {
         return [
@@ -48,6 +54,7 @@ class OrderReservedDomainEvent extends DomainEvent
             'zoneId' => $this->zoneId,
             'dayId' => $this->dayId,
             'quantity' => $this->quantity,
+            'status' => $this->status,
         ];
     }
 }
