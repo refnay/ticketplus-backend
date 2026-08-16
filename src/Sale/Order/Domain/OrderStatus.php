@@ -22,6 +22,11 @@ class OrderStatus extends IntValueObject
         return new self(OrderStatusList::PAID->value); 
     }
 
+    public static function expired(): self
+    {
+        return new self(OrderStatusList::EXPIRED->value); 
+    }
+
     public function isPending(): bool
     {
         return OrderStatusList::PENDING->value == $this->value;

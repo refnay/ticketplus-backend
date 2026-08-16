@@ -59,6 +59,16 @@ class OrderDoctrineRepository implements OrderRepository
     }
 
     #[Override]
+    public function find(OrderId $id): ?Order
+    {
+        $entity = $this->entityManager
+            ->getRepository($this->mapper->entityClass())
+            ->find($id->value());
+
+        return !is_null($entity) ? $this->mapper->newDomain($entity) : null;
+    }
+
+    #[Override]
     public function findById(OrderId $id, UserId $userId): ?Order
     {
         $entity = $this->entityManager

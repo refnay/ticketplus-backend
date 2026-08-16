@@ -12,6 +12,8 @@ interface OrderRepository
 
     public function delete(Order $order): void;
 
+    public function find(OrderId $id): ?Order;
+
     public function findById(OrderId $id, UserId $userId): ?Order;
 
     public function searchByFilters(array $filters, string $orderBy, string $order, ?int $limit, ?int $offset): array;
