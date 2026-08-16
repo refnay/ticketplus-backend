@@ -9,7 +9,6 @@ use App\Sale\Payment\Domain\PaymentExternalReference;
 use App\Sale\Payment\Domain\PaymentId;
 use App\Sale\Payment\Domain\PaymentRepository;
 use App\Sale\Payment\Domain\PaymentStatus;
-use App\Sale\Payment\Domain\PaymentStatusList;
 use App\Sale\Payment\Domain\Provider\PaymentProviderList;
 use App\Sale\Payment\Domain\Services\PaymentFinder;
 use App\Sale\Shared\Domain\UserId;
@@ -31,11 +30,10 @@ class PaymentProcessor
 
         try {
             $response = $this->resolver->__invoke(PaymentProviderList::MERCADO_PAGO->value)->process($payment, $token);
-            
+
             $payment->changeStatus(PaymentStatus::fromInt($response->status()));
             $payment->changeExternalReference(PaymentExternalReference::fromReference($response->id(), $response->provider()));
         } catch (Throwable) {
-            $payment->changeExternalReference(PaymentExternalReference::fromNull());
             $payment->changeStatus(PaymentStatus::processing());
         }
 
