@@ -15,8 +15,12 @@ class SeatUpdater
     {
     }
 
-    public function __invoke(ZoneId $zoneId, array $seatIds, int $status): void
+    public function __invoke(ZoneId $zoneId, ?array $seatIds, int $status): void
     {   
+        if (is_null($seatIds)) {
+            return;
+        }
+        
         switch ($status) {
             case PaymentStatusList::APPROVED->value:
                 foreach ($seatIds as $seatId) {

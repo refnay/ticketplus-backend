@@ -7,7 +7,7 @@ use App\Sale\Payment\Domain\Events\PaymentProcessedDomainEvent;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]
-class PaymentApprovedEvent
+class PaymentApprovedEventSubscriber
 {
     public function __construct(private SeatUpdater $updater)
     {
