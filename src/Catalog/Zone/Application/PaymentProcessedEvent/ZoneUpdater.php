@@ -22,10 +22,8 @@ class ZoneUpdater
             case PaymentStatusList::APPROVED->value:
                 $reserved = $zone->quantity()->reserved() - $quantity;
                 $sold = $zone->quantity()->sold() + $quantity;
-
                 $zone->changeReservedQuantity($reserved);
                 $zone->changeSoldQuantity($sold);
-
                 break;
             default:
                 return;
