@@ -16,4 +16,9 @@ class OrderStatus extends IntValueObject
     {
         return new self(OrderStatusList::PENDING->value); 
     }
+
+    public function isPending(): bool
+    {
+        return OrderStatusList::PENDING->value == $this->value;
+    }
 }

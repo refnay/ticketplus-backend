@@ -1,0 +1,46 @@
+<?php
+
+namespace App\Sale\Payment\Application\Create;
+
+use App\Sale\Order\Domain\Exceptions\OrderStatusNotAllowed;
+use App\Sale\Order\Domain\OrderId;
+use App\Sale\Order\Domain\Services\OrderFinder;
+use App\Sale\Payment\Domain\Payment;
+use App\Sale\Payment\Domain\PaymentAmount;
+use App\Sale\Payment\Domain\PaymentMethod;
+use App\Sale\Payment\Domain\PaymentRepository;
+use App\Sale\Shared\Domain\UserId;
+use App\Shared\Application\Messenger\EventBus;
+use App\Shared\Domain\Utils\Primitive\ArrayBuilder;
+
+class PaymentCreator
+{
+    private ArrayBuilder $events;
+    
+    public function __construct(
+        private OrderFinder $orderFinder,
+        private PaymentRepository $repository,
+        private EventBus $eventBus,
+    ) {
+        $this->events = ArrayBuilder::generate();
+    }
+
+    public function __invoke(OrderId $orderId, PaymentMethod $method, UserId $userId): string
+    {
+        $order = $this->orderFinder->__invoke($orderId, $userId);
+        
+        if (!$order->status()->isPending()) {
+            throw new OrderStatusNotAllowed();
+        }
+
+        $payment = Payment::create(
+            PaymentAmount::fromFloat($order->total()->value()),
+            $method,
+            $order->id(),
+        );
+
+        $this->repository->save($payment);
+
+        return $payment->id()->value();
+    }
+}

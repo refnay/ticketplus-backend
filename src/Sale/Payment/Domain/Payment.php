@@ -29,14 +29,16 @@ class Payment
         $this->orderId = $orderId;
     }
 
-    public static function create(
-        PaymentAmount $amount,
-        PaymentExternalReference $externalReference,
-        PaymentMethod $method,
-        PaymentStatus $status,
-        OrderId $orderId,
-    ): self {
-        return new self(PaymentId::generate(), $amount, $externalReference, $method, $status, $orderId);
+    public static function create(PaymentAmount $amount, PaymentMethod $method, OrderId $orderId): self
+    {
+        return new self(
+            PaymentId::generate(),
+            $amount,
+            PaymentExternalReference::fromNull(),
+            $method,
+            PaymentStatus::pending(),
+            $orderId
+        );
     }
 
     public function id(): PaymentId

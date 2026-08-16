@@ -11,4 +11,9 @@ class PaymentStatus extends IntValueObject
     public function validate(): void
     {
     }
+
+    public static function pending(): self
+    {
+        return new self(PaymentStatusList::PENDING->value);
+    }
 }
