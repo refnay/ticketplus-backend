@@ -46,4 +46,9 @@ class ZoneQuantity
             'reserved' => $this->reserved,
         ];
     }
+
+    public static function changeReserved(int $reserved): self
+    {
+        return new self($this->total, $this->sold, $reserved);
+    }
 }

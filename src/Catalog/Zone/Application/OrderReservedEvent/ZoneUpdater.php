@@ -3,7 +3,6 @@
 namespace App\Catalog\Zone\Application\OrderReservedEvent;
 
 use App\Catalog\Event\Domain\EventDayId;
-use App\Catalog\Event\Domain\EventId;
 use App\Catalog\Zone\Domain\Services\ZoneFinder;
 use App\Catalog\Zone\Domain\ZoneId;
 use App\Shared\Infrastructure\Persistence\Repository\ZoneRepository;
