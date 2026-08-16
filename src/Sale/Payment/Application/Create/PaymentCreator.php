@@ -6,6 +6,7 @@ use App\Sale\Order\Domain\Exceptions\OrderStatusNotAllowed;
 use App\Sale\Order\Domain\OrderId;
 use App\Sale\Order\Domain\Services\OrderFinder;
 use App\Sale\Payment\Domain\Events\PaymentCreatedDomainEvent;
+use App\Sale\Payment\Domain\Exceptions\PaymentAlreadyProcessing;
 use App\Sale\Payment\Domain\Payment;
 use App\Sale\Payment\Domain\PaymentAmount;
 use App\Sale\Payment\Domain\PaymentMethod;
@@ -34,6 +35,8 @@ class PaymentCreator
             throw new OrderStatusNotAllowed();
         }
 
+        $this->validate($order->id());
+
         $payment = Payment::create(
             PaymentAmount::fromFloat($order->total()->value()),
             $method,
@@ -46,5 +49,17 @@ class PaymentCreator
         $this->eventBus->dispatch(...$this->events->items());
 
         return $payment->id()->value();
+    }
+
+    private function validate(OrderId $id): void
+    {   
+        /** @var Payment[] $payments */
+        $payments = $this->repository->searchByFilters(['order' => $id->value()], 'createdAt', 'DESC', null, null);
+
+        foreach ($payments as $payment) {
+            if ($payment->status()->isProcessing()) {
+                throw new PaymentAlreadyProcessing();
+            }
+        }
     }
 }
