@@ -4,7 +4,7 @@ namespace App\Sale\Payment\Domain\Events;
 
 use App\Shared\Domain\Events\DomainEvent;
 
-class PaymentProcessedDomainEvent extends DomainEvent
+class PaymentWithEventProcessedDomainEvent extends DomainEvent
 {
     public function __construct(
         private string $zoneId,

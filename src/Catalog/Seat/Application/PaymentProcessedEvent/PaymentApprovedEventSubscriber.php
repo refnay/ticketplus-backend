@@ -3,7 +3,7 @@
 namespace App\Catalog\Seat\Application\PaymentProcessedEvent;
 
 use App\Catalog\Zone\Domain\ZoneId;
-use App\Sale\Payment\Domain\Events\PaymentProcessedDomainEvent;
+use App\Sale\Payment\Domain\Events\PaymentWithEventProcessedDomainEvent;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]
@@ -13,7 +13,7 @@ class PaymentApprovedEventSubscriber
     {
     }
 
-    public function __invoke(PaymentProcessedDomainEvent $event): void
+    public function __invoke(PaymentWithEventProcessedDomainEvent $event): void
     {
         $this->updater->__invoke(ZoneId::fromString($event->zoneId()), $event->seatIds(), $event->status());
     }
