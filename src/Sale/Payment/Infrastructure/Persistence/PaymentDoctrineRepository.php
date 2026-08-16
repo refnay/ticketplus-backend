@@ -71,6 +71,16 @@ class PaymentDoctrineRepository implements PaymentRepository
     }
 
     #[Override]
+    public function findByOrder(OrderId $orderId): ?Payment
+    {
+        $entity = $this->entityManager
+            ->getRepository($this->mapper->entityClass())
+            ->findOneBy(['purchase' => $orderId->value()]);
+
+        return !is_null($entity) ? $this->mapper->newDomain($entity) : null;
+    }
+
+    #[Override]
     public function findByExternalReference(PaymentExternalReference $externalReference, OrderId $orderId): ?Payment
     {
         $entity = $this->entityManager

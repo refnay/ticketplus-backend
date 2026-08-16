@@ -16,6 +16,8 @@ interface PaymentRepository
 
     public function findById(PaymentId $id, OrderId $orderId): ?Payment;
 
+    public function findByOrder(OrderId $orderId): ?Payment;
+
     public function findByExternalReference(PaymentExternalReference $id, OrderId $orderId): ?Payment;
 
     public function findProcessing(OrderId $orderId): ?Payment;
