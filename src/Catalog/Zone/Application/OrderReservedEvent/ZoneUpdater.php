@@ -5,7 +5,7 @@ namespace App\Catalog\Zone\Application\OrderReservedEvent;
 use App\Catalog\Event\Domain\EventDayId;
 use App\Catalog\Zone\Domain\Services\ZoneFinder;
 use App\Catalog\Zone\Domain\ZoneId;
-use App\Shared\Infrastructure\Persistence\Repository\ZoneRepository;
+use App\Catalog\Zone\Domain\ZoneRepository;
 
 class ZoneUpdater
 {
@@ -16,5 +16,10 @@ class ZoneUpdater
     public function __invoke(EventDayId $dayId, ZoneId $id, int $quantity): void
     {
         $zone = $this->finder->__invoke($id, $dayId);
+        $reserved = $zone->quantity()->reserved() * $quantity;
+
+        $zone->changeReservedQuantity($reserved);
+
+        $this->repository->update($zone);
     }
 }

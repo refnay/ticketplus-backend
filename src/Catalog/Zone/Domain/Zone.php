@@ -145,6 +145,21 @@ class Zone
         $this->quantity = $quantity;
     }
 
+    public function changeTotalQuantity(int $total): void
+    {
+        $this->quantity = $this->quantity->changeTotal($total);
+    }
+    
+    public function changeSoldQuantity(int $sold): void
+    {
+        $this->quantity = $this->quantity->changeSold($sold);
+    }
+    
+    public function changeReservedQuantity(int $reserved): void
+    {
+        $this->quantity = $this->quantity->changeReserved($reserved);
+    }
+
     public function changeTaxRate(ZoneTaxRate $taxRate): void
     {
         $this->taxRate = $taxRate;
