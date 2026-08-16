@@ -5,6 +5,7 @@ namespace App\Sale\Order\Application\Create;
 use App\Sale\Discount\Domain\DiscountId;
 use App\Sale\Discount\Domain\Services\DiscountApply;
 use App\Sale\Discount\Domain\Services\DiscountFinder;
+use App\Sale\Order\Domain\Events\OrderReservedDomainEvent;
 use App\Sale\Order\Domain\Events\OrderSeatsReservedDomainEvent;
 use App\Sale\Order\Domain\Events\OrderZoneReservedDomainEvent;
 use App\Sale\Order\Domain\Order;
@@ -99,11 +100,7 @@ class OrderCreator
 
         $this->repository->save($order);
 
-        if (!is_null($seatIds)) {
-            $this->events->add(new OrderSeatsReservedDomainEvent($seatIds, $zoneId->value()));
-        }
-        $this->events->add(new OrderZoneReservedDomainEvent($dayId->value(), $zoneId->value(), $quantity));
-
+        $this->events->add(new OrderReservedDomainEvent($dayId->value(), $zoneId->value(), $quantity, $seatIds));
         $this->eventBus->dispatch(...$this->events->items());
 
         return $order->id()->value();

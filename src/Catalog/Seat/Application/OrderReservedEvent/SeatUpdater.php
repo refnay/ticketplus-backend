@@ -14,15 +14,14 @@ class SeatUpdater
     {
     }
 
-    public function __invoke(ZoneId $zoneId, array $seatIds): void
+    public function __invoke(ZoneId $zoneId, ?array $seatIds): void
     {   
+        if (is_null($seatIds)) {
+            return;
+        }
+
         foreach ($seatIds as $seatId) {
             $seat = $this->finder->__invoke(SeatId::fromString($seatId), $zoneId);
-
-            if (!$seat->status()->isAvailable()) {
-                continue;
-            }
-
             $seat->changeStatus(SeatStatus::reserved());
 
             $this->repository->update($seat);
