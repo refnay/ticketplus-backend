@@ -28,21 +28,23 @@ class TicketCreator
 
     public function __invoke(
         Order $order,
-        ZoneId $zoneId,
+        array $item,
         ?SeatId $seatId
     ): void {
         $details = $order->details();
+        $zoneId = ZoneId::fromString($item['zone']);
 
-        $seat = null;
         $day = $this->dayFinder->__invoke(
             EventId::fromString($details->event()),
             EventDayId::fromString($details->day()),
         );
         $zone = $this->zoneFinder->__invoke(
-            ZoneId::fromString($zoneId),
+            $zoneId,
             EventId::fromString($details->event()),
             EventDayId::fromString($details->day()),
         );
+
+        $seat = null;
 
         try {
             $seat = $this->seatFinder->__invoke($seatId, $zoneId);
@@ -51,7 +53,7 @@ class TicketCreator
 
         $ticket = Ticket::create(
             TicketInformation::create($day->date(), $day->eventName(), $zone->name(), is_null($seat) ? null : $seat->code()),
-            TicketPrice::fromFloat($order->price()->value() / $details->quantity()),
+            TicketPrice::fromFloat($item['price']),
             $order->id(),
             $zoneId,
         );
