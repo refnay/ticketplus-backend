@@ -51,13 +51,15 @@ class PaymentProcessor
 
         if ($payment->status()->isApproved()) {
             $details = $order->details();
-            $this->events->add(new PaymentWithEventApprovedDomainEvent(
-                $details->event(),
-                $details->day(),
-                $details->zone(),
-                $details->quantity(),
-                $details->seats(),
-            ));
+            foreach ($details->items() as $item) {
+                $this->events->add(new PaymentWithEventApprovedDomainEvent(
+                    $details->event(),
+                    $details->day(),
+                    $item['zone'],
+                    $item['quantity'],
+                    $item['seats'],
+                ));
+            }
             $this->events->add(new PaymentWithOrderApprovedDomainEvent(
                 $orderId->value(),
                 $userId->value(),
