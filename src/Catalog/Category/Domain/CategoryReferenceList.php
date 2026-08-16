@@ -2,7 +2,7 @@
 
 namespace App\Catalog\Category\Domain;
 
-enum EventCategory: int
+enum CategoryReferenceList: int
 {
     case CONCERT = 0;
     case THEATER = 1;

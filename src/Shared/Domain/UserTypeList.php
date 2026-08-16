@@ -2,7 +2,7 @@
 
 namespace App\Shared\Domain;
 
-enum UserTypesList: int
+enum UserTypeList: int
 {
     case SIMPLE = 0;
     case WORKER = 1;
