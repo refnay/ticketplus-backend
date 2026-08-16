@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Sale\Payment\Application\Provider;
+namespace App\Sale\Payment\Application\Resolver;
 
 use App\Sale\Payment\Domain\Exceptions\PaymentProviderNotFound;
 use App\Sale\Payment\Domain\Provider\PaymentProvider;

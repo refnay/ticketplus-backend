@@ -4,7 +4,7 @@ namespace App\Sale\Payment\Application\PaymentUpdatedEvent;
 
 use App\Sale\Order\Domain\OrderId;
 use App\Sale\Order\Domain\Services\OrderFinder;
-use App\Sale\Payment\Application\Provider\PaymentProviderResolver;
+use App\Sale\Payment\Application\Resolver\PaymentProviderResolver;
 use App\Sale\Payment\Domain\PaymentExternalReference;
 use App\Sale\Payment\Domain\PaymentId;
 use App\Sale\Payment\Domain\PaymentRepository;

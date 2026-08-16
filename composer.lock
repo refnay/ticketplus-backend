@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0bf53d79487cbb7449bb04f41fe83715",
+    "content-hash": "42d8a1c1b96f4572a34c29de663f358c",
     "packages": [
         {
             "name": "doctrine/collections",
@@ -1375,6 +1375,47 @@
                 }
             ],
             "time": "2025-12-20T17:47:00+00:00"
+        },
+        {
+            "name": "mercadopago/dx-php",
+            "version": "3.14.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mercadopago/sdk-php.git",
+                "reference": "69ebc7584f896a4c3406ad3840e53ab2b1e51cd8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mercadopago/sdk-php/zipball/69ebc7584f896a4c3406ad3840e53ab2b1e51cd8",
+                "reference": "69ebc7584f896a4c3406ad3840e53ab2b1e51cd8",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.22",
+                "phpunit/phpunit": "^11.0",
+                "squizlabs/php_codesniffer": ">=3.13.6",
+                "symfony/console": "^7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "MercadoPago\\": "src/MercadoPago"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Mercado Pago PHP SDK",
+            "homepage": "https://github.com/mercadopago/sdk-php",
+            "support": {
+                "issues": "https://github.com/mercadopago/sdk-php/issues",
+                "source": "https://github.com/mercadopago/sdk-php/tree/3.14.0"
+            },
+            "time": "2026-08-11T22:07:54+00:00"
         },
         {
             "name": "nelmio/cors-bundle",
