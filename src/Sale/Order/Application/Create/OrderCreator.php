@@ -6,6 +6,7 @@ use App\Sale\Discount\Domain\DiscountId;
 use App\Sale\Discount\Domain\Services\DiscountApply;
 use App\Sale\Discount\Domain\Services\DiscountFinder;
 use App\Sale\Order\Domain\Events\OrderSeatsReservedDomainEvent;
+use App\Sale\Order\Domain\Events\OrderZoneReservedDomainEvent;
 use App\Sale\Order\Domain\Order;
 use App\Sale\Order\Domain\OrderCurrency;
 use App\Sale\Order\Domain\OrderDetails;
@@ -101,6 +102,7 @@ class OrderCreator
         if (!is_null($seatIds)) {
             $this->events->add(new OrderSeatsReservedDomainEvent($seatIds, $zoneId->value()));
         }
+        $this->events->add(new OrderZoneReservedDomainEvent($dayId->value(), $zoneId->value(), $quantity));
 
         $this->eventBus->dispatch(...$this->events->items());
 
