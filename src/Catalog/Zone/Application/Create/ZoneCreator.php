@@ -8,7 +8,6 @@ use App\Catalog\Event\Domain\Exceptions\EventDayNotFound;
 use App\Catalog\Event\Domain\Services\EventFinder;
 use App\Catalog\Shared\Domain\CompanyId;
 use App\Catalog\Zone\Domain\Zone;
-use App\Catalog\Zone\Domain\ZoneCurrency;
 use App\Catalog\Zone\Domain\ZoneHierarchy;
 use App\Catalog\Zone\Domain\ZoneName;
 use App\Catalog\Zone\Domain\ZoneNumberedSeating;
@@ -25,7 +24,6 @@ class ZoneCreator
 
     public function __invoke(
         ZoneName $name,
-        ZoneCurrency $currency,
         ZoneTaxRate $taxRate,
         ZonePrice $price,
         ZoneQuantity $quantity,
@@ -44,7 +42,6 @@ class ZoneCreator
 
         $zone = Zone::create(
             $name,
-            $currency,
             $hierarchy,
             $numberedSeating,
             $price,

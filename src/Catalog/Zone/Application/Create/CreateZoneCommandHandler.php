@@ -5,7 +5,6 @@ namespace App\Catalog\Zone\Application\Create;
 use App\Catalog\Event\Domain\EventDayId;
 use App\Catalog\Event\Domain\EventId;
 use App\Catalog\Shared\Domain\CompanyId;
-use App\Catalog\Zone\Domain\ZoneCurrency;
 use App\Catalog\Zone\Domain\ZoneHierarchy;
 use App\Catalog\Zone\Domain\ZoneName;
 use App\Catalog\Zone\Domain\ZoneNumberedSeating;
@@ -23,7 +22,6 @@ class CreateZoneCommandHandler
     {
         return $this->creator->__invoke(
             ZoneName::fromString($command->name()),
-            ZoneCurrency::fromString($command->currency()),
             ZoneTaxRate::fromFloat($command->taxRate()),
             ZonePrice::fromFloat($command->price()),
             ZoneQuantity::fromTotal($command->quantity()),

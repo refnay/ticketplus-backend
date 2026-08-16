@@ -13,12 +13,8 @@ class SeatUpdater
 {
     public function __construct(private SeatRepository $repository, private SeatFinder $finder) {}
 
-    public function __invoke(ZoneId $zoneId, ?array $seatIds, int $status): void
+    public function __invoke(array $items, int $status): void
     {
-        if (is_null($seatIds)) {
-            return;
-        }
-
         $newStatus = match ($status) {
             OrderStatusList::PENDING->value => SeatStatus::reserved(),
             OrderStatusList::EXPIRED->value => SeatStatus::available(),
@@ -29,11 +25,17 @@ class SeatUpdater
             return;
         }
 
-        foreach ($seatIds as $seatId) {
-            $seat = $this->finder->__invoke(SeatId::fromString($seatId), $zoneId);
-            $seat->changeStatus($newStatus);
+        foreach ($items as $item) {
+            $seatIds = $item['seats'];
 
-            $this->repository->update($seat);
+            if (is_array($seatIds) && count($seatIds) > 0) {
+                foreach ($seatIds as $seatId) {
+                    $seat = $this->finder->__invoke(SeatId::fromString($seatId), ZoneId::fromString($item['zone']));
+                    $seat->changeStatus($newStatus);
+
+                    $this->repository->update($seat);
+                }
+            }
         }
     }
 }

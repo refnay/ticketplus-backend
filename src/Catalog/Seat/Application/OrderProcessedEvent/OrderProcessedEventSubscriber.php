@@ -2,7 +2,6 @@
 
 namespace App\Catalog\Seat\Application\OrderProcessedEvent;
 
-use App\Catalog\Zone\Domain\ZoneId;
 use App\Sale\Order\Domain\Events\OrderProcessedDomainEvent;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
@@ -15,6 +14,6 @@ class OrderProcessedEventSubscriber
 
     public function __invoke(OrderProcessedDomainEvent $event): void
     {
-        $this->updater->__invoke(ZoneId::fromString($event->zoneId()), $event->seatIds(), $event->status());
+        $this->updater->__invoke($event->items(), $event->status());
     }
 }

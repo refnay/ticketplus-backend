@@ -11,7 +11,6 @@ class ZoneResponse implements JsonSerializable
     public function __construct(
         readonly private string $id,
         readonly private string $name,
-        readonly private string $currency,
         readonly private int $hierarchy,
         readonly private float $price,
         readonly private float $taxRate,
@@ -25,7 +24,6 @@ class ZoneResponse implements JsonSerializable
         return new self(
             $zone->id()->value(),
             $zone->name()->value(),
-            $zone->currency()->value(),
             $zone->hierarchy()->value(),
             $zone->price()->value(),
             $zone->taxRate()->value(),
