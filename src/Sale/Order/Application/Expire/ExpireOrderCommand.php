@@ -18,5 +18,5 @@ class ExpireOrderCommand extends BaseCommand
     public function order(): string
     {
         return $this->order;
-    } 
+    }
 }
