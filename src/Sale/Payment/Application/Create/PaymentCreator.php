@@ -2,6 +2,7 @@
 
 namespace App\Sale\Payment\Application\Create;
 
+use App\Sale\Order\Domain\Exceptions\OrderExpired;
 use App\Sale\Order\Domain\Exceptions\OrderStatusNotAllowed;
 use App\Sale\Order\Domain\OrderId;
 use App\Sale\Order\Domain\Services\OrderFinder;
@@ -37,6 +38,10 @@ class PaymentCreator
 
         if (!$order->status()->isPending()) {
             throw new OrderStatusNotAllowed();
+        }
+
+        if ($order->expiresAt()->expired()) {
+            throw new OrderExpired();
         }
 
         try {

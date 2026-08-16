@@ -12,6 +12,11 @@ class OrderExpiresAt extends DateTimeValueObject
     {
         return self::now()->add(new DateInterval('PT15M'));
     }
+    
+    public function expired(): bool
+    {
+        return $this->before(self::now());
+    }
 
     #[Override]
     public function validate(): void
