@@ -18,7 +18,7 @@ use App\Shared\Domain\Utils\Primitive\ArrayBuilder;
 class PaymentCreator
 {
     private ArrayBuilder $events;
-    
+
     public function __construct(
         private OrderFinder $orderFinder,
         private PaymentRepository $repository,
@@ -30,7 +30,7 @@ class PaymentCreator
     public function __invoke(OrderId $orderId, PaymentMethod $method, UserId $userId): string
     {
         $order = $this->orderFinder->__invoke($orderId, $userId);
-        
+
         if (!$order->status()->isPending()) {
             throw new OrderStatusNotAllowed();
         }
@@ -44,7 +44,7 @@ class PaymentCreator
         );
 
         $this->repository->save($payment);
-        
+
         $this->events->add(new PaymentCreatedDomainEvent($orderId->value(), $method->value(), $userId->value()));
         $this->eventBus->dispatch(...$this->events->items());
 
@@ -52,14 +52,11 @@ class PaymentCreator
     }
 
     private function validate(OrderId $id): void
-    {   
-        /** @var Payment[] $payments */
-        $payments = $this->repository->searchByFilters(['order' => $id->value()], 'createdAt', 'DESC', null, null);
+    {
+        $payment = $this->repository->getProcessing($id);
 
-        foreach ($payments as $payment) {
-            if ($payment->status()->isProcessing()) {
-                throw new PaymentAlreadyProcessing();
-            }
+        if (!is_null($payment)) {
+            throw new PaymentAlreadyProcessing();
         }
     }
 }

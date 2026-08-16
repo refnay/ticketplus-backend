@@ -9,6 +9,8 @@ use App\Sale\Payment\Domain\Payment;
 use App\Sale\Payment\Domain\PaymentId;
 use App\Sale\Payment\Domain\PaymentRepository;
 use App\Sale\Order\Domain\OrderId;
+use App\Sale\Payment\Domain\PaymentExternalReference;
+use App\Sale\Payment\Domain\PaymentStatus;
 use App\Shared\Infrastructure\Persistence\Doctrine\QueryBuilder;
 use Doctrine\ORM\EntityManagerInterface;
 use Override;
@@ -64,6 +66,26 @@ class PaymentDoctrineRepository implements PaymentRepository
         $entity = $this->entityManager
             ->getRepository($this->mapper->entityClass())
             ->findOneBy(['id' => $id->value(), 'purchase' => $orderId->value()]);
+
+        return !is_null($entity) ? $this->mapper->newDomain($entity) : null;
+    }
+
+    #[Override]
+    public function findByExternalReference(PaymentExternalReference $externalReference, OrderId $orderId): ?Payment
+    {
+        $entity = $this->entityManager
+            ->getRepository($this->mapper->entityClass())
+            ->findOneBy(['externalReference' => $externalReference->value(), 'purchase' => $orderId->value()]);
+
+        return !is_null($entity) ? $this->mapper->newDomain($entity) : null;
+    }
+
+    #[Override]
+    public function getProcessing(OrderId $orderId): ?Payment
+    {
+        $entity = $this->entityManager
+            ->getRepository($this->mapper->entityClass())
+            ->findOneBy(['status' => PaymentStatus::processing()->value(), 'purchase' => $orderId->value()]);
 
         return !is_null($entity) ? $this->mapper->newDomain($entity) : null;
     }
