@@ -5,6 +5,7 @@ namespace App\Catalog\Event\Application\Update;
 use App\Catalog\Category\Domain\CategoryId;
 use App\Catalog\Event\Domain\EventCity;
 use App\Catalog\Event\Domain\EventCountry;
+use App\Catalog\Event\Domain\EventCurrency;
 use App\Catalog\Event\Domain\EventDescription;
 use App\Catalog\Event\Domain\EventId;
 use App\Catalog\Event\Domain\EventLocation;
@@ -27,6 +28,7 @@ class UpdateEventCommandHandler
             EventLocation::fromString($command->location()),
             EventCountry::fromString($command->country()),
             EventCity::fromString($command->city()),
+            EventCurrency::fromString($command->currency()),
             EventStatus::fromInt($command->status()),
             CategoryId::fromString($command->category()),
             CompanyId::fromString($command->session()->company()),

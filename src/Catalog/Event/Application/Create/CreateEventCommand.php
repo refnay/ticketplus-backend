@@ -14,6 +14,7 @@ class CreateEventCommand extends BaseCommand
         private string $location,
         private string $country,
         private string $city,
+        private string $currency,
         private string $category,
         private array $days,
     ) {}
@@ -33,6 +34,7 @@ class CreateEventCommand extends BaseCommand
             $payload->string('location'),
             $payload->string('country'),
             $payload->string('city'),
+            $payload->string('currency'),
             $payload->string('category'),
             $days->items()
         );
@@ -61,6 +63,11 @@ class CreateEventCommand extends BaseCommand
     public function city(): string
     {
         return $this->city;
+    }
+
+    public function currency(): string
+    {
+        return $this->currency;
     }
 
     public function category(): string

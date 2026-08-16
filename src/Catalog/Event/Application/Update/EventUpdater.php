@@ -6,6 +6,7 @@ use App\Catalog\Category\Domain\CategoryId;
 use App\Catalog\Category\Domain\Services\CategoryFinder;
 use App\Catalog\Event\Domain\EventCity;
 use App\Catalog\Event\Domain\EventCountry;
+use App\Catalog\Event\Domain\EventCurrency;
 use App\Catalog\Event\Domain\EventDescription;
 use App\Catalog\Event\Domain\EventId;
 use App\Catalog\Event\Domain\EventLocation;
@@ -31,6 +32,7 @@ class EventUpdater
         EventLocation $location,
         EventCountry $country,
         EventCity $city,
+        EventCurrency $currency,
         EventStatus $status,
         CategoryId $categoryId,
         CompanyId $companyId,
@@ -44,6 +46,7 @@ class EventUpdater
         $event->changeLocation($location);
         $event->changeCountry($country);
         $event->changeCity($city);
+        $event->changeCurrency($currency);
         $event->changeStatus($status);
         $event->changeCategoryId($category->id());
 

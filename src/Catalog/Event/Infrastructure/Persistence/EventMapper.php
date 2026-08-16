@@ -9,6 +9,7 @@ use App\Catalog\Event\Domain\EventCanvas;
 use App\Catalog\Event\Domain\EventCity;
 use App\Catalog\Event\Domain\EventCountry;
 use App\Catalog\Event\Domain\EventCoverImage;
+use App\Catalog\Event\Domain\EventCurrency;
 use App\Catalog\Event\Domain\EventDay;
 use App\Catalog\Event\Domain\EventDayDate;
 use App\Catalog\Event\Domain\EventDayDescription;
@@ -43,6 +44,7 @@ class EventMapper
         $entity->setLocation($event->location()->value());
         $entity->setCountry($event->country()->value());
         $entity->setCity($event->city()->value());
+        $entity->setCurrency($event->currency()->value());
         $entity->setStatus($event->status()->value());
         $entity->setCompany($this->fetcher->company($event->companyId()));
         $entity->setCategory($this->fetcher->category($event->categoryId()));
@@ -76,6 +78,7 @@ class EventMapper
             EventLocation::fromString($entity->getLocation()),
             EventCountry::fromString($entity->getCountry()),
             EventCity::fromString($entity->getCity()),
+            EventCurrency::fromString($entity->getCurrency()),
             EventStatus::fromInt($entity->getStatus()),
             EventCanvas::fromArray($entity->getCanvas()),
             CategoryId::fromString($entity->getCategory()->getId()),
@@ -109,6 +112,7 @@ class EventMapper
         $entity->setLocation($event->location()->value());
         $entity->setCountry($event->country()->value());
         $entity->setCity($event->city()->value());
+        $entity->setCurrency($event->currency()->value());
         $entity->setStatus($event->status()->value());
         $entity->setCategory($this->fetcher->category($event->categoryId()));
         $entity->setCanvas($event->canvas()->value());

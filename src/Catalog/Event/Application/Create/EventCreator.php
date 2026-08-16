@@ -7,6 +7,7 @@ use App\Catalog\Category\Domain\Services\CategoryFinder;
 use App\Catalog\Event\Domain\Event;
 use App\Catalog\Event\Domain\EventCity;
 use App\Catalog\Event\Domain\EventCountry;
+use App\Catalog\Event\Domain\EventCurrency;
 use App\Catalog\Event\Domain\EventDay;
 use App\Catalog\Event\Domain\EventDayDate;
 use App\Catalog\Event\Domain\EventDayDescription;
@@ -39,6 +40,7 @@ class EventCreator
         EventLocation $location,
         EventCountry $country,
         EventCity $city,
+        EventCurrency $currency,
         CategoryId $categoryId, 
         CompanyId $companyId,
         array $days,
@@ -59,6 +61,7 @@ class EventCreator
             $location,
             $country,
             $city,
+            $currency,
             $category->id(),
             $companyId,
         );

@@ -5,6 +5,7 @@ namespace App\Catalog\Event\Application\Create;
 use App\Catalog\Category\Domain\CategoryId;
 use App\Catalog\Event\Domain\EventCity;
 use App\Catalog\Event\Domain\EventCountry;
+use App\Catalog\Event\Domain\EventCurrency;
 use App\Catalog\Event\Domain\EventDescription;
 use App\Catalog\Event\Domain\EventLocation;
 use App\Catalog\Event\Domain\EventName;
@@ -25,6 +26,7 @@ class CreateEventCommandHandler
             EventLocation::fromString($command->location()),
             EventCountry::fromString($command->country()),
             EventCity::fromString($command->city()),
+            EventCurrency::fromString($command->currency()),
             CategoryId::fromString($command->category()),
             CompanyId::fromString($command->session()->company()),
             $command->days(),

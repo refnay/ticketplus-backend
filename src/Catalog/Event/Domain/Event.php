@@ -19,6 +19,7 @@ class Event
     private EventLocation $location;
     private EventCountry $country;
     private EventCity $city;
+    private EventCurrency $currency;
     private EventStatus $status;
     private CategoryId $categoryId;
     private CompanyId $companyId;
@@ -35,6 +36,7 @@ class Event
         EventLocation $location,
         EventCountry $country,
         EventCity $city,
+        EventCurrency $currency,
         EventStatus $status,
         EventCanvas $canvas,
         CategoryId $categoryId,
@@ -49,6 +51,7 @@ class Event
         $this->location = $location;
         $this->country = $country;
         $this->city = $city;
+        $this->currency = $currency;
         $this->status = $status;
         $this->canvas = $canvas;
         $this->categoryId = $categoryId;
@@ -62,6 +65,7 @@ class Event
         EventLocation $location,
         EventCountry $country,
         EventCity $city,
+        EventCurrency $currency,
         CategoryId $categoryId,
         CompanyId $companyId,
     ): self {
@@ -75,6 +79,7 @@ class Event
             $location,
             $country,
             $city,
+            $currency,
             EventStatus::draft(),
             EventCanvas::fromNull(),
             $categoryId,
@@ -130,6 +135,11 @@ class Event
     public function city(): EventCity
     {
         return $this->city;
+    }
+
+    public function currency(): EventCurrency
+    {
+        return $this->currency;
     }
 
     public function status(): EventStatus
@@ -191,6 +201,11 @@ class Event
     public function changeCity(EventCity $city): void
     {
         $this->city = $city;
+    }
+
+    public function changeCurrency(EventCurrency $currency): void
+    {
+        $this->currency = $currency;
     }
 
     public function changeStatus(EventStatus $status): void
