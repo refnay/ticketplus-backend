@@ -6,6 +6,7 @@ use App\Sale\Order\Domain\OrderId;
 use App\Sale\Order\Domain\Services\OrderFinder;
 use App\Sale\Payment\Application\Resolver\PaymentProviderResolver;
 use App\Sale\Payment\Domain\Events\PaymentWithEventProcessedDomainEvent;
+use App\Sale\Payment\Domain\Events\PaymentWithOrderProcessedDomainEvent;
 use App\Sale\Payment\Domain\PaymentExternalReference;
 use App\Sale\Payment\Domain\PaymentId;
 use App\Sale\Payment\Domain\PaymentRepository;
@@ -48,13 +49,20 @@ class PaymentProcessor
         $this->repository->save($payment);
 
         $details = $order->details();
+        $status = $payment->status()->value();
+
         $this->events->add(new PaymentWithEventProcessedDomainEvent(
             $details->event(),
             $details->day(),
             $details->zone(),
             $details->quantity(),
-            $payment->status()->value(),
+            $status,
             $details->seats(),
+        ));
+        $this->events->add(new PaymentWithOrderProcessedDomainEvent(
+            $order->id()->value(),
+            $userId->value(),
+            $status,
         ));
 
         $this->eventBus->dispatch(...$this->events->items());
