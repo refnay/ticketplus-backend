@@ -26,17 +26,14 @@ final class ExpiredOrdersCommand extends Command
         /** @var Order[] $orders */
         $orders = $this->repository->findExpireds();
 
-        try {
-            $this->transaction->begin();
-
-            foreach ($orders as $order) {
+        foreach ($orders as $order) {
+            try {
+                $this->transaction->begin();
                 $this->expirator->__invoke($order->id());
+                $this->transaction->commit();
+            } catch (Throwable) {
+                $this->transaction->rollback();
             }
-
-            $this->transaction->commit();
-        } catch (Throwable) {
-            $this->transaction->rollback();
-            return Command::FAILURE;
         }
 
         return Command::SUCCESS;
