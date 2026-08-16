@@ -81,7 +81,7 @@ class PaymentDoctrineRepository implements PaymentRepository
     }
 
     #[Override]
-    public function getProcessing(OrderId $orderId): ?Payment
+    public function findProcessing(OrderId $orderId): ?Payment
     {
         $entity = $this->entityManager
             ->getRepository($this->mapper->entityClass())

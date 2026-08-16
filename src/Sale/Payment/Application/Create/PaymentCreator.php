@@ -7,10 +7,12 @@ use App\Sale\Order\Domain\OrderId;
 use App\Sale\Order\Domain\Services\OrderFinder;
 use App\Sale\Payment\Domain\Events\PaymentCreatedDomainEvent;
 use App\Sale\Payment\Domain\Exceptions\PaymentAlreadyProcessing;
+use App\Sale\Payment\Domain\Exceptions\PaymentNotFound;
 use App\Sale\Payment\Domain\Payment;
 use App\Sale\Payment\Domain\PaymentAmount;
 use App\Sale\Payment\Domain\PaymentMethod;
 use App\Sale\Payment\Domain\PaymentRepository;
+use App\Sale\Payment\Domain\Services\PaymentProcessingFinder;
 use App\Sale\Shared\Domain\UserId;
 use App\Shared\Application\Messenger\EventBus;
 use App\Shared\Domain\Utils\Primitive\ArrayBuilder;
@@ -23,6 +25,7 @@ class PaymentCreator
         private OrderFinder $orderFinder,
         private PaymentRepository $repository,
         private EventBus $eventBus,
+        private PaymentProcessingFinder $paymentFinder,
     ) {
         $this->events = ArrayBuilder::generate();
     }
@@ -35,7 +38,11 @@ class PaymentCreator
             throw new OrderStatusNotAllowed();
         }
 
-        $this->validate($order->id());
+        try {
+            $this->paymentFinder->__invoke($order->id());
+            throw new PaymentAlreadyProcessing();
+        } catch (PaymentNotFound) {
+        }
 
         $payment = Payment::create(
             PaymentAmount::fromFloat($order->total()->value()),
@@ -49,14 +56,5 @@ class PaymentCreator
         $this->eventBus->dispatch(...$this->events->items());
 
         return $payment->id()->value();
-    }
-
-    private function validate(OrderId $id): void
-    {
-        $payment = $this->repository->getProcessing($id);
-
-        if (!is_null($payment)) {
-            throw new PaymentAlreadyProcessing();
-        }
     }
 }
