@@ -12,7 +12,7 @@ class PaymentProcessedDomainEvent extends DomainEvent
         private string $dayId,
         private int $quantity,
         private int $status,
-        private ?array $seats,
+        private ?array $seatIds,
     ) {
     }
 
@@ -41,9 +41,9 @@ class PaymentProcessedDomainEvent extends DomainEvent
         return $this->status;
     }
 
-    public function seats(): ?array
+    public function seatIds(): ?array
     {
-        return $this->seats;
+        return $this->seatIds;
     }
 
     public function payload(): array
@@ -54,7 +54,7 @@ class PaymentProcessedDomainEvent extends DomainEvent
             'dayId' => $this->dayId,
             'quantity' => $this->quantity,
             'status' => $this->status,
-            'seats' => $this->seats,
+            'seatIds' => $this->seatIds,
         ];
     }
 }

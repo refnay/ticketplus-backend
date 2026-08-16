@@ -17,6 +17,11 @@ class SeatStatus extends IntValueObject
         return new self(SeatStatusList::RESERVED->value);
     }
 
+    public static function sold(): self
+    {
+        return new self(SeatStatusList::SOLD->value);
+    }
+
     public function isReserved(): bool
     {
         return $this->value === SeatStatusList::RESERVED->value;
