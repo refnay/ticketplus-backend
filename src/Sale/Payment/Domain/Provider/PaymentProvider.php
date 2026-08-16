@@ -6,5 +6,5 @@ use App\Sale\Payment\Domain\Payment;
 
 interface PaymentProvider
 {
-    public function process(Payment $payment, string $token): ProviderResponse;
+    public function process(Payment $payment, string $token): PaymentProviderResponse;
 }

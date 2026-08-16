@@ -7,7 +7,7 @@ use App\Sale\Payment\Domain\PaymentMethodList;
 use App\Sale\Payment\Domain\PaymentStatusList;
 use App\Sale\Payment\Domain\Provider\PaymentProvider;
 use App\Sale\Payment\Domain\Provider\PaymentProviderList;
-use App\Sale\Payment\Domain\Provider\ProviderResponse;
+use App\Sale\Payment\Domain\Provider\PaymentProviderResponse;
 use MercadoPago\Client\Payment\PaymentClient;
 use MercadoPago\MercadoPagoConfig;
 
@@ -21,7 +21,7 @@ final class MercadoPagoProvider implements PaymentProvider
         $this->client = new PaymentClient();
     }
 
-    public function process(Payment $payment, string $token): ProviderResponse
+    public function process(Payment $payment, string $token): PaymentProviderResponse
     {
         $response = $this->client->create([
             'transaction_amount' => $payment->amount()->value(),
@@ -32,7 +32,7 @@ final class MercadoPagoProvider implements PaymentProvider
             ],
         ]);
 
-        return new ProviderResponse(
+        return new PaymentProviderResponse(
             $response->id,
             PaymentProviderList::MERCADO_PAGO->value,
             PaymentStatusList::fromMercadoPago($response->status)->value,

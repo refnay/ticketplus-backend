@@ -5,7 +5,7 @@ namespace App\Sale\Payment\Domain\Provider;
 use JsonSerializable;
 use Override;
 
-class ProviderResponse implements JsonSerializable
+class PaymentProviderResponse implements JsonSerializable
 {
     public function __construct(
         readonly private string $id,
