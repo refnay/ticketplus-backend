@@ -9,16 +9,14 @@ class OrderProcessedDomainEvent extends DomainEvent
     public function __construct(
         private string $eventId,
         private string $dayId,
-        private string $zoneId,
-        private int $quantity,
+        private array $items,
         private int $status,
-        private ?array $seatIds,
     ) {
     }
 
-    public function seatIds(): ?array
+    public function items(): array
     {
-        return $this->seatIds;
+        return $this->items;
     }
 
     public function eventId(): string
@@ -26,19 +24,9 @@ class OrderProcessedDomainEvent extends DomainEvent
         return $this->eventId;
     }
 
-    public function zoneId(): string
-    {
-        return $this->zoneId;
-    }
-
     public function dayId(): string
     {
         return $this->dayId;
-    }
-    
-    public function quantity(): int
-    {
-        return $this->quantity;
     }
 
     public function status(): int
@@ -50,10 +38,8 @@ class OrderProcessedDomainEvent extends DomainEvent
     {
         return [
             'eventId' => $this->eventId,
-            'seatIds' => $this->seatIds,
-            'zoneId' => $this->zoneId,
             'dayId' => $this->dayId,
-            'quantity' => $this->quantity,
+            'items' => $this->items,
             'status' => $this->status,
         ];
     }

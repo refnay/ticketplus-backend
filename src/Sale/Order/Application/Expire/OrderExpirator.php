@@ -52,10 +52,8 @@ class OrderExpirator
         $this->events->add(new OrderProcessedDomainEvent(
             $details->event(),
             $details->day(),
-            $details->zone(),
+            $details->items(),
             $order->status()->value(),
-            $details->quantity(),
-            $details->seats(),
         ));
         $this->eventBus->dispatch(...$this->events->items());
     }

@@ -12,15 +12,28 @@ class OrderDetails extends ArrayValueObject
     {
     }
 
-    public static function fromPattern(string $event, string $day, string $zone, int $quantity, ?array $seats): self
+    public static function fromPattern(string $event, string $day, array $items): self
     {
+        $elements = [];
+        foreach ($items as $item) {
+            $elements[] = self::itemPattern($item);
+        }
+
         return new self([
             'event' => $event,
             'day' => $day,
-            'zone' => $zone,
-            'quantity' => $quantity,
-            'seats' => $seats,
+            'items' => $elements,
         ]);
+    }
+
+    private static function itemPattern(array $item): array
+    {
+        return [
+            'zone' => isset($item['zone']) ? (string) $item['zone'] : null,
+            'quantity' => isset($item['quantity']) ? (int) $item['quantity'] : null,
+            'seats' => isset($item['seats']) ? (array) $item['seats'] : null,
+            'price' => isset($item['price']) ? (float) $item['price'] : null,
+        ];
     }
 
     public function event(): ?string
@@ -28,25 +41,13 @@ class OrderDetails extends ArrayValueObject
         return isset($this->value['event']) ? (string) $this->value['event'] : null;
     }
 
-    public function zone(): ?string
-    {
-        return isset($this->value['zone']) ? (string) $this->value['zone'] : null;
-    }
-
-    public function quantity(): ?int
-    {
-        return isset($this->value['quantity']) ? (int) $this->value['quantity'] : null;
-    }
-
     public function day(): ?string
     {
         return isset($this->value['day']) ? (string) $this->value['day'] : null;
     }
 
-    public function seats(): ?array
+    public function items(): array
     {
-        return isset($this->value['seats']) && is_array($this->value['seats']) && count($this->value['seats']) > 0
-            ? (array) $this->value['seats']
-            : null;
+        return isset($this->value['items']) ? (array) $this->value['items'] : null;
     }
 }
