@@ -7,22 +7,22 @@ use App\Shared\Domain\Events\DomainEvent;
 class PaymentWithEventProcessedDomainEvent extends DomainEvent
 {
     public function __construct(
-        private string $zoneId,
         private string $dayId,
+        private string $zoneId,
         private int $quantity,
         private int $status,
         private ?array $seatIds,
     ) {
     }
 
-    public function zoneId(): string
-    {
-        return $this->zoneId;
-    }
-
     public function dayId(): string
     {
         return $this->dayId;
+    }
+
+    public function zoneId(): string
+    {
+        return $this->zoneId;
     }
 
     public function quantity(): int
