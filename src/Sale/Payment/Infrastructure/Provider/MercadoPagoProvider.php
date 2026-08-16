@@ -6,7 +6,7 @@ use App\Sale\Payment\Domain\Payment;
 use App\Sale\Payment\Domain\Provider\PaymentProvider;
 use App\Sale\Payment\Domain\Provider\ProviderResponse;
 
-final class MercadoPagoPaymentProvider implements PaymentProvider
+final class MercadoPagoProvider implements PaymentProvider
 {
     public function process(Payment $payment, string $token): ProviderResponse
     {

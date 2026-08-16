@@ -21,7 +21,7 @@ services:
 
     App\Sale\Payment\Application\Resolver\PaymentProviderResolver:
         arguments:
-            $mercadoPago: '@App\Sale\Payment\Infrastructure\Provider\MercadoPagoPaymentProvider'
+            $mercadoPago: '@App\Sale\Payment\Infrastructure\Provider\MercadoPagoProvider'
 
     Symfony\Component\DependencyInjection\ContainerInterface: '@service_container'
 
