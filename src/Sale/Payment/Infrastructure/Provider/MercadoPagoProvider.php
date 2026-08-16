@@ -9,11 +9,6 @@ use App\Sale\Payment\Domain\Provider\ProviderResponse;
 
 final class MercadoPagoPaymentProvider implements PaymentProvider
 {
-    public function type(): int
-    {
-        return ProviderList::MERCADO_PAGO->value;
-    }
-
     public function process(Payment $payment, string $token): ProviderResponse
     {
         return new ProviderResponse('', '');

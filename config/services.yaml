@@ -19,6 +19,10 @@ services:
     App\:
         resource: '../src/'
 
+    App\Sale\Payment\Application\Resolver\PaymentProviderResolver:
+        arguments:
+            $mercadoPago: '@App\Sale\Payment\Infrastructure\Provider\MercadoPagoPaymentProvider'
+
     Symfony\Component\DependencyInjection\ContainerInterface: '@service_container'
 
     # add more service definitions when explicit configuration is needed
