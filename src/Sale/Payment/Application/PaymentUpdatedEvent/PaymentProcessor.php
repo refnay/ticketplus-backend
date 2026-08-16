@@ -5,7 +5,7 @@ namespace App\Sale\Payment\Application\PaymentUpdatedEvent;
 use App\Sale\Order\Domain\OrderId;
 use App\Sale\Order\Domain\Services\OrderFinder;
 use App\Sale\Payment\Application\Resolver\PaymentProviderResolver;
-use App\Sale\Payment\Domain\Events\PaymentApprovedDomainEvent;
+use App\Sale\Payment\Domain\Events\PaymentProcessedDomainEvent;
 use App\Sale\Payment\Domain\PaymentExternalReference;
 use App\Sale\Payment\Domain\PaymentId;
 use App\Sale\Payment\Domain\PaymentRepository;
@@ -48,13 +48,15 @@ class PaymentProcessor
         $this->repository->save($payment);
 
         if ($payment->status()->isApproved()) {
-            $this->events->add(new PaymentApprovedDomainEvent(
+            $this->events->add(new PaymentProcessedDomainEvent(
+                $order->details()->event(),
                 $order->details()->zone(),
                 $order->details()->day(),
                 $order->details()->quantity(),
+                $payment->status()->value(),
+                $order->details()->seats(),
             ));
         }
-        
 
         $this->eventBus->dispatch(...$this->events->items());
     }
