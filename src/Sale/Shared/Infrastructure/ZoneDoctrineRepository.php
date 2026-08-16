@@ -22,6 +22,7 @@ class ZoneDoctrineRepository implements ZoneRepository
     {
         $row = $this->entityManager->createNativeQuery(
             'SELECT
+                z.name,
                 z.currency,
                 z.price,
                 z.tax_rate,
@@ -46,6 +47,7 @@ class ZoneDoctrineRepository implements ZoneRepository
 
         return Zone::create(
             $id->value(),
+            (string) $row['name'],
             (string) $row['currency'],
             (float) $row['price'],
             (float) $row['tax_rate'],

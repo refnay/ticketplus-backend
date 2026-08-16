@@ -10,7 +10,7 @@ class TicketInformation
         private DateTimeInterface $date,
         private string $eventName,
         private string $zoneName,
-        private string $seatCode,
+        private ?string $seatCode,
     ) {
     }
 
@@ -18,7 +18,7 @@ class TicketInformation
         DateTimeInterface $date,
         string $eventName,
         string $zoneName,
-        string $seatCode
+        ?string $seatCode
     ): self {
         return new self($date, $eventName, $zoneName, $seatCode);
     }
@@ -43,7 +43,7 @@ class TicketInformation
         return $this->zoneName;
     }
 
-    public function seatCode(): string
+    public function seatCode(): ?string
     {
         return $this->seatCode;
     }
