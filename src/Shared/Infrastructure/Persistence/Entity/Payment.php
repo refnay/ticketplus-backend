@@ -32,6 +32,9 @@ class Payment
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $externalReference = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $token = null;
+
     #[ORM\ManyToOne(inversedBy: 'payments')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Purchase $purchase = null;
@@ -116,6 +119,18 @@ class Payment
     public function setExternalReference(?string $externalReference): static
     {
         $this->externalReference = $externalReference;
+
+        return $this;
+    }
+
+    public function getToken(): ?string
+    {
+        return $this->token;
+    }
+
+    public function setToken(?string $token): static
+    {
+        $this->token = $token;
 
         return $this;
     }

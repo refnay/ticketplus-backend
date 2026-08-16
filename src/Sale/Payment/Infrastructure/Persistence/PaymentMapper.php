@@ -9,6 +9,7 @@ use App\Sale\Payment\Domain\PaymentId;
 use App\Sale\Payment\Domain\PaymentMethod;
 use App\Sale\Payment\Domain\PaymentStatus;
 use App\Sale\Order\Domain\OrderId;
+use App\Sale\Payment\Domain\PaymentToken;
 use App\Shared\Infrastructure\Persistence\Entity\Payment as PaymentEntity;
 
 class PaymentMapper
@@ -26,6 +27,7 @@ class PaymentMapper
         $entity->setPaymentMethod($payment->method()->value());
         $entity->setStatus($payment->status()->value());
         $entity->setExternalReference($payment->externalReference()->value());
+        $entity->setToken($payment->token()->value());
         $entity->setPurchase($this->fetcher->order($payment->orderId()));
 
         return $entity;
@@ -37,6 +39,7 @@ class PaymentMapper
             PaymentId::fromString($entity->getId()),
             PaymentAmount::fromFloat($entity->getAmount()),
             PaymentExternalReference::fromString($entity->getExternalReference()),
+            PaymentToken::fromString($entity->getToken()),
             PaymentMethod::fromInt($entity->getPaymentMethod()),
             PaymentStatus::fromInt($entity->getStatus()),
             OrderId::fromString($entity->getPurchase()->getId()),
@@ -51,6 +54,7 @@ class PaymentMapper
         $entity->setPaymentMethod($payment->method()->value());
         $entity->setStatus($payment->status()->value());
         $entity->setExternalReference($payment->externalReference()->value());
+        $entity->setToken($payment->token()->value());
     }
 
     public function entityClass(): string
