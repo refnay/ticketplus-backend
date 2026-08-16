@@ -12,7 +12,6 @@ class UpdateZoneCommand extends BaseCommand
         private string $event,
         private string $day,
         private string $name,
-        private string $currency,
         private float $price,
         private float $taxRate,
         private int $total,
@@ -30,7 +29,6 @@ class UpdateZoneCommand extends BaseCommand
             $event,
             $day,
             $payload->string('name'),
-            $payload->string('currency'),
             $payload->float('price'),
             $payload->float('taxRate'),
             $payload->int('total'),
@@ -57,11 +55,6 @@ class UpdateZoneCommand extends BaseCommand
     public function name(): string
     {
         return $this->name;
-    }
-
-    public function currency(): string
-    {
-        return $this->currency;
     }
 
     public function price(): float

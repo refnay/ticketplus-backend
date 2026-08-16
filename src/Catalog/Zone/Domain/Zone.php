@@ -8,7 +8,6 @@ class Zone
 {
     private ZoneId $id;
     private ZoneName $name;
-    private ZoneCurrency $currency;
     private ZoneHierarchy $hierarchy;
     private ZoneNumberedSeating $numberedSeating;
     private ZonePrice $price;
@@ -20,7 +19,6 @@ class Zone
     public function __construct(
         ZoneId $id,
         ZoneName $name,
-        ZoneCurrency $currency,
         ZoneHierarchy $hierarchy,
         ZoneNumberedSeating $numberedSeating,
         ZonePrice $price,
@@ -31,7 +29,6 @@ class Zone
     ) {
         $this->id = $id;
         $this->name = $name;
-        $this->currency = $currency;
         $this->hierarchy = $hierarchy;
         $this->numberedSeating = $numberedSeating;
         $this->price = $price;
@@ -43,7 +40,6 @@ class Zone
 
     public static function create(
         ZoneName $name,
-        ZoneCurrency $currency,
         ZoneHierarchy $hierarchy,
         ZoneNumberedSeating $numberedSeating,
         ZonePrice $price,
@@ -54,7 +50,6 @@ class Zone
         return new self(
             ZoneId::generate(),
             $name,
-            $currency,
             $hierarchy,
             $numberedSeating,
             $price,
@@ -73,11 +68,6 @@ class Zone
     public function name(): ZoneName
     {
         return $this->name;
-    }
-
-    public function currency(): ZoneCurrency
-    {
-        return $this->currency;
     }
 
     public function hierarchy(): ZoneHierarchy
@@ -118,11 +108,6 @@ class Zone
     public function changeName(ZoneName $name): void
     {
         $this->name = $name;
-    }
-
-    public function changeCurrency(ZoneCurrency $currency): void
-    {
-        $this->currency = $currency;
     }
 
     public function changeHierarchy(ZoneHierarchy $hierarchy): void

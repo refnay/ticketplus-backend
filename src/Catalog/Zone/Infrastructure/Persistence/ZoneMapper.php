@@ -5,7 +5,6 @@ namespace App\Catalog\Zone\Infrastructure\Persistence;
 use App\Catalog\Event\Domain\EventDayId;
 use App\Catalog\Zone\Domain\Zone;
 use App\Catalog\Zone\Domain\ZoneCanvas;
-use App\Catalog\Zone\Domain\ZoneCurrency;
 use App\Catalog\Zone\Domain\ZoneHierarchy;
 use App\Catalog\Zone\Domain\ZoneId;
 use App\Catalog\Zone\Domain\ZoneName;
@@ -31,7 +30,6 @@ class ZoneMapper
         $entity->setPrice($zone->price()->value());
         $entity->setHierarchy($zone->hierarchy()->value());
         $entity->setTaxRate($zone->taxRate()->value());
-        $entity->setCurrency($zone->currency()->value());
         $entity->setNumberedSeating($zone->numberedSeating()->value());
         $entity->setDay($this->fetcher->day($zone->dayId()));
 
@@ -43,7 +41,6 @@ class ZoneMapper
         $zone = new Zone(
             ZoneId::fromString($entity->getId()),
             ZoneName::fromString($entity->getName()),
-            ZoneCurrency::fromString($entity->getCurrency()),
             ZoneHierarchy::fromInt($entity->getHierarchy()),
             ZoneNumberedSeating::fromBool($entity->isNumberedSeating()),
             ZonePrice::fromFloat($entity->getPrice()),
@@ -65,7 +62,6 @@ class ZoneMapper
         $entity->setPrice($zone->price()->value());
         $entity->setHierarchy($zone->hierarchy()->value());
         $entity->setTaxRate($zone->taxRate()->value());
-        $entity->setCurrency($zone->currency()->value());
         $entity->setNumberedSeating($zone->numberedSeating()->value());
     }
 
