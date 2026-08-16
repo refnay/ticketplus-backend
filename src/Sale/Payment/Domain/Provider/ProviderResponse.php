@@ -9,7 +9,8 @@ class ProviderResponse implements JsonSerializable
 {
     public function __construct(
         readonly private string $id,
-        readonly private string $status,
+        readonly private string $provider,
+        readonly private int $status,
     ) {
     }
 
@@ -17,8 +18,13 @@ class ProviderResponse implements JsonSerializable
     {
         return $this->id;
     }
+    
+    public function provider(): string
+    {
+        return $this->provider;
+    }
 
-    public function status(): string
+    public function status(): int
     {
         return $this->status;
     }

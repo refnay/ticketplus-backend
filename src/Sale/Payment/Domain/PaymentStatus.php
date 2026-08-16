@@ -22,6 +22,11 @@ class PaymentStatus extends IntValueObject
         return new self(PaymentStatusList::PROCESSING->value);
     }
 
+    public static function declined(): self
+    {
+        return new self(PaymentStatusList::DECLINED->value);
+    }
+
     public function isProcessing(): bool
     {
         return PaymentStatusList::PROCESSING->value === $this->value;;

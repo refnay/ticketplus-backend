@@ -12,7 +12,7 @@ final readonly class PaymentProviderResolver
     {
     }
 
-    public function resolve(int $provider): PaymentProvider
+    public function __invoke(int $provider): PaymentProvider
     {
         return match($provider) {
             ProviderList::MERCADO_PAGO => $this->mercadoPago,

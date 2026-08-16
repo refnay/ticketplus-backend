@@ -10,6 +10,6 @@ final class MercadoPagoPaymentProvider implements PaymentProvider
 {
     public function process(Payment $payment, string $token): ProviderResponse
     {
-        return new ProviderResponse('', '');
+        return new ProviderResponse('', '', 0);
     }
 }

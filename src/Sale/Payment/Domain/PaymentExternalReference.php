@@ -11,4 +11,9 @@ class PaymentExternalReference extends StringValueObject
     public function validate(): void
     {
     }
+
+    public static function fromReference(string $id, string $provider): self
+    {
+        return new self(sprintf('%s::%s', $id, $provider));
+    }
 }
