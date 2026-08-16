@@ -4,30 +4,32 @@ namespace App\Sale\Order\Application\Create;
 
 use App\Shared\Application\Command\BaseCommand;
 use App\Shared\Domain\Utils\PayloadMapper;
+use App\Shared\Domain\Utils\Primitive\ArrayBuilder;
 
 class CreateOrderCommand extends BaseCommand
 {
     public function __construct(
         private string $event,
         private string $day,
-        private string $zone,
         private ?string $discount,
-        private int $quantity,
-        private ?array $seats,
+        private array $zones,
     ) {
     }
 
     public static function create(array $data): self
     {
         $payload = PayloadMapper::fromData($data);
+        $zones = ArrayBuilder::generate();
+
+        foreach ($payload->array('zones') as $zone) {
+            $zones->add(ZoneCommand::create($zone));
+        }
 
         return new self(
             $payload->string('event'),
             $payload->string('day'),
-            $payload->string('zone'),
             $payload->nullableString('discount'),
-            $payload->int('quantity'),
-            $payload->nullableArray('seats'),
+            $zones->items(),
         );
     }
 
@@ -41,23 +43,13 @@ class CreateOrderCommand extends BaseCommand
         return $this->day;
     }
 
-    public function zone(): string
-    {
-        return $this->zone;
-    }
-
     public function discount(): ?string
     {
         return $this->discount;
     }
 
-    public function quantity(): int
+    public function zones(): array
     {
-        return $this->quantity;
-    }
-
-    public function seats(): ?array
-    {
-        return $this->seats;
+        return  $this->zones;
     }
 }
