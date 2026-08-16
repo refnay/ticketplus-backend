@@ -5,7 +5,7 @@ namespace App\Sale\Payment\Application\PaymentUpdatedEvent;
 use App\Sale\Order\Domain\OrderId;
 use App\Sale\Order\Domain\Services\OrderFinder;
 use App\Sale\Payment\Application\Resolver\PaymentProviderResolver;
-use App\Sale\Payment\Domain\Events\PaymentWithEvenApprovedDomainEvent;
+use App\Sale\Payment\Domain\Events\PaymentWithEventApprovedDomainEvent;
 use App\Sale\Payment\Domain\Events\PaymentWithOrderApprovedDomainEvent;
 use App\Sale\Payment\Domain\Events\PaymentWithTicketApprovedDomainEvent;
 use App\Sale\Payment\Domain\PaymentExternalReference;
@@ -51,7 +51,7 @@ class PaymentProcessor
 
         if ($payment->status()->isApproved()) {
             $details = $order->details();
-            $this->events->add(new PaymentWithEvenApprovedDomainEvent(
+            $this->events->add(new PaymentWithEventApprovedDomainEvent(
                 $details->event(),
                 $details->day(),
                 $details->zone(),
