@@ -11,7 +11,7 @@ use App\Sale\Payment\Domain\Provider\PaymentProviderResponse;
 use MercadoPago\Client\Payment\PaymentClient;
 use MercadoPago\MercadoPagoConfig;
 
-final class MercadoPagoProvider implements PaymentProvider
+final class MercadoPagoPaymentProvider implements PaymentProvider
 {
     private PaymentClient $client;
 

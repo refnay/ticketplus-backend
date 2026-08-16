@@ -21,9 +21,9 @@ services:
 
     App\Sale\Payment\Application\Resolver\PaymentProviderResolver:
         arguments:
-            $mercadoPago: '@App\Sale\Payment\Infrastructure\Provider\MercadoPagoProvider'
+            $mercadoPago: '@App\Sale\Payment\Infrastructure\Provider\MercadoPagoPaymentProvider'
 
-    App\Sale\Payment\Infrastructure\Provider\MercadoPagoProvider:
+    App\Sale\Payment\Infrastructure\Provider\MercadoPagoPaymentProvider:
         arguments:
             $accessToken: '%env(MERCADO_PAGO_ACCESS_TOKEN)%'
 
