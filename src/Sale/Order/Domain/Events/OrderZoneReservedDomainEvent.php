@@ -7,7 +7,7 @@ use App\Shared\Domain\Events\DomainEvent;
 class OrderZoneReservedDomainEvent extends DomainEvent
 {
     public function __construct(
-        private string $eventId,
+        private string $dayId,
         private string $zoneId,
         private int $quantity,
     ) {
@@ -18,9 +18,9 @@ class OrderZoneReservedDomainEvent extends DomainEvent
         return $this->quantity;
     }
 
-    public function eventId(): string
+    public function dayId(): string
     {
-        return $this->eventId;
+        return $this->dayId;
     }
     
     public function zoneId(): string
@@ -31,7 +31,7 @@ class OrderZoneReservedDomainEvent extends DomainEvent
     public function payload(): array
     {
         return [
-            'eventId' => $this->eventId,
+            'dayId' => $this->dayId,
             'zoneId' => $this->zoneId,
             'quantity' => $this->quantity,
         ];
