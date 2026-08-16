@@ -6,25 +6,31 @@ use App\Shared\Domain\Events\DomainEvent;
 
 class PaymentCreatedDomainEvent extends DomainEvent
 {
-    public function __construct(private string $id, private int $method)
+    public function __construct(private string $orderId, private int $paymentMethod, private string $userId)
     {
     }
 
-    public function method(): int
+    public function paymentMethod(): int
     {
-        return $this->method;
+        return $this->paymentMethod;
     }
 
-    public function id(): string
+    public function orderId(): string
     {
-        return $this->id;
+        return $this->orderId;
+    }
+
+    public function userId(): string
+    {
+        return $this->userId;
     }
 
     public function payload(): array
     {
         return [
-            'id' => $this->id,
-            'method' => $this->method,
+            'orderId' => $this->orderId,
+            'paymentMethod' => $this->paymentMethod,
+            'userId' => $this->userId,
         ];
     }
 }
