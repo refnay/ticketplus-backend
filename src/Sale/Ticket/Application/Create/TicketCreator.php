@@ -4,6 +4,8 @@ namespace App\Sale\Ticket\Application\Create;
 
 use App\Sale\Order\Domain\OrderId;
 use App\Sale\Order\Domain\Services\OrderFinder;
+use App\Sale\Payment\Domain\PaymentId;
+use App\Sale\Payment\Domain\Services\PaymentFinder;
 use App\Sale\Shared\Domain\EventDayId;
 use App\Sale\Shared\Domain\EventId;
 use App\Sale\Shared\Domain\Exceptions\SeatNotFound;
@@ -22,6 +24,7 @@ use DateTimeImmutable;
 class TicketCreator
 {
     public function __construct(
+        private PaymentFinder $paymentFinder,
         private OrderFinder $orderFinder,
         private EventDayFinder $dayFinder,
         private TicketRepository $repository,
@@ -31,12 +34,18 @@ class TicketCreator
     }
 
     public function __invoke(
+        PaymentId $paymentId,
         OrderId $orderId,
         UserId $userId,
         ZoneId $zoneId,
         ?SeatId $seatId
     ): void {
         $order = $this->orderFinder->__invoke($orderId, $userId);
+        $payment = $this->paymentFinder->__invoke($paymentId, $orderId);
+
+        if ($payment->status()->isApproved()) {
+            return;
+        }
         
         $details = $order->details();
 
