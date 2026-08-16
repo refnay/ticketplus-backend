@@ -53,7 +53,7 @@ class ZoneUpdater
         $zone->changeCurrency($currency);
         $zone->changeTaxRate($taxRate);
         $zone->changePrice($price);
-        $zone->changeQuantity($quantity);
+        $zone->changeQuantity($zone->quantity()->changeTotal($quantity->total()));
         $zone->changeHierarchy($hierarchy);
         $zone->changeNumberedSeating($numberedSeating);
 

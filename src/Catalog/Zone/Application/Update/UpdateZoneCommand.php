@@ -15,9 +15,7 @@ class UpdateZoneCommand extends BaseCommand
         private string $currency,
         private float $price,
         private float $taxRate,
-        private int $totalQuantity,
-        private int $soldQuantity,
-        private int $reservedQuantity,
+        private int $total,
         private int $hierarchy,
         private bool $numberedSeating,
     ) {
@@ -35,9 +33,7 @@ class UpdateZoneCommand extends BaseCommand
             $payload->string('currency'),
             $payload->float('price'),
             $payload->float('taxRate'),
-            $payload->int('totalQuantity'),
-            $payload->int('soldQuantity'),
-            $payload->int('reservedQuantity'),
+            $payload->int('total'),
             $payload->int('hierarchy'),
             $payload->bool('numberedSeating'),
         );
@@ -78,19 +74,9 @@ class UpdateZoneCommand extends BaseCommand
         return $this->taxRate;
     }
 
-    public function totalQuantity(): int
+    public function total(): int
     {
-        return $this->totalQuantity;
-    }
-
-    public function soldQuantity(): int
-    {
-        return $this->soldQuantity;
-    }
-
-    public function reservedQuantity(): int
-    {
-        return $this->reservedQuantity;
+        return $this->total;
     }
 
     public function hierarchy(): int

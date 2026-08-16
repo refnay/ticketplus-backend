@@ -28,7 +28,7 @@ class UpdateZoneCommandHandler
             ZoneCurrency::fromString($command->currency()),
             ZoneTaxRate::fromFloat($command->taxRate()),
             ZonePrice::fromFloat($command->price()),
-            ZoneQuantity::create($command->totalQuantity(), $command->soldQuantity(), $command->reservedQuantity()),
+            ZoneQuantity::fromTotal($command->total()),
             ZoneHierarchy::fromInt($command->hierarchy()),
             ZoneNumberedSeating::fromBool($command->numberedSeating()),
             EventId::fromString($command->event()),
