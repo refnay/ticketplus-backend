@@ -31,4 +31,9 @@ class PaymentStatus extends IntValueObject
     {
         return PaymentStatusList::PROCESSING->value === $this->value;;
     }
+
+    public function isApproved(): bool
+    {
+        return PaymentStatusList::APPROVED->value === $this->value;;
+    }
 }
