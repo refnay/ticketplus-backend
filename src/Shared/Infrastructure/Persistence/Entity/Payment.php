@@ -32,8 +32,8 @@ class Payment
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $externalReference = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $token = null;
+    #[ORM\Column(type: 'json')]
+    private array $payer = [];
 
     #[ORM\ManyToOne(inversedBy: 'payments')]
     #[ORM\JoinColumn(nullable: false)]
@@ -123,14 +123,20 @@ class Payment
         return $this;
     }
 
-    public function getToken(): ?string
+    /**
+     * @return array<mixed>
+     */
+    public function getPayer(): array
     {
-        return $this->token;
+        return $this->payer;
     }
 
-    public function setToken(?string $token): static
+    /**
+     * @param array<mixed> $payer
+     */
+    public function setPayer(array $payer): static
     {
-        $this->token = $token;
+        $this->payer = $payer;
 
         return $this;
     }

@@ -9,7 +9,7 @@ class Payment
     private PaymentId $id;
     private PaymentAmount $amount;
     private ?PaymentExternalReference $externalReference = null;
-    private ?PaymentToken $token = null;
+    private ?PaymentPayer $payer = null;
     private PaymentMethod $method;
     private PaymentStatus $status;
     private OrderId $orderId;
@@ -18,7 +18,7 @@ class Payment
         PaymentId $id,
         PaymentAmount $amount,
         PaymentExternalReference $externalReference,
-        PaymentToken $token,
+        PaymentPayer $payer,
         PaymentMethod $method,
         PaymentStatus $status,
         OrderId $orderId,
@@ -26,7 +26,7 @@ class Payment
         $this->id = $id;
         $this->amount = $amount;
         $this->externalReference = $externalReference;
-        $this->token = $token;
+        $this->payer = $payer;
         $this->method = $method;
         $this->status = $status;
         $this->orderId = $orderId;
@@ -38,7 +38,7 @@ class Payment
             PaymentId::generate(),
             $amount,
             PaymentExternalReference::fromNull(),
-            PaymentToken::fromNull(),
+            PaymentPayer::fromNull(),
             $method,
             PaymentStatus::pending(),
             $orderId
@@ -60,9 +60,9 @@ class Payment
         return $this->externalReference ?? PaymentExternalReference::fromNull();
     }
 
-    public function token(): PaymentToken
+    public function payer(): PaymentPayer
     {
-        return $this->token ?? PaymentToken::fromNull();
+        return $this->payer ?? PaymentPayer::fromNull();
     }
 
     public function method(): PaymentMethod
@@ -90,9 +90,9 @@ class Payment
         $this->externalReference = $externalReference;
     }
 
-    public function changeToken(PaymentToken $token): void
+    public function changePayer(PaymentPayer $payer): void
     {
-        $this->token = $token;
+        $this->payer = $payer;
     }
 
     public function changeMethod(PaymentMethod $method): void
