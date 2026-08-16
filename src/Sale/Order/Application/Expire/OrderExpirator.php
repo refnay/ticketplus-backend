@@ -23,7 +23,7 @@ class OrderExpirator
     {
         $order = $this->orderFinder->__invoke($id);
         
-        if ($order->status()->paid()) {
+        if (!$order->status()->isPending()) {
             return;
         }
 
