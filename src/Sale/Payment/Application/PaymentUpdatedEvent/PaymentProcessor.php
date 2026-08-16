@@ -49,6 +49,7 @@ class PaymentProcessor
 
         $details = $order->details();
         $this->events->add(new PaymentWithEventProcessedDomainEvent(
+            $details->event(),
             $details->day(),
             $details->zone(),
             $details->quantity(),
