@@ -64,7 +64,7 @@ final class Session
 
     public function userTypeAllowed(): void
     {
-        if (!IntegerHelper::isEqual(UserTypesList::WORKER->value, $this->provider->userType())) {
+        if (!IntegerHelper::isEqual(UserTypeList::WORKER->value, $this->provider->userType())) {
             throw new UserNotAllowed();
         }
 

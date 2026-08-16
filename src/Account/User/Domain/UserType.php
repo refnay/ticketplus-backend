@@ -14,11 +14,11 @@ class UserType extends IntValueObject
 
     public static function simple(): self
     {
-        return new self(UserTypesList::SIMPLE->value);
+        return new self(UserTypeList::SIMPLE->value);
     }
 
     public static function worker(): self
     {
-        return new self(UserTypesList::WORKER->value);
+        return new self(UserTypeList::WORKER->value);
     }
 }
