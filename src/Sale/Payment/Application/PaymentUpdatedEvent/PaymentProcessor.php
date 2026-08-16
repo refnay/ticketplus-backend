@@ -7,6 +7,7 @@ use App\Sale\Order\Domain\Services\OrderFinder;
 use App\Sale\Payment\Application\Resolver\PaymentProviderResolver;
 use App\Sale\Payment\Domain\Events\PaymentWithEvenApprovedDomainEvent;
 use App\Sale\Payment\Domain\Events\PaymentWithOrderApprovedDomainEvent;
+use App\Sale\Payment\Domain\Events\PaymentWithTicketApprovedDomainEvent;
 use App\Sale\Payment\Domain\PaymentExternalReference;
 use App\Sale\Payment\Domain\PaymentId;
 use App\Sale\Payment\Domain\PaymentRepository;
@@ -58,11 +59,15 @@ class PaymentProcessor
                 $details->seats(),
             ));
             $this->events->add(new PaymentWithOrderApprovedDomainEvent(
-                $order->id()->value(),
+                $orderId->value(),
                 $userId->value(),
             ));
-        }
+            $this->events->add(new PaymentWithTicketApprovedDomainEvent(
+                $orderId->value(),
+                $userId->value(),
+            ));
 
-        $this->eventBus->dispatch(...$this->events->items());
+            $this->eventBus->dispatch(...$this->events->items());
+        }
     }
 }

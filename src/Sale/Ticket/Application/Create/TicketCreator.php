@@ -3,7 +3,6 @@
 namespace App\Sale\Ticket\Application\Create;
 
 use App\Sale\Order\Domain\Order;
-use App\Sale\Payment\Domain\Payment;
 use App\Sale\Shared\Domain\EventDayId;
 use App\Sale\Shared\Domain\EventId;
 use App\Sale\Shared\Domain\Exceptions\SeatNotFound;
@@ -28,15 +27,10 @@ class TicketCreator
     }
 
     public function __invoke(
-        Payment $payment,
         Order $order,
         ZoneId $zoneId,
         ?SeatId $seatId
     ): void {
-        if ($payment->status()->isApproved()) {
-            return;
-        }
-        
         $details = $order->details();
 
         $seat = null;
