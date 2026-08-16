@@ -4,7 +4,7 @@ namespace App\Sale\Payment\Application\Resolver;
 
 use App\Sale\Payment\Domain\Exceptions\PaymentProviderNotFound;
 use App\Sale\Payment\Domain\Provider\PaymentProvider;
-use App\Sale\Payment\Domain\Provider\ProviderList;
+use App\Sale\Payment\Domain\Provider\PaymentProviderList;
 
 final readonly class PaymentProviderResolver
 {
@@ -15,7 +15,7 @@ final readonly class PaymentProviderResolver
     public function __invoke(string $provider): PaymentProvider
     {
         return match($provider) {
-            ProviderList::MERCADO_PAGO => $this->mercadoPago,
+            PaymentProviderList::MERCADO_PAGO => $this->mercadoPago,
             default => throw new PaymentProviderNotFound(),
         };
     }

@@ -9,7 +9,7 @@ use App\Sale\Payment\Domain\PaymentExternalReference;
 use App\Sale\Payment\Domain\PaymentId;
 use App\Sale\Payment\Domain\PaymentRepository;
 use App\Sale\Payment\Domain\PaymentStatus;
-use App\Sale\Payment\Domain\Provider\ProviderList;
+use App\Sale\Payment\Domain\Provider\PaymentProviderList;
 use App\Sale\Payment\Domain\Services\PaymentFinder;
 use App\Sale\Shared\Domain\UserId;
 use Throwable;
@@ -28,7 +28,7 @@ class PaymentProcessor
         $order = $this->orderFinder->__invoke($orderId, $userId);
         $payment = $this->paymentFinder->__invoke($id, $order->id());
 
-        $response = $this->resolver->__invoke(ProviderList::MERCADO_PAGO->value)->process($payment, $token);
+        $response = $this->resolver->__invoke(PaymentProviderList::MERCADO_PAGO->value)->process($payment, $token);
 
         try {
             $payment->changeExternalReference(PaymentExternalReference::fromReference($response->id(), $response->provider()));

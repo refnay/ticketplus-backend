@@ -3,10 +3,10 @@
 namespace App\Sale\Payment\Infrastructure\Provider;
 
 use App\Sale\Payment\Domain\Payment;
-use App\Sale\Payment\Domain\PaymentMethod;
 use App\Sale\Payment\Domain\PaymentMethodList;
+use App\Sale\Payment\Domain\PaymentStatusList;
 use App\Sale\Payment\Domain\Provider\PaymentProvider;
-use App\Sale\Payment\Domain\Provider\ProviderList;
+use App\Sale\Payment\Domain\Provider\PaymentProviderList;
 use App\Sale\Payment\Domain\Provider\ProviderResponse;
 use MercadoPago\Client\Payment\PaymentClient;
 use MercadoPago\MercadoPagoConfig;
@@ -32,6 +32,10 @@ final class MercadoPagoProvider implements PaymentProvider
             ],
         ]);
 
-        return new ProviderResponse($response->id, ProviderList::MERCADO_PAGO->value, 0);
+        return new ProviderResponse(
+            $response->id,
+            PaymentProviderList::MERCADO_PAGO->value,
+            PaymentStatusList::fromMercadoPago($response->status)->value,
+        );
     }
 }
