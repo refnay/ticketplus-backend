@@ -23,6 +23,10 @@ services:
         arguments:
             $mercadoPago: '@App\Sale\Payment\Infrastructure\Provider\MercadoPagoProvider'
 
+    App\Sale\Payment\Infrastructure\Provider\MercadoPagoProvider:
+        arguments:
+            $accessToken: '%env(MERCADO_PAGO_ACCESS_TOKEN)%'
+
     Symfony\Component\DependencyInjection\ContainerInterface: '@service_container'
 
     # add more service definitions when explicit configuration is needed
