@@ -6,16 +6,16 @@ class Seat
 {
     private string $id;
     private string $code;
-    private string $status;
+    private int $status;
 
-    public function __construct(string $id, string $code, string $status)
+    public function __construct(string $id, string $code, int $status)
     {
         $this->id = $id;
         $this->code = $code;
         $this->status = $status;
     }
 
-    public static function create(string $id, string $code, string $status): self
+    public static function create(string $id, string $code, int $status): self
     {
         return new self($id, $code, $status);
     }
@@ -30,7 +30,7 @@ class Seat
         return $this->code;
     }
 
-    public function status(): string
+    public function status(): int
     {
         return $this->status;
     }

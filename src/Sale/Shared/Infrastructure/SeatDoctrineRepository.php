@@ -40,7 +40,7 @@ class SeatDoctrineRepository implements SeatRepository
         return Seat::create(
             $id->value(),
             (string) $row['code'],
-            (string) $row['status'],
+            (int) $row['status'],
         );
     }
 
