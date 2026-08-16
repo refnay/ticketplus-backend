@@ -12,9 +12,9 @@ final readonly class PaymentProviderResolver
     {
     }
 
-    public function resolve(int $type): PaymentProvider
+    public function resolve(int $provider): PaymentProvider
     {
-        return match($type) {
+        return match($provider) {
             ProviderList::MERCADO_PAGO => $this->mercadoPago,
             default => throw new PaymentProviderNotFound(),
         };
