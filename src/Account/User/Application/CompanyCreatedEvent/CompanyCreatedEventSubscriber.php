@@ -16,6 +16,6 @@ class CompanyCreatedEventSubscriber
 
     public function __invoke(CompanyCreatedDomainEvent $event): void
     {
-        $this->updater->__invoke(UserId::fromString($event->user()), CompanyId::fromString($event->company()));
+        $this->updater->__invoke(UserId::fromString($event->userId()), CompanyId::fromString($event->companyId()));
     }
 }

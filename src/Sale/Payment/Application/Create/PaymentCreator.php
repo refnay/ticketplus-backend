@@ -5,6 +5,7 @@ namespace App\Sale\Payment\Application\Create;
 use App\Sale\Order\Domain\Exceptions\OrderStatusNotAllowed;
 use App\Sale\Order\Domain\OrderId;
 use App\Sale\Order\Domain\Services\OrderFinder;
+use App\Sale\Payment\Domain\Events\PaymentCreatedDomainEvent;
 use App\Sale\Payment\Domain\Payment;
 use App\Sale\Payment\Domain\PaymentAmount;
 use App\Sale\Payment\Domain\PaymentMethod;
@@ -40,6 +41,9 @@ class PaymentCreator
         );
 
         $this->repository->save($payment);
+        
+        $this->events->add(new PaymentCreatedDomainEvent($orderId->value(), $method->value(), $userId->value()));
+        $this->eventBus->dispatch(...$this->events->items());
 
         return $payment->id()->value();
     }

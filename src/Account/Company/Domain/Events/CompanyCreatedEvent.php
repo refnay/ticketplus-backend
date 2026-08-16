@@ -7,26 +7,26 @@ use App\Shared\Domain\Events\DomainEvent;
 class CompanyCreatedDomainEvent extends DomainEvent
 {
     public function __construct(
-        private string $user,
-        private string $company,
+        private string $userId,
+        private string $companyId,
     ) {
     }
 
-    public function user(): string
+    public function userId(): string
     {
-        return $this->user;
+        return $this->userId;
     }
 
-    public function company(): string
+    public function companyId(): string
     {
-        return $this->company;
+        return $this->companyId;
     }
 
     public function payload(): array
     {
         return [
-            'user' => $this->user,
-            'company' => $this->company,
+            'userId' => $this->userId,
+            'companyId' => $this->companyId,
         ];
     }
 }
