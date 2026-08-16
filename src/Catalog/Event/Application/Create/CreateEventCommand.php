@@ -15,6 +15,7 @@ class CreateEventCommand extends BaseCommand
         private string $country,
         private string $city,
         private string $currency,
+        private float $taxRate,
         private string $category,
         private array $days,
     ) {}
@@ -35,6 +36,7 @@ class CreateEventCommand extends BaseCommand
             $payload->string('country'),
             $payload->string('city'),
             $payload->string('currency'),
+            $payload->float('taxRate'),
             $payload->string('category'),
             $days->items()
         );
@@ -68,6 +70,11 @@ class CreateEventCommand extends BaseCommand
     public function currency(): string
     {
         return $this->currency;
+    }
+
+    public function taxRate(): float
+    {
+        return $this->taxRate;
     }
 
     public function category(): string

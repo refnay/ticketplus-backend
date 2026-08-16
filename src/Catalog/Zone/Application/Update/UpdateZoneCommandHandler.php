@@ -11,7 +11,6 @@ use App\Catalog\Zone\Domain\ZoneName;
 use App\Catalog\Zone\Domain\ZoneNumberedSeating;
 use App\Catalog\Zone\Domain\ZonePrice;
 use App\Catalog\Zone\Domain\ZoneQuantity;
-use App\Catalog\Zone\Domain\ZoneTaxRate;
 
 class UpdateZoneCommandHandler
 {
@@ -24,7 +23,6 @@ class UpdateZoneCommandHandler
         $this->updater->__invoke(
             ZoneId::fromString($command->id()),
             ZoneName::fromString($command->name()),
-            ZoneTaxRate::fromFloat($command->taxRate()),
             ZonePrice::fromFloat($command->price()),
             ZoneQuantity::fromTotal($command->total()),
             ZoneHierarchy::fromInt($command->hierarchy()),

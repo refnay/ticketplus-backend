@@ -14,7 +14,6 @@ use App\Catalog\Zone\Domain\ZoneNumberedSeating;
 use App\Catalog\Zone\Domain\ZonePrice;
 use App\Catalog\Zone\Domain\ZoneQuantity;
 use App\Catalog\Zone\Domain\ZoneRepository;
-use App\Catalog\Zone\Domain\ZoneTaxRate;
 
 class ZoneCreator
 {
@@ -24,7 +23,6 @@ class ZoneCreator
 
     public function __invoke(
         ZoneName $name,
-        ZoneTaxRate $taxRate,
         ZonePrice $price,
         ZoneQuantity $quantity,
         ZoneHierarchy $hierarchy,
@@ -46,7 +44,6 @@ class ZoneCreator
             $numberedSeating,
             $price,
             $quantity,
-            $taxRate,
             $day->id(),
         );
 

@@ -23,6 +23,7 @@ use App\Catalog\Event\Domain\EventLocation;
 use App\Catalog\Event\Domain\EventName;
 use App\Catalog\Event\Domain\EventSlug;
 use App\Catalog\Event\Domain\EventStatus;
+use App\Catalog\Event\Domain\EventTaxRate;
 use App\Catalog\Shared\Domain\CompanyId;
 use App\Shared\Infrastructure\Persistence\Entity\Event as EventEntity;
 use App\Shared\Infrastructure\Persistence\Entity\Day as EventDayEntity;
@@ -45,6 +46,7 @@ class EventMapper
         $entity->setCountry($event->country()->value());
         $entity->setCity($event->city()->value());
         $entity->setCurrency($event->currency()->value());
+        $entity->setTaxRate($event->taxRate()->value());
         $entity->setStatus($event->status()->value());
         $entity->setCompany($this->fetcher->company($event->companyId()));
         $entity->setCategory($this->fetcher->category($event->categoryId()));
@@ -79,6 +81,7 @@ class EventMapper
             EventCountry::fromString($entity->getCountry()),
             EventCity::fromString($entity->getCity()),
             EventCurrency::fromString($entity->getCurrency()),
+            EventTaxRate::fromFloat($entity->getTaxRate()),
             EventStatus::fromInt($entity->getStatus()),
             EventCanvas::fromArray($entity->getCanvas()),
             CategoryId::fromString($entity->getCategory()->getId()),
@@ -113,6 +116,7 @@ class EventMapper
         $entity->setCountry($event->country()->value());
         $entity->setCity($event->city()->value());
         $entity->setCurrency($event->currency()->value());
+        $entity->setTaxRate($event->taxRate()->value());
         $entity->setStatus($event->status()->value());
         $entity->setCategory($this->fetcher->category($event->categoryId()));
         $entity->setCanvas($event->canvas()->value());

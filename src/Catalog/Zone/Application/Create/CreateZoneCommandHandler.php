@@ -10,7 +10,6 @@ use App\Catalog\Zone\Domain\ZoneName;
 use App\Catalog\Zone\Domain\ZoneNumberedSeating;
 use App\Catalog\Zone\Domain\ZonePrice;
 use App\Catalog\Zone\Domain\ZoneQuantity;
-use App\Catalog\Zone\Domain\ZoneTaxRate;
 
 class CreateZoneCommandHandler
 {
@@ -22,7 +21,6 @@ class CreateZoneCommandHandler
     {
         return $this->creator->__invoke(
             ZoneName::fromString($command->name()),
-            ZoneTaxRate::fromFloat($command->taxRate()),
             ZonePrice::fromFloat($command->price()),
             ZoneQuantity::fromTotal($command->quantity()),
             ZoneHierarchy::fromInt($command->hierarchy()),

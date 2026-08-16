@@ -13,6 +13,7 @@ use App\Catalog\Event\Domain\EventLocation;
 use App\Catalog\Event\Domain\EventName;
 use App\Catalog\Event\Domain\EventRepository;
 use App\Catalog\Event\Domain\EventStatus;
+use App\Catalog\Event\Domain\EventTaxRate;
 use App\Catalog\Event\Domain\Services\EventFinder;
 use App\Catalog\Shared\Domain\CompanyId;
 
@@ -33,6 +34,7 @@ class EventUpdater
         EventCountry $country,
         EventCity $city,
         EventCurrency $currency,
+        EventTaxRate $taxRate,
         EventStatus $status,
         CategoryId $categoryId,
         CompanyId $companyId,
@@ -47,6 +49,7 @@ class EventUpdater
         $event->changeCountry($country);
         $event->changeCity($city);
         $event->changeCurrency($currency);
+        $event->changeTaxRate($taxRate);
         $event->changeStatus($status);
         $event->changeCategoryId($category->id());
 

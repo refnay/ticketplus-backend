@@ -13,7 +13,6 @@ class UpdateZoneCommand extends BaseCommand
         private string $day,
         private string $name,
         private float $price,
-        private float $taxRate,
         private int $total,
         private int $hierarchy,
         private bool $numberedSeating,
@@ -30,7 +29,6 @@ class UpdateZoneCommand extends BaseCommand
             $day,
             $payload->string('name'),
             $payload->float('price'),
-            $payload->float('taxRate'),
             $payload->int('total'),
             $payload->int('hierarchy'),
             $payload->bool('numberedSeating'),
@@ -60,11 +58,6 @@ class UpdateZoneCommand extends BaseCommand
     public function price(): float
     {
         return $this->price;
-    }
-
-    public function taxRate(): float
-    {
-        return $this->taxRate;
     }
 
     public function total(): int

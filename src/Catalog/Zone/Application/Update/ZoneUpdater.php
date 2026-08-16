@@ -15,7 +15,6 @@ use App\Catalog\Zone\Domain\ZoneNumberedSeating;
 use App\Catalog\Zone\Domain\ZonePrice;
 use App\Catalog\Zone\Domain\ZoneQuantity;
 use App\Catalog\Zone\Domain\ZoneRepository;
-use App\Catalog\Zone\Domain\ZoneTaxRate;
 
 class ZoneUpdater
 {
@@ -29,7 +28,6 @@ class ZoneUpdater
     public function __invoke(
         ZoneId $id,
         ZoneName $name,
-        ZoneTaxRate $taxRate,
         ZonePrice $price,
         ZoneQuantity $quantity,
         ZoneHierarchy $hierarchy,
@@ -48,7 +46,6 @@ class ZoneUpdater
         $zone = $this->zoneFinder->__invoke($id, $day->id());
         
         $zone->changeName($name);
-        $zone->changeTaxRate($taxRate);
         $zone->changePrice($price);
         $zone->changeTotalQuantity($quantity->total());
         $zone->changeHierarchy($hierarchy);

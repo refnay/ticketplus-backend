@@ -12,8 +12,8 @@ class ZoneResponse implements JsonSerializable
         readonly private string $id,
         readonly private string $name,
         readonly private int $hierarchy,
-        readonly private float $total,
         readonly private array $quantity,
+        readonly private float $price,
     ) {
     }
 
@@ -23,8 +23,8 @@ class ZoneResponse implements JsonSerializable
             $zone->id()->value(),
             $zone->name()->value(),
             $zone->hierarchy()->value(),
-            $zone->total(),
             $zone->quantity()->toArray(),
+            $zone->price()->value(),
         );
     }
 

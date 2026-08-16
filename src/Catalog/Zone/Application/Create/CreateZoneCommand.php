@@ -12,7 +12,6 @@ class CreateZoneCommand extends BaseCommand
         private string $day,
         private string $name,
         private float $price,
-        private float $taxRate,
         private int $quantity,
         private int $hierarchy,
         private bool $numberedSeating,
@@ -28,7 +27,6 @@ class CreateZoneCommand extends BaseCommand
             $day,
             $payload->string('name'),
             $payload->float('price'),
-            $payload->float('taxRate'),
             $payload->int('quantity'),
             $payload->int('hierarchy'),
             $payload->bool('numberedSeating'),
@@ -53,11 +51,6 @@ class CreateZoneCommand extends BaseCommand
     public function price(): float
     {
         return $this->price;
-    }
-
-    public function taxRate(): float
-    {
-        return $this->taxRate;
     }
 
     public function quantity(): int

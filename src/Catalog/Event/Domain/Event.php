@@ -20,6 +20,7 @@ class Event
     private EventCountry $country;
     private EventCity $city;
     private EventCurrency $currency;
+    private EventTaxRate $taxRate;
     private EventStatus $status;
     private CategoryId $categoryId;
     private CompanyId $companyId;
@@ -37,6 +38,7 @@ class Event
         EventCountry $country,
         EventCity $city,
         EventCurrency $currency,
+        EventTaxRate $taxRate,
         EventStatus $status,
         EventCanvas $canvas,
         CategoryId $categoryId,
@@ -52,6 +54,7 @@ class Event
         $this->country = $country;
         $this->city = $city;
         $this->currency = $currency;
+        $this->taxRate = $taxRate;
         $this->status = $status;
         $this->canvas = $canvas;
         $this->categoryId = $categoryId;
@@ -66,6 +69,7 @@ class Event
         EventCountry $country,
         EventCity $city,
         EventCurrency $currency,
+        EventTaxRate $taxRate,
         CategoryId $categoryId,
         CompanyId $companyId,
     ): self {
@@ -80,6 +84,7 @@ class Event
             $country,
             $city,
             $currency,
+            $taxRate,
             EventStatus::draft(),
             EventCanvas::fromNull(),
             $categoryId,
@@ -140,6 +145,11 @@ class Event
     public function currency(): EventCurrency
     {
         return $this->currency;
+    }
+
+    public function taxRate(): EventTaxRate
+    {
+        return $this->taxRate;
     }
 
     public function status(): EventStatus
@@ -206,6 +216,11 @@ class Event
     public function changeCurrency(EventCurrency $currency): void
     {
         $this->currency = $currency;
+    }
+
+    public function changeTaxRate(EventTaxRate $taxRate): void
+    {
+        $this->taxRate = $taxRate;
     }
 
     public function changeStatus(EventStatus $status): void

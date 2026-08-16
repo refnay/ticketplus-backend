@@ -12,7 +12,6 @@ class Zone
     private ZoneNumberedSeating $numberedSeating;
     private ZonePrice $price;
     private ZoneQuantity $quantity;
-    private ZoneTaxRate $taxRate;
     private ?ZoneCanvas $canvas = null;
     private EventDayId $dayId;
 
@@ -23,7 +22,6 @@ class Zone
         ZoneNumberedSeating $numberedSeating,
         ZonePrice $price,
         ZoneQuantity $quantity,
-        ZoneTaxRate $taxRate,
         ZoneCanvas $canvas,
         EventDayId $dayId,
     ) {
@@ -33,7 +31,6 @@ class Zone
         $this->numberedSeating = $numberedSeating;
         $this->price = $price;
         $this->quantity = $quantity;
-        $this->taxRate = $taxRate;
         $this->canvas = $canvas;
         $this->dayId = $dayId;
     }
@@ -44,7 +41,6 @@ class Zone
         ZoneNumberedSeating $numberedSeating,
         ZonePrice $price,
         ZoneQuantity $quantity,
-        ZoneTaxRate $taxRate,
         EventDayId $dayId,
     ): self {
         return new self(
@@ -54,7 +50,6 @@ class Zone
             $numberedSeating,
             $price,
             $quantity,
-            $taxRate,
             ZoneCanvas::fromNull(),
             $dayId,
         );
@@ -90,11 +85,6 @@ class Zone
         return $this->quantity;
     }
 
-    public function taxRate(): ZoneTaxRate
-    {
-        return $this->taxRate;
-    }
-    
     public function dayId(): EventDayId
     {
         return $this->dayId;
@@ -145,18 +135,8 @@ class Zone
         $this->quantity = $this->quantity->changeReserved($reserved);
     }
 
-    public function changeTaxRate(ZoneTaxRate $taxRate): void
-    {
-        $this->taxRate = $taxRate;
-    }
-
     public function changeCanvas(ZoneCanvas $canvas): void
     {
         $this->canvas = $canvas;
-    }
-
-    public function total(): float
-    {
-        return $this->price()->value() + ($this->price()->value() * $this->taxRate()->decimal());
     }
 }

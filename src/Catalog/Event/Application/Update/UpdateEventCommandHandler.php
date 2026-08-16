@@ -11,6 +11,7 @@ use App\Catalog\Event\Domain\EventId;
 use App\Catalog\Event\Domain\EventLocation;
 use App\Catalog\Event\Domain\EventName;
 use App\Catalog\Event\Domain\EventStatus;
+use App\Catalog\Event\Domain\EventTaxRate;
 use App\Catalog\Shared\Domain\CompanyId;
 
 class UpdateEventCommandHandler
@@ -29,6 +30,7 @@ class UpdateEventCommandHandler
             EventCountry::fromString($command->country()),
             EventCity::fromString($command->city()),
             EventCurrency::fromString($command->currency()),
+            EventTaxRate::fromFloat($command->taxRate()),
             EventStatus::fromInt($command->status()),
             CategoryId::fromString($command->category()),
             CompanyId::fromString($command->session()->company()),

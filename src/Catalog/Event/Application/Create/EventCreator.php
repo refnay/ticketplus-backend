@@ -18,6 +18,7 @@ use App\Catalog\Event\Domain\EventLocation;
 use App\Catalog\Event\Domain\EventName;
 use App\Catalog\Event\Domain\EventRepository;
 use App\Catalog\Event\Domain\EventSlug;
+use App\Catalog\Event\Domain\EventTaxRate;
 use App\Catalog\Event\Domain\Exceptions\EventAlreadyExists;
 use App\Catalog\Event\Domain\Exceptions\EventNotFound;
 use App\Catalog\Event\Domain\Services\EventBySlugFinder;
@@ -41,6 +42,7 @@ class EventCreator
         EventCountry $country,
         EventCity $city,
         EventCurrency $currency,
+        EventTaxRate $taxRate,
         CategoryId $categoryId, 
         CompanyId $companyId,
         array $days,
@@ -62,6 +64,7 @@ class EventCreator
             $country,
             $city,
             $currency,
+            $taxRate,
             $category->id(),
             $companyId,
         );
