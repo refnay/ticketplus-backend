@@ -1,0 +1,4 @@
+order-create:
+    path: /api/order
+    controller: App\Sale\Order\Infrastructure\Controller\OrderCreateController::create
+    methods: POST
