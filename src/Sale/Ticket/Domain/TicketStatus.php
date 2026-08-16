@@ -11,4 +11,9 @@ class TicketStatus extends IntValueObject
     public function validate(): void
     {
     }
+
+    public static function active(): self
+    {
+        return new self(TicketStatusList::ACTIVE->value);
+    }
 }

@@ -18,6 +18,9 @@ class Ticket
     #[ORM\Column(type: 'uuid', unique: true)]
     private ?Uuid $QRCode = null;
 
+    #[ORM\Column(length: 12)]
+    private ?string $code = null;
+
     #[ORM\Column(length: 255)]
     private ?string $eventName = null;
 
@@ -85,6 +88,18 @@ class Ticket
     public function setEventName(string $eventName): static
     {
         $this->eventName = $eventName;
+
+        return $this;
+    }
+
+    public function getCode(): ?string
+    {
+        return $this->code;
+    }
+
+    public function setCode(string $code): static
+    {
+        $this->code = $code;
 
         return $this;
     }

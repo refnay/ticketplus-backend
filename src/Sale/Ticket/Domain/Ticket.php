@@ -10,6 +10,7 @@ class Ticket
 {
     private TicketId $id;
     private TicketInformation $information;
+    private TicketCode $code;
     private TicketPrice $price;
     private TicketQRCode $qrCode;
     private TicketStatus $status;
@@ -20,6 +21,7 @@ class Ticket
     public function __construct(
         TicketId $id,
         TicketInformation $information,
+        TicketCode $code,
         TicketPrice $price,
         TicketQRCode $qrCode,
         TicketStatus $status,
@@ -28,6 +30,7 @@ class Ticket
     ) {
         $this->id = $id;
         $this->information = $information;
+        $this->code = $code;
         $this->price = $price;
         $this->qrCode = $qrCode;
         $this->status = $status;
@@ -38,17 +41,16 @@ class Ticket
     public static function create(
         TicketInformation $information,
         TicketPrice $price,
-        TicketQRCode $qrCode,
-        TicketStatus $status,
         OrderId $orderId,
         ZoneId $zoneId,
     ): self {
         return new self(
             TicketId::generate(),
             $information,
+            TicketCode::generate(),
             $price,
-            $qrCode,
-            $status,
+            TicketQRCode::generate(),
+            TicketStatus::active(),
             $orderId,
             $zoneId,
         );
@@ -62,6 +64,11 @@ class Ticket
     public function information(): TicketInformation
     {
         return $this->information;
+    }
+
+    public function code(): TicketCode
+    {
+        return $this->code;
     }
 
     public function price(): TicketPrice
@@ -97,6 +104,11 @@ class Ticket
     public function changePrice(TicketPrice $price): void
     {
         $this->price = $price;
+    } 
+
+    public function changeCode(TicketCode $code): void
+    {
+        $this->code = $code;
     }
 
     public function changeQRCode(TicketQRCode $qrCode): void
