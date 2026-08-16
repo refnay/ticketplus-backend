@@ -2,7 +2,7 @@
 
 namespace App\Sale\Payment\Domain\Provider;
 
-enum ProviderList: int
+enum ProviderList: string
 {
-    case MERCADO_PAGO = 0;
+    case MERCADO_PAGO = 'MP';
 }

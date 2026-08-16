@@ -3,13 +3,35 @@
 namespace App\Sale\Payment\Infrastructure\Provider;
 
 use App\Sale\Payment\Domain\Payment;
+use App\Sale\Payment\Domain\PaymentMethod;
+use App\Sale\Payment\Domain\PaymentMethodList;
 use App\Sale\Payment\Domain\Provider\PaymentProvider;
+use App\Sale\Payment\Domain\Provider\ProviderList;
 use App\Sale\Payment\Domain\Provider\ProviderResponse;
+use MercadoPago\Client\Payment\PaymentClient;
+use MercadoPago\MercadoPagoConfig;
 
 final class MercadoPagoProvider implements PaymentProvider
 {
+    private PaymentClient $client;
+
+    public function __construct(string $accessToken)
+    {
+        MercadoPagoConfig::setAccessToken($accessToken);
+        $this->client = new PaymentClient();
+    }
+
     public function process(Payment $payment, string $token): ProviderResponse
     {
-        return new ProviderResponse('', '', 0);
+        $response = $this->client->create([
+            'transaction_amount' => $payment->amount()->value(),
+            'token' => $token,
+            'payment_method_id' => PaymentMethodList::from($payment->method()->value())->toMercadoPago(),
+            'payer' => [
+                'email' => $payment->payer()->email(),
+            ],
+        ]);
+
+        return new ProviderResponse($response->id, ProviderList::MERCADO_PAGO->value, 0);
     }
 }
