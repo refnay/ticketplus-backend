@@ -7,7 +7,7 @@ use App\Shared\Domain\Utils\PayloadMapper;
 
 class CreatePaymentCommand extends BaseCommand
 {
-    public function __construct(private string $order, private int $method)
+    public function __construct(private string $order, private int $method, private array $payer)
     {
     }
 
@@ -17,7 +17,8 @@ class CreatePaymentCommand extends BaseCommand
 
         return new self(
             $payload->string('order'),
-            $payload->int('method')
+            $payload->int('method'),
+            $payload->array('payer'),
         );
     }
 
@@ -29,5 +30,10 @@ class CreatePaymentCommand extends BaseCommand
     public function method(): int
     {
         return $this->method;
+    } 
+
+    public function payer(): array
+    {
+        return $this->payer;
     } 
 }

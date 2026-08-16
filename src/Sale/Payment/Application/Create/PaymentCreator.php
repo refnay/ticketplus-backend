@@ -11,6 +11,7 @@ use App\Sale\Payment\Domain\Exceptions\PaymentNotFound;
 use App\Sale\Payment\Domain\Payment;
 use App\Sale\Payment\Domain\PaymentAmount;
 use App\Sale\Payment\Domain\PaymentMethod;
+use App\Sale\Payment\Domain\PaymentPayer;
 use App\Sale\Payment\Domain\PaymentRepository;
 use App\Sale\Payment\Domain\Services\PaymentProcessingFinder;
 use App\Sale\Shared\Domain\UserId;
@@ -30,7 +31,7 @@ class PaymentCreator
         $this->events = ArrayBuilder::generate();
     }
 
-    public function __invoke(OrderId $orderId, PaymentMethod $method, UserId $userId): string
+    public function __invoke(OrderId $orderId, PaymentMethod $method, PaymentPayer $payer, UserId $userId): string
     {
         $order = $this->orderFinder->__invoke($orderId, $userId);
 
@@ -47,6 +48,7 @@ class PaymentCreator
         $payment = Payment::create(
             PaymentAmount::fromFloat($order->total()->value()),
             $method,
+            $payer,
             $order->id(),
         );
 
