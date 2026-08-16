@@ -47,8 +47,18 @@ class ZoneQuantity
         ];
     }
 
-    public static function changeReserved(int $reserved): self
+    public function changeReserved(int $reserved): self
     {
         return new self($this->total, $this->sold, $reserved);
+    }
+
+    public function changeSold(int $sold): self
+    {
+        return new self($this->total, $sold, $this->reserved);
+    }
+
+    public function changeTotal(int $total): self
+    {
+        return new self($total, $this->sold, $this->reserved);
     }
 }
