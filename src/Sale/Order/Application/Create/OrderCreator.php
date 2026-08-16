@@ -83,7 +83,7 @@ class OrderCreator
         
         $price = $zone->price() * $quantity;
         $subTotal = !is_null($discount) ? $this->applyDiscount->__invoke($price, $discount) : $price;
-        $tax = $subTotal * $zone->taxRate();
+        $tax = $subTotal * $zone->taxRate() / 100;
         $total = $subTotal + $tax;
         
         $order = Order::create(

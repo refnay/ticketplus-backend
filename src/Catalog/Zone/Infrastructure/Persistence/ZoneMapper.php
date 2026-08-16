@@ -61,6 +61,7 @@ class ZoneMapper
         $entity->setName($zone->name()->value());
         $entity->setTotalQuantity($zone->quantity()->total());
         $entity->setSoldQuantity($zone->quantity()->sold());
+        $entity->setReservedQuantity($zone->quantity()->reserved());
         $entity->setPrice($zone->price()->value());
         $entity->setHierarchy($zone->hierarchy()->value());
         $entity->setTaxRate($zone->taxRate()->value());
