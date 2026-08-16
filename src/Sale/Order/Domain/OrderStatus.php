@@ -17,6 +17,11 @@ class OrderStatus extends IntValueObject
         return new self(OrderStatusList::PENDING->value); 
     }
 
+    public static function cancelled(): self
+    {
+        return new self(OrderStatusList::CANCELLED->value); 
+    }
+
     public static function paid(): self
     {
         return new self(OrderStatusList::PAID->value); 
