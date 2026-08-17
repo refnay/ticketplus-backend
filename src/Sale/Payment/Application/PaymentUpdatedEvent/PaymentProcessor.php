@@ -47,7 +47,7 @@ class PaymentProcessor
             $payment->changeStatus(PaymentStatus::processing());
         }
 
-        $this->repository->save($payment);
+        $this->repository->update($payment);
 
         if ($payment->status()->isApproved()) {
             $details = $order->details();

@@ -15,7 +15,7 @@ final readonly class PaymentProviderResolver
     public function __invoke(string $provider): PaymentProvider
     {
         return match($provider) {
-            PaymentProviderList::MERCADO_PAGO => $this->mercadoPago,
+            PaymentProviderList::MERCADO_PAGO->value => $this->mercadoPago,
             default => throw new PaymentProviderNotFound(),
         };
     }
