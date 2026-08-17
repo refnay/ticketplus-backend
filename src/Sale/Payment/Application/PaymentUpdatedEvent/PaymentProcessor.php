@@ -38,6 +38,10 @@ class PaymentProcessor
         $order = $this->orderFinder->__invoke($orderId, $userId);
         $payment = $this->paymentFinder->__invoke($id, $order->id());
 
+        if ($payment->status()->isApproved() || $payment->status()->isDeclined()) {
+            return;
+        }
+
         try {
             $response = $this->resolver->__invoke(PaymentProviderList::MERCADO_PAGO->value)->process($payment, $token);
 

@@ -36,4 +36,9 @@ class PaymentStatus extends IntValueObject
     {
         return PaymentStatusList::APPROVED->value === $this->value;;
     }
+
+    public function isDeclined(): bool
+    {
+        return PaymentStatusList::DECLINED->value === $this->value;;
+    }
 }

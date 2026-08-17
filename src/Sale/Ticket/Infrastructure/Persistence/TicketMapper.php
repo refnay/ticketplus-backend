@@ -12,6 +12,7 @@ use App\Sale\Ticket\Domain\TicketQRCode;
 use App\Sale\Ticket\Domain\TicketInformation;
 use App\Sale\Ticket\Domain\TicketStatus;
 use App\Shared\Infrastructure\Persistence\Entity\Ticket as TicketEntity;
+use DateTime;
 
 class TicketMapper
 {
@@ -26,7 +27,7 @@ class TicketMapper
         $entity->setId($ticket->id()->toUuid());
         $entity->setQRCode($ticket->qrCode()->toUuid());
         $entity->setEventName($ticket->information()->eventName());
-        $entity->setDate($ticket->information()->date());
+        $entity->setDate(new DateTime($ticket->information()->date()->format('Y-m-d')));
         $entity->setZoneName($ticket->information()->zoneName());
         $entity->setCode($ticket->code()->value());
         $entity->setSeatCode($ticket->information()->seatCode());
