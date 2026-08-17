@@ -1,0 +1,9 @@
+payment-create:
+    path: /api/payment
+    controller: App\Sale\Payment\Infrastructure\Controller\PaymentCreateController::create
+    methods: POST
+
+payment-update:
+    path: /api/payment/{id}
+    controller: App\Sale\Payment\Infrastructure\Controller\PaymentUpdateController::update
+    methods: PUT

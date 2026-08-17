@@ -35,7 +35,7 @@ class ZoneUpdater
                         $reserved = $zone->quantity()->reserved() - $item['quantity'];
                         break;
                     default:
-                        continue;
+                        continue 2;
                 }
 
                 $zone->changeReservedQuantity($reserved);

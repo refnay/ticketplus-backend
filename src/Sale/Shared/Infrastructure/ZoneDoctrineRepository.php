@@ -55,6 +55,7 @@ class ZoneDoctrineRepository implements ZoneRepository
     private function resultSetMapping(): ResultSetMapping
     {
         $mapping = new ResultSetMapping();
+        $mapping->addScalarResult('name', 'name');
         $mapping->addScalarResult('price', 'price');
         $mapping->addScalarResult('quantity', 'quantity');
         $mapping->addScalarResult('numbered_seating', 'numbered_seating');
