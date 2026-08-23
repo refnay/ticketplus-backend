@@ -19,10 +19,6 @@ use App\Shared\Infrastructure\Persistence\Entity\Company as CompanyEntity;
 
 class CompanyMapper
 {
-    public function __construct(private RelationFetcher $fetcher)
-    {
-    }
-
     public function newEntity(Company $company): CompanyEntity
     {
         $entity = new CompanyEntity();
