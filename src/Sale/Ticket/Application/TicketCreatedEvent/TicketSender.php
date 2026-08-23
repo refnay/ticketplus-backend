@@ -7,9 +7,9 @@ use App\Sale\Shared\Domain\Services\UserFinder;
 use App\Sale\Shared\Domain\UserId;
 use App\Sale\Ticket\Application\Render\TicketRender;
 use App\Sale\Ticket\Domain\TicketId;
-use App\Shared\Domain\Services\Mailer;
-use Symfony\Bridge\Twig\Mime\TemplatedEmail;
-use Symfony\Component\Mime\Address;
+use App\Shared\Domain\Mailer\EmailAttachment;
+use App\Shared\Domain\Mailer\EmailMessage;
+use App\Shared\Domain\Mailer\Mailer;
 
 final readonly class TicketSender
 {
@@ -28,14 +28,7 @@ final readonly class TicketSender
 
         $user = $this->userFinder->__invoke($userId);
 
-        $email = (new TemplatedEmail())
-            ->from(new Address('no-reply@ticketplus.com', 'Ticketplus'))
-            ->to($user->email())
-            ->subject('Confirmación de compra')
-            ->htmlTemplate('email/tickets-email.html.twig')
-            ->context([
-                'name' => $user->name(),
-            ]);
+        $attachments = [];
 
         foreach ($ticketIds as $ticketId) {
             $ticket = $this->ticketRender->__invoke(
@@ -44,9 +37,21 @@ final readonly class TicketSender
                 $userId,
             );
 
-            $email->attach($ticket->content(), $ticket->filename(), 'application/pdf');
+            $attachments[] = new EmailAttachment(
+                $ticket->content(),
+                $ticket->filename(),
+                'application/pdf',
+            );
         }
 
-        $this->mailer->send($email);
+        $this->mailer->send(new EmailMessage(
+            fromAddress: 'no-reply@ticketplus.com',
+            fromName: 'Ticketplus',
+            to: $user->email(),
+            subject: 'Confirmación de compra',
+            template: 'email/tickets-email.html.twig',
+            context: ['name' => $user->name()],
+            attachments: $attachments,
+        ));
     }
 }

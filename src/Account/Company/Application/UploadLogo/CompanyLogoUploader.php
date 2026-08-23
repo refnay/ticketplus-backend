@@ -7,7 +7,7 @@ use App\Account\Company\Domain\CompanyLogo;
 use App\Account\Company\Domain\CompanyRepository;
 use App\Account\Company\Domain\Exceptions\CompanyLogoNotUploaded;
 use App\Account\Company\Domain\Services\CompanyFinder;
-use App\Shared\Domain\Services\ImageUploader;
+use App\Shared\Domain\Image\ImageUploader;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Throwable;
 

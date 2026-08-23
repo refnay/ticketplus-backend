@@ -28,6 +28,29 @@ services:
         arguments:
             $accessToken: '%env(MERCADO_PAGO_ACCESS_TOKEN)%'
 
+    # Image
+    App\Shared\Domain\Image\ImageUploader:
+        alias: App\Shared\Infrastructure\Image\ImgBBImageUploader
+
+    App\Shared\Infrastructure\Image\ImgBBImageUploader:
+        arguments:
+            $apiKey: '%env(IMGBB_API_KEY)%'
+
+    # Mailer
+    App\Shared\Domain\Mailer\Mailer:
+        alias: App\Shared\Infrastructure\Mailer\SymfonyMailer
+
+    # Password
+    App\Account\User\Domain\Password\PasswordHasher:
+        alias: App\Account\User\Infrastructure\Password\SymfonyPasswordHasher
+
+    App\Account\User\Domain\Recovery\PasswordResetter:
+        alias: App\Account\User\Infrastructure\Recovery\SymfonyPasswordResetter
+
+    # Slug
+    App\Catalog\Event\Domain\Slug\SlugGenerator:
+        alias: App\Catalog\Event\Infrastructure\Slug\SymfonySlugGenerator
+
     # PDF
     App\Shared\Application\Pdf\PdfGenerator:
         alias: App\Shared\Infrastructure\Pdf\Generate\PdfDocumentGenerator

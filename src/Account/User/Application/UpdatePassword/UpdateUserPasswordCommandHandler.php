@@ -4,7 +4,7 @@ namespace App\Account\User\Application\UpdatePassword;
 
 use App\Account\User\Domain\UserId;
 use App\Account\User\Domain\UserPassword;
-use App\Shared\Domain\Services\PasswordHasher;
+use App\Account\User\Domain\Password\PasswordHasher;
 
 class UpdateUserPasswordCommandHandler
 {

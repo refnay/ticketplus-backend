@@ -11,7 +11,7 @@ use App\Account\User\Domain\UserLastName;
 use App\Account\User\Domain\UserMobile;
 use App\Account\User\Domain\UserName;
 use App\Account\User\Domain\UserPassword;
-use App\Shared\Domain\Services\PasswordHasher;
+use App\Account\User\Domain\Password\PasswordHasher;
 
 class CreateUserCommandHandler
 {

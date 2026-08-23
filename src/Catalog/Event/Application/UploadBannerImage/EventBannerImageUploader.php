@@ -8,7 +8,7 @@ use App\Catalog\Event\Domain\EventRepository;
 use App\Catalog\Event\Domain\Exceptions\EventBannerImageNotUploaded;
 use App\Catalog\Event\Domain\Services\EventFinder;
 use App\Catalog\Shared\Domain\CompanyId;
-use App\Shared\Domain\Services\ImageUploader;
+use App\Shared\Domain\Image\ImageUploader;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Throwable;
 

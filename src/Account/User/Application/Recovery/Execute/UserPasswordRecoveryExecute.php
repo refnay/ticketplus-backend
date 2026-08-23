@@ -5,8 +5,8 @@ namespace App\Account\User\Application\Recovery\Execute;
 use App\Account\User\Domain\UserId;
 use App\Account\User\Domain\UserPassword;
 use App\Account\User\Domain\UserRepository;
+use App\Account\User\Domain\Recovery\PasswordResetter;
 use App\Shared\Domain\Exceptions\ExpiredOrInvalidResetToken;
-use App\Shared\Domain\Services\PasswordResetter;
 use Throwable;
 
 class UserPasswordRecoveryExecute

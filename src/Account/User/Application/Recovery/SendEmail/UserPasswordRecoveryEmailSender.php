@@ -5,11 +5,9 @@ namespace App\Account\User\Application\Recovery\SendEmail;
 use App\Account\User\Domain\Exceptions\UserNotFound;
 use App\Account\User\Domain\Services\UserByEmailFinder;
 use App\Account\User\Domain\UserEmail;
-use App\Shared\Domain\Services\Mailer;
-use App\Shared\Domain\Services\PasswordResetter;
-use App\Shared\Domain\UserId;
-use Symfony\Bridge\Twig\Mime\TemplatedEmail;
-use Symfony\Component\Mime\Address;
+use App\Account\User\Domain\Recovery\PasswordResetter;
+use App\Shared\Domain\Mailer\EmailMessage;
+use App\Shared\Domain\Mailer\Mailer;
 use Throwable;
 
 class UserPasswordRecoveryEmailSender
@@ -29,18 +27,18 @@ class UserPasswordRecoveryEmailSender
         }
 
         try {
-            $token = $this->passwordResetter->generateToken(UserId::fromString($user->id()->value()));
+            $token = $this->passwordResetter->generateToken($user->id());
         } catch (Throwable) {
             return;
         }
 
-        $email = (new TemplatedEmail())
-            ->from(new Address('no-reply@ticketplus.com', 'Ticketplus'))
-            ->to($user->email()->value())
-            ->subject('Recuperación de contraseña')
-            ->htmlTemplate('email/recovery-password-email.html.twig')
-            ->context(['token' => $token]);
-
-        $this->mailer->send($email);
+        $this->mailer->send(new EmailMessage(
+            fromAddress: 'no-reply@ticketplus.com',
+            fromName: 'Ticketplus',
+            to: $user->email()->value(),
+            subject: 'Recuperación de contraseña',
+            template: 'email/recovery-password-email.html.twig',
+            context: ['token' => $token],
+        ));
     }
 }
