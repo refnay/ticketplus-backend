@@ -2,7 +2,7 @@
 
 namespace App;
 
-use App\Shared\Infrastructure\DependencyInjection\MessageHandlerPass;
+use App\Shared\Infrastructure\Dependency\MessageHandlerPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
