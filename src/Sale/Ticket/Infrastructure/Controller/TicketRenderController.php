@@ -5,11 +5,12 @@ namespace App\Sale\Ticket\Infrastructure\Controller;
 use App\Sale\Ticket\Application\Render\RenderTicketQuery;
 use App\Shared\Application\MessageBus;
 use App\Shared\Domain\Session;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
-class TicketRenderController
+class TicketRenderController extends AbstractController
 {
-    public function render(string $id, string $order, Session $session, MessageBus $messageBus): Response
+    public function create(string $id, string $order, Session $session, MessageBus $messageBus): Response
     {
         $query = RenderTicketQuery::create($id, $order);
         $query->setSession($session);

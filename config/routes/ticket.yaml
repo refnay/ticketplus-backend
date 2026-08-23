@@ -1,4 +1,4 @@
 ticket-render:
     path: /api/ticket/{id}/order/{order}
-    controller: App\Sale\Ticket\Infrastructure\Controller\TicketRenderController::render
+    controller: App\Sale\Ticket\Infrastructure\Controller\TicketRenderController::create
     methods: GET
