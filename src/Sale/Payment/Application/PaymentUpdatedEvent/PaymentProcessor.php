@@ -36,7 +36,7 @@ class PaymentProcessor
     public function __invoke(PaymentId $id, OrderId $orderId, UserId $userId, string $token): void
     {
         $order = $this->orderFinder->__invoke($orderId, $userId);
-        $payment = $this->paymentFinder->__invoke($id, $order->id());
+        $payment = $this->paymentFinder->__invoke($id, $orderId);
 
         if ($payment->status()->isApproved() || $payment->status()->isDeclined()) {
             return;

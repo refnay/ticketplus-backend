@@ -45,7 +45,7 @@ class PaymentCreator
         }
 
         try {
-            $this->paymentFinder->__invoke($order->id());
+            $this->paymentFinder->__invoke($orderId);
             throw new PaymentAlreadyProcessing();
         } catch (PaymentNotFound) {
         }
@@ -54,7 +54,7 @@ class PaymentCreator
             PaymentAmount::fromFloat($order->total()->value()),
             $method,
             $payer,
-            $order->id(),
+            $orderId,
         );
 
         $this->repository->save($payment);
