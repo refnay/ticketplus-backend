@@ -11,7 +11,9 @@ use Override;
 
 class EventDayDoctrineRepository implements EventDayRepository
 {
-    public function __construct(private EntityManagerInterface $entityManager) {}
+    public function __construct(private EntityManagerInterface $entityManager)
+    {
+    }
 
     #[Override]
     public function findById(EventId $eventId, EventDayId $id): ?EventDay
