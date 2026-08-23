@@ -3,6 +3,7 @@
 namespace App\Sale\Ticket\Infrastructure\Persistence;
 
 use App\Sale\Order\Domain\OrderId;
+use App\Sale\Shared\Domain\SeatId;
 use App\Sale\Shared\Domain\ZoneId;
 use App\Sale\Ticket\Domain\Ticket;
 use App\Sale\Ticket\Domain\TicketCode;
@@ -60,7 +61,11 @@ class TicketMapper
             OrderId::fromString($entity->getPurchase()->getId()),
             ZoneId::fromString($entity->getZone()->getId()),
         );
-        $ticket->changeSeatId($entity->getSeat()?->getId());
+
+        $seatEntity = $entity->getSeat();
+        if (!is_null($seatEntity)) {
+            $ticket->changeSeatId(SeatId::fromString($seatEntity->getId()));
+        }
 
         return $ticket;
     }
