@@ -17,7 +17,6 @@ class OrderCancelator
         private OrderFinder $orderFinder,
         private PaymentByOrderFinder $paymentFinder,
         private OrderRepository $repository,
-
     ) {
     }
 
@@ -34,7 +33,7 @@ class OrderCancelator
         }
 
         try {
-            $payment = $this->paymentFinder->__invoke($order->id());
+            $payment = $this->paymentFinder->__invoke($id);
             if ($payment->status()->isProcessing()) {
                 throw new OrderNotCancelable();
             }
@@ -42,6 +41,7 @@ class OrderCancelator
         }
 
         $order->changeStatus(OrderStatus::cancelled());
+        
         $this->repository->update($order);
     }
 }

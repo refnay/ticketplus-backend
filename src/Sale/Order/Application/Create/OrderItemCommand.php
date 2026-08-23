@@ -4,13 +4,10 @@ namespace App\Sale\Order\Application\Create;
 
 use App\Shared\Domain\Utils\PayloadMapper;
 
-class ZoneCommand
+class OrderItemCommand
 {
-    public function __construct(
-        private string $id,
-        private int $quantity,
-        private ?array $seatIds,
-    ) {
+    public function __construct(private string $zone, private int $quantity, private ?array $seats)
+    {
     }
 
     public static function create(array $data): self
@@ -18,15 +15,15 @@ class ZoneCommand
         $payload = PayloadMapper::fromData($data);
 
         return new self(
-            $payload->string('id'),
+            $payload->string('zone'),
             $payload->int('quantity'),
-            $payload->array('seatIds'),
+            $payload->array('seats'),
         );
     }
 
-    public function id(): string
+    public function zone(): string
     {
-        return $this->id;
+        return $this->zone;
     }
 
     public function quantity(): string
@@ -34,8 +31,8 @@ class ZoneCommand
         return $this->quantity;
     }
 
-    public function seatIds(): ?array
+    public function seats(): ?array
     {
-        return $this->seatIds;
+        return $this->seats;
     }
 }

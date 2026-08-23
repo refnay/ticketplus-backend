@@ -12,24 +12,26 @@ class CreateOrderCommand extends BaseCommand
         private string $event,
         private string $day,
         private ?string $discount,
-        private array $zones,
+        private array $items,
     ) {
     }
 
     public static function create(array $data): self
     {
         $payload = PayloadMapper::fromData($data);
-        $zones = ArrayBuilder::generate();
+        $items = ArrayBuilder::generate();
 
-        foreach ($payload->array('zones') as $zone) {
-            $zones->add(ZoneCommand::create($zone));
+        foreach ($payload->array('items') as $item) {
+            $items->add(OrderItemCommand::create($item));
         }
+
+        $items->removeDuplicates();
 
         return new self(
             $payload->string('event'),
             $payload->string('day'),
             $payload->nullableString('discount'),
-            $zones->items(),
+            $items->items(),
         );
     }
 
@@ -48,8 +50,8 @@ class CreateOrderCommand extends BaseCommand
         return $this->discount;
     }
 
-    public function zones(): array
+    public function items(): array
     {
-        return  $this->zones;
+        return  $this->items;
     }
 }

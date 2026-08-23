@@ -20,7 +20,7 @@ class CreateOrderCommandHandler
             EventDayId::fromString($command->day()),
             DiscountId::fromNullable($command->discount()),
             UserId::fromString($command->session()->user()),
-            $command->zones(),
+            $command->items(),
         );
     }
 }

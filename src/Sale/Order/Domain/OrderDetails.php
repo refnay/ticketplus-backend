@@ -16,7 +16,12 @@ class OrderDetails extends ArrayValueObject
     {
         $elements = [];
         foreach ($items as $item) {
-            $elements[] = self::itemPattern($item);
+            $elements[] = [
+                'zone' => isset($item['zone']) ? (string) $item['zone'] : null,
+                'quantity' => isset($item['quantity']) ? (int) $item['quantity'] : null,
+                'seats' => isset($item['seats']) ? (array) $item['seats'] : null,
+                'price' => isset($item['price']) ? (float) $item['price'] : null,
+            ];
         }
 
         return new self([
@@ -24,16 +29,6 @@ class OrderDetails extends ArrayValueObject
             'day' => $day,
             'items' => $elements,
         ]);
-    }
-
-    private static function itemPattern(array $item): array
-    {
-        return [
-            'zone' => isset($item['zone']) ? (string) $item['zone'] : null,
-            'quantity' => isset($item['quantity']) ? (int) $item['quantity'] : null,
-            'seats' => isset($item['seats']) ? (array) $item['seats'] : null,
-            'price' => isset($item['price']) ? (float) $item['price'] : null,
-        ];
     }
 
     public function event(): ?string

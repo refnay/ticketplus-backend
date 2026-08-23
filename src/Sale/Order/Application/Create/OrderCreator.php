@@ -52,14 +52,13 @@ class OrderCreator
         EventDayId $dayId,
         ?DiscountId $discountId,
         UserId $userId,
-        array $zones,
+        array $items,
     ): string {
-        if (!(count($zones) > 0)) {
+        if (!(count($items) > 0)) {
             throw new ZoneNotFound();
         }
 
         $day = $this->dayFinder->__invoke($eventId, $dayId);
-        $currency = $day->currency();
         $discount = null;
 
         if (!is_null($discountId)) {
@@ -67,16 +66,13 @@ class OrderCreator
         }
 
         $details = [];
-        $price = 0.00;
-        $subTotal = 0.00;
-        $tax = 0.00;
-        $total = 0.00;
+        $price = $subTotal = $tax = $total = 0.00;
 
-        /** @var ZoneCommand $zoneCommand */
-        foreach ($zones as $zoneCommand) {
-            $zoneId = ZoneId::fromString($zoneCommand->id());
-            $quantity = $zoneCommand->quantity();
-            $seatIds = $zoneCommand->seatIds();
+        /** @var OrderItemCommand $item */
+        foreach ($items as $item) {
+            $zoneId = ZoneId::fromString($item->zone());
+            $quantity = $item->quantity();
+            $seatIds = $item->seats();
 
             $zone = $this->zoneFinder->__invoke($zoneId, $eventId, $dayId);
 
@@ -87,7 +83,7 @@ class OrderCreator
             }
 
             if ($zone->numberedSeating()) {
-                if (is_null($seatIds)) {
+                if (!(is_array($seatIds) && count($seatIds) > 0)) {
                     throw new SeatNotFound();
                 }
 
@@ -100,9 +96,8 @@ class OrderCreator
             }
 
             $price += $zone->price() * $quantity;
-
             $details[] = [
-                'zone' => $zone->id(),
+                'zone' => $zoneId,
                 'quantity' => $quantity,
                 'seats' => $seatIds,
                 'price' => $zone->price(),
@@ -114,7 +109,7 @@ class OrderCreator
         $total = $subTotal + $tax;
 
         $order = Order::create(
-            OrderCurrency::fromString($currency),
+            OrderCurrency::fromString($day->currency()),
             OrderPrice::fromFloat($price),
             OrderSubTotal::fromFloat($subTotal),
             OrderTax::fromFloat($tax),
