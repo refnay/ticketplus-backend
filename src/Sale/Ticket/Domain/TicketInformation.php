@@ -51,7 +51,7 @@ class TicketInformation
     public function toArray(): array
     {
         return [
-            'dayDate' => $this->date->format('d/m/Y'),
+            'date' => $this->date->format('d/m/Y'),
             'eventName' => $this->eventName,
             'zoneName' => $this->zoneName,
             'seatCode' => $this->seatCode,

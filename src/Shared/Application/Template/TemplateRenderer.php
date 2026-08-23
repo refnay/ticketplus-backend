@@ -4,5 +4,5 @@ namespace App\Shared\Application\Template;
 
 interface TemplateRenderer
 {
-    public function render(string $template, array $parameters): string;
+    public function render(string $template, array $data): string;
 }

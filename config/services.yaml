@@ -27,6 +27,20 @@ services:
         arguments:
             $accessToken: '%env(MERCADO_PAGO_ACCESS_TOKEN)%'
 
+    # PDF
+    App\Shared\Application\Pdf\PdfGenerator:
+        alias: App\Shared\Infrastructure\Pdf\Generate\PdfDocumentGenerator
+
+    App\Shared\Application\Pdf\PdfRenderer:
+        alias: App\Shared\Infrastructure\Pdf\Render\DompdfPdfRenderer
+
+    App\Shared\Application\Pdf\PdfStorage:
+        alias: App\Shared\Infrastructure\Pdf\Storage\LocalPdfStorage
+
+    # Template
+    App\Shared\Application\Template\TemplateRenderer:
+        alias: App\Shared\Infrastructure\Template\TwigTemplateRenderer
+
     Symfony\Component\DependencyInjection\ContainerInterface: '@service_container'
 
     # add more service definitions when explicit configuration is needed

@@ -125,4 +125,14 @@ class Ticket
     {
         $this->seatId = $seatId;
     }
+
+    public function toArray(): array
+    {
+        return [
+            'information' => $this->information()->toArray(),
+            'code' => $this->code()->value(),
+            'price' => $this->price()->value(),
+            'qrCode' => $this->qrCode()->value(),
+        ];
+    }
 }
