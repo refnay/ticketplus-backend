@@ -7,7 +7,7 @@
 		<style>
 			@media only screen and (max-width: 560px) {
 				.email-shell { padding: 16px !important; }
-				.card { width: 100% !important; }
+				.email-card { width: 100% !important; }
 				.header, .content, .footer { padding-left: 24px !important; padding-right: 24px !important; }
 			}
 		</style>
@@ -16,31 +16,21 @@
 		<table class="email-shell" role="presentation" width="100%" cellpadding="0" cellspacing="0" style="width:100%; background-color:#f4f5f5; padding:40px 16px;">
 			<tr>
 				<td align="center">
-					<table class="card" role="presentation" width="520" cellpadding="0" cellspacing="0" style="width:520px; background-color:#ffffff; border:1px solid #dfe3e6; border-radius:12px; overflow:hidden;">
+					<table class="email-card" role="presentation" width="520" cellpadding="0" cellspacing="0" style="width:520px; background-color:#ffffff; border:1px solid #dfe3e6; border-radius:12px; overflow:hidden;">
 						<tr>
 							<td style="height:4px; background-color:#284b63; font-size:0; line-height:0;">&nbsp;</td>
 						</tr>
 						<tr>
 							<td class="header" style="padding:24px 32px 21px; border-bottom:1px solid #e7e9eb;">
-								<table role="presentation" width="100%" cellpadding="0" cellspacing="0">
-									<tr>
-										<td style="vertical-align:middle;">
-											<img src="{{ ticketplus_logo() }}" width="150" alt="Ticket+" style="display:block; width:150px; max-width:100%; height:auto; border:0;">
-										</td>
-										<td style="vertical-align:middle; text-align:right;">
-											<span style="display:block; color:#526879; font-size:9px; font-weight:700; letter-spacing:1.2px; text-transform:uppercase;">Compra confirmada</span>
-											<span style="display:block; margin-top:3px; color:#1c2733; font-size:14px; font-weight:700;">Confirmación de compra</span>
-										</td>
-									</tr>
-								</table>
+								<img src="{{ ticketplus_logo() }}" width="150" alt="Ticket+" style="display:block; width:150px; max-width:100%; height:auto; border:0;">
 							</td>
 						</tr>
 						<tr>
-							<td class="content" style="padding:32px;">
+							<td class="content" style="padding:32px 32px 28px;">
 								<p style="margin:0 0 7px; color:#526879; font-size:10px; font-weight:700; letter-spacing:1.3px; text-transform:uppercase;">Compra confirmada</p>
-								<h1 style="margin:0 0 15px; color:#17212b; font-size:24px; line-height:1.3; font-weight:700;">Hola, {{ name }}</h1>
+								<h1 style="margin:0 0 15px; color:#17212b; font-size:24px; line-height:1.3; font-weight:700;">Tus entradas están listas</h1>
 								<p style="margin:0 0 20px; color:#59636b; font-size:14px; line-height:1.65;">
-									Tu compra se ha procesado correctamente. En este correo encontrarás adjuntas las entradas correspondientes a tu compra en formato PDF.
+									Hola, {{ name }}. Tu compra se procesó correctamente y encontrarás tus entradas adjuntas a este correo en formato PDF.
 								</p>
 								<div style="padding:14px 16px; color:#59636b; background-color:#f6f6f4; border-left:3px solid #8a969f; border-radius:0 5px 5px 0; font-size:12px; line-height:1.55;">
 									<strong style="color:#1c2733;">Importante</strong><br>
@@ -49,8 +39,8 @@
 							</td>
 						</tr>
 						<tr>
-							<td class="footer" style="padding:20px 32px 24px; color:#59636b; border-top:1px solid #e7e9eb; text-align:center; font-size:11px; line-height:1.5;">
-								Ticket+ · Lo que vas a recordar empieza aquí.
+							<td class="footer" style="padding:20px 32px 24px; background-color:#ffffff; border-top:1px solid #e7e9eb; text-align:center;">
+								<p style="margin:0; color:#59636b; font-size:11px; line-height:1.5;">Ticket+ · Lo que vas a recordar empieza aquí.</p>
 							</td>
 						</tr>
 					</table>
