@@ -2,3 +2,8 @@ order-create:
     path: /api/order
     controller: App\Sale\Order\Infrastructure\Controller\OrderCreateController::create
     methods: POST
+
+order-cancel:
+    path: /api/order/{id}
+    controller: App\Sale\Order\Infrastructure\Controller\OrderCancelController::cancel
+    methods: DELETE

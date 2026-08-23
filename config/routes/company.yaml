@@ -2,3 +2,13 @@ company-create:
     path: /api/company
     controller: App\Account\Company\Infrastructure\Controller\CompanyCreateController::create
     methods: POST
+
+company-update:
+    path: /api/company
+    controller: App\Account\Company\Infrastructure\Controller\CompanyUpdateController::update
+    methods: PUT
+
+company-logo-upload:
+    path: /api/company/upload
+    controller: App\Account\Company\Infrastructure\Controller\CompanyLogoUploadController::upload
+    methods: POST

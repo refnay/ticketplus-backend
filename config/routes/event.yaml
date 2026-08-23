@@ -7,3 +7,28 @@ event-search:
     path: /api/event
     controller: App\Catalog\Event\Infrastructure\Controller\EventSearchController::search
     methods: GET
+
+event-find:
+    path: /api/event/{id}
+    controller: App\Catalog\Event\Infrastructure\Controller\EventFindController::find
+    methods: GET
+
+event-update:
+    path: /api/event/{id}
+    controller: App\Catalog\Event\Infrastructure\Controller\EventUpdateController::update
+    methods: PUT
+
+event-delete:
+    path: /api/event/{id}
+    controller: App\Catalog\Event\Infrastructure\Controller\EventDeleteController::delete
+    methods: DELETE
+
+event-cover-image-upload:
+    path: /api/event/{id}/cover
+    controller: App\Catalog\Event\Infrastructure\Controller\EventCoverImageUploadController::upload
+    methods: POST
+
+event-banner-image-upload:
+    path: /api/event/{id}/banner
+    controller: App\Catalog\Event\Infrastructure\Controller\EventBannerImageUploadController::upload
+    methods: POST

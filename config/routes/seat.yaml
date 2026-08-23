@@ -2,3 +2,23 @@ seat-create:
     path: /api/seat/event/{event}/day/{day}/zone/{zone}
     controller: App\Catalog\Seat\Infrastructure\Controller\SeatCreateController::create
     methods: POST
+
+seat-search:
+    path: /api/seat/event/{event}/day/{day}/zone/{zone}
+    controller: App\Catalog\Seat\Infrastructure\Controller\SeatSearchController::search
+    methods: GET
+
+seat-find:
+    path: /api/seat/{id}/event/{event}/day/{day}/zone/{zone}
+    controller: App\Catalog\Seat\Infrastructure\Controller\SeatFindController::find
+    methods: GET
+
+seat-update:
+    path: /api/seat/{id}/event/{event}/day/{day}/zone/{zone}
+    controller: App\Catalog\Seat\Infrastructure\Controller\SeatUpdateController::update
+    methods: PUT
+
+seat-delete:
+    path: /api/seat/{id}/event/{event}/day/{day}/zone/{zone}
+    controller: App\Catalog\Seat\Infrastructure\Controller\SeatDeleteController::delete
+    methods: DELETE

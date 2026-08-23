@@ -2,3 +2,23 @@ category-create:
     path: /api/category
     controller: App\Catalog\Category\Infrastructure\Controller\CategoryCreateController::create
     methods: POST
+
+category-search:
+    path: /api/category
+    controller: App\Catalog\Category\Infrastructure\Controller\CategorySearchController::search
+    methods: GET
+
+category-find:
+    path: /api/category/{id}
+    controller: App\Catalog\Category\Infrastructure\Controller\CategoryFindController::find
+    methods: GET
+
+category-update:
+    path: /api/category/{id}
+    controller: App\Catalog\Category\Infrastructure\Controller\CategoryUpdateController::update
+    methods: PUT
+
+category-delete:
+    path: /api/category/{id}
+    controller: App\Catalog\Category\Infrastructure\Controller\CategoryDeleteController::delete
+    methods: DELETE

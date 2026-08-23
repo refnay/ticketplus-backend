@@ -1,0 +1,24 @@
+discount-create:
+    path: /api/discount/event/{event}
+    controller: App\Sale\Discount\Infrastructure\Controller\DiscountCreateController::create
+    methods: POST
+
+discount-search:
+    path: /api/discount/event/{event}
+    controller: App\Sale\Discount\Infrastructure\Controller\DiscountSearchController::search
+    methods: GET
+
+discount-find:
+    path: /api/discount/{id}/event/{event}
+    controller: App\Sale\Discount\Infrastructure\Controller\DiscountFindController::find
+    methods: GET
+
+discount-update:
+    path: /api/discount/{id}/event/{event}
+    controller: App\Sale\Discount\Infrastructure\Controller\DiscountUpdateController::update
+    methods: PUT
+
+discount-delete:
+    path: /api/discount/{id}/event/{event}
+    controller: App\Sale\Discount\Infrastructure\Controller\DiscountDeleteController::delete
+    methods: DELETE

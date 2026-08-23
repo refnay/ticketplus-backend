@@ -2,3 +2,23 @@ zone-create:
     path: /api/zone/event/{event}/day/{day}
     controller: App\Catalog\Zone\Infrastructure\Controller\ZoneCreateController::create
     methods: POST
+
+zone-search:
+    path: /api/zone/event/{event}/day/{day}
+    controller: App\Catalog\Zone\Infrastructure\Controller\ZoneSearchController::search
+    methods: GET
+
+zone-find:
+    path: /api/zone/{id}/event/{event}/day/{day}
+    controller: App\Catalog\Zone\Infrastructure\Controller\ZoneFindController::find
+    methods: GET
+
+zone-update:
+    path: /api/zone/{id}/event/{event}/day/{day}
+    controller: App\Catalog\Zone\Infrastructure\Controller\ZoneUpdateController::update
+    methods: PUT
+
+zone-delete:
+    path: /api/zone/{id}/event/{event}/day/{day}
+    controller: App\Catalog\Zone\Infrastructure\Controller\ZoneDeleteController::delete
+    methods: DELETE
