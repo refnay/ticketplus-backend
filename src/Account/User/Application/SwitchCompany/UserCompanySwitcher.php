@@ -16,7 +16,6 @@ class UserCompanySwitcher
     public function __invoke(UserId $id, UserCurrentCompany $currentCompany): void
     {
         $user = $this->finder->__invoke($id);
-
         $user->changeCurrentCompany($currentCompany);
 
         $this->repository->update($user);

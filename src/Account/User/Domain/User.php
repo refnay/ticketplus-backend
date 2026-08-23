@@ -228,4 +228,9 @@ class User
     {
         $this->currentCompany = $currentCompany;
     }
+
+    public function fullName(): string
+    {
+        return sprintf('%s %s', $this->name()->value(), $this->lastName()->value());
+    }
 }

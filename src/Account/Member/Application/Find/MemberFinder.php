@@ -18,18 +18,17 @@ class MemberFinder
     public function __invoke(MemberId $id): MemberResponse
     {
         $member = $this->memberFinder->__invoke($id);
-        
         $user = $this->userFinder->__invoke($member->userId());
         $company = $this->companyFinder->__invoke($member->companyId());
 
         return new MemberResponse(
             $member->id()->value(),
+            $user->id()->value(),
             $user->name()->value(),
-            $user->lastName()->value(),
-            $member->role()->value(),
-            $member->status()->value(),
             $company->id()->value(),
             $company->name()->value(),
+            $member->role()->value(),
+            $member->status()->value(),
         );
     }
 }

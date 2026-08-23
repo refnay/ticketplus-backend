@@ -31,7 +31,7 @@ class MemberCompanySearcher
             $company = $this->companyFinder->__invoke($member->companyId());
             return new MemberCompanyResponse(
                 $member->id()->value(),
-                $member->companyId()->value(),
+                $company->id()->value(),
                 $company->name()->value(),
                 $member->role()->value(),
                 $member->status()->value(),

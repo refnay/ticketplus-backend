@@ -16,11 +16,7 @@ class MemberCreator
 
     public function __invoke(UserId $userId, CompanyId $companyId): void
     {
-        $member = Member::create(
-            MemberRole::owner(),
-            $userId,
-            $companyId,
-        );
+        $member = Member::create(MemberRole::owner(), $userId, $companyId);
 
         $this->repository->save($member);
     }
