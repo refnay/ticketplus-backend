@@ -4,10 +4,6 @@ namespace App\Shared\Domain\Mailer;
 
 final readonly class EmailMessage
 {
-    /**
-     * @param array<string, mixed> $context
-     * @param EmailAttachment[] $attachments
-     */
     public function __construct(
         private string $fromAddress,
         private string $fromName,

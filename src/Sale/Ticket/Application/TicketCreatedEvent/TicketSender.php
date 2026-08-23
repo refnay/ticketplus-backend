@@ -10,6 +10,7 @@ use App\Sale\Ticket\Domain\TicketId;
 use App\Shared\Domain\Mailer\EmailAttachment;
 use App\Shared\Domain\Mailer\EmailMessage;
 use App\Shared\Domain\Mailer\Mailer;
+use App\Shared\Domain\Utils\Primitive\ArrayBuilder;
 
 final readonly class TicketSender
 {
@@ -28,7 +29,7 @@ final readonly class TicketSender
 
         $user = $this->userFinder->__invoke($userId);
 
-        $attachments = [];
+        $attachments = ArrayBuilder::generate();
 
         foreach ($ticketIds as $ticketId) {
             $ticket = $this->ticketRender->__invoke(
@@ -37,21 +38,21 @@ final readonly class TicketSender
                 $userId,
             );
 
-            $attachments[] = new EmailAttachment(
+            $attachments->add(new EmailAttachment(
                 $ticket->content(),
                 $ticket->filename(),
                 'application/pdf',
-            );
+            ));
         }
 
         $this->mailer->send(new EmailMessage(
-            fromAddress: 'no-reply@ticketplus.com',
-            fromName: 'Ticketplus',
-            to: $user->email(),
-            subject: 'Confirmación de compra',
-            template: 'email/tickets-email.html.twig',
-            context: ['name' => $user->name()],
-            attachments: $attachments,
+            'no-reply@ticketplus.com',
+            'Ticketplus',
+            $user->email(),
+            'Confirmación de compra',
+            'email/tickets-email.html.twig',
+            ['name' => $user->name()],
+            $attachments->items(),
         ));
     }
 }

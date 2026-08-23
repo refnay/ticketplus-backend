@@ -33,12 +33,12 @@ class UserPasswordRecoveryEmailSender
         }
 
         $this->mailer->send(new EmailMessage(
-            fromAddress: 'no-reply@ticketplus.com',
-            fromName: 'Ticketplus',
-            to: $user->email()->value(),
-            subject: 'Recuperación de contraseña',
-            template: 'email/recovery-password-email.html.twig',
-            context: ['token' => $token],
+            'no-reply@ticketplus.com',
+            'Ticketplus',
+            $user->email()->value(),
+            'Recuperación de contraseña',
+            'email/recovery-password-email.html.twig',
+            ['token' => $token],
         ));
     }
 }
