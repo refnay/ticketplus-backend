@@ -26,7 +26,7 @@ class TicketCreator
     ) {
     }
 
-    public function __invoke(Order $order, array $item, ?SeatId $seatId): void
+    public function __invoke(Order $order, array $item, ?SeatId $seatId): string
     {
         $details = $order->details();
 
@@ -52,5 +52,7 @@ class TicketCreator
         $ticket->changeSeatId($seatId);
 
         $this->repository->save($ticket);
+
+        return $ticket->id()->value();
     }
 }
