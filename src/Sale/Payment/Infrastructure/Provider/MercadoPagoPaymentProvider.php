@@ -23,7 +23,6 @@ final class MercadoPagoPaymentProvider implements PaymentProvider
 
     public function process(Payment $payment, string $token): PaymentProviderResponse
     {
-        /*
         $response = $this->client->create([
             'transaction_amount' => $payment->amount()->value(),
             'token' => $token,
@@ -37,13 +36,6 @@ final class MercadoPagoPaymentProvider implements PaymentProvider
             $response->id,
             PaymentProviderList::MERCADO_PAGO->value,
             PaymentStatusList::fromMercadoPago($response->status)->value,
-        );
-        */
-
-        return new PaymentProviderResponse(
-            'TESTTESTTESTTEST',
-            PaymentProviderList::MERCADO_PAGO->value,
-            2,
         );
     }
 }
