@@ -46,6 +46,7 @@ class OrderExpirator
         }
 
         $order->changeStatus(OrderStatus::expired());
+        
         $this->repository->update($order);
 
         $details = $order->details();
