@@ -50,6 +50,12 @@ final class PdfDocumentGenerator implements PdfGenerator
         return $this;
     }
 
+    
+    public function filename(): string
+    {
+        return $this->filename;
+    }
+
     public function generate(): string
     {
         $this->validateTemplate();

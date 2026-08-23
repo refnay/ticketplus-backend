@@ -19,7 +19,7 @@ class TicketRenderController extends AbstractController
 
         /** @var TicketRenderResponse $ticket */
         $ticket = $messageBus->ask($query);
-
+        dd($ticket->filename());
         $response = new Response($ticket->content());
         $response->headers->set('Content-Type', 'application/pdf');
         $response->headers->set(

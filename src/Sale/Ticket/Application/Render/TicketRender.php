@@ -23,18 +23,17 @@ final readonly class TicketRender
     {
         $order = $this->orderFinder->__invoke($orderId, $userId);
         $ticket = $this->ticketFinder->__invoke($id, $orderId);
-        
+
         $filename = StringHelper::normalize($ticket->filename());
 
-        $content = $this->pdfGenerator
+        $pdf = $this->pdfGenerator
             ->prepare([
                 ...$ticket->toArray(),
                 'currency' => $order->currency()->value(),
             ])
             ->setTemplate('ticket/ticket.html.twig')
-            ->setFilename($filename)
-            ->generate();
+            ->setFilename($filename);
 
-        return new TicketRenderResponse($content, $filename);
+        return new TicketRenderResponse($pdf->generate(), $pdf->filename());
     }
 }

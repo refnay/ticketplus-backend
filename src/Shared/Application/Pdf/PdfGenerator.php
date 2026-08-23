@@ -12,6 +12,8 @@ interface PdfGenerator
 
     public function setFilename(string $filename): self;
 
+    public function filename(): string;
+
     public function generate(): string;
 
     public function save(): string;
