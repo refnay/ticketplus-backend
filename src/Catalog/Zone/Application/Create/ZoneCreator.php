@@ -44,7 +44,7 @@ class ZoneCreator
             $numberedSeating,
             $price,
             $quantity,
-            $day->id(),
+            $dayId,
         );
 
         $this->repository->save($zone);

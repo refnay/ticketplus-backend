@@ -43,7 +43,7 @@ class ZoneUpdater
             throw new EventDayNotFound();
         }
 
-        $zone = $this->zoneFinder->__invoke($id, $day->id());
+        $zone = $this->zoneFinder->__invoke($id, $dayId);
         
         $zone->changeName($name);
         $zone->changePrice($price);

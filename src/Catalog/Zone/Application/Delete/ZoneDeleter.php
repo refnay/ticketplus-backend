@@ -29,7 +29,7 @@ class ZoneDeleter
             throw new EventDayNotFound();
         }
 
-        $zone = $this->zoneFinder->__invoke($id, $day->id());
+        $zone = $this->zoneFinder->__invoke($id, $dayId);
 
         $this->repository->delete($zone);
     }
