@@ -6,11 +6,8 @@ use App\Shared\Domain\Events\DomainEvent;
 
 class TicketCreatedDomainEvent extends DomainEvent
 {
-    public function __construct(
-        private array $ticketIds,
-        private string $orderId,
-        private string $userId,
-    ) {
+    public function __construct(private array $ticketIds, private string $orderId, private string $userId)
+    {
     }
 
     public function ticketIds(): array
