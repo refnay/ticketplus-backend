@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8">
+		<title>Entrada
+			{{ information.eventName }}
+			·
+			{{ code }}</title>
+		<style>
+			@page {
+				size: A4 portrait;
+				margin: 0;
+			}
+			* {
+				box-sizing: border-box;
+			}
+			body {
+				margin: 0;
+				padding: 34px;
+				color: #09243f;
+				background: #eef6ff;
+				font-family: DejaVu Sans, Arial, sans-serif;
+				font-size: 12px;
+				line-height: 1.45;
+			}
+			.ticket {
+				width: 100%;
+				overflow: hidden;
+				background: #ffffff;
+				border: 1px solid #cfe3f8;
+				border-radius: 18px;
+			}
+			.ticketplus-bar {
+				height: 8px;
+				background: #0759f8;
+			}
+			.header {
+				padding: 28px 32px 24px;
+				border-bottom: 1px solid #dbeafa;
+			}
+			.header-table,
+			.content-table,
+			.details-table,
+			.footer-table {
+				width: 100%;
+				border-collapse: collapse;
+			}
+			.logo-cell {
+				width: 185px;
+				vertical-align: middle;
+			}
+			.ticketplus-logo {
+				display: block;
+				width: 170px;
+				height: auto;
+			}
+			.type-cell {
+				text-align: right;
+				vertical-align: middle;
+			}
+			.eyebrow {
+				margin: 0 0 4px;
+				color: #087bf2;
+				font-size: 10px;
+				font-weight: 700;
+				letter-spacing: 1.6px;
+				text-transform: uppercase;
+			}
+			.document-title {
+				margin: 0;
+				color: #09243f;
+				font-size: 20px;
+				font-weight: 700;
+			}
+			.hero {
+				padding: 30px 32px 27px;
+				background: #f6fbff;
+			}
+			.event-name {
+				margin: 0;
+				color: #071f38;
+				font-size: 29px;
+				line-height: 1.2;
+			}
+			.event-rule {
+				width: 46px;
+				height: 4px;
+				margin-top: 16px;
+				background: #0759f8;
+				border-radius: 2px;
+			}
+			.content {
+				padding: 30px 32px 25px;
+			}
+			.information-cell {
+				padding-right: 30px;
+				vertical-align: top;
+			}
+			.qr-cell {
+				width: 182px;
+				padding-left: 28px;
+				text-align: center;
+				vertical-align: top;
+				border-left: 1px dashed #9dc9f5;
+			}
+			.section-title {
+				margin: 0 0 16px;
+				color: #688096;
+				font-size: 10px;
+				font-weight: 700;
+				letter-spacing: 1.4px;
+				text-transform: uppercase;
+			}
+			.details-table td {
+				width: 50%;
+				padding: 0 14px 20px 0;
+				vertical-align: top;
+			}
+			.label {
+				display: block;
+				margin-bottom: 4px;
+				color: #71879b;
+				font-size: 9px;
+				font-weight: 700;
+				letter-spacing: 1px;
+				text-transform: uppercase;
+			}
+			.value {
+				display: block;
+				color: #09243f;
+				font-size: 15px;
+				font-weight: 700;
+			}
+			.price {
+				color: #0759f8;
+				font-size: 20px;
+			}
+			.tax-note {
+				display: block;
+				margin-top: 3px;
+				color: #71879b;
+				font-size: 9px;
+				font-weight: 400;
+			}
+			.qr-frame {
+				display: inline-block;
+				padding: 9px;
+				background: #ffffff;
+				border: 1px solid #cfe3f8;
+				border-radius: 10px;
+			}
+			.qr-image {
+				display: block;
+				width: 132px;
+				height: 132px;
+			}
+			.qr-help {
+				margin: 10px 0 0;
+				color: #526b80;
+				font-size: 9px;
+				line-height: 1.35;
+			}
+			.code-box {
+				margin-top: 15px;
+				padding: 9px 7px;
+				color: #0759f8;
+				background: #eef6ff;
+				border-radius: 6px;
+				font-family: DejaVu Sans Mono, monospace;
+				font-size: 10px;
+				font-weight: 700;
+				letter-spacing: 0.7px;
+				word-break: break-all;
+			}
+			.notice {
+				margin: 0 32px 28px;
+				padding: 15px 18px;
+				color: #355269;
+				background: #eaf5ff;
+				border-left: 4px solid #08a6f5;
+				border-radius: 0 7px 7px 0;
+				font-size: 10px;
+			}
+			.notice strong {
+				color: #09243f;
+			}
+			.footer {
+				padding: 17px 32px;
+				color: #688096;
+				background: #09243f;
+				font-size: 9px;
+			}
+			.footer-code {
+				color: #ffffff;
+				font-family: DejaVu Sans Mono, monospace;
+				text-align: right;
+			}
+		</style>
+	</head>
+	<body>
+		<main class="ticket">
+			<div class="ticketplus-bar"></div>
+			<header class="header">
+				<table class="header-table" role="presentation">
+					<tr>
+						<td class="logo-cell">
+							<img class="ticketplus-logo" src="{{ ticketplus_logo() }}" alt="Ticket+">
+						</td>
+						<td class="type-cell">
+							<p class="eyebrow">Documento de acceso</p>
+							<p class="document-title">Entrada digital</p>
+						</td>
+					</tr>
+				</table>
+			</header>
+			<section class="hero">
+				<p class="eyebrow">Tu próximo evento</p>
+				<h1 class="event-name">{{ information.eventName }}</h1>
+				<div class="event-rule"></div>
+			</section>
+			<section class="content">
+				<table class="content-table" role="presentation">
+					<tr>
+						<td class="information-cell">
+							<p class="section-title">Información de la entrada</p>
+							<table class="details-table" role="presentation">
+								<tr>
+									<td>
+										<span class="label">Fecha</span>
+										<span class="value">{{ information.date }}</span>
+									</td>
+									<td>
+										<span class="label">Zona</span>
+										<span class="value">{{ information.zoneName }}</span>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<span class="label">Asiento</span>
+										<span class="value">{{ information.seatCode is not empty ? information.seatCode : 'No numerado' }}</span>
+									</td>
+									<td>
+										<span class="label">Precio</span>
+										<span class="value price">{{ currency }} {{ price|number_format(2, '.', ',') }}</span>
+										<span class="tax-note">Impuestos no incluidos</span>
+									</td>
+								</tr>
+							</table>
+						</td>
+						<td class="qr-cell">
+							<p class="section-title">Código de ingreso</p>
+							<div class="qr-frame">
+								<img class="qr-image" src="{{ qr_code(qrCode) }}" alt="Código QR de acceso">
+							</div>
+							<p class="qr-help">Presenta este código QR en el acceso al evento.</p>
+							<div class="code-box">{{ code }}</div>
+							<p class="qr-help">ID QR: {{ qrCode }}</p>
+						</td>
+					</tr>
+				</table>
+			</section>
+			<aside class="notice">
+				<strong>Importante:</strong>
+				esta entrada es única. Evita compartir el código QR y ten este documento listo al llegar al evento.
+			</aside>
+			<footer class="footer">
+				<table class="footer-table" role="presentation">
+					<tr>
+						<td>Ticket+ · Experiencias que empiezan desde tu entrada</td>
+						<td class="footer-code">REF {{ code }}</td>
+					</tr>
+				</table>
+			</footer>
+		</main>
+	</body>
+</html>

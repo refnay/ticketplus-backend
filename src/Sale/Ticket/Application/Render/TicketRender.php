@@ -20,12 +20,14 @@ final readonly class TicketRender
 
     public function __invoke(TicketId $id, OrderId $orderId, UserId $userId): string
     {
-        $this->orderFinder->__invoke($orderId, $userId);
-        
+        $order = $this->orderFinder->__invoke($orderId, $userId);
         $ticket = $this->ticketFinder->__invoke($id, $orderId);
 
         return $this->pdfGenerator
-            ->prepare($ticket->toArray())
+            ->prepare([
+                ...$ticket->toArray(),
+                'currency' => $order->currency()->value(),
+            ])
             ->setTemplate('ticket/ticket.html.twig')
             ->generate();
     }

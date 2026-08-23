@@ -52,7 +52,7 @@ final class PdfDocumentGenerator implements PdfGenerator
 
     public function generate(): string
     {
-        $this->validate();
+        $this->validateTemplate();
 
         $html = $this->templateRenderer->render($this->template, $this->data);
 
@@ -61,17 +61,20 @@ final class PdfDocumentGenerator implements PdfGenerator
 
     public function save(): string
     {
-        $this->validate();
+        $this->validateStorage();
 
         return $this->pdfStorage->save($this->generate(), $this->path, $this->filename);
     }
 
-    private function validate(): void
+    private function validateTemplate(): void
     {
         if (is_null($this->template)) {
             throw new RuntimeException('PDF template has not been defined.');
         }
+    }
 
+    private function validateStorage(): void
+    {
         if (is_null($this->path)) {
             throw new RuntimeException('PDF path has not been defined.');
         }

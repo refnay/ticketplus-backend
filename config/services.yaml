@@ -41,6 +41,10 @@ services:
     App\Shared\Application\Template\TemplateRenderer:
         alias: App\Shared\Infrastructure\Template\TwigTemplateRenderer
 
+    App\Shared\Infrastructure\Twig\TicketplusExtension:
+        arguments:
+            $projectDir: '%kernel.project_dir%'
+
     Symfony\Component\DependencyInjection\ContainerInterface: '@service_container'
 
     # add more service definitions when explicit configuration is needed
