@@ -15,11 +15,7 @@ class UpdateCategoryCommand extends BaseCommand
     {
         $payload = PayloadMapper::fromData($data);
 
-        return new self(
-            $id,
-            $payload->string('name'),
-            $payload->int('reference')
-        );
+        return new self($id, $payload->string('name'), $payload->int('reference'));
     }
 
     public function id(): string

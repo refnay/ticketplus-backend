@@ -15,10 +15,7 @@ class CreateCategoryCommand extends BaseCommand
     {
         $payload = PayloadMapper::fromData($data);
 
-        return new self(
-            $payload->string('name'),
-            $payload->int('reference')
-        );
+        return new self($payload->string('name'), $payload->int('reference'));
     }
 
     public function name(): string

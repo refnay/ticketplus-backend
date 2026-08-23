@@ -41,19 +41,19 @@ class SeatCreator
             throw new EventDayNotFound();
         }
 
-        $zone = $this->zoneFinder->__invoke($zoneId, $day->id());
+        $zone = $this->zoneFinder->__invoke($zoneId, $dayId);
 
         if ($zone->numberedSeating()->isDisable()) {
             throw new ZoneNotNumberedSeating();
         }
 
         try {
-            $this->seatFinder->__invoke($code, $zone->id());
+            $this->seatFinder->__invoke($code, $zoneId);
             throw new SeatAlreadyExists();
         } catch (SeatNotFound) {
         }
 
-        $seat = Seat::create($code, $zone->id());
+        $seat = Seat::create($code, $zoneId);
 
         $this->repository->save($seat);
 

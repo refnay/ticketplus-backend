@@ -31,6 +31,8 @@ class UpdateEventCommand extends BaseCommand
             $days->add(EventDayCommand::create($day));
         }
 
+        $days->removeDuplicates();
+
         return new self(
             $payload->string('id'),
             $payload->string('name'),

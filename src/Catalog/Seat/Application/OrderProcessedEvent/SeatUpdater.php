@@ -11,7 +11,9 @@ use App\Catalog\Zone\Domain\ZoneId;
 
 class SeatUpdater
 {
-    public function __construct(private SeatRepository $repository, private SeatFinder $finder) {}
+    public function __construct(private SeatRepository $repository, private SeatFinder $finder)
+    {
+    }
 
     public function __invoke(array $items, int $status): void
     {

@@ -14,7 +14,7 @@ class SeatUpdater
 
     public function __invoke(ZoneId $zoneId, ?array $seatIds): void
     {
-        if (is_null($seatIds)) {
+        if (!(is_array($seatIds) && count($seatIds) > 0)) {
             return;
         }
 

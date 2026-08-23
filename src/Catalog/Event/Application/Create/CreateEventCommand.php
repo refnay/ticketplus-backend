@@ -29,6 +29,8 @@ class CreateEventCommand extends BaseCommand
             $days->add(EventDayCommand::create($day));
         }
 
+        $days->removeDuplicates();
+
         return new self(
             $payload->string('name'),
             $payload->nullableString('description'),
@@ -81,7 +83,7 @@ class CreateEventCommand extends BaseCommand
     {
         return $this->category;
     }
-
+    
     public function days(): array
     {
         return $this->days;

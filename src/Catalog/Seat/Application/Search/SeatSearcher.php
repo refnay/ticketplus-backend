@@ -36,7 +36,7 @@ class SeatSearcher
             throw new EventDayNotFound();
         }
 
-        $this->zoneFinder->__invoke($zoneId, $day->id());
+        $this->zoneFinder->__invoke($zoneId, $dayId);
 
         $seats = $this->repository->searchByFilters($filters, $orderBy, $order, $limit, $offset);
         $total = $this->repository->countByFilters($filters);

@@ -7,10 +7,8 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class UploadEventBannerImageCommand extends BaseCommand
 {
-    public function __construct(
-        private string $id,
-        private ?UploadedFile $bannerImage
-    ) {
+    public function __construct( private string $id, private ?UploadedFile $bannerImage)
+    {
     }
 
     public function id(): string

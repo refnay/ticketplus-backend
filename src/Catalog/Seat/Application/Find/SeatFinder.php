@@ -30,8 +30,9 @@ class SeatFinder
             throw new EventDayNotFound();
         }
 
-        $zone = $this->zoneFinder->__invoke($zoneId, $day->id());
-        $seat = $this->seatFinder->__invoke($id, $zone->id());
+        $this->zoneFinder->__invoke($zoneId, $dayId);
+        
+        $seat = $this->seatFinder->__invoke($id, $zoneId);
 
         return SeatResponse::create($seat);
     }

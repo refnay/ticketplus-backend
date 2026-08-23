@@ -43,6 +43,7 @@ class PaymentWithEventApprovedDomainEvent extends DomainEvent
     public function payload(): array
     {
         return [
+            'eventId' => $this->eventId,
             'zoneId' => $this->zoneId,
             'dayId' => $this->dayId,
             'quantity' => $this->quantity,
