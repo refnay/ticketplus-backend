@@ -12,7 +12,7 @@ class RenderTicketQueryHandler
     {
     }
 
-    public function __invoke(RenderTicketQuery $query): string
+    public function __invoke(RenderTicketQuery $query): TicketRenderResponse
     {
         return $this->finder->__invoke(
             TicketId::fromString($query->id()),

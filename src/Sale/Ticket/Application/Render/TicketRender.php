@@ -8,6 +8,7 @@ use App\Sale\Shared\Domain\UserId;
 use App\Sale\Ticket\Domain\Services\TicketFinder;
 use App\Sale\Ticket\Domain\TicketId;
 use App\Shared\Application\Pdf\PdfGenerator;
+use App\Shared\Domain\Utils\StringHelper;
 
 final readonly class TicketRender
 {
@@ -18,17 +19,22 @@ final readonly class TicketRender
     ) {
     }
 
-    public function __invoke(TicketId $id, OrderId $orderId, UserId $userId): string
+    public function __invoke(TicketId $id, OrderId $orderId, UserId $userId): TicketRenderResponse
     {
         $order = $this->orderFinder->__invoke($orderId, $userId);
         $ticket = $this->ticketFinder->__invoke($id, $orderId);
+        
+        $filename = StringHelper::normalize($ticket->filename());
 
-        return $this->pdfGenerator
+        $content = $this->pdfGenerator
             ->prepare([
                 ...$ticket->toArray(),
                 'currency' => $order->currency()->value(),
             ])
             ->setTemplate('ticket/ticket.html.twig')
+            ->setFilename($filename)
             ->generate();
+
+        return new TicketRenderResponse($content, $filename);
     }
 }

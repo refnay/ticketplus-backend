@@ -135,4 +135,9 @@ class Ticket
             'qrCode' => $this->qrCode()->value(),
         ];
     }
+
+    public function filename(): string
+    {
+        return sprintf('%s %s', $this->code()->value(), $this->information()->eventName());
+    }
 }

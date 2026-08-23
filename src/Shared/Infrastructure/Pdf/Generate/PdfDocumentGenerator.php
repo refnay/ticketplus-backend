@@ -45,7 +45,7 @@ final class PdfDocumentGenerator implements PdfGenerator
 
     public function setFilename(string $filename): self
     {
-        $this->filename = $filename;
+        $this->filename = sprintf('%s.pdf', $filename);
 
         return $this;
     }
