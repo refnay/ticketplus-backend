@@ -44,8 +44,8 @@ class EventDayDoctrineRepository implements EventDayRepository
             $id->value(),
             (string) $result['currency'],
             (string) $result['event_name'],
-            (float) $result['tax_rate'],
             (string) $result['date'],
+            (float) $result['tax_rate'],
         );
     }
 }
