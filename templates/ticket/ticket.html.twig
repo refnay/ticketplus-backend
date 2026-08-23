@@ -2,20 +2,20 @@
 <html lang="es">
 	<head>
 		<meta charset="UTF-8">
-		<title>{{ code }} {{ information.eventName }}</title>
+		<title>{{ information.eventName }}</title>
 		<style>
 			@page {
 				size: A4 portrait;
-				margin: 0;
+				margin: 24px;
 			}
 			* {
 				box-sizing: border-box;
 			}
 			body {
 				margin: 0;
-				padding: 34px;
-				color: #09243f;
-				background: #eef6ff;
+				padding: 0;
+				color: #1c2733;
+				background: #ffffff;
 				font-family: DejaVu Sans, Arial, sans-serif;
 				font-size: 12px;
 				line-height: 1.45;
@@ -24,16 +24,16 @@
 				width: 100%;
 				overflow: hidden;
 				background: #ffffff;
-				border: 1px solid #cfe3f8;
-				border-radius: 18px;
+				border: 1px solid #dfe3e6;
+				border-radius: 12px;
 			}
 			.ticketplus-bar {
-				height: 8px;
-				background: #0759f8;
+				height: 4px;
+				background: #284b63;
 			}
 			.header {
-				padding: 28px 32px 24px;
-				border-bottom: 1px solid #dbeafa;
+				padding: 26px 30px 22px;
+				border-bottom: 1px solid #e7e9eb;
 			}
 			.header-table,
 			.content-table,
@@ -57,7 +57,7 @@
 			}
 			.eyebrow {
 				margin: 0 0 4px;
-				color: #087bf2;
+				color: #526879;
 				font-size: 10px;
 				font-weight: 700;
 				letter-spacing: 1.6px;
@@ -65,29 +65,29 @@
 			}
 			.document-title {
 				margin: 0;
-				color: #09243f;
-				font-size: 20px;
+				color: #1c2733;
+				font-size: 19px;
 				font-weight: 700;
 			}
 			.hero {
-				padding: 30px 32px 27px;
-				background: #f6fbff;
+				padding: 31px 30px 28px;
+				background: #ffffff;
+				border-bottom: 1px solid #e7e9eb;
 			}
 			.event-name {
 				margin: 0;
-				color: #071f38;
-				font-size: 29px;
+				color: #17212b;
+				font-size: 27px;
 				line-height: 1.2;
 			}
 			.event-rule {
-				width: 46px;
-				height: 4px;
+				width: 34px;
+				height: 2px;
 				margin-top: 16px;
-				background: #0759f8;
-				border-radius: 2px;
+				background: #284b63;
 			}
 			.content {
-				padding: 30px 32px 25px;
+				padding: 29px 30px 24px;
 			}
 			.information-cell {
 				padding-right: 30px;
@@ -98,11 +98,11 @@
 				padding-left: 28px;
 				text-align: center;
 				vertical-align: top;
-				border-left: 1px dashed #9dc9f5;
+				border-left: 1px dashed #c8cdd1;
 			}
 			.section-title {
 				margin: 0 0 16px;
-				color: #688096;
+				color: #68737d;
 				font-size: 10px;
 				font-weight: 700;
 				letter-spacing: 1.4px;
@@ -116,7 +116,7 @@
 			.label {
 				display: block;
 				margin-bottom: 4px;
-				color: #71879b;
+				color: #7a838b;
 				font-size: 9px;
 				font-weight: 700;
 				letter-spacing: 1px;
@@ -124,18 +124,18 @@
 			}
 			.value {
 				display: block;
-				color: #09243f;
+				color: #1c2733;
 				font-size: 15px;
 				font-weight: 700;
 			}
 			.price {
-				color: #0759f8;
+				color: #284b63;
 				font-size: 20px;
 			}
 			.tax-note {
 				display: block;
 				margin-top: 3px;
-				color: #71879b;
+				color: #7a838b;
 				font-size: 9px;
 				font-weight: 400;
 			}
@@ -143,8 +143,8 @@
 				display: inline-block;
 				padding: 9px;
 				background: #ffffff;
-				border: 1px solid #cfe3f8;
-				border-radius: 10px;
+				border: 1px solid #d7dbde;
+				border-radius: 8px;
 			}
 			.qr-image {
 				display: block;
@@ -153,16 +153,29 @@
 			}
 			.qr-help {
 				margin: 10px 0 0;
-				color: #526b80;
+				color: #6d7780;
 				font-size: 9px;
 				line-height: 1.35;
 			}
-			.code-box {
+			.access-reference {
 				margin-top: 15px;
-				padding: 9px 7px;
-				color: #0759f8;
-				background: #eef6ff;
-				border-radius: 6px;
+				padding: 10px 7px 9px;
+				color: #284b63;
+				background: #f4f5f5;
+				border: 1px solid #e3e5e6;
+				border-radius: 5px;
+			}
+			.access-reference-label {
+				display: block;
+				margin-bottom: 4px;
+				color: #7a838b;
+				font-size: 8px;
+				font-weight: 700;
+				letter-spacing: 0.9px;
+				text-transform: uppercase;
+			}
+			.access-reference-value {
+				display: block;
 				font-family: DejaVu Sans Mono, monospace;
 				font-size: 10px;
 				font-weight: 700;
@@ -170,27 +183,27 @@
 				word-break: break-all;
 			}
 			.notice {
-				margin: 0 32px 28px;
+				margin: 0 30px 27px;
 				padding: 15px 18px;
-				color: #355269;
-				background: #eaf5ff;
-				border-left: 4px solid #08a6f5;
-				border-radius: 0 7px 7px 0;
+				color: #59636b;
+				background: #f6f6f4;
+				border-left: 3px solid #8a969f;
+				border-radius: 0 5px 5px 0;
 				font-size: 10px;
 			}
 			.notice strong {
-				color: #09243f;
+				color: #1c2733;
 			}
 			.footer {
-				padding: 17px 32px;
-				color: #688096;
-				background: #09243f;
+				padding: 16px 30px;
+				color: #788189;
+				background: #ffffff;
+				border-top: 1px solid #e7e9eb;
 				font-size: 9px;
 			}
-			.footer-code {
-				color: #ffffff;
-				font-family: DejaVu Sans Mono, monospace;
-				text-align: right;
+			.footer-message {
+				color: #59636b;
+				text-align: center;
 			}
 		</style>
 	</head>
@@ -250,8 +263,10 @@
 								<img class="qr-image" src="{{ qr_code(qrCode) }}" alt="Código QR de acceso">
 							</div>
 							<p class="qr-help">Presenta este código QR en el acceso al evento.</p>
-							<div class="code-box">{{ code }}</div>
-							<p class="qr-help">ID QR: {{ qrCode }}</p>
+							<div class="access-reference">
+								<span class="access-reference-label">Código de entrada</span>
+								<span class="access-reference-value">{{ code }}</span>
+							</div>
 						</td>
 					</tr>
 				</table>
@@ -263,8 +278,7 @@
 			<footer class="footer">
 				<table class="footer-table" role="presentation">
 					<tr>
-						<td>Ticket+ · Experiencias que empiezan desde tu entrada</td>
-						<td class="footer-code">REF {{ code }}</td>
+						<td class="footer-message">Ticket+ · Lo que vas a recordar empieza aquí.</td>
 					</tr>
 				</table>
 			</footer>
