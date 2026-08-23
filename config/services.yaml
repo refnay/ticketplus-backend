@@ -52,17 +52,17 @@ services:
         alias: App\Catalog\Event\Infrastructure\Slug\SymfonySlugGenerator
 
     # PDF
-    App\Shared\Application\Pdf\PdfGenerator:
+    App\Shared\Domain\Pdf\PdfGenerator:
         alias: App\Shared\Infrastructure\Pdf\Generate\PdfDocumentGenerator
 
-    App\Shared\Application\Pdf\PdfRenderer:
+    App\Shared\Domain\Pdf\PdfRenderer:
         alias: App\Shared\Infrastructure\Pdf\Render\DompdfPdfRenderer
 
-    App\Shared\Application\Pdf\PdfStorage:
+    App\Shared\Domain\Pdf\PdfStorage:
         alias: App\Shared\Infrastructure\Pdf\Storage\LocalPdfStorage
 
     # Template
-    App\Shared\Application\Template\TemplateRenderer:
+    App\Shared\Domain\Template\TemplateRenderer:
         alias: App\Shared\Infrastructure\Template\TwigTemplateRenderer
 
     # Twig

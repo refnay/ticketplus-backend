@@ -2,10 +2,10 @@
 
 namespace App\Shared\Infrastructure\Pdf\Generate;
 
-use App\Shared\Application\Pdf\PdfGenerator;
-use App\Shared\Application\Pdf\PdfRenderer;
-use App\Shared\Application\Pdf\PdfStorage;
-use App\Shared\Application\Template\TemplateRenderer;
+use App\Shared\Domain\Pdf\PdfGenerator;
+use App\Shared\Domain\Pdf\PdfRenderer;
+use App\Shared\Domain\Pdf\PdfStorage;
+use App\Shared\Domain\Template\TemplateRenderer;
 use RuntimeException;
 
 final class PdfDocumentGenerator implements PdfGenerator

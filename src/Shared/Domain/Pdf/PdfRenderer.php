@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Shared\Application\Pdf;
+namespace App\Shared\Domain\Pdf;
 
 interface PdfRenderer
 {
