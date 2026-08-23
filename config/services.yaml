@@ -19,6 +19,7 @@ services:
     App\:
         resource: '../src/'
 
+    # Payment Providers
     App\Sale\Payment\Application\Resolver\PaymentProviderResolver:
         arguments:
             $mercadoPago: '@App\Sale\Payment\Infrastructure\Provider\MercadoPagoPaymentProvider'
@@ -41,6 +42,7 @@ services:
     App\Shared\Application\Template\TemplateRenderer:
         alias: App\Shared\Infrastructure\Template\TwigTemplateRenderer
 
+    # Twig
     App\Shared\Infrastructure\Twig\TicketplusExtension:
         arguments:
             $projectDir: '%kernel.project_dir%'
