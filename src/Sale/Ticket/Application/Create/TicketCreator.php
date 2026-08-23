@@ -26,33 +26,25 @@ class TicketCreator
     ) {
     }
 
-    public function __invoke(
-        Order $order,
-        array $item,
-        ?SeatId $seatId
-    ): void {
+    public function __invoke(Order $order, array $item, ?SeatId $seatId): void
+    {
         $details = $order->details();
+
+        $eventId = EventId::fromString($details->event());
+        $dayId = EventDayId::fromString($details->day());
         $zoneId = ZoneId::fromString($item['zone']);
 
-        $day = $this->dayFinder->__invoke(
-            EventId::fromString($details->event()),
-            EventDayId::fromString($details->day()),
-        );
-        $zone = $this->zoneFinder->__invoke(
-            $zoneId,
-            EventId::fromString($details->event()),
-            EventDayId::fromString($details->day()),
-        );
+        $day = $this->dayFinder->__invoke($eventId, $dayId);
+        $zone = $this->zoneFinder->__invoke($zoneId, $eventId, $dayId);
 
         $seat = null;
-
         try {
             $seat = $this->seatFinder->__invoke($seatId, $zoneId);
         } catch (SeatNotFound) {
         }
 
         $ticket = Ticket::create(
-            TicketInformation::create($day->date(), $day->eventName(), $zone->name(), is_null($seat) ? null : $seat->code()),
+            TicketInformation::create($day->date(), $day->event(), $zone->name(), is_null($seat) ? null : $seat->code()),
             TicketPrice::fromFloat($item['price']),
             $order->id(),
             $zoneId,

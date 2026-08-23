@@ -16,8 +16,8 @@ class TicketCreator
         private OrderFinder $orderFinder,
         private TransactionManager $transaction,
         private ServiceTicketCreator $creator,
-
-    ) {}
+    ) {
+    }
 
     public function __invoke(OrderId $orderId, UserId $userId): void
     {

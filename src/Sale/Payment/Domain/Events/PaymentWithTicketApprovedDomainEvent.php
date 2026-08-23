@@ -6,10 +6,8 @@ use App\Shared\Domain\Events\DomainEvent;
 
 class PaymentWithTicketApprovedDomainEvent extends DomainEvent
 {
-    public function __construct(
-        private string $orderId,
-        private string $userId,
-    ) {
+    public function __construct(private string $orderId, private string $userId)
+    {
     }
 
     public function orderId(): string
