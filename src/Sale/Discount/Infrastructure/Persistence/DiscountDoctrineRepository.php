@@ -76,6 +76,9 @@ class DiscountDoctrineRepository implements DiscountRepository
         );
 
         $queryBuilder->equals('event', $filters['event'] ?? null)
+            ->like('code', $filters['code'] ?? null, true)
+            ->equals('type', $filters['type'] ?? null)
+            ->equals('active', $filters['active'] ?? null)
             ->applyOrder($orderBy, $order)
             ->paginate($limit, $offset);
 
@@ -91,7 +94,10 @@ class DiscountDoctrineRepository implements DiscountRepository
             $this->entityManager->getRepository($this->mapper->entityClass())->createQueryBuilder(self::DISCOUNT_PREFIX)
         );
 
-        $queryBuilder->equals('event', $filters['event'] ?? null);
+        $queryBuilder->equals('event', $filters['event'] ?? null)
+            ->like('code', $filters['code'] ?? null, true)
+            ->equals('type', $filters['type'] ?? null)
+            ->equals('active', $filters['active'] ?? null);
 
         return (int) $queryBuilder->queryBuilder()
             ->select('COUNT(' . self::DISCOUNT_PREFIX . '.id)')
