@@ -12,7 +12,6 @@ class DiscountFindController extends AbstractController
 {
     public function find(string $id, string $event, QueryBus $queryBus): JsonResponse
     {
-
         $query = FindDiscountQuery::create($id, $event);
 
         /** @var DiscountResponse $response */

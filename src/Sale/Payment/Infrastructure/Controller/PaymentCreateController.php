@@ -12,7 +12,6 @@ class PaymentCreateController extends AbstractController
 {
     public function create(Request $request, CommandBus $commandBus): JsonResponse
     {
-
         $command = CreatePaymentCommand::create($request->toArray());
         
         /** @var string $id */

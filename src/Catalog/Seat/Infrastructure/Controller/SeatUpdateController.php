@@ -12,7 +12,6 @@ class SeatUpdateController extends AbstractController
 {
     public function update(string $id, string $event, string $day, string $zone, Request $request, CommandBus $commandBus): JsonResponse
     {
-
         $command = UpdateSeatCommand::create($id, $event, $day, $zone, $request->toArray());
 
         $commandBus->dispatch($command);

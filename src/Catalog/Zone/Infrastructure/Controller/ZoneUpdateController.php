@@ -12,7 +12,6 @@ class ZoneUpdateController extends AbstractController
 {
     public function update(string $id, string $event, string $day, Request $request, CommandBus $commandBus): JsonResponse
     {
-
         $command = UpdateZoneCommand::create($id, $event, $day, $request->toArray());
 
         $commandBus->dispatch($command);

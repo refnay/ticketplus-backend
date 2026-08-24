@@ -12,7 +12,6 @@ class CategoryCreateController extends AbstractController
 {
     public function create(Request $request, CommandBus $commandBus): JsonResponse
     {
-
         $command = CreateCategoryCommand::create($request->toArray());
         
         /** @var string $id */

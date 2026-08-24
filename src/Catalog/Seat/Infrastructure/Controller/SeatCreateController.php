@@ -12,7 +12,6 @@ class SeatCreateController extends AbstractController
 {
     public function create(string $event, string $day, string $zone, Request $request, CommandBus $commandBus): JsonResponse
     {
-
         $command = CreateSeatCommand::create($event, $day, $zone, $request->toArray());
         
         /** @var string $id */

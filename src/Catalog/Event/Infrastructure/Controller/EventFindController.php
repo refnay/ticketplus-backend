@@ -12,7 +12,6 @@ class EventFindController extends AbstractController
 {
     public function find(string $id, QueryBus $queryBus): JsonResponse
     {
-
         $query = FindEventQuery::create($id);
 
         /** @var EventResponse $response */

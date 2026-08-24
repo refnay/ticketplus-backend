@@ -12,7 +12,6 @@ class CategoryFindController extends AbstractController
 {
     public function find(string $id, QueryBus $queryBus): JsonResponse
     {
-
         $query = FindCategoryQuery::create($id);
 
         /** @var CategoryResponse $response */

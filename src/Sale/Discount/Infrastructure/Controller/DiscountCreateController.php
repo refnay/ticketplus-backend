@@ -12,7 +12,6 @@ class DiscountCreateController extends AbstractController
 {
     public function create(string $event, Request $request, CommandBus $commandBus): JsonResponse
     {
-
         $command = CreateDiscountCommand::create($event, $request->toArray());
 
         /** @var string $id */

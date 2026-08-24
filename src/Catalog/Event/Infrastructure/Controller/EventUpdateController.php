@@ -12,7 +12,6 @@ class EventUpdateController extends AbstractController
 {
     public function update(string $id, Request $request, CommandBus $commandBus): JsonResponse
     {
-
         $data = $request->toArray();
         $data['id'] = $id;
 

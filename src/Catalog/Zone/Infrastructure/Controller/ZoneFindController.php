@@ -12,7 +12,6 @@ class ZoneFindController extends AbstractController
 {
     public function find(string $id, string $event, string $day, QueryBus $queryBus): JsonResponse
     {
-
         $query = FindZoneQuery::create($id, $event, $day);
 
         /** @var ZoneResponse $response */

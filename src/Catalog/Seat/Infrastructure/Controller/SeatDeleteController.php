@@ -11,7 +11,6 @@ class SeatDeleteController extends AbstractController
 {
     public function delete(string $id, string $event, string $day, string $zone, CommandBus $commandBus): JsonResponse
     {
-
         $command = DeleteSeatCommand::create($id, $event, $day, $zone);
 
         $commandBus->dispatch($command);

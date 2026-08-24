@@ -13,7 +13,6 @@ class DiscountSearchController extends AbstractController
 {
     public function search(string $event, Request $request, QueryBus $queryBus): JsonResponse
     {
-
         $query = SearchDiscountQuery::fromQuery($event, $request->query->all());
 
         /** @var DiscountsResponse $response */

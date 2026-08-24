@@ -12,7 +12,6 @@ class UserCompanySwitchController extends AbstractController
 {
     public function switch(Request $request, CommandBus $commandBus): JsonResponse
     {
-        
         $command = SwitchUserCompanyCommand::create($request->toArray());
         
         $commandBus->dispatch($command);

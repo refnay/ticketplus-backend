@@ -12,7 +12,6 @@ class SeatFindController extends AbstractController
 {
     public function find(string $id, string $event, string $day, string $zone, QueryBus $queryBus): JsonResponse
     {
-
         $query = FindSeatQuery::create($id, $event, $day, $zone);
 
         /** @var SeatResponse $response */

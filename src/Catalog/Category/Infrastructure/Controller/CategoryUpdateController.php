@@ -12,7 +12,6 @@ class CategoryUpdateController extends AbstractController
 {
     public function update(string $id, Request $request, CommandBus $commandBus): JsonResponse
     {
-
         $command = UpdateCategoryCommand::create($id, $request->toArray());
 
         $commandBus->dispatch($command);

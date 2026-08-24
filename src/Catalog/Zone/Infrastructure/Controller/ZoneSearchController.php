@@ -13,7 +13,6 @@ class ZoneSearchController extends AbstractController
 {
     public function search(string $event, string $day, Request $request, QueryBus $queryBus): JsonResponse
     {
-
         $query = SearchZoneQuery::fromQuery($event, $day, $request->query->all());
 
         /** @var ZonesResponse $response */

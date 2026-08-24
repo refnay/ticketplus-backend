@@ -12,7 +12,6 @@ class ZoneCreateController extends AbstractController
 {
     public function create(string $event, string $day, Request $request, CommandBus $commandBus): JsonResponse
     {
-
         $command = CreateZoneCommand::create($event, $day, $request->toArray());
         
         /** @var string $id */

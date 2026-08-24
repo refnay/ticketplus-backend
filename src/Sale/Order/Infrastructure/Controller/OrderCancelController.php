@@ -11,7 +11,6 @@ class OrderCancelController extends AbstractController
 {
     public function cancel(string $id, CommandBus $commandBus): JsonResponse
     {
-
         $command = CancelOrderCommand::create($id);
 
         $commandBus->dispatch($command);

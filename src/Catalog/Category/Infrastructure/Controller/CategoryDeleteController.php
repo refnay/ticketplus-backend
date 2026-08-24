@@ -11,7 +11,6 @@ class CategoryDeleteController extends AbstractController
 {
     public function delete(string $id, CommandBus $commandBus): JsonResponse
     {
-
         $command = DeleteCategoryCommand::create($id);
 
         $commandBus->dispatch($command);

@@ -11,7 +11,6 @@ class DiscountDeleteController extends AbstractController
 {
     public function delete(string $id, string $event, CommandBus $commandBus): JsonResponse
     {
-
         $command = DeleteDiscountCommand::create($id, $event);
 
         $commandBus->dispatch($command);

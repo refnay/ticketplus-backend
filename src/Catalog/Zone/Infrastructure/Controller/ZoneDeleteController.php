@@ -11,7 +11,6 @@ class ZoneDeleteController extends AbstractController
 {
     public function delete(string $id, string $event, string $day, CommandBus $commandBus): JsonResponse
     {
-
         $command = DeleteZoneCommand::create($id, $event, $day);
 
         $commandBus->dispatch($command);

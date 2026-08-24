@@ -13,7 +13,6 @@ class SeatSearchController extends AbstractController
 {
     public function search(string $event, string $day, string $zone, Request $request, QueryBus $queryBus): JsonResponse
     {
-
         $query = SearchSeatQuery::fromQuery($event, $day, $zone, $request->query->all());
 
         /** @var SeatsResponse $response */

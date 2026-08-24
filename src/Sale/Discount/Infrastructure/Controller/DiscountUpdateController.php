@@ -12,7 +12,6 @@ class DiscountUpdateController extends AbstractController
 {
     public function update(string $id, string $event, Request $request, CommandBus $commandBus): JsonResponse
     {
-
         $command = UpdateDiscountCommand::create($id, $event, $request->toArray());
 
         $commandBus->dispatch($command);
