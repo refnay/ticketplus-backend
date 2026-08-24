@@ -3,7 +3,7 @@
 namespace App\Catalog\Zone\Application\Search;
 
 use App\Shared\Application\Query\SearchQuery;
-use App\Shared\Domain\Utils\PayloadMapper;
+use App\Shared\Application\Input\PayloadMapper;
 
 class SearchZoneQuery extends SearchQuery
 {

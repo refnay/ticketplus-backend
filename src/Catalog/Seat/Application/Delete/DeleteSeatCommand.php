@@ -2,9 +2,8 @@
 
 namespace App\Catalog\Seat\Application\Delete;
 
-use App\Shared\Application\Command\BaseCommand;
 
-class DeleteSeatCommand extends BaseCommand
+class DeleteSeatCommand
 {
     public function __construct(private string $id, private string $event, private string $day, private string $zone)
     {

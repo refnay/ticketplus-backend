@@ -2,6 +2,7 @@
 
 namespace App\Catalog\Seat\Application\Update;
 
+use App\Shared\Application\Security\AuthorizationContext;
 use App\Catalog\Event\Domain\EventDayId;
 use App\Catalog\Event\Domain\EventId;
 use App\Catalog\Seat\Domain\SeatCode;
@@ -12,12 +13,14 @@ use App\Catalog\Zone\Domain\ZoneId;
 
 class UpdateSeatCommandHandler
 {
-    public function __construct(private SeatUpdater $updater)
+    public function __construct(private AuthorizationContext $authorization, private SeatUpdater $updater)
     {
     }
 
     public function __invoke(UpdateSeatCommand $command): void
     {
+        $this->authorization->requireAllPermissions();
+
         $this->updater->__invoke(
             SeatId::fromString($command->id()),
             SeatCode::fromString($command->code()),
@@ -25,7 +28,7 @@ class UpdateSeatCommandHandler
             EventId::fromString($command->event()),
             EventDayId::fromString($command->day()),
             ZoneId::fromString($command->zone()),
-            CompanyId::fromString($command->session()->company()),
+            CompanyId::fromString($this->authorization->requireCompanyId()),
         );
     }
 }

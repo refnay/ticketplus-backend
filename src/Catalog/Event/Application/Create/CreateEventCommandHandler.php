@@ -2,6 +2,7 @@
 
 namespace App\Catalog\Event\Application\Create;
 
+use App\Shared\Application\Security\AuthorizationContext;
 use App\Catalog\Category\Domain\CategoryId;
 use App\Catalog\Event\Domain\EventCity;
 use App\Catalog\Event\Domain\EventCountry;
@@ -14,12 +15,14 @@ use App\Catalog\Shared\Domain\CompanyId;
 
 class CreateEventCommandHandler
 {
-    public function __construct(private EventCreator $creator)
+    public function __construct(private AuthorizationContext $authorization, private EventCreator $creator)
     {
     }
 
     public function __invoke(CreateEventCommand $command): string
     {
+        $this->authorization->requireAllPermissions();
+
         return $this->creator->__invoke(
             EventName::fromString($command->name()),
             EventDescription::fromString($command->description()),
@@ -29,7 +32,7 @@ class CreateEventCommandHandler
             EventCurrency::fromString($command->currency()),
             EventTaxRate::fromFloat($command->taxRate()),
             CategoryId::fromString($command->category()),
-            CompanyId::fromString($command->session()->company()),
+            CompanyId::fromString($this->authorization->requireCompanyId()),
             $command->days(),
         );
     }

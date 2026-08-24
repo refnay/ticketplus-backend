@@ -2,7 +2,7 @@
 
 namespace App\Shared\Infrastructure\Image;
 
-use App\Shared\Domain\Image\ImageUploader;
+use App\Shared\Application\Port\Image\ImageUploader;
 use RuntimeException;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 

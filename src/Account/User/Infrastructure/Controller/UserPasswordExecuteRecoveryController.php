@@ -3,18 +3,18 @@
 namespace App\Account\User\Infrastructure\Controller;
 
 use App\Account\User\Application\Recovery\Execute\ExecuteUserPasswordRecoveryCommand;
-use App\Shared\Application\MessageBus;
+use App\Shared\Application\Bus\CommandBus;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class UserPasswordExecuteRecoveryController extends AbstractController
 {
-    public function execute(Request $request, MessageBus $messageBus): JsonResponse
+    public function execute(Request $request, CommandBus $commandBus): JsonResponse
     {
         $command = ExecuteUserPasswordRecoveryCommand::create($request->toArray());
         
-        $messageBus->dispatch($command);
+        $commandBus->dispatch($command);
 
         return new JsonResponse([]);
     }

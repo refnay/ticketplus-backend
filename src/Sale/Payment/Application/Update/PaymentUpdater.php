@@ -10,21 +10,16 @@ use App\Sale\Payment\Domain\PaymentRepository;
 use App\Sale\Payment\Domain\PaymentStatus;
 use App\Sale\Payment\Domain\Services\PaymentFinder;
 use App\Sale\User\Domain\UserId;
-use App\Shared\Application\Messenger\EventBus;
-use App\Shared\Domain\Utils\Primitive\ArrayBuilder;
+use App\Shared\Application\Bus\EventBus;
 
 class PaymentUpdater
 {
-    private ArrayBuilder $events;
-
     public function __construct(
         private PaymentFinder $paymentFinder,
         private OrderFinder $orderFinder,
         private PaymentRepository $repository,
         private EventBus $eventBus,
-    ) {
-        $this->events = ArrayBuilder::generate();
-    }
+    ) {}
 
     public function __invoke(PaymentId $id, OrderId $orderId, UserId $userId, string $token): void
     {
@@ -35,7 +30,6 @@ class PaymentUpdater
 
         $this->repository->update($payment);
 
-        $this->events->add(new PaymentUpdatedDomainEvent($payment->id(), $orderId->value(), $userId->value(), $token));
-        $this->eventBus->dispatch(...$this->events->items());
+        $this->eventBus->publish(new PaymentUpdatedDomainEvent($payment->id(), $orderId->value(), $userId->value(), $token));
     }
 }

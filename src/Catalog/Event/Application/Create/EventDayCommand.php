@@ -2,7 +2,7 @@
 
 namespace App\Catalog\Event\Application\Create;
 
-use App\Shared\Domain\Utils\PayloadMapper;
+use App\Shared\Application\Input\PayloadMapper;
 
 class EventDayCommand
 {

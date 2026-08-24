@@ -8,7 +8,7 @@ use App\Sale\Payment\Domain\PaymentId;
 use App\Sale\User\Domain\UserId;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
-#[AsMessageHandler]
+#[AsMessageHandler(bus: 'event_bus')]
 class PaymentUpdatedEventSubscriber
 {
     public function __construct(private PaymentProcessor $processor)

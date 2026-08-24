@@ -4,6 +4,7 @@ namespace App\Shared\Domain\ValueObjects;
 
 use App\Shared\Domain\Exceptions\ValueObjectUsedWhileNull;
 
+/** @phpstan-consistent-constructor */
 abstract class BooleanValueObject
 {
     public function __construct(protected ?bool $value)

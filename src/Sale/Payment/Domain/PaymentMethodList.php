@@ -24,7 +24,6 @@ enum PaymentMethodList: int
             self::TRANSFER => 'transfer',
             self::CASH => 'cash',
             self::UNDEFINED => throw new PaymentMethodNotSupported(),
-            default => throw new PaymentMethodNotSupported(),
         };
     }
 }

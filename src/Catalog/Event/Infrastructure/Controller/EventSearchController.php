@@ -4,23 +4,20 @@ namespace App\Catalog\Event\Infrastructure\Controller;
 
 use App\Catalog\Event\Application\Search\EventsResponse;
 use App\Catalog\Event\Application\Search\SearchEventQuery;
-use App\Shared\Application\MessageBus;
-use App\Shared\Domain\Session\Session;
+use App\Shared\Application\Bus\QueryBus;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class EventSearchController extends AbstractController
 {
-    public function search(Request $request, Session $session, MessageBus $messageBus): JsonResponse
+    public function search(Request $request, QueryBus $queryBus): JsonResponse
     {
-        $session->allPermissions();
 
         $query = SearchEventQuery::fromQuery($request->query->all());
-        $query->setSession($session);
         
         /** @var EventsResponse $response */
-        $response = $messageBus->ask($query);
+        $response = $queryBus->ask($query);
 
         return new JsonResponse($response->jsonSerialize());
     }

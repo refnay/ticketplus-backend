@@ -2,6 +2,7 @@
 
 namespace App\Account\Company\Application\Create;
 
+use App\Shared\Application\Security\AuthorizationContext;
 use App\Account\Company\Domain\CompanyCity;
 use App\Account\Company\Domain\CompanyCountry;
 use App\Account\Company\Domain\CompanyDescription;
@@ -15,7 +16,7 @@ use App\Account\User\Domain\UserId;
 
 class CreateCompanyCommandHandler
 {
-    public function __construct(private CompanyCreator $creator)
+    public function __construct(private AuthorizationContext $authorization, private CompanyCreator $creator)
     {
     }
 
@@ -31,7 +32,7 @@ class CreateCompanyCommandHandler
             CompanyDescription::fromString($command->description()),
             CompanyTelephone::fromString($command->telephone()),
             CompanyWebSite::fromString($command->webSite()),
-            UserId::fromString($command->session()->user()),
+            UserId::fromString($this->authorization->userId()),
         );
     }
 }

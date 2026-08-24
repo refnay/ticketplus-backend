@@ -2,10 +2,9 @@
 
 namespace App\Sale\Discount\Application\Create;
 
-use App\Shared\Application\Command\BaseCommand;
-use App\Shared\Domain\Utils\PayloadMapper;
+use App\Shared\Application\Input\PayloadMapper;
 
-class CreateDiscountCommand extends BaseCommand
+class CreateDiscountCommand
 {
     public function __construct(
         private string $event,

@@ -2,9 +2,8 @@
 
 namespace App\Catalog\Event\Application\Find;
 
-use App\Shared\Application\Query\BaseQuery;
 
-class FindEventQuery extends BaseQuery
+class FindEventQuery
 {
     public function __construct(private string $id)
     {

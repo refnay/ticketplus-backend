@@ -2,7 +2,7 @@
 
 namespace App\Account\User\Infrastructure\Password;
 
-use App\Account\User\Domain\Password\PasswordHasher;
+use App\Account\User\Application\Port\Password\PasswordHasher;
 use App\Shared\Infrastructure\Persistence\Entity\User;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 

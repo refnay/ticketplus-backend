@@ -2,7 +2,7 @@
 
 namespace App\Catalog\Event\Infrastructure\Slug;
 
-use App\Catalog\Event\Domain\Slug\SlugGenerator;
+use App\Catalog\Event\Application\Port\Slug\SlugGenerator;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
 final readonly class SymfonySlugGenerator implements SlugGenerator

@@ -2,7 +2,7 @@
 
 namespace App\Shared\Infrastructure\Pdf\Render;
 
-use App\Shared\Domain\Pdf\PdfRenderer;
+use App\Shared\Application\Port\Pdf\PdfRenderer;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 

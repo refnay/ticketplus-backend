@@ -2,9 +2,8 @@
 
 namespace App\Catalog\Event\Application\Delete;
 
-use App\Shared\Application\Command\BaseCommand;
 
-class DeleteEventCommand extends BaseCommand
+class DeleteEventCommand
 {
     public function __construct(private string $id)
     {

@@ -2,10 +2,9 @@
 
 namespace App\Catalog\Event\Application\UploadCoverImage;
 
-use App\Shared\Application\Command\BaseCommand;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-class UploadEventCoverImageCommand extends BaseCommand
+class UploadEventCoverImageCommand
 {
     public function __construct(
         private string $id,

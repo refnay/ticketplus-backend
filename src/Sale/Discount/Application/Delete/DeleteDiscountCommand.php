@@ -2,9 +2,8 @@
 
 namespace App\Sale\Discount\Application\Delete;
 
-use App\Shared\Application\Command\BaseCommand;
 
-class DeleteDiscountCommand extends BaseCommand
+class DeleteDiscountCommand
 {
     public function __construct(private string $id, private string $event)
     {

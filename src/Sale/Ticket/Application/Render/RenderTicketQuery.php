@@ -2,9 +2,8 @@
 
 namespace App\Sale\Ticket\Application\Render;
 
-use App\Shared\Application\Query\BaseQuery;
 
-class RenderTicketQuery extends BaseQuery
+class RenderTicketQuery
 {
     public function __construct(private string $id, private string $order)
     {

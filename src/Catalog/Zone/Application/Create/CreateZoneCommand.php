@@ -2,10 +2,9 @@
 
 namespace App\Catalog\Zone\Application\Create;
 
-use App\Shared\Application\Command\BaseCommand;
-use App\Shared\Domain\Utils\PayloadMapper;
+use App\Shared\Application\Input\PayloadMapper;
 
-class CreateZoneCommand extends BaseCommand
+class CreateZoneCommand
 {
     public function __construct(
         private string $event,

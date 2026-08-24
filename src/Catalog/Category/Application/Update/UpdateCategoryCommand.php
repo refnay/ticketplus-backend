@@ -2,10 +2,9 @@
 
 namespace App\Catalog\Category\Application\Update;
 
-use App\Shared\Application\Command\BaseCommand;
-use App\Shared\Domain\Utils\PayloadMapper;
+use App\Shared\Application\Input\PayloadMapper;
 
-class UpdateCategoryCommand extends BaseCommand
+class UpdateCategoryCommand
 {
     public function __construct(private string $id, private string $name, private int $reference)
     {

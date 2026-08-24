@@ -2,8 +2,8 @@
 
 namespace App\Shared\Infrastructure\Mailer;
 
-use App\Shared\Domain\Mailer\EmailMessage;
-use App\Shared\Domain\Mailer\Mailer;
+use App\Shared\Application\Port\Mailer\EmailMessage;
+use App\Shared\Application\Port\Mailer\Mailer;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;

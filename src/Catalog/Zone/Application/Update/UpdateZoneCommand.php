@@ -2,10 +2,9 @@
 
 namespace App\Catalog\Zone\Application\Update;
 
-use App\Shared\Application\Command\BaseCommand;
-use App\Shared\Domain\Utils\PayloadMapper;
+use App\Shared\Application\Input\PayloadMapper;
 
-class UpdateZoneCommand extends BaseCommand
+class UpdateZoneCommand
 {
     public function __construct(
         private string $id,

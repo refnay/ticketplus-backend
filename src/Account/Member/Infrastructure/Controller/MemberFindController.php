@@ -4,22 +4,19 @@ namespace App\Account\Member\Infrastructure\Controller;
 
 use App\Account\Member\Application\Find\MemberResponse;
 use App\Account\Member\Application\Find\FindMemberQuery;
-use App\Shared\Application\MessageBus;
-use App\Shared\Domain\Session\Session;
+use App\Shared\Application\Bus\QueryBus;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class MemberFindController extends AbstractController
 {
-    public function find(Session $session, MessageBus $messageBus): JsonResponse
+    public function find(QueryBus $queryBus): JsonResponse
     {
-        $session->allPermissions();
 
         $query = FindMemberQuery::create();
-        $query->setSession($session);
         
         /** @var MemberResponse $response */
-        $response = $messageBus->ask($query);
+        $response = $queryBus->ask($query);
 
         return new JsonResponse($response->jsonSerialize());
     }

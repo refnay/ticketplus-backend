@@ -8,23 +8,19 @@ use App\Sale\Seat\Domain\SeatId;
 use App\Sale\User\Domain\UserId;
 use App\Sale\Ticket\Application\Create\TicketCreator as ServiceTicketCreator;
 use App\Sale\Ticket\Domain\Events\TicketCreatedDomainEvent;
-use App\Shared\Application\Messenger\EventBus;
-use App\Shared\Domain\Utils\Primitive\ArrayBuilder;
-use App\Shared\Domain\Persistence\TransactionService;
+use App\Shared\Application\Bus\EventBus;
+use App\Shared\Application\Support\ArrayBuilder;
+use App\Shared\Application\Transaction\TransactionManager;
 use Throwable;
 
 class TicketCreator
 {
-    private ArrayBuilder $events;
-    
     public function __construct(
         private OrderFinder $orderFinder,
-        private TransactionService $transaction,
+        private TransactionManager $transaction,
         private ServiceTicketCreator $creator,
         private EventBus $eventBus,
-    ) {
-        $this->events = ArrayBuilder::generate();
-    }
+    ) {}
 
     public function __invoke(OrderId $orderId, UserId $userId): void
     {
@@ -50,8 +46,7 @@ class TicketCreator
             }
             $this->transaction->commit();
             
-            $this->events->add(new TicketCreatedDomainEvent($tickets->items(), $orderId, $userId));
-            $this->eventBus->dispatch(...$this->events->items());
+            $this->eventBus->publish(new TicketCreatedDomainEvent($tickets->items(), $orderId, $userId));
         } catch (Throwable) {
             $this->transaction->rollback();
         }

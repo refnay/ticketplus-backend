@@ -2,6 +2,7 @@
 
 namespace App\Sale\Discount\Application\Create;
 
+use App\Shared\Application\Security\AuthorizationContext;
 use App\Sale\Discount\Domain\DiscountActive;
 use App\Sale\Discount\Domain\DiscountCode;
 use App\Sale\Discount\Domain\DiscountEndDate;
@@ -14,12 +15,14 @@ use App\Sale\Event\Domain\EventId;
 
 class CreateDiscountCommandHandler
 {
-    public function __construct(private DiscountCreator $creator)
+    public function __construct(private AuthorizationContext $authorization, private DiscountCreator $creator)
     {
     }
 
     public function __invoke(CreateDiscountCommand $command): string
     {
+        $this->authorization->requireAllPermissions();
+
         return $this->creator->__invoke(
             DiscountActive::fromBool($command->active()),
             DiscountCode::fromString($command->code()),
@@ -29,7 +32,7 @@ class CreateDiscountCommandHandler
             DiscountUsage::fromLimit($command->usageLimit()),
             DiscountValue::fromFloat($command->value()),
             EventId::fromString($command->event()),
-            CompanyId::fromString($command->session()->company()),
+            CompanyId::fromString($this->authorization->requireCompanyId()),
         );
     }
 }

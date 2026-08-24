@@ -5,9 +5,9 @@ namespace App\Account\User\Application\Recovery\SendEmail;
 use App\Account\User\Domain\Exceptions\UserNotFound;
 use App\Account\User\Domain\Services\UserByEmailFinder;
 use App\Account\User\Domain\UserEmail;
-use App\Account\User\Domain\Recovery\PasswordResetter;
-use App\Shared\Domain\Mailer\EmailMessage;
-use App\Shared\Domain\Mailer\Mailer;
+use App\Account\User\Application\Port\Recovery\PasswordResetter;
+use App\Shared\Application\Port\Mailer\EmailMessage;
+use App\Shared\Application\Port\Mailer\Mailer;
 use Throwable;
 
 class UserPasswordRecoveryEmailSender

@@ -2,6 +2,7 @@
 
 namespace App\Catalog\Zone\Application\Create;
 
+use App\Shared\Application\Security\AuthorizationContext;
 use App\Catalog\Event\Domain\EventDayId;
 use App\Catalog\Event\Domain\EventId;
 use App\Catalog\Shared\Domain\CompanyId;
@@ -13,12 +14,14 @@ use App\Catalog\Zone\Domain\ZoneQuantity;
 
 class CreateZoneCommandHandler
 {
-    public function __construct(private ZoneCreator $creator)
+    public function __construct(private AuthorizationContext $authorization, private ZoneCreator $creator)
     {
     }
 
     public function __invoke(CreateZoneCommand $command): string
     {
+        $this->authorization->requireAllPermissions();
+
         return $this->creator->__invoke(
             ZoneName::fromString($command->name()),
             ZonePrice::fromFloat($command->price()),
@@ -27,7 +30,7 @@ class CreateZoneCommandHandler
             ZoneNumberedSeating::fromBool($command->numberedSeating()),
             EventId::fromString($command->event()),
             EventDayId::fromString($command->day()),
-            CompanyId::fromString($command->session()->company()),
+            CompanyId::fromString($this->authorization->requireCompanyId()),
         );
     }
 }

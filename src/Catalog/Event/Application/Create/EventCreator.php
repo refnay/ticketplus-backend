@@ -22,7 +22,7 @@ use App\Catalog\Event\Domain\EventTaxRate;
 use App\Catalog\Event\Domain\Exceptions\EventAlreadyExists;
 use App\Catalog\Event\Domain\Exceptions\EventNotFound;
 use App\Catalog\Event\Domain\Services\EventBySlugFinder;
-use App\Catalog\Event\Domain\Slug\SlugGenerator;
+use App\Catalog\Event\Application\Port\Slug\SlugGenerator;
 use App\Catalog\Shared\Domain\CompanyId;
 
 class EventCreator

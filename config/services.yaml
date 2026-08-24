@@ -29,7 +29,7 @@ services:
             $accessToken: '%env(MERCADO_PAGO_ACCESS_TOKEN)%'
 
     # Image
-    App\Shared\Domain\Image\ImageUploader:
+    App\Shared\Application\Port\Image\ImageUploader:
         alias: App\Shared\Infrastructure\Image\ImgBBImageUploader
 
     App\Shared\Infrastructure\Image\ImgBBImageUploader:
@@ -37,38 +37,67 @@ services:
             $apiKey: '%env(IMGBB_API_KEY)%'
 
     # Mailer
-    App\Shared\Domain\Mailer\Mailer:
+    App\Shared\Application\Port\Mailer\Mailer:
         alias: App\Shared\Infrastructure\Mailer\SymfonyMailer
 
     # Password
-    App\Account\User\Domain\Password\PasswordHasher:
+    App\Account\User\Application\Port\Password\PasswordHasher:
         alias: App\Account\User\Infrastructure\Password\SymfonyPasswordHasher
 
-    App\Account\User\Domain\Recovery\PasswordResetter:
+    App\Account\User\Application\Port\Recovery\PasswordResetter:
         alias: App\Account\User\Infrastructure\Recovery\SymfonyPasswordResetter
 
     # Slug
-    App\Catalog\Event\Domain\Slug\SlugGenerator:
+    App\Catalog\Event\Application\Port\Slug\SlugGenerator:
         alias: App\Catalog\Event\Infrastructure\Slug\SymfonySlugGenerator
 
     # PDF
-    App\Shared\Domain\Pdf\PdfGenerator:
+    App\Shared\Application\Port\Pdf\PdfGenerator:
         alias: App\Shared\Infrastructure\Pdf\Generate\PdfDocumentGenerator
 
-    App\Shared\Domain\Pdf\PdfRenderer:
+    App\Shared\Application\Port\Pdf\PdfRenderer:
         alias: App\Shared\Infrastructure\Pdf\Render\DompdfPdfRenderer
 
-    App\Shared\Domain\Pdf\PdfStorage:
+    App\Shared\Application\Port\Pdf\PdfStorage:
         alias: App\Shared\Infrastructure\Pdf\Storage\LocalPdfStorage
 
     # Template
-    App\Shared\Domain\Template\TemplateRenderer:
+    App\Shared\Application\Port\Template\TemplateRenderer:
         alias: App\Shared\Infrastructure\Template\TwigTemplateRenderer
 
     # Twig
     App\Shared\Infrastructure\Twig\TicketplusExtension:
         arguments:
             $projectDir: '%kernel.project_dir%'
+
+    # Transaction boundary for application services. The Doctrine implementation
+    # remains untouched behind a compatibility adapter.
+    App\Shared\Application\Transaction\TransactionManager:
+        alias: App\Shared\Infrastructure\Transaction\DoctrineTransactionManagerAdapter
+
+    App\Shared\Application\Security\CurrentActor:
+        alias: App\Shared\Infrastructure\Security\SymfonyCurrentActor
+
+    App\Shared\Application\Bus\CommandBus:
+        alias: App\Shared\Infrastructure\Messenger\SymfonyCommandBus
+
+    App\Shared\Application\Bus\QueryBus:
+        alias: App\Shared\Infrastructure\Messenger\SymfonyQueryBus
+
+    App\Shared\Application\Bus\EventBus:
+        alias: App\Shared\Infrastructure\Messenger\SymfonyEventBus
+
+    App\Shared\Infrastructure\Messenger\SymfonyCommandBus:
+        arguments:
+            $commandBus: '@command_bus'
+
+    App\Shared\Infrastructure\Messenger\SymfonyQueryBus:
+        arguments:
+            $queryBus: '@query_bus'
+
+    App\Shared\Infrastructure\Messenger\SymfonyEventBus:
+        arguments:
+            $eventBus: '@event_bus'
 
     Symfony\Component\DependencyInjection\ContainerInterface: '@service_container'
 

@@ -4,6 +4,7 @@ namespace App\Shared\Domain\ValueObjects;
 
 use App\Shared\Domain\Exceptions\ValueObjectUsedWhileNull;
 
+/** @phpstan-consistent-constructor */
 abstract class StringValueObject
 {
     public function __construct(protected ?string $value)

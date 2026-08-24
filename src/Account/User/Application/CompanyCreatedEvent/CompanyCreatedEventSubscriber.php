@@ -7,7 +7,7 @@ use App\Account\Company\Domain\Events\CompanyCreatedDomainEvent;
 use App\Account\User\Domain\UserId;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
-#[AsMessageHandler]
+#[AsMessageHandler(bus: 'event_bus')]
 class CompanyCreatedEventSubscriber
 {
     public function __construct(private UserUpdater $updater)

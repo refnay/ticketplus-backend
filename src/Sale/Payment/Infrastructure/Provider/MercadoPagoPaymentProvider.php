@@ -5,9 +5,9 @@ namespace App\Sale\Payment\Infrastructure\Provider;
 use App\Sale\Payment\Domain\Payment;
 use App\Sale\Payment\Domain\PaymentMethodList;
 use App\Sale\Payment\Domain\PaymentStatusList;
-use App\Sale\Payment\Domain\Provider\PaymentProvider;
+use App\Sale\Payment\Application\Port\Payment\PaymentProvider;
 use App\Sale\Payment\Domain\Provider\PaymentProviderList;
-use App\Sale\Payment\Domain\Provider\PaymentProviderResponse;
+use App\Sale\Payment\Application\Port\Payment\PaymentProviderResponse;
 use MercadoPago\Client\Payment\PaymentClient;
 use MercadoPago\MercadoPagoConfig;
 
@@ -32,8 +32,12 @@ final class MercadoPagoPaymentProvider implements PaymentProvider
             ],
         ]);
 
+        if ($response->id === null) {
+            throw new \UnexpectedValueException('Mercado Pago did not return a payment identifier.');
+        }
+
         return new PaymentProviderResponse(
-            $response->id,
+            (string) $response->id,
             PaymentProviderList::MERCADO_PAGO->value,
             PaymentStatusList::fromMercadoPago($response->status)->value,
         );

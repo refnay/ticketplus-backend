@@ -7,6 +7,7 @@ use DateTimeInterface;
 use App\Shared\Domain\Exceptions\ValueObjectUsedWhileNull;
 use DateTime;
 
+/** @phpstan-consistent-constructor */
 abstract class DateValueObject
 {
     public function __construct(protected ?DateTimeImmutable $value)

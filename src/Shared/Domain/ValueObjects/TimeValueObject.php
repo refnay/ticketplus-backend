@@ -8,6 +8,7 @@ use DateTime;
 use App\Shared\Domain\Exceptions\ValueObjectUsedWhileNull;
 use App\Shared\Domain\Utils\Primitive\BoolBuilder;
 
+/** @phpstan-consistent-constructor */
 abstract class TimeValueObject
 {
     public function __construct(protected ?DateTimeImmutable $value)

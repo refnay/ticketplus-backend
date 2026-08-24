@@ -2,10 +2,9 @@
 
 namespace App\Account\User\Application\Create;
 
-use App\Shared\Application\Command\BaseCommand;
-use App\Shared\Domain\Utils\PayloadMapper;
+use App\Shared\Application\Input\PayloadMapper;
 
-class CreateUserCommand extends BaseCommand
+class CreateUserCommand
 {
     public function __construct(
         private string $email,

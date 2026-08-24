@@ -2,10 +2,9 @@
 
 namespace App\Catalog\Seat\Application\Create;
 
-use App\Shared\Application\Command\BaseCommand;
-use App\Shared\Domain\Utils\PayloadMapper;
+use App\Shared\Application\Input\PayloadMapper;
 
-class CreateSeatCommand extends BaseCommand
+class CreateSeatCommand
 {
     public function __construct(
         private string $event,

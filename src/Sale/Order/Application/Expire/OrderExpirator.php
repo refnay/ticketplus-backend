@@ -9,21 +9,16 @@ use App\Sale\Order\Domain\OrderStatus;
 use App\Sale\Order\Domain\Services\OrderForceFinder;
 use App\Sale\Payment\Domain\Exceptions\PaymentNotFound;
 use App\Sale\Payment\Domain\Services\PaymentByOrderFinder;
-use App\Shared\Application\Messenger\EventBus;
-use App\Shared\Domain\Utils\Primitive\ArrayBuilder;
+use App\Shared\Application\Bus\EventBus;
 
 class OrderExpirator
 {
-    private ArrayBuilder $events;
-    
     public function __construct(
         private OrderForceFinder $orderFinder,
         private PaymentByOrderFinder $paymentFinder,
         private OrderRepository $repository,
         private EventBus $eventBus,
-    ) {
-        $this->events = ArrayBuilder::generate();
-    }
+    ) {}
 
     public function __invoke(OrderId $id): void
     {
@@ -50,12 +45,12 @@ class OrderExpirator
         $this->repository->update($order);
 
         $details = $order->details();
-        $this->events->add(new OrderProcessedDomainEvent(
+        $event = new OrderProcessedDomainEvent(
             $details->event(),
             $details->day(),
             $details->items(),
             $order->status()->value(),
-        ));
-        $this->eventBus->dispatch(...$this->events->items());
+        );
+        $this->eventBus->publish($event);
     }
 }

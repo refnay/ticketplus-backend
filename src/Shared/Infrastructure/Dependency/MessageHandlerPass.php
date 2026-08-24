@@ -10,8 +10,10 @@ class MessageHandlerPass implements CompilerPassInterface
     public function process(ContainerBuilder $container): void
     {
         foreach ($container->getDefinitions() as $serviceId => $definition) {
-            if (str_ends_with($serviceId, 'Handler')) {
-                $definition->setPublic(true);
+            if (str_ends_with($serviceId, 'CommandHandler')) {
+                $definition->addTag('messenger.message_handler', ['bus' => 'command_bus']);
+            } elseif (str_ends_with($serviceId, 'QueryHandler')) {
+                $definition->addTag('messenger.message_handler', ['bus' => 'query_bus']);
             }
         }
     }

@@ -2,7 +2,7 @@
 
 namespace App\Shared\Infrastructure\Pdf\Storage;
 
-use App\Shared\Domain\Pdf\PdfStorage;
+use App\Shared\Application\Port\Pdf\PdfStorage;
 use RuntimeException;
 
 final class LocalPdfStorage implements PdfStorage

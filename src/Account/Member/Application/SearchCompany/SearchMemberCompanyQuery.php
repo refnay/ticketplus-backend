@@ -3,7 +3,7 @@
 namespace App\Account\Member\Application\SearchCompany;
 
 use App\Shared\Application\Query\SearchQuery;
-use App\Shared\Domain\Utils\PayloadMapper;
+use App\Shared\Application\Input\PayloadMapper;
 
 class SearchMemberCompanyQuery extends SearchQuery
 {
@@ -28,10 +28,10 @@ class SearchMemberCompanyQuery extends SearchQuery
         );
     }
     
-    public function filters(): array
+    public function filters(string $userId): array
     {
         $filters = get_object_vars($this);
-        $filters['user'] = $this->user();
+        $filters['user'] = $userId;
         
         return $filters; 
     }

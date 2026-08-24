@@ -4,20 +4,18 @@ namespace App\Account\User\Infrastructure\Controller;
 
 use App\Account\User\Application\Find\FindUserQuery;
 use App\Account\User\Application\Find\UserResponse;
-use App\Shared\Application\MessageBus;
-use App\Shared\Domain\Session\Session;
+use App\Shared\Application\Bus\QueryBus;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class UserFindController extends AbstractController
 {
-    public function find(Session $session, MessageBus $messageBus): JsonResponse
+    public function find(QueryBus $queryBus): JsonResponse
     {
         $query = FindUserQuery::create();
-        $query->setSession($session);
         
         /** @var UserResponse $response */
-        $response = $messageBus->ask($query);
+        $response = $queryBus->ask($query);
 
         return new JsonResponse($response->jsonSerialize());
     }

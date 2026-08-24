@@ -2,11 +2,10 @@
 
 namespace App\Catalog\Event\Application\Create;
 
-use App\Shared\Application\Command\BaseCommand;
-use App\Shared\Domain\Utils\PayloadMapper;
-use App\Shared\Domain\Utils\Primitive\ArrayBuilder;
+use App\Shared\Application\Input\PayloadMapper;
+use App\Shared\Application\Support\ArrayBuilder;
 
-class CreateEventCommand extends BaseCommand
+class CreateEventCommand
 {
     public function __construct(
         private string $name,

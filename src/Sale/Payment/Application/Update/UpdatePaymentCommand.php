@@ -2,10 +2,9 @@
 
 namespace App\Sale\Payment\Application\Update;
 
-use App\Shared\Application\Command\BaseCommand;
-use App\Shared\Domain\Utils\PayloadMapper;
+use App\Shared\Application\Input\PayloadMapper;
 
-class UpdatePaymentCommand extends BaseCommand
+class UpdatePaymentCommand
 {
     public function __construct(private string $payment, private string $order, private string $token)
     {

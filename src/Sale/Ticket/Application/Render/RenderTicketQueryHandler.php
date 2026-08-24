@@ -2,13 +2,14 @@
 
 namespace App\Sale\Ticket\Application\Render;
 
+use App\Shared\Application\Security\AuthorizationContext;
 use App\Sale\Order\Domain\OrderId;
 use App\Sale\User\Domain\UserId;
 use App\Sale\Ticket\Domain\TicketId;
 
 class RenderTicketQueryHandler
 {
-    public function __construct(private TicketRender $finder)
+    public function __construct(private AuthorizationContext $authorization, private TicketRender $finder)
     {
     }
 
@@ -17,7 +18,7 @@ class RenderTicketQueryHandler
         return $this->finder->__invoke(
             TicketId::fromString($query->id()),
             OrderId::fromString($query->order()),
-            UserId::fromString($query->session()->user()),
+            UserId::fromString($this->authorization->userId()),
         );
     }
 }

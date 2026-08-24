@@ -15,23 +15,18 @@ use App\Sale\Payment\Domain\PaymentStatus;
 use App\Sale\Payment\Domain\Provider\PaymentProviderList;
 use App\Sale\Payment\Domain\Services\PaymentFinder;
 use App\Sale\User\Domain\UserId;
-use App\Shared\Application\Messenger\EventBus;
-use App\Shared\Domain\Utils\Primitive\ArrayBuilder;
+use App\Shared\Application\Bus\EventBus;
 use Throwable;
 
 class PaymentProcessor
 {
-    private ArrayBuilder $events;
-
     public function __construct(
         private PaymentFinder $paymentFinder,
         private OrderFinder $orderFinder,
         private PaymentProviderResolver $resolver,
         private PaymentRepository $repository,
         private EventBus $eventBus,
-    ) {
-        $this->events = ArrayBuilder::generate();
-    }
+    ) {}
 
     public function __invoke(PaymentId $id, OrderId $orderId, UserId $userId, string $token): void
     {
@@ -55,25 +50,26 @@ class PaymentProcessor
 
         if ($payment->status()->isApproved()) {
             $details = $order->details();
+            $events = [];
             foreach ($details->items() as $item) {
-                $this->events->add(new PaymentWithEventApprovedDomainEvent(
+                $events[] = new PaymentWithEventApprovedDomainEvent(
                     $details->event(),
                     $details->day(),
                     $item['zone'],
                     $item['quantity'],
                     $item['seats'],
-                ));
+                );
             }
-            $this->events->add(new PaymentWithOrderApprovedDomainEvent(
+            $events[] = new PaymentWithOrderApprovedDomainEvent(
                 $orderId->value(),
                 $userId->value(),
-            ));
-            $this->events->add(new PaymentWithTicketApprovedDomainEvent(
+            );
+            $events[] = new PaymentWithTicketApprovedDomainEvent(
                 $orderId->value(),
                 $userId->value(),
-            ));
+            );
 
-            $this->eventBus->dispatch(...$this->events->items());
+            $this->eventBus->publish(...$events);
         }
     }
 }

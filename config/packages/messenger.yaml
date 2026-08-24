@@ -5,6 +5,7 @@ framework:
             command_bus:
                 middleware:
                     - doctrine_transaction
+            query_bus: ~
             event_bus:
                 middleware:
                     - doctrine_transaction

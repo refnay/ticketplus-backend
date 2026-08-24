@@ -2,9 +2,8 @@
 
 namespace App\Catalog\Category\Application\Find;
 
-use App\Shared\Application\Query\BaseQuery;
 
-class FindCategoryQuery extends BaseQuery
+class FindCategoryQuery
 {
     public function __construct(private string $id)
     {

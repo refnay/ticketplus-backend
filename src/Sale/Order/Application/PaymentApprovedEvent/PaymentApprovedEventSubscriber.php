@@ -7,7 +7,7 @@ use App\Sale\Payment\Domain\Events\PaymentWithOrderApprovedDomainEvent;
 use App\Sale\User\Domain\UserId;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
-#[AsMessageHandler]
+#[AsMessageHandler(bus: 'event_bus')]
 class PaymentApprovedEventSubscriber
 {
     public function __construct(private OrderUpdater $updater)

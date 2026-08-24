@@ -2,9 +2,8 @@
 
 namespace App\Catalog\Seat\Application\Find;
 
-use App\Shared\Application\Query\BaseQuery;
 
-class FindSeatQuery extends BaseQuery
+class FindSeatQuery
 {
     public function __construct(private string $id, private string $event, private string $day, private string $zone)
     {

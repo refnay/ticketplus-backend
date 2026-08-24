@@ -28,13 +28,10 @@ use App\Sale\Seat\Domain\Services\SeatFinder;
 use App\Sale\Zone\Domain\Services\ZoneFinder;
 use App\Sale\User\Domain\UserId;
 use App\Sale\Zone\Domain\ZoneId;
-use App\Shared\Application\Messenger\EventBus;
-use App\Shared\Domain\Utils\Primitive\ArrayBuilder;
+use App\Shared\Application\Bus\EventBus;
 
 class OrderCreator
 {
-    private ArrayBuilder $events;
-    
     public function __construct(
         private EventFinder $eventFinder,
         private ZoneFinder $zoneFinder,
@@ -43,9 +40,7 @@ class OrderCreator
         private DiscountApply $applyDiscount,
         private OrderRepository $repository,
         private EventBus $eventBus,
-    ) {
-        $this->events = ArrayBuilder::generate();
-    }
+    ) {}
 
     public function __invoke(
         EventId $eventId,
@@ -121,13 +116,13 @@ class OrderCreator
 
         $this->repository->save($order);
 
-        $this->events->add(new OrderProcessedDomainEvent(
+        $event = new OrderProcessedDomainEvent(
             $eventId->value(),
             $dayId->value(),
             $details,
             $order->status()->value(),
-        ));
-        $this->eventBus->dispatch(...$this->events->items());
+        );
+        $this->eventBus->publish($event);
 
         return $order->id()->value();
     }

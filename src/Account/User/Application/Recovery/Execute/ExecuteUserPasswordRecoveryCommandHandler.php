@@ -3,7 +3,7 @@
 namespace App\Account\User\Application\Recovery\Execute;
 
 use App\Account\User\Domain\UserPassword;
-use App\Account\User\Domain\Password\PasswordHasher;
+use App\Account\User\Application\Port\Password\PasswordHasher;
 
 class ExecuteUserPasswordRecoveryCommandHandler
 {

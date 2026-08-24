@@ -2,10 +2,9 @@
 
 namespace App\Catalog\Category\Application\Create;
 
-use App\Shared\Application\Command\BaseCommand;
-use App\Shared\Domain\Utils\PayloadMapper;
+use App\Shared\Application\Input\PayloadMapper;
 
-class CreateCategoryCommand extends BaseCommand
+class CreateCategoryCommand
 {
     public function __construct(private string $name, private int $reference)
     {

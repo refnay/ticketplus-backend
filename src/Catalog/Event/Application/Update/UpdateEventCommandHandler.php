@@ -2,6 +2,7 @@
 
 namespace App\Catalog\Event\Application\Update;
 
+use App\Shared\Application\Security\AuthorizationContext;
 use App\Catalog\Category\Domain\CategoryId;
 use App\Catalog\Event\Domain\EventCity;
 use App\Catalog\Event\Domain\EventCountry;
@@ -16,12 +17,14 @@ use App\Catalog\Shared\Domain\CompanyId;
 
 class UpdateEventCommandHandler
 {
-    public function __construct(private EventUpdater $updater)
+    public function __construct(private AuthorizationContext $authorization, private EventUpdater $updater)
     {
     }
 
     public function __invoke(UpdateEventCommand $command): void
     {
+        $this->authorization->requireAllPermissions();
+
         $this->updater->__invoke(
             EventId::fromString($command->id()),
             EventName::fromString($command->name()),
@@ -33,7 +36,7 @@ class UpdateEventCommandHandler
             EventTaxRate::fromFloat($command->taxRate()),
             EventStatus::fromInt($command->status()),
             CategoryId::fromString($command->category()),
-            CompanyId::fromString($command->session()->company()),
+            CompanyId::fromString($this->authorization->requireCompanyId()),
             $command->days(),
         );
     }

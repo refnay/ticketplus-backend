@@ -2,9 +2,8 @@
 
 namespace App\Sale\Order\Application\Cancel;
 
-use App\Shared\Application\Command\BaseCommand;
 
-class CancelOrderCommand extends BaseCommand
+class CancelOrderCommand
 {
     public function __construct(private string $id)
     {

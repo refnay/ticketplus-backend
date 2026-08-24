@@ -3,7 +3,7 @@
 namespace App\Catalog\Event\Application\Search;
 
 use App\Shared\Application\Query\SearchQuery;
-use App\Shared\Domain\Utils\PayloadMapper;
+use App\Shared\Application\Input\PayloadMapper;
 
 class SearchEventQuery extends SearchQuery
 {
@@ -36,10 +36,10 @@ class SearchEventQuery extends SearchQuery
         );
     }
     
-    public function filters(): array
+    public function filters(string $companyId): array
     {
         $filters = get_object_vars($this);
-        $filters['company'] = $this->company();
+        $filters['company'] = $companyId;
 
         return $filters; 
     }

@@ -2,7 +2,7 @@
 
 namespace App\Shared\Infrastructure\Template;
 
-use App\Shared\Domain\Template\TemplateRenderer;
+use App\Shared\Application\Port\Template\TemplateRenderer;
 use Twig\Environment;
 
 final readonly class TwigTemplateRenderer implements TemplateRenderer

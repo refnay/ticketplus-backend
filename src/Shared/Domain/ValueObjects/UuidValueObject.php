@@ -4,6 +4,7 @@ namespace App\Shared\Domain\ValueObjects;
 
 use Symfony\Component\Uid\Uuid;
 
+/** @phpstan-consistent-constructor */
 abstract class UuidValueObject
 {
     public function __construct(protected ?string $value)

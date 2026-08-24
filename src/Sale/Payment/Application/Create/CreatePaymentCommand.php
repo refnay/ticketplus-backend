@@ -2,10 +2,9 @@
 
 namespace App\Sale\Payment\Application\Create;
 
-use App\Shared\Application\Command\BaseCommand;
-use App\Shared\Domain\Utils\PayloadMapper;
+use App\Shared\Application\Input\PayloadMapper;
 
-class CreatePaymentCommand extends BaseCommand
+class CreatePaymentCommand
 {
     public function __construct(private string $order, private int $method, private array $payer)
     {

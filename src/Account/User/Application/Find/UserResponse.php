@@ -33,8 +33,8 @@ final class UserResponse implements JsonSerializable
             $user->city()->value(),
             $user->country()->value(),
             $user->document()->toArray(),
-            $user->mobile()?->value(),
-            $user->profileImage()?->value(),
+            $user->mobile()->value(),
+            $user->profileImage()->value(),
         );
     }
     

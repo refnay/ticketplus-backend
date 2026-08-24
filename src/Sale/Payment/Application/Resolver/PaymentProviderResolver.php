@@ -3,7 +3,7 @@
 namespace App\Sale\Payment\Application\Resolver;
 
 use App\Sale\Payment\Domain\Exceptions\PaymentProviderNotFound;
-use App\Sale\Payment\Domain\Provider\PaymentProvider;
+use App\Sale\Payment\Application\Port\Payment\PaymentProvider;
 use App\Sale\Payment\Domain\Provider\PaymentProviderList;
 
 final readonly class PaymentProviderResolver

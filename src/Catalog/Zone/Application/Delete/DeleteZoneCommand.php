@@ -2,9 +2,8 @@
 
 namespace App\Catalog\Zone\Application\Delete;
 
-use App\Shared\Application\Command\BaseCommand;
 
-class DeleteZoneCommand extends BaseCommand
+class DeleteZoneCommand
 {
     public function __construct(private string $id, private string $event, private string $day)
     {

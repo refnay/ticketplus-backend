@@ -2,10 +2,9 @@
 
 namespace App\Catalog\Event\Application\UploadBannerImage;
 
-use App\Shared\Application\Command\BaseCommand;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-class UploadEventBannerImageCommand extends BaseCommand
+class UploadEventBannerImageCommand
 {
     public function __construct( private string $id, private ?UploadedFile $bannerImage)
     {

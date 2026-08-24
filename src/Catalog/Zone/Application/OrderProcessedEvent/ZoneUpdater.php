@@ -8,7 +8,7 @@ use App\Catalog\Zone\Domain\Exceptions\ZoneNotUpdated;
 use App\Catalog\Zone\Domain\Services\ZoneFinder;
 use App\Catalog\Zone\Domain\ZoneId;
 use App\Catalog\Zone\Domain\ZoneRepository;
-use App\Shared\Domain\Persistence\TransactionService;
+use App\Shared\Application\Transaction\TransactionManager;
 use Throwable;
 
 class ZoneUpdater
@@ -16,7 +16,7 @@ class ZoneUpdater
     public function __construct(
         private ZoneRepository $repository,
         private ZoneFinder $finder,
-        private TransactionService $transaction,
+        private TransactionManager $transaction,
     ) {}
 
     public function __invoke(EventDayId $dayId, array $items, int $status): void

@@ -2,10 +2,9 @@
 
 namespace App\Account\User\Application\Update;
 
-use App\Shared\Application\Command\BaseCommand;
-use App\Shared\Domain\Utils\PayloadMapper;
+use App\Shared\Application\Input\PayloadMapper;
 
-class UpdateUserCommand extends BaseCommand
+class UpdateUserCommand
 {
     public function __construct(
         private string $name,

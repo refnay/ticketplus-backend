@@ -7,7 +7,7 @@ use App\Sale\Order\Domain\Services\OrderFinder;
 use App\Sale\User\Domain\UserId;
 use App\Sale\Ticket\Domain\Services\TicketFinder;
 use App\Sale\Ticket\Domain\TicketId;
-use App\Shared\Domain\Pdf\PdfGenerator;
+use App\Shared\Application\Port\Pdf\PdfGenerator;
 use App\Shared\Domain\Utils\StringHelper;
 
 final readonly class TicketRender

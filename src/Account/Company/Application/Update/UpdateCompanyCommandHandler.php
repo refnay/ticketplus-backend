@@ -2,6 +2,7 @@
 
 namespace App\Account\Company\Application\Update;
 
+use App\Shared\Application\Security\AuthorizationContext;
 use App\Account\Company\Domain\CompanyCity;
 use App\Account\Company\Domain\CompanyCountry;
 use App\Account\Company\Domain\CompanyDescription;
@@ -15,14 +16,14 @@ use App\Account\Company\Domain\CompanyWebSite;
 
 class UpdateCompanyCommandHandler
 {
-    public function __construct(private CompanyUpdater $updater)
+    public function __construct(private AuthorizationContext $authorization, private CompanyUpdater $updater)
     {
     }
 
     public function __invoke(UpdateCompanyCommand $command): void
     {
         $this->updater->__invoke(
-            CompanyId::fromString($command->session()->company()),
+            CompanyId::fromString($this->authorization->requireCompanyId()),
             CompanyCountry::fromString($command->country()),
             CompanyCity::fromString($command->city()),
             CompanyDocument::create($command->documentType(), $command->documentNumber()),

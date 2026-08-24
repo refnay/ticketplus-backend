@@ -2,10 +2,9 @@
 
 namespace App\Account\User\Application\Recovery\SendEmail;
 
-use App\Shared\Application\Command\BaseCommand;
-use App\Shared\Domain\Utils\PayloadMapper;
+use App\Shared\Application\Input\PayloadMapper;
 
-class SendUserPasswordRecoveryEmailCommand extends BaseCommand
+class SendUserPasswordRecoveryEmailCommand
 {
     public function __construct(private string $email)
     {

@@ -2,9 +2,8 @@
 
 namespace App\Catalog\Zone\Application\Find;
 
-use App\Shared\Application\Query\BaseQuery;
 
-class FindZoneQuery extends BaseQuery
+class FindZoneQuery
 {
     public function __construct(private string $id, private string $event, private string $day)
     {

@@ -3,7 +3,7 @@
 namespace App\Catalog\Seat\Application\Search;
 
 use App\Shared\Application\Query\SearchQuery;
-use App\Shared\Domain\Utils\PayloadMapper;
+use App\Shared\Application\Input\PayloadMapper;
 
 class SearchSeatQuery extends SearchQuery
 {

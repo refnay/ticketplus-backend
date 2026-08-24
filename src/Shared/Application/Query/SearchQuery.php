@@ -2,7 +2,7 @@
 
 namespace App\Shared\Application\Query;
 
-class SearchQuery extends BaseQuery
+class SearchQuery
 {
     public function __construct(
         private string $orderBy = 'createdAt',
@@ -32,16 +32,6 @@ class SearchQuery extends BaseQuery
         return $this->page;
     }
     
-    public function company(): string
-    {
-        return $this->session()->company();
-    }
-    
-    public function user(): string
-    {
-        return $this->session()->user();
-    }
-
     public function offset(): ?int
     {
         if (is_null($this->page) || is_null($this->limit)) {

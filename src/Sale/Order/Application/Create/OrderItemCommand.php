@@ -2,7 +2,7 @@
 
 namespace App\Sale\Order\Application\Create;
 
-use App\Shared\Domain\Utils\PayloadMapper;
+use App\Shared\Application\Input\PayloadMapper;
 
 class OrderItemCommand
 {
@@ -26,7 +26,7 @@ class OrderItemCommand
         return $this->zone;
     }
 
-    public function quantity(): string
+    public function quantity(): int
     {
         return $this->quantity;
     }

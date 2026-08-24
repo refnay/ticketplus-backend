@@ -5,6 +5,7 @@ namespace App\Shared\Domain\ValueObjects;
 use App\Shared\Domain\Exceptions\DivisionByZeroAttempted;
 use App\Shared\Domain\Exceptions\ValueObjectUsedWhileNull;
 
+/** @phpstan-consistent-constructor */
 abstract class IntValueObject
 {
     public function __construct(protected ?int $value)

@@ -5,6 +5,7 @@ namespace App\Shared\Domain\ValueObjects;
 use App\Shared\Domain\Exceptions\ArrayKeyNotFound;
 use App\Shared\Domain\Exceptions\ValueObjectUsedWhileNull;
 
+/** @phpstan-consistent-constructor */
 abstract class ArrayValueObject
 {
     public function __construct(protected ?array $value)

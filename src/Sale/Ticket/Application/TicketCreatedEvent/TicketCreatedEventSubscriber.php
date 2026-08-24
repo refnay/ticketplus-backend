@@ -7,7 +7,7 @@ use App\Sale\User\Domain\UserId;
 use App\Sale\Ticket\Domain\Events\TicketCreatedDomainEvent;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
-#[AsMessageHandler]
+#[AsMessageHandler(bus: 'event_bus')]
 class TicketCreatedEventSubscriber
 {
     public function __construct(private TicketSender $sender)

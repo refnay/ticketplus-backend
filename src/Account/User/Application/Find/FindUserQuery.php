@@ -2,9 +2,8 @@
 
 namespace App\Account\User\Application\Find;
 
-use App\Shared\Application\Query\BaseQuery;
 
-class FindUserQuery extends BaseQuery
+class FindUserQuery
 {
     public function __construct()
     {

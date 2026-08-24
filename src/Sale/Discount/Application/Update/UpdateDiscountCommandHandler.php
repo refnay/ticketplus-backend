@@ -2,6 +2,7 @@
 
 namespace App\Sale\Discount\Application\Update;
 
+use App\Shared\Application\Security\AuthorizationContext;
 use App\Sale\Discount\Domain\DiscountActive;
 use App\Sale\Discount\Domain\DiscountCode;
 use App\Sale\Discount\Domain\DiscountEndDate;
@@ -14,12 +15,14 @@ use App\Sale\Event\Domain\EventId;
 
 class UpdateDiscountCommandHandler
 {
-    public function __construct(private DiscountUpdater $updater)
+    public function __construct(private AuthorizationContext $authorization, private DiscountUpdater $updater)
     {
     }
 
     public function __invoke(UpdateDiscountCommand $command): void
     {
+        $this->authorization->requireAllPermissions();
+
         $this->updater->__invoke(
             DiscountId::fromString($command->id()),
             DiscountActive::fromBool($command->active()),
@@ -29,7 +32,7 @@ class UpdateDiscountCommandHandler
             DiscountType::fromInt($command->type()),
             DiscountValue::fromFloat($command->value()),
             EventId::fromString($command->event()),
-            CompanyId::fromString($command->session()->company()),
+            CompanyId::fromString($this->authorization->requireCompanyId()),
             $command->usageLimit(),
         );
     }

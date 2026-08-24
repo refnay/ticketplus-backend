@@ -3,7 +3,7 @@
 namespace App\Catalog\Category\Application\Search;
 
 use App\Shared\Application\Query\SearchQuery;
-use App\Shared\Domain\Utils\PayloadMapper;
+use App\Shared\Application\Input\PayloadMapper;
 
 class SearchCategoryQuery extends SearchQuery
 {
@@ -32,10 +32,10 @@ class SearchCategoryQuery extends SearchQuery
         );
     }
     
-    public function filters(): array
+    public function filters(string $companyId): array
     {
         $filters = get_object_vars($this);
-        $filters['company'] = $this->company();
+        $filters['company'] = $companyId;
 
         return $filters; 
     }

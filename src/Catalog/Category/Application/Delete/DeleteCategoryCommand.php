@@ -2,9 +2,8 @@
 
 namespace App\Catalog\Category\Application\Delete;
 
-use App\Shared\Application\Command\BaseCommand;
 
-class DeleteCategoryCommand extends BaseCommand
+class DeleteCategoryCommand
 {
     public function __construct(private string $id)
     {

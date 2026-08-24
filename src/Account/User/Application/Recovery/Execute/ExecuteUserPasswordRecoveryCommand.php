@@ -2,10 +2,9 @@
 
 namespace App\Account\User\Application\Recovery\Execute;
 
-use App\Shared\Application\Command\BaseCommand;
-use App\Shared\Domain\Utils\PayloadMapper;
+use App\Shared\Application\Input\PayloadMapper;
 
-class ExecuteUserPasswordRecoveryCommand extends BaseCommand
+class ExecuteUserPasswordRecoveryCommand
 {
     public function __construct(private string $token, private string $newPassword)
     {

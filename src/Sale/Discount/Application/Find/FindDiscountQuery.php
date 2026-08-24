@@ -2,9 +2,8 @@
 
 namespace App\Sale\Discount\Application\Find;
 
-use App\Shared\Application\Query\BaseQuery;
 
-class FindDiscountQuery extends BaseQuery
+class FindDiscountQuery
 {
     public function __construct(private string $id, private string $event)
     {

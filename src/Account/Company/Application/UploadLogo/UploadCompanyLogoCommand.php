@@ -2,10 +2,9 @@
 
 namespace App\Account\Company\Application\UploadLogo;
 
-use App\Shared\Application\Command\BaseCommand;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-class UploadCompanyLogoCommand extends BaseCommand
+class UploadCompanyLogoCommand
 {
     public function __construct(private ?UploadedFile $logo)
     {

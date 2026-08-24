@@ -16,21 +16,16 @@ use App\Sale\Payment\Domain\PaymentPayer;
 use App\Sale\Payment\Domain\PaymentRepository;
 use App\Sale\Payment\Domain\Services\PaymentProcessingFinder;
 use App\Sale\User\Domain\UserId;
-use App\Shared\Application\Messenger\EventBus;
-use App\Shared\Domain\Utils\Primitive\ArrayBuilder;
+use App\Shared\Application\Bus\EventBus;
 
 class PaymentCreator
 {
-    private ArrayBuilder $events;
-
     public function __construct(
         private OrderFinder $orderFinder,
         private PaymentRepository $repository,
         private EventBus $eventBus,
         private PaymentProcessingFinder $paymentFinder,
-    ) {
-        $this->events = ArrayBuilder::generate();
-    }
+    ) {}
 
     public function __invoke(OrderId $orderId, PaymentMethod $method, PaymentPayer $payer, UserId $userId): string
     {
@@ -59,8 +54,7 @@ class PaymentCreator
 
         $this->repository->save($payment);
 
-        $this->events->add(new PaymentCreatedDomainEvent($orderId->value(), $method->value(), $userId->value()));
-        $this->eventBus->dispatch(...$this->events->items());
+        $this->eventBus->publish(new PaymentCreatedDomainEvent($orderId->value(), $method->value(), $userId->value()));
 
         return $payment->id()->value();
     }
