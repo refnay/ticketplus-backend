@@ -13,10 +13,9 @@ class EventCoverImageUploadController extends AbstractController
 {
     public function upload(string $id, Request $request, CommandBus $commandBus): JsonResponse
     {
-
         $command = new UploadEventCoverImageCommand(
             $id,
-            FileUploadFactory::fromRequestFile($request->files->get('coverImage')),
+            FileUploadFactory::fromRequest($request->files->get('coverImage')),
         );
 
         $commandBus->dispatch($command);

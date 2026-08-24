@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 final class FileUploadFactory
 {
-    public static function fromRequestFile(mixed $file): ?FileUpload
+    public static function fromRequest(mixed $file): ?FileUpload
     {
         if (!$file instanceof UploadedFile) {
             return null;

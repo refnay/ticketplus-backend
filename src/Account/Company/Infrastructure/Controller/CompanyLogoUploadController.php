@@ -13,7 +13,7 @@ class CompanyLogoUploadController extends AbstractController
 {
     public function upload(Request $request, CommandBus $commandBus): JsonResponse
     {
-        $command = new UploadCompanyLogoCommand(FileUploadFactory::fromRequestFile($request->files->get('logo')));
+        $command = new UploadCompanyLogoCommand(FileUploadFactory::fromRequest($request->files->get('logo')));
 
         $commandBus->dispatch($command);
 

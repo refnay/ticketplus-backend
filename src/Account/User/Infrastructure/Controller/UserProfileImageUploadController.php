@@ -14,7 +14,7 @@ class UserProfileImageUploadController extends AbstractController
     public function upload(Request $request, CommandBus $commandBus): JsonResponse
     {
         $command = new UploadUserProfileImageCommand(
-            FileUploadFactory::fromRequestFile($request->files->get('profileImage')),
+            FileUploadFactory::fromRequest($request->files->get('profileImage')),
         );
         
         $commandBus->dispatch($command);

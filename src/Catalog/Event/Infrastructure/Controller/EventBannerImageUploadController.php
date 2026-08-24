@@ -13,10 +13,9 @@ class EventBannerImageUploadController extends AbstractController
 {
     public function upload(string $id, Request $request, CommandBus $commandBus): JsonResponse
     {
-
         $command = new UploadEventBannerImageCommand(
             $id,
-            FileUploadFactory::fromRequestFile($request->files->get('bannerImage')),
+            FileUploadFactory::fromRequest($request->files->get('bannerImage')),
         );
 
         $commandBus->dispatch($command);
