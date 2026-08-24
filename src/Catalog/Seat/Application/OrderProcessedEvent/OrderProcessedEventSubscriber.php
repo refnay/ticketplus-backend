@@ -3,9 +3,7 @@
 namespace App\Catalog\Seat\Application\OrderProcessedEvent;
 
 use App\Sale\Order\Domain\Events\OrderProcessedDomainEvent;
-use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
-#[AsMessageHandler(bus: 'event_bus')]
 class OrderProcessedEventSubscriber
 {
     public function __construct(private SeatUpdater $updater)

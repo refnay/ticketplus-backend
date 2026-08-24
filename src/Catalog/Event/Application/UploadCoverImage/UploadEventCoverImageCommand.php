@@ -2,13 +2,13 @@
 
 namespace App\Catalog\Event\Application\UploadCoverImage;
 
-use Symfony\Component\HttpFoundation\File\UploadedFile;
+use App\Shared\Application\Input\FileUpload;
 
 class UploadEventCoverImageCommand
 {
     public function __construct(
         private string $id,
-        private ?UploadedFile $coverImage,
+        private ?FileUpload $coverImage,
     ) {
     }
 
@@ -17,7 +17,7 @@ class UploadEventCoverImageCommand
         return $this->id;
     }
 
-    public function coverImage(): ?UploadedFile
+    public function coverImage(): ?FileUpload
     {
         return $this->coverImage;
     }

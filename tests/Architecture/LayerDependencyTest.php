@@ -26,6 +26,11 @@ final class LayerDependencyTest extends TestCase
 
         self::assertIsString($source);
         self::assertStringNotContainsString('\\Infrastructure\\', $source, $file);
+        self::assertDoesNotMatchRegularExpression(
+            '/^use (Symfony|Doctrine|MercadoPago|Dompdf|Endroid)\\\\/m',
+            $source,
+            $file,
+        );
     }
 
     public static function domainFiles(): iterable

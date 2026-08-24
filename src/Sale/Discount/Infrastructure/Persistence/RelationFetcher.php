@@ -2,8 +2,8 @@
 
 namespace App\Sale\Discount\Infrastructure\Persistence;
 
-use App\Sale\Event\Domain\EventId;
-use App\Sale\Event\Domain\Exceptions\EventNotFound;
+use App\Sale\Reference\Event\Domain\EventId;
+use App\Sale\Reference\Event\Domain\Exceptions\EventNotFound;
 use App\Shared\Infrastructure\Persistence\Entity\Event as EventEntity;
 use Doctrine\ORM\EntityManagerInterface;
 use Throwable;

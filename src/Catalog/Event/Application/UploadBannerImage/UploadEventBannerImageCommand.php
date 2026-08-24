@@ -2,11 +2,11 @@
 
 namespace App\Catalog\Event\Application\UploadBannerImage;
 
-use Symfony\Component\HttpFoundation\File\UploadedFile;
+use App\Shared\Application\Input\FileUpload;
 
 class UploadEventBannerImageCommand
 {
-    public function __construct( private string $id, private ?UploadedFile $bannerImage)
+    public function __construct(private string $id, private ?FileUpload $bannerImage)
     {
     }
 
@@ -15,7 +15,7 @@ class UploadEventBannerImageCommand
         return $this->id;
     }
 
-    public function bannerImage(): ?UploadedFile
+    public function bannerImage(): ?FileUpload
     {
         return $this->bannerImage;
     }

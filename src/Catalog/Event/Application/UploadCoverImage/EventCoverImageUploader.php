@@ -9,7 +9,7 @@ use App\Catalog\Event\Domain\Exceptions\EventCoverImageNotUploaded;
 use App\Catalog\Event\Domain\Services\EventFinder;
 use App\Catalog\Shared\Domain\CompanyId;
 use App\Shared\Application\Port\Image\ImageUploader;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
+use App\Shared\Application\Input\FileUpload;
 use Throwable;
 
 class EventCoverImageUploader
@@ -23,14 +23,14 @@ class EventCoverImageUploader
 
     public function __invoke(
         EventId $id,
-        ?UploadedFile $coverImage,
+        ?FileUpload $coverImage,
         CompanyId $companyId
     ): void {
         $event = $this->finder->__invoke($id, $companyId);
 
         if (!is_null($coverImage)) {
             try {
-                $url = $this->uploader->upload($coverImage->getRealPath());
+                $url = $this->uploader->upload($coverImage->path());
                 $event->changeCoverImage(EventCoverImage::fromString($url));
             } catch (Throwable) {
                 throw new EventCoverImageNotUploaded();

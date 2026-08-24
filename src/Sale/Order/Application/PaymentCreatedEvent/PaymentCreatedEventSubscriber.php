@@ -5,10 +5,8 @@ namespace App\Sale\Order\Application\PaymentCreatedEvent;
 use App\Sale\Order\Domain\OrderId;
 use App\Sale\Order\Domain\OrderPaymentMethod;
 use App\Sale\Payment\Domain\Events\PaymentCreatedDomainEvent;
-use App\Sale\User\Domain\UserId;
-use Symfony\Component\Messenger\Attribute\AsMessageHandler;
+use App\Sale\Reference\User\Domain\UserId;
 
-#[AsMessageHandler(bus: 'event_bus')]
 class PaymentCreatedEventSubscriber
 {
     public function __construct(private OrderUpdater $updater)

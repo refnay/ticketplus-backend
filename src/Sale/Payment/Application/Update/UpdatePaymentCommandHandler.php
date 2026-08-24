@@ -5,7 +5,7 @@ namespace App\Sale\Payment\Application\Update;
 use App\Shared\Application\Security\AuthorizationContext;
 use App\Sale\Order\Domain\OrderId;
 use App\Sale\Payment\Domain\PaymentId;
-use App\Sale\User\Domain\UserId;
+use App\Sale\Reference\User\Domain\UserId;
 
 class UpdatePaymentCommandHandler
 {

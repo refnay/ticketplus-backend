@@ -14,6 +14,8 @@ class MessageHandlerPass implements CompilerPassInterface
                 $definition->addTag('messenger.message_handler', ['bus' => 'command_bus']);
             } elseif (str_ends_with($serviceId, 'QueryHandler')) {
                 $definition->addTag('messenger.message_handler', ['bus' => 'query_bus']);
+            } elseif (str_ends_with($serviceId, 'EventSubscriber')) {
+                $definition->addTag('messenger.message_handler', ['bus' => 'event_bus']);
             }
         }
     }

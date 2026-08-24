@@ -3,8 +3,8 @@
 namespace App\Sale\Ticket\Domain;
 
 use App\Sale\Order\Domain\OrderId;
-use App\Sale\Seat\Domain\SeatId;
-use App\Sale\Zone\Domain\ZoneId;
+use App\Sale\Reference\Seat\Domain\SeatId;
+use App\Sale\Reference\Zone\Domain\ZoneId;
 
 class Ticket
 {

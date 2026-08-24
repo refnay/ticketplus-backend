@@ -4,8 +4,8 @@ namespace App\Sale\Order\Infrastructure\Persistence;
 
 use App\Sale\Discount\Domain\DiscountId;
 use App\Sale\Discount\Domain\Exceptions\DiscountNotFound;
-use App\Sale\User\Domain\Exceptions\UserNotFound;
-use App\Sale\User\Domain\UserId;
+use App\Sale\Reference\User\Domain\Exceptions\UserNotFound;
+use App\Sale\Reference\User\Domain\UserId;
 use App\Shared\Infrastructure\Persistence\Entity\User as UserEntity;
 use App\Shared\Infrastructure\Persistence\Entity\Discount as DiscountEntity;
 use Doctrine\ORM\EntityManagerInterface;

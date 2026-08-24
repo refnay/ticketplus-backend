@@ -4,7 +4,7 @@ namespace App\Sale\Order\Application\Cancel;
 
 use App\Shared\Application\Security\AuthorizationContext;
 use App\Sale\Order\Domain\OrderId;
-use App\Sale\User\Domain\UserId;
+use App\Sale\Reference\User\Domain\UserId;
 
 class CancelOrderCommandHandler
 {

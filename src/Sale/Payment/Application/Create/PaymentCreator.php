@@ -15,7 +15,7 @@ use App\Sale\Payment\Domain\PaymentMethod;
 use App\Sale\Payment\Domain\PaymentPayer;
 use App\Sale\Payment\Domain\PaymentRepository;
 use App\Sale\Payment\Domain\Services\PaymentProcessingFinder;
-use App\Sale\User\Domain\UserId;
+use App\Sale\Reference\User\Domain\UserId;
 use App\Shared\Application\Bus\EventBus;
 
 class PaymentCreator

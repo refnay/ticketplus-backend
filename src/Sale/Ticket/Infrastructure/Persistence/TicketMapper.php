@@ -3,8 +3,8 @@
 namespace App\Sale\Ticket\Infrastructure\Persistence;
 
 use App\Sale\Order\Domain\OrderId;
-use App\Sale\Seat\Domain\SeatId;
-use App\Sale\Zone\Domain\ZoneId;
+use App\Sale\Reference\Seat\Domain\SeatId;
+use App\Sale\Reference\Zone\Domain\ZoneId;
 use App\Sale\Ticket\Domain\Ticket;
 use App\Sale\Ticket\Domain\TicketCode;
 use App\Sale\Ticket\Domain\TicketId;

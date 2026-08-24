@@ -2,28 +2,28 @@
 
 namespace App\Shared\Infrastructure\Persistence\Doctrine;
 
-use App\Shared\Domain\Persistence\TransactionService;
+use App\Shared\Application\Transaction\TransactionService;
 use Doctrine\ORM\EntityManagerInterface;
 
 final class TransactionManager implements TransactionService
 {
-    public function __construct(private EntityManagerInterface $em)
+    public function __construct(private EntityManagerInterface $entityManager)
     {
     }
 
     public function begin(): void
     {
-        $this->em->getConnection()->beginTransaction();
+        $this->entityManager->getConnection()->beginTransaction();
     }
 
     public function commit(): void
     {
-        $this->em->flush();
-        $this->em->getConnection()->commit();
+        $this->entityManager->flush();
+        $this->entityManager->getConnection()->commit();
     }
 
     public function rollback(): void
     {
-        $this->em->getConnection()->rollBack();
+        $this->entityManager->getConnection()->rollBack();
     }
 }

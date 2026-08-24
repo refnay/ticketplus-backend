@@ -4,10 +4,10 @@ namespace App\Sale\Ticket\Infrastructure\Persistence;
 
 use App\Sale\Order\Domain\Exceptions\OrderNotFound;
 use App\Sale\Order\Domain\OrderId;
-use App\Sale\Seat\Domain\Exceptions\SeatNotFound;
-use App\Sale\Zone\Domain\Exceptions\ZoneNotFound;
-use App\Sale\Seat\Domain\SeatId;
-use App\Sale\Zone\Domain\ZoneId;
+use App\Sale\Reference\Seat\Domain\Exceptions\SeatNotFound;
+use App\Sale\Reference\Zone\Domain\Exceptions\ZoneNotFound;
+use App\Sale\Reference\Seat\Domain\SeatId;
+use App\Sale\Reference\Zone\Domain\ZoneId;
 use App\Shared\Infrastructure\Persistence\Entity\Zone as ZoneEntity;
 use App\Shared\Infrastructure\Persistence\Entity\Seat as SeatEntity;
 use App\Shared\Infrastructure\Persistence\Entity\Purchase as OrderEntity;

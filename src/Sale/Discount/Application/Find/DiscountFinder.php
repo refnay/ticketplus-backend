@@ -4,7 +4,7 @@ namespace App\Sale\Discount\Application\Find;
 
 use App\Sale\Discount\Domain\DiscountId;
 use App\Sale\Discount\Domain\Services\DiscountFinder as DomainDiscountFinder;
-use App\Sale\Event\Domain\EventId;
+use App\Sale\Reference\Event\Domain\EventId;
 
 class DiscountFinder
 {

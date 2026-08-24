@@ -2,7 +2,7 @@
 
 namespace App\Sale\Discount\Domain;
 
-use App\Sale\Event\Domain\EventId;
+use App\Sale\Reference\Event\Domain\EventId;
 
 class Discount
 {

@@ -6,7 +6,7 @@ use App\Shared\Application\Security\AuthorizationContext;
 use App\Sale\Order\Domain\OrderId;
 use App\Sale\Payment\Domain\PaymentMethod;
 use App\Sale\Payment\Domain\PaymentPayer;
-use App\Sale\User\Domain\UserId;
+use App\Sale\Reference\User\Domain\UserId;
 
 class CreatePaymentCommandHandler
 {

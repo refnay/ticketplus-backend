@@ -3,15 +3,15 @@
 namespace App\Sale\Ticket\Application\Create;
 
 use App\Sale\Order\Domain\Order;
-use App\Sale\EventDay\Domain\EventDayId;
-use App\Sale\Event\Domain\EventId;
-use App\Sale\Seat\Domain\Exceptions\SeatNotFound;
-use App\Sale\Seat\Domain\SeatId;
-use App\Sale\EventDay\Domain\Services\EventDayFinder;
-use App\Sale\Event\Domain\Services\EventFinder;
-use App\Sale\Seat\Domain\Services\SeatFinder;
-use App\Sale\Zone\Domain\Services\ZoneFinder;
-use App\Sale\Zone\Domain\ZoneId;
+use App\Sale\Reference\EventDay\Domain\EventDayId;
+use App\Sale\Reference\Event\Domain\EventId;
+use App\Sale\Reference\Seat\Domain\Exceptions\SeatNotFound;
+use App\Sale\Reference\Seat\Domain\SeatId;
+use App\Sale\Reference\EventDay\Domain\Services\EventDayFinder;
+use App\Sale\Reference\Event\Domain\Services\EventFinder;
+use App\Sale\Reference\Seat\Domain\Services\SeatFinder;
+use App\Sale\Reference\Zone\Domain\Services\ZoneFinder;
+use App\Sale\Reference\Zone\Domain\ZoneId;
 use App\Sale\Ticket\Domain\Ticket;
 use App\Sale\Ticket\Domain\TicketInformation;
 use App\Sale\Ticket\Domain\TicketPrice;

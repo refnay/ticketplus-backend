@@ -3,7 +3,7 @@
 namespace App\Sale\Discount\Application\Search;
 
 use App\Sale\Shared\Domain\CompanyId;
-use App\Sale\Event\Domain\EventId;
+use App\Sale\Reference\Event\Domain\EventId;
 use App\Shared\Application\Security\AuthorizationContext;
 
 class SearchDiscountQueryHandler

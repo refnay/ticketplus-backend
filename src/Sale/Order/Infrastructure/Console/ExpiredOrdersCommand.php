@@ -5,7 +5,7 @@ namespace App\Sale\Order\Infrastructure\Console;
 use App\Sale\Order\Application\Expire\OrderExpirator;
 use App\Sale\Order\Domain\Order;
 use App\Sale\Order\Domain\OrderRepository;
-use App\Shared\Domain\Persistence\TransactionService;
+use App\Shared\Application\Transaction\TransactionService;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;

@@ -9,7 +9,7 @@ use App\Catalog\Event\Domain\Exceptions\EventBannerImageNotUploaded;
 use App\Catalog\Event\Domain\Services\EventFinder;
 use App\Catalog\Shared\Domain\CompanyId;
 use App\Shared\Application\Port\Image\ImageUploader;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
+use App\Shared\Application\Input\FileUpload;
 use Throwable;
 
 class EventBannerImageUploader
@@ -23,14 +23,14 @@ class EventBannerImageUploader
 
     public function __invoke(
         EventId $id,
-        ?UploadedFile $bannerImage,
+        ?FileUpload $bannerImage,
         CompanyId $companyId
     ): void {
         $event = $this->finder->__invoke($id, $companyId);
 
         if (!is_null($bannerImage)) {
             try {
-                $url = $this->uploader->upload($bannerImage->getRealPath());
+                $url = $this->uploader->upload($bannerImage->path());
                 $event->changeBannerImage(EventBannerImage::fromString($url));
             } catch (Throwable) {
                 throw new EventBannerImageNotUploaded();

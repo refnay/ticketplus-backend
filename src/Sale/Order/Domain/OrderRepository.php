@@ -2,7 +2,7 @@
 
 namespace App\Sale\Order\Domain;
 
-use App\Sale\User\Domain\UserId;
+use App\Sale\Reference\User\Domain\UserId;
 
 interface OrderRepository
 {

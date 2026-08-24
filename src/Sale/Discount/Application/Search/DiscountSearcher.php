@@ -5,8 +5,8 @@ namespace App\Sale\Discount\Application\Search;
 use App\Sale\Discount\Domain\Discount;
 use App\Sale\Discount\Domain\DiscountRepository;
 use App\Sale\Shared\Domain\CompanyId;
-use App\Sale\Event\Domain\EventId;
-use App\Sale\Event\Domain\Services\EventFinder;
+use App\Sale\Reference\Event\Domain\EventId;
+use App\Sale\Reference\Event\Domain\Services\EventFinder;
 
 class DiscountSearcher
 {

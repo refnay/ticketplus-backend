@@ -8,7 +8,7 @@ use App\Account\User\Domain\UserId;
 use App\Account\User\Domain\UserProfileImage;
 use App\Account\User\Domain\UserRepository;
 use App\Shared\Application\Port\Image\ImageUploader;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
+use App\Shared\Application\Input\FileUpload;
 use Throwable;
 
 class UserProfileImageUploader
@@ -20,13 +20,13 @@ class UserProfileImageUploader
     ) {
     }
 
-    public function __invoke(UserId $id, ?UploadedFile $profileImage): void
+    public function __invoke(UserId $id, ?FileUpload $profileImage): void
     {
         $user = $this->finder->__invoke($id);
 
         if (!is_null($profileImage)) {
             try {
-                $url = $this->uploader->upload($profileImage->getRealPath());
+                $url = $this->uploader->upload($profileImage->path());
                 $user->changeProfileImage(UserProfileImage::fromString($url));
             } catch (Throwable) {
                 throw new UserProfileImageNotUploaded();

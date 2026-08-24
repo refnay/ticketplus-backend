@@ -4,7 +4,7 @@ namespace App\Sale\Ticket\Application\Render;
 
 use App\Sale\Order\Domain\OrderId;
 use App\Sale\Order\Domain\Services\OrderFinder;
-use App\Sale\User\Domain\UserId;
+use App\Sale\Reference\User\Domain\UserId;
 use App\Sale\Ticket\Domain\Services\TicketFinder;
 use App\Sale\Ticket\Domain\TicketId;
 use App\Shared\Application\Port\Pdf\PdfGenerator;

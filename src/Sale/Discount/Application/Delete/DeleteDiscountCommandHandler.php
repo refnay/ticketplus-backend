@@ -5,7 +5,7 @@ namespace App\Sale\Discount\Application\Delete;
 use App\Shared\Application\Security\AuthorizationContext;
 use App\Sale\Discount\Domain\DiscountId;
 use App\Sale\Shared\Domain\CompanyId;
-use App\Sale\Event\Domain\EventId;
+use App\Sale\Reference\Event\Domain\EventId;
 
 class DeleteDiscountCommandHandler
 {

@@ -17,6 +17,10 @@ deptrac:
           collectors:
               - type: classLike
                 value: '^App\\.*\\Infrastructure\\'
+        - name: Framework
+          collectors:
+              - type: classLike
+                value: '^(Symfony\\(?!Component\\Uid\\)|Doctrine\\|MercadoPago\\|Dompdf\\|Endroid\\)'
     ruleset:
         Domain:
             - Domain
@@ -27,3 +31,4 @@ deptrac:
             - Infrastructure
             - Application
             - Domain
+            - Framework

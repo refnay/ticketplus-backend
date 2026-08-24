@@ -8,7 +8,7 @@ use App\Account\Company\Domain\CompanyRepository;
 use App\Account\Company\Domain\Exceptions\CompanyLogoNotUploaded;
 use App\Account\Company\Domain\Services\CompanyFinder;
 use App\Shared\Application\Port\Image\ImageUploader;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
+use App\Shared\Application\Input\FileUpload;
 use Throwable;
 
 class CompanyLogoUploader
@@ -20,13 +20,13 @@ class CompanyLogoUploader
     ) {
     }
 
-    public function __invoke(CompanyId $id, ?UploadedFile $logo): void
+    public function __invoke(CompanyId $id, ?FileUpload $logo): void
     {
         $company = $this->finder->__invoke($id);
 
         if (!is_null($logo)) {
             try {
-                $url = $this->uploader->upload($logo->getRealPath());
+                $url = $this->uploader->upload($logo->path());
                 $company->changeLogo(CompanyLogo::fromString($url));
             } catch (Throwable) {
                 throw new CompanyLogoNotUploaded();

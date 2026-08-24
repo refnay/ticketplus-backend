@@ -22,6 +22,10 @@ Infrastructure -> Application -> Domain
 `Domain` must not depend on `Application` or `Infrastructure`. `Application`
 must not depend on concrete infrastructure or framework classes.
 
+The current shared UUID value object uses `Symfony\Component\Uid` as a small
+domain-safe library. This is the only documented framework exception in Domain;
+transport, persistence, and Messenger classes remain forbidden there.
+
 ## Shared kernel
 
 `Shared/Domain` is intentionally small. It is reserved for concepts genuinely
@@ -42,12 +46,22 @@ There are two intentional kinds of finder:
 A domain finder may not depend on HTTP, sessions, application DTOs, Symfony,
 Doctrine, or infrastructure entities.
 
+## Sale references
+
+`Sale/Reference` contains the local read models that Sale needs from other
+bounded contexts: events, event days, users, zones, and seats. They are not the
+owning Catalog or Account aggregates. Sale owns these representations and their
+repository contracts as an anti-corruption boundary.
+
 ## Commands and queries
 
 Commands and queries are immutable application messages containing only input
 data. The current actor and authorization policies are injected into handlers;
 they are not stored inside messages. Controllers only map transport input,
 dispatch a message, and build a transport response.
+
+Transport-specific uploaded files are converted by Infrastructure to the
+application `FileUpload` input before a command is dispatched.
 
 There are three explicit application ports:
 
@@ -77,6 +91,7 @@ Symfony's normal `500` handling.
 ## Persistence boundary
 
 The existing persistence model under `Shared/Infrastructure/Persistence` is a
-deliberate compatibility boundary for this refactor. Entities, Doctrine
-configuration, mappers, repositories, relation fetchers, and migrations are not
-reorganized as part of the application-layer refactor.
+deliberate compatibility boundary for this refactor. Its entities, Doctrine
+mapping configuration, and migrations are not changed. Persistence mappers keep
+their mapping logic; only the imports required by the `Sale/Reference` namespace
+move are updated.

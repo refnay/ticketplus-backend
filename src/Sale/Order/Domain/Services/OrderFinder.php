@@ -6,7 +6,7 @@ use App\Sale\Order\Domain\Exceptions\OrderNotFound;
 use App\Sale\Order\Domain\Order;
 use App\Sale\Order\Domain\OrderId;
 use App\Sale\Order\Domain\OrderRepository;
-use App\Sale\User\Domain\UserId;
+use App\Sale\Reference\User\Domain\UserId;
 
 class OrderFinder
 {

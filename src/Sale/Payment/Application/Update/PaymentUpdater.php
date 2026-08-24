@@ -9,7 +9,7 @@ use App\Sale\Payment\Domain\PaymentId;
 use App\Sale\Payment\Domain\PaymentRepository;
 use App\Sale\Payment\Domain\PaymentStatus;
 use App\Sale\Payment\Domain\Services\PaymentFinder;
-use App\Sale\User\Domain\UserId;
+use App\Sale\Reference\User\Domain\UserId;
 use App\Shared\Application\Bus\EventBus;
 
 class PaymentUpdater

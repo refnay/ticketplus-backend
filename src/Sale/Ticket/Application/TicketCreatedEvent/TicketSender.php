@@ -3,8 +3,8 @@
 namespace App\Sale\Ticket\Application\TicketCreatedEvent;
 
 use App\Sale\Order\Domain\OrderId;
-use App\Sale\User\Domain\Services\UserFinder;
-use App\Sale\User\Domain\UserId;
+use App\Sale\Reference\User\Domain\Services\UserFinder;
+use App\Sale\Reference\User\Domain\UserId;
 use App\Sale\Ticket\Application\Render\TicketRender;
 use App\Sale\Ticket\Domain\TicketId;
 use App\Shared\Application\Port\Mailer\EmailAttachment;

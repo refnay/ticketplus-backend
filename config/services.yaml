@@ -70,10 +70,8 @@ services:
         arguments:
             $projectDir: '%kernel.project_dir%'
 
-    # Transaction boundary for application services. The Doctrine implementation
-    # remains untouched behind a compatibility adapter.
-    App\Shared\Application\Transaction\TransactionManager:
-        alias: App\Shared\Infrastructure\Transaction\DoctrineTransactionManagerAdapter
+    App\Shared\Application\Transaction\TransactionService:
+        alias: App\Shared\Infrastructure\Persistence\Doctrine\TransactionManager
 
     App\Shared\Application\Security\CurrentActor:
         alias: App\Shared\Infrastructure\Security\SymfonyCurrentActor

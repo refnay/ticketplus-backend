@@ -4,9 +4,9 @@ namespace App\Sale\Order\Application\Create;
 
 use App\Shared\Application\Security\AuthorizationContext;
 use App\Sale\Discount\Domain\DiscountId;
-use App\Sale\EventDay\Domain\EventDayId;
-use App\Sale\Event\Domain\EventId;
-use App\Sale\User\Domain\UserId;
+use App\Sale\Reference\EventDay\Domain\EventDayId;
+use App\Sale\Reference\Event\Domain\EventId;
+use App\Sale\Reference\User\Domain\UserId;
 
 class CreateOrderCommandHandler
 {

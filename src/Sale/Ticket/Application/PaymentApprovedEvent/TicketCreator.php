@@ -4,20 +4,20 @@ namespace App\Sale\Ticket\Application\PaymentApprovedEvent;
 
 use App\Sale\Order\Domain\OrderId;
 use App\Sale\Order\Domain\Services\OrderFinder;
-use App\Sale\Seat\Domain\SeatId;
-use App\Sale\User\Domain\UserId;
+use App\Sale\Reference\Seat\Domain\SeatId;
+use App\Sale\Reference\User\Domain\UserId;
 use App\Sale\Ticket\Application\Create\TicketCreator as ServiceTicketCreator;
 use App\Sale\Ticket\Domain\Events\TicketCreatedDomainEvent;
 use App\Shared\Application\Bus\EventBus;
 use App\Shared\Application\Support\ArrayBuilder;
-use App\Shared\Application\Transaction\TransactionManager;
+use App\Shared\Application\Transaction\TransactionService;
 use Throwable;
 
 class TicketCreator
 {
     public function __construct(
         private OrderFinder $orderFinder,
-        private TransactionManager $transaction,
+        private TransactionService $transaction,
         private ServiceTicketCreator $creator,
         private EventBus $eventBus,
     ) {}

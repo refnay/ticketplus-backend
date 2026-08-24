@@ -4,10 +4,8 @@ namespace App\Sale\Ticket\Application\PaymentApprovedEvent;
 
 use App\Sale\Order\Domain\OrderId;
 use App\Sale\Payment\Domain\Events\PaymentWithTicketApprovedDomainEvent;
-use App\Sale\User\Domain\UserId;
-use Symfony\Component\Messenger\Attribute\AsMessageHandler;
+use App\Sale\Reference\User\Domain\UserId;
 
-#[AsMessageHandler(bus: 'event_bus')]
 class PaymentApprovedEventSubscriber
 {
     public function __construct(private TicketCreator $creator)

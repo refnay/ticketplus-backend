@@ -2,15 +2,15 @@
 
 namespace App\Account\Company\Application\UploadLogo;
 
-use Symfony\Component\HttpFoundation\File\UploadedFile;
+use App\Shared\Application\Input\FileUpload;
 
 class UploadCompanyLogoCommand
 {
-    public function __construct(private ?UploadedFile $logo)
+    public function __construct(private ?FileUpload $logo)
     {
     }
 
-    public function logo(): ?UploadedFile
+    public function logo(): ?FileUpload
     {
         return $this->logo;
     }

@@ -2,15 +2,15 @@
 
 namespace App\Account\User\Application\UploadProfileImage;
 
-use Symfony\Component\HttpFoundation\File\UploadedFile;
+use App\Shared\Application\Input\FileUpload;
 
 class UploadUserProfileImageCommand
 {
-    public function __construct(private ?UploadedFile $profileImage)
+    public function __construct(private ?FileUpload $profileImage)
     {
     }
 
-    public function profileImage(): ?UploadedFile
+    public function profileImage(): ?FileUpload
     {
         return $this->profileImage;
     }

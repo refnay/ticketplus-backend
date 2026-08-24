@@ -11,7 +11,7 @@ use App\Sale\Discount\Domain\DiscountStartDate;
 use App\Sale\Discount\Domain\DiscountType;
 use App\Sale\Discount\Domain\DiscountValue;
 use App\Sale\Shared\Domain\CompanyId;
-use App\Sale\Event\Domain\EventId;
+use App\Sale\Reference\Event\Domain\EventId;
 
 class UpdateDiscountCommandHandler
 {
