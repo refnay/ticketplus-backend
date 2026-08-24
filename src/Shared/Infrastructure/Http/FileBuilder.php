@@ -5,7 +5,7 @@ namespace App\Shared\Infrastructure\Http;
 use App\Shared\Application\Input\FileUpload;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-final class FileUploadFactory
+final class FileBuilder
 {
     public static function fromRequest(mixed $file): ?FileUpload
     {

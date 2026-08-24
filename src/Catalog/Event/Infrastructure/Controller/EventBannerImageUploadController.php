@@ -4,7 +4,7 @@ namespace App\Catalog\Event\Infrastructure\Controller;
 
 use App\Catalog\Event\Application\UploadBannerImage\UploadEventBannerImageCommand;
 use App\Shared\Application\Bus\CommandBus;
-use App\Shared\Infrastructure\Http\FileUploadFactory;
+use App\Shared\Infrastructure\Http\FileBuilder;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,7 +15,7 @@ class EventBannerImageUploadController extends AbstractController
     {
         $command = new UploadEventBannerImageCommand(
             $id,
-            FileUploadFactory::fromRequest($request->files->get('bannerImage')),
+            FileBuilder::fromRequest($request->files->get('bannerImage')),
         );
 
         $commandBus->dispatch($command);

@@ -4,7 +4,7 @@ namespace App\Catalog\Event\Infrastructure\Controller;
 
 use App\Catalog\Event\Application\UploadCoverImage\UploadEventCoverImageCommand;
 use App\Shared\Application\Bus\CommandBus;
-use App\Shared\Infrastructure\Http\FileUploadFactory;
+use App\Shared\Infrastructure\Http\FileBuilder;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,7 +15,7 @@ class EventCoverImageUploadController extends AbstractController
     {
         $command = new UploadEventCoverImageCommand(
             $id,
-            FileUploadFactory::fromRequest($request->files->get('coverImage')),
+            FileBuilder::fromRequest($request->files->get('coverImage')),
         );
 
         $commandBus->dispatch($command);
