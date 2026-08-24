@@ -12,8 +12,7 @@ class SearchMemberCompanyQueryHandler
 
     public function __invoke(SearchMemberCompanyQuery $query): MemberCompaniesResponse
     {
-        $this->authorization->userTypeAllowed();
-        $this->authorization->userStatusAllowed();
+        $this->authorization->workerAllowed();
 
         return $this->searcher->__invoke(
             $query->filters($this->authorization->userId()),

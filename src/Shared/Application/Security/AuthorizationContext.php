@@ -2,14 +2,11 @@
 
 namespace App\Shared\Application\Security;
 
-use App\Shared\Domain\Enums\MemberStatusList;
-use App\Shared\Domain\Enums\UserStatusList;
 use App\Shared\Domain\Enums\UserTypeList;
 use App\Shared\Application\Security\Exception\MemberRequired;
 use App\Shared\Application\Security\Exception\CompanyRequired;
-use App\Shared\Application\Security\Exception\MemberNotAllowed;
 use App\Shared\Application\Security\Exception\UserNotAllowed;
-use App\Shared\Domain\Utils\IntegerHelper;
+use App\Shared\Domain\Utils\IntegerHelper as Integer;
 
 final readonly class AuthorizationContext
 {
@@ -34,57 +31,18 @@ final readonly class AuthorizationContext
 
     public function requireAllPermissions(): void
     {
-        $this->companyRequired();
-        $this->memberRequired();
+        $this->requireCompanyId();
+        $this->requireMemberId();
         
-        $this->userTypeAllowed();
-        $this->userStatusAllowed();
-
-        $this->memberStatusAllowed();
+        $this->workerAllowed();
 
         return;
     }
 
-    public function companyRequired(): void
+    public function workerAllowed(): void
     {
-        if (is_null($this->companyId())) {
-            throw new CompanyRequired();
-        }
-
-        return;
-    }
-
-    public function memberRequired(): void
-    {
-        if (is_null($this->memberId())) {
-            throw new MemberRequired();
-        }
-
-        return;
-    }
-
-    public function userTypeAllowed(): void
-    {
-        if (!IntegerHelper::isEqual(UserTypeList::WORKER->value, $this->actor->userType())) {
+        if (!Integer::equals(UserTypeList::WORKER->value, $this->actor->userType())) {
             throw new UserNotAllowed();
-        }
-
-        return;
-    }
-
-    public function userStatusAllowed(): void
-    {
-        if (in_array($this->actor->userStatus(), UserStatusList::blocked(), true)) {
-            throw new UserNotAllowed();
-        }
-
-        return;
-    }
-
-    public function memberStatusAllowed(): void
-    {
-        if (IntegerHelper::isEqual($this->actor->memberStatus(), MemberStatusList::INACTIVE->value)) {
-            throw new MemberNotAllowed();
         }
 
         return;

@@ -45,24 +45,6 @@ final class SymfonyCurrentActor implements CurrentActor
         
         return null;
     }
-    
-    public function memberStatus(): ?int
-    {
-         if (is_null($this->companyId())) {
-            return null;
-        }
-
-        /** @var User $user */
-        $user = $this->security->getUser();
-
-        foreach ($user->getCompanies() as $company) {
-            if ($company->getCompany()->getId()->toRfc4122() === $this->companyId()) {
-                return $company->getStatus();
-            } 
-        }
-        
-        return null;
-    }
 
     public function userType(): int
     {
@@ -70,13 +52,5 @@ final class SymfonyCurrentActor implements CurrentActor
         $user = $this->security->getUser();
 
         return $user->getType();
-    }
-
-    public function userStatus(): int
-    {
-        /** @var User $user */
-        $user = $this->security->getUser();
-
-        return $user->getStatus();
     }
 }

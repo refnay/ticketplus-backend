@@ -10,9 +10,5 @@ interface CurrentActor
 
     public function memberId(): ?string;
 
-    public function memberStatus(): ?int;
-
     public function userType(): int;
-
-    public function userStatus(): int;
 }

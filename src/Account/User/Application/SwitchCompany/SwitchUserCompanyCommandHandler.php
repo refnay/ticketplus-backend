@@ -14,8 +14,7 @@ class SwitchUserCompanyCommandHandler
 
     public function __invoke(SwitchUserCompanyCommand $command): void
     {
-        $this->authorization->userTypeAllowed();
-        $this->authorization->userStatusAllowed();
+        $this->authorization->workerAllowed();
 
         $this->switcher->__invoke(
             UserId::fromString($this->authorization->userId()),
