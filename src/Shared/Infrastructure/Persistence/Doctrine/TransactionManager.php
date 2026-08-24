@@ -2,7 +2,7 @@
 
 namespace App\Shared\Infrastructure\Persistence\Doctrine;
 
-use App\Shared\Domain\TransactionService;
+use App\Shared\Domain\Persistence\TransactionService;
 use Doctrine\ORM\EntityManagerInterface;
 
 final class TransactionManager implements TransactionService

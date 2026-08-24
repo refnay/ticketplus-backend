@@ -10,7 +10,7 @@ use App\Sale\Ticket\Application\Create\TicketCreator as ServiceTicketCreator;
 use App\Sale\Ticket\Domain\Events\TicketCreatedDomainEvent;
 use App\Shared\Application\Messenger\EventBus;
 use App\Shared\Domain\Utils\Primitive\ArrayBuilder;
-use App\Shared\Infrastructure\Persistence\Doctrine\TransactionManager;
+use App\Shared\Domain\Persistence\TransactionService;
 use Throwable;
 
 class TicketCreator
@@ -19,7 +19,7 @@ class TicketCreator
     
     public function __construct(
         private OrderFinder $orderFinder,
-        private TransactionManager $transaction,
+        private TransactionService $transaction,
         private ServiceTicketCreator $creator,
         private EventBus $eventBus,
     ) {

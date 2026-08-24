@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Shared\Infrastructure;
+namespace App\Shared\Infrastructure\Session;
 
 use App\Shared\Domain\Session\SessionProvider;
 use App\Shared\Infrastructure\Persistence\Entity\User;
