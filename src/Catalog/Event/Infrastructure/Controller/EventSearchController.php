@@ -5,7 +5,7 @@ namespace App\Catalog\Event\Infrastructure\Controller;
 use App\Catalog\Event\Application\Search\EventsResponse;
 use App\Catalog\Event\Application\Search\SearchEventQuery;
 use App\Shared\Application\MessageBus;
-use App\Shared\Domain\Session;
+use App\Shared\Domain\Session\Session;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;

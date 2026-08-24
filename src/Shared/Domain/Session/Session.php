@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Shared\Domain;
+namespace App\Shared\Domain\Session;
 
 use App\Shared\Domain\Enums\MemberStatusList;
 use App\Shared\Domain\Enums\UserStatusList;

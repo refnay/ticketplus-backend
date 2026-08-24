@@ -4,7 +4,7 @@ namespace App\Catalog\Event\Domain;
 
 use App\Catalog\Category\Domain\CategoryId;
 use App\Catalog\Shared\Domain\CompanyId;
-use App\Shared\Domain\Audit;
+use App\Shared\Domain\Audit\Audit;
 
 class Event
 {

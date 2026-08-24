@@ -2,7 +2,7 @@
 
 namespace App\Shared\Application\Query;
 
-use App\Shared\Domain\Session;
+use App\Shared\Domain\Session\Session;
 
 class BaseQuery
 {

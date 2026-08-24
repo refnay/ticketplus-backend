@@ -2,7 +2,7 @@
 
 namespace App\Shared\Application\Command;
 
-use App\Shared\Domain\Session;
+use App\Shared\Domain\Session\Session;
 
 class BaseCommand
 {

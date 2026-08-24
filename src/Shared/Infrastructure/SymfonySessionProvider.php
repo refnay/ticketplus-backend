@@ -2,7 +2,7 @@
 
 namespace App\Shared\Infrastructure;
 
-use App\Shared\Domain\SessionProvider;
+use App\Shared\Domain\Session\SessionProvider;
 use App\Shared\Infrastructure\Persistence\Entity\User;
 use Symfony\Bundle\SecurityBundle\Security;
 

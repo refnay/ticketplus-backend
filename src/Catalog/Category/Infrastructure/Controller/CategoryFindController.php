@@ -5,7 +5,7 @@ namespace App\Catalog\Category\Infrastructure\Controller;
 use App\Catalog\Category\Application\Find\CategoryResponse;
 use App\Catalog\Category\Application\Find\FindCategoryQuery;
 use App\Shared\Application\MessageBus;
-use App\Shared\Domain\Session;
+use App\Shared\Domain\Session\Session;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 

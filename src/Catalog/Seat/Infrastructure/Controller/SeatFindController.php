@@ -5,7 +5,7 @@ namespace App\Catalog\Seat\Infrastructure\Controller;
 use App\Catalog\Seat\Application\Find\FindSeatQuery;
 use App\Catalog\Seat\Application\Find\SeatResponse;
 use App\Shared\Application\MessageBus;
-use App\Shared\Domain\Session;
+use App\Shared\Domain\Session\Session;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 

@@ -4,7 +4,7 @@ namespace App\Sale\Discount\Infrastructure\Controller;
 
 use App\Sale\Discount\Application\Delete\DeleteDiscountCommand;
 use App\Shared\Application\MessageBus;
-use App\Shared\Domain\Session;
+use App\Shared\Domain\Session\Session;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 

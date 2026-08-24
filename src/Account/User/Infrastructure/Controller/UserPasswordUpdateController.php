@@ -4,7 +4,7 @@ namespace App\Account\User\Infrastructure\Controller;
 
 use App\Account\User\Application\UpdatePassword\UpdateUserPasswordCommand;
 use App\Shared\Application\MessageBus;
-use App\Shared\Domain\Session;
+use App\Shared\Domain\Session\Session;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;

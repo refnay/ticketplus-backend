@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Shared\Domain;
+namespace App\Shared\Domain\Audit;
 
 use App\Shared\Domain\ValueObjects\DateTimeValueObject;
 use Override;
