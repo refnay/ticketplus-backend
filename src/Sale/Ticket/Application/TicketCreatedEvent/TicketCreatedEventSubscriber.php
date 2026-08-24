@@ -3,7 +3,7 @@
 namespace App\Sale\Ticket\Application\TicketCreatedEvent;
 
 use App\Sale\Order\Domain\OrderId;
-use App\Sale\Shared\Domain\UserId;
+use App\Sale\User\Domain\UserId;
 use App\Sale\Ticket\Domain\Events\TicketCreatedDomainEvent;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 

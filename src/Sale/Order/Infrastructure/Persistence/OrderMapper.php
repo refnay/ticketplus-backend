@@ -13,7 +13,7 @@ use App\Sale\Order\Domain\OrderStatus;
 use App\Sale\Order\Domain\OrderSubTotal;
 use App\Sale\Order\Domain\OrderTax;
 use App\Sale\Order\Domain\OrderTotal;
-use App\Sale\Shared\Domain\UserId;
+use App\Sale\User\Domain\UserId;
 use App\Shared\Infrastructure\Persistence\Entity\Purchase as OrderEntity;
 
 class OrderMapper

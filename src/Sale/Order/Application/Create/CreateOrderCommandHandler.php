@@ -3,9 +3,9 @@
 namespace App\Sale\Order\Application\Create;
 
 use App\Sale\Discount\Domain\DiscountId;
-use App\Sale\Shared\Domain\EventDayId;
-use App\Sale\Shared\Domain\EventId;
-use App\Sale\Shared\Domain\UserId;
+use App\Sale\EventDay\Domain\EventDayId;
+use App\Sale\Event\Domain\EventId;
+use App\Sale\User\Domain\UserId;
 
 class CreateOrderCommandHandler
 {

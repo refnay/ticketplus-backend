@@ -3,7 +3,7 @@
 namespace App\Sale\Order\Domain;
 
 use App\Sale\Discount\Domain\DiscountId;
-use App\Sale\Shared\Domain\UserId;
+use App\Sale\User\Domain\UserId;
 
 class Order
 {

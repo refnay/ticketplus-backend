@@ -3,7 +3,7 @@
 namespace App\Sale\Ticket\Application\Render;
 
 use App\Sale\Order\Domain\OrderId;
-use App\Sale\Shared\Domain\UserId;
+use App\Sale\User\Domain\UserId;
 use App\Sale\Ticket\Domain\TicketId;
 
 class RenderTicketQueryHandler

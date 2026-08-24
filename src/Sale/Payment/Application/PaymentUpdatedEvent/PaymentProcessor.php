@@ -14,7 +14,7 @@ use App\Sale\Payment\Domain\PaymentRepository;
 use App\Sale\Payment\Domain\PaymentStatus;
 use App\Sale\Payment\Domain\Provider\PaymentProviderList;
 use App\Sale\Payment\Domain\Services\PaymentFinder;
-use App\Sale\Shared\Domain\UserId;
+use App\Sale\User\Domain\UserId;
 use App\Shared\Application\Messenger\EventBus;
 use App\Shared\Domain\Utils\Primitive\ArrayBuilder;
 use Throwable;

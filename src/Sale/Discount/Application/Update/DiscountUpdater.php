@@ -13,8 +13,8 @@ use App\Sale\Discount\Domain\DiscountUsage;
 use App\Sale\Discount\Domain\DiscountValue;
 use App\Sale\Discount\Domain\Services\DiscountFinder;
 use App\Sale\Shared\Domain\CompanyId;
-use App\Sale\Shared\Domain\EventId;
-use App\Sale\Shared\Domain\Services\EventFinder;
+use App\Sale\Event\Domain\EventId;
+use App\Sale\Event\Domain\Services\EventFinder;
 
 class DiscountUpdater
 {

@@ -4,8 +4,8 @@ namespace App\Sale\Ticket\Application\PaymentApprovedEvent;
 
 use App\Sale\Order\Domain\OrderId;
 use App\Sale\Order\Domain\Services\OrderFinder;
-use App\Sale\Shared\Domain\SeatId;
-use App\Sale\Shared\Domain\UserId;
+use App\Sale\Seat\Domain\SeatId;
+use App\Sale\User\Domain\UserId;
 use App\Sale\Ticket\Application\Create\TicketCreator as ServiceTicketCreator;
 use App\Sale\Ticket\Domain\Events\TicketCreatedDomainEvent;
 use App\Shared\Application\Messenger\EventBus;

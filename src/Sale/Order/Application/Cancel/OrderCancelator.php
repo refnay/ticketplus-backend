@@ -9,7 +9,7 @@ use App\Sale\Order\Domain\OrderStatus;
 use App\Sale\Order\Domain\Services\OrderFinder;
 use App\Sale\Payment\Domain\Exceptions\PaymentNotFound;
 use App\Sale\Payment\Domain\Services\PaymentByOrderFinder;
-use App\Sale\Shared\Domain\UserId;
+use App\Sale\User\Domain\UserId;
 
 class OrderCancelator
 {

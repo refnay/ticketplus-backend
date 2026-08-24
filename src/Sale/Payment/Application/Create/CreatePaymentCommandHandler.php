@@ -5,7 +5,7 @@ namespace App\Sale\Payment\Application\Create;
 use App\Sale\Order\Domain\OrderId;
 use App\Sale\Payment\Domain\PaymentMethod;
 use App\Sale\Payment\Domain\PaymentPayer;
-use App\Sale\Shared\Domain\UserId;
+use App\Sale\User\Domain\UserId;
 
 class CreatePaymentCommandHandler
 {

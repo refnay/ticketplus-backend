@@ -5,7 +5,7 @@ namespace App\Sale\Order\Application\PaymentCreatedEvent;
 use App\Sale\Order\Domain\OrderId;
 use App\Sale\Order\Domain\OrderPaymentMethod;
 use App\Sale\Payment\Domain\Events\PaymentCreatedDomainEvent;
-use App\Sale\Shared\Domain\UserId;
+use App\Sale\User\Domain\UserId;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]

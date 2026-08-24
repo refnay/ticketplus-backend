@@ -4,7 +4,7 @@ namespace App\Sale\Ticket\Application\PaymentApprovedEvent;
 
 use App\Sale\Order\Domain\OrderId;
 use App\Sale\Payment\Domain\Events\PaymentWithTicketApprovedDomainEvent;
-use App\Sale\Shared\Domain\UserId;
+use App\Sale\User\Domain\UserId;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]

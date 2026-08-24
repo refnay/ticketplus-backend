@@ -10,7 +10,7 @@ use App\Sale\Order\Domain\OrderExpiresAt;
 use App\Sale\Order\Domain\OrderId;
 use App\Sale\Order\Domain\OrderRepository;
 use App\Sale\Order\Domain\OrderStatusList;
-use App\Sale\Shared\Domain\UserId;
+use App\Sale\User\Domain\UserId;
 use App\Shared\Infrastructure\Persistence\Doctrine\QueryBuilder;
 use Doctrine\ORM\EntityManagerInterface;
 use Override;

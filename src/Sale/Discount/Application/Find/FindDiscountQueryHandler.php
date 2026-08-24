@@ -3,7 +3,7 @@
 namespace App\Sale\Discount\Application\Find;
 
 use App\Sale\Discount\Domain\DiscountId;
-use App\Sale\Shared\Domain\EventId;
+use App\Sale\Event\Domain\EventId;
 
 class FindDiscountQueryHandler
 {

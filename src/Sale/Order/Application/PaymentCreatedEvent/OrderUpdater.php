@@ -6,7 +6,7 @@ use App\Sale\Order\Domain\OrderId;
 use App\Sale\Order\Domain\OrderPaymentMethod;
 use App\Sale\Order\Domain\OrderRepository;
 use App\Sale\Order\Domain\Services\OrderFinder;
-use App\Sale\Shared\Domain\UserId;
+use App\Sale\User\Domain\UserId;
 
 class OrderUpdater
 {

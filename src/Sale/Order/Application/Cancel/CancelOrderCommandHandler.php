@@ -3,7 +3,7 @@
 namespace App\Sale\Order\Application\Cancel;
 
 use App\Sale\Order\Domain\OrderId;
-use App\Sale\Shared\Domain\UserId;
+use App\Sale\User\Domain\UserId;
 
 class CancelOrderCommandHandler
 {
