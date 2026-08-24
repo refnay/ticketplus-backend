@@ -8,7 +8,7 @@ use App\Sale\Reference\User\Domain\UserId;
 use App\Sale\Ticket\Domain\Services\TicketFinder;
 use App\Sale\Ticket\Domain\TicketId;
 use App\Shared\Application\Port\Pdf\PdfGenerator;
-use App\Shared\Domain\Utils\StringHelper;
+use App\Shared\Domain\Utils\StringHelper as StringValue;
 
 final readonly class TicketRender
 {
@@ -24,7 +24,7 @@ final readonly class TicketRender
         $order = $this->orderFinder->__invoke($orderId, $userId);
         $ticket = $this->ticketFinder->__invoke($id, $orderId);
 
-        $filename = StringHelper::normalize($ticket->filename());
+        $filename = StringValue::normalize($ticket->filename());
 
         $pdf = $this->pdfGenerator
             ->prepare([
