@@ -56,7 +56,7 @@ final class Session
 
     public function memberRequired(): void
     {
-        if (is_null($this->company())) {
+        if (is_null($this->member())) {
             throw new MemberRequired();
         }
 
@@ -83,7 +83,7 @@ final class Session
 
     public function memberStatusAllowed(): void
     {
-        if (IntegerHelper::isEqual($this->provider->userStatus(), MemberStatusList::INACTIVE->value)) {
+        if (IntegerHelper::isEqual($this->provider->memberStatus(), MemberStatusList::INACTIVE->value)) {
             throw new MemberNotAllowed();
         }
 

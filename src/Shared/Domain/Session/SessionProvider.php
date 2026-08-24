@@ -10,6 +10,8 @@ interface SessionProvider
 
     public function member(): ?string;
 
+    public function memberStatus(): ?int;
+
     public function userType(): int;
 
     public function userStatus(): int;

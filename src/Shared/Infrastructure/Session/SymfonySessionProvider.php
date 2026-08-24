@@ -45,6 +45,24 @@ class SymfonySessionProvider implements SessionProvider
         
         return null;
     }
+    
+    public function memberStatus(): ?int
+    {
+         if (is_null($this->company())) {
+            return null;
+        }
+
+        /** @var User $user */
+        $user = $this->security->getUser();
+
+        foreach ($user->getCompanies() as $company) {
+            if ($company->getCompany()->getId()->toRfc4122() === $this->company()) {
+                return $company->getStatus();
+            } 
+        }
+        
+        return null;
+    }
 
     public function userType(): int
     {
