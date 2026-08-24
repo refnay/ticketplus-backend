@@ -6,5 +6,5 @@ use App\Sale\Event\Domain\EventId;
 
 interface EventDayRepository
 {
-    public function findById(EventId $dayId, EventDayId $id): ?EventDay;
+    public function findById(EventId $eventId, EventDayId $id): ?EventDay;
 }

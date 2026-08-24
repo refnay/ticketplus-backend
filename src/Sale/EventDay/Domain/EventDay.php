@@ -6,34 +6,19 @@ use DateTimeImmutable;
 
 class EventDay
 {
-    private string $id;
-    private string $currency;
-    private string $event;
-    private float $taxRate;
-    private DateTimeImmutable $date;
-
     public function __construct(
-        string $id,
-        string $currency,
-        string $event,
-        float $taxRate,
-        DateTimeImmutable $date,
+        private string $id,
+        private DateTimeImmutable $date,
+        private string $eventId,
     ) {
-        $this->id = $id;
-        $this->currency = $currency;
-        $this->event = $event;
-        $this->taxRate = $taxRate;
-        $this->date = $date;
     }
 
     public static function create(
         string $id,
-        string $currency,
-        string $event,
         string $date,
-        float $taxRate,
+        string $eventId,
     ): self {
-        return new self($id, $currency, $event,  $taxRate, DateTimeImmutable::createFromFormat('Y-m-d', $date));
+        return new self($id, DateTimeImmutable::createFromFormat('Y-m-d', $date), $eventId);
     }
 
     public function id(): string
@@ -46,18 +31,8 @@ class EventDay
         return $this->date;
     }
 
-    public function currency(): string
+    public function eventId(): string
     {
-        return $this->currency;
-    }
-
-    public function taxRate(): float
-    {
-        return $this->taxRate;
-    }
-
-    public function event(): string
-    {
-        return $this->event;
+        return $this->eventId;
     }
 }

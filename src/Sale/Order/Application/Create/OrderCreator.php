@@ -23,7 +23,7 @@ use App\Sale\Zone\Domain\Exceptions\ZoneQuantityExceeded;
 use App\Sale\Zone\Domain\Exceptions\ZoneQuantitySoldOut;
 use App\Sale\Seat\Domain\SeatId;
 use App\Sale\Seat\Domain\SeatStatusList;
-use App\Sale\EventDay\Domain\Services\EventDayFinder;
+use App\Sale\Event\Domain\Services\EventFinder;
 use App\Sale\Seat\Domain\Services\SeatFinder;
 use App\Sale\Zone\Domain\Services\ZoneFinder;
 use App\Sale\User\Domain\UserId;
@@ -36,7 +36,7 @@ class OrderCreator
     private ArrayBuilder $events;
     
     public function __construct(
-        private EventDayFinder $dayFinder,
+        private EventFinder $eventFinder,
         private ZoneFinder $zoneFinder,
         private SeatFinder $seatFinder,
         private DiscountFinder $discountFinder,
@@ -58,7 +58,7 @@ class OrderCreator
             throw new ZoneNotFound();
         }
 
-        $day = $this->dayFinder->__invoke($eventId, $dayId);
+        $event = $this->eventFinder->__invoke($eventId);
         $discount = null;
 
         if (!is_null($discountId)) {
@@ -105,11 +105,11 @@ class OrderCreator
         }
 
         $subTotal = !is_null($discount) ? $this->applyDiscount->__invoke($price, $discount) : $price;
-        $tax = $subTotal * $day->taxRate() / 100;
+        $tax = $subTotal * $event->taxRate() / 100;
         $total = $subTotal + $tax;
 
         $order = Order::create(
-            OrderCurrency::fromString($day->currency()),
+            OrderCurrency::fromString($event->currency()),
             OrderPrice::fromFloat($price),
             OrderSubTotal::fromFloat($subTotal),
             OrderTax::fromFloat($tax),

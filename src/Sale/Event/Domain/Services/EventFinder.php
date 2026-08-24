@@ -14,7 +14,7 @@ class EventFinder
     {
     }
 
-    public function __invoke(EventId $id, CompanyId $companyId): Event
+    public function __invoke(EventId $id, ?CompanyId $companyId = null): Event
     {
         $event = $this->repository->findById($id, $companyId);
 

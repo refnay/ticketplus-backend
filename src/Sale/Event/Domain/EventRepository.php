@@ -6,5 +6,5 @@ use App\Sale\Shared\Domain\CompanyId;
 
 interface EventRepository
 {
-    public function findById(EventId $id, CompanyId $companyId): ?Event;
+    public function findById(EventId $id, ?CompanyId $companyId = null): ?Event;
 }

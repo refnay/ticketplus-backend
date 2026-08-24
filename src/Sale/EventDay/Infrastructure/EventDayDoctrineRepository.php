@@ -18,22 +18,17 @@ class EventDayDoctrineRepository implements EventDayRepository
     #[Override]
     public function findById(EventId $eventId, EventDayId $id): ?EventDay
     {
-        $sql = sprintf(
-            "SELECT d.date,
-                e.currency,
-                e.tax_rate,
-                e.name AS event_name
-            FROM day d
-            INNER JOIN event e ON e.id = d.event_id
-            WHERE d.id = '%s'
-                AND e.id = '%s'",
-            $id->value(),
-            $eventId->value(),
-        );
+        $sql = 'SELECT d.id, d.date, d.event_id
+                FROM day d
+                WHERE d.id = :id
+                    AND d.event_id = :event';
 
         $result = $this->entityManager
             ->getConnection()
-            ->executeQuery($sql)
+            ->executeQuery($sql, [
+                'id' => $id->value(),
+                'event' => $eventId->value(),
+            ])
             ->fetchAssociative();
 
         if (!is_array($result)) {
@@ -41,11 +36,9 @@ class EventDayDoctrineRepository implements EventDayRepository
         }
 
         return EventDay::create(
-            $id->value(),
-            (string) $result['currency'],
-            (string) $result['event_name'],
+            (string) $result['id'],
             (string) $result['date'],
-            (float) $result['tax_rate'],
+            (string) $result['event_id'],
         );
     }
 }

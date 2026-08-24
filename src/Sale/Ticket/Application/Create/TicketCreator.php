@@ -8,6 +8,7 @@ use App\Sale\Event\Domain\EventId;
 use App\Sale\Seat\Domain\Exceptions\SeatNotFound;
 use App\Sale\Seat\Domain\SeatId;
 use App\Sale\EventDay\Domain\Services\EventDayFinder;
+use App\Sale\Event\Domain\Services\EventFinder;
 use App\Sale\Seat\Domain\Services\SeatFinder;
 use App\Sale\Zone\Domain\Services\ZoneFinder;
 use App\Sale\Zone\Domain\ZoneId;
@@ -20,6 +21,7 @@ class TicketCreator
 {
     public function __construct(
         private EventDayFinder $dayFinder,
+        private EventFinder $eventFinder,
         private TicketRepository $repository,
         private ZoneFinder $zoneFinder,
         private SeatFinder $seatFinder,
@@ -35,6 +37,7 @@ class TicketCreator
         $zoneId = ZoneId::fromString($item['zone']);
 
         $day = $this->dayFinder->__invoke($eventId, $dayId);
+        $event = $this->eventFinder->__invoke($eventId);
         $zone = $this->zoneFinder->__invoke($zoneId, $eventId, $dayId);
 
         $seat = null;
@@ -44,7 +47,7 @@ class TicketCreator
         }
 
         $ticket = Ticket::create(
-            TicketInformation::create($day->date(), $day->event(), $zone->name(), is_null($seat) ? null : $seat->code()),
+            TicketInformation::create($day->date(), $event->name(), $zone->name(), is_null($seat) ? null : $seat->code()),
             TicketPrice::fromFloat($item['price']),
             $order->id(),
             $zoneId,
