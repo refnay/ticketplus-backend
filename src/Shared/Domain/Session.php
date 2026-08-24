@@ -4,6 +4,7 @@ namespace App\Shared\Domain;
 
 use App\Shared\Domain\Enums\MemberStatusList;
 use App\Shared\Domain\Enums\UserStatusList;
+use App\Shared\Domain\Enums\UserTypeList;
 use App\Shared\Domain\Exceptions\MemberRequired;
 use App\Shared\Domain\Exceptions\CompanyRequired;
 use App\Shared\Domain\Exceptions\MemberNotAllowed;
