@@ -2,10 +2,10 @@
 
 namespace App\Catalog\Category\Application\Search;
 
-use App\Shared\Application\Query\ListQuery;
+use App\Shared\Application\Query\SearchQuery;
 use App\Shared\Domain\Utils\PayloadMapper;
 
-class SearchCategoryQuery extends ListQuery
+class SearchCategoryQuery extends SearchQuery
 {
     public function __construct(
         private ?string $name,

@@ -2,10 +2,10 @@
 
 namespace App\Catalog\Zone\Application\Search;
 
-use App\Shared\Application\Query\ListQuery;
+use App\Shared\Application\Query\SearchQuery;
 use App\Shared\Domain\Utils\PayloadMapper;
 
-class SearchZoneQuery extends ListQuery
+class SearchZoneQuery extends SearchQuery
 {
     public function __construct(
         private string $event,

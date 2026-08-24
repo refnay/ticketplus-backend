@@ -2,7 +2,7 @@
 
 namespace App\Shared\Application\Query;
 
-class ListQuery extends BaseQuery
+class SearchQuery extends BaseQuery
 {
     public function __construct(
         private string $orderBy = 'createdAt',

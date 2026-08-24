@@ -2,10 +2,10 @@
 
 namespace App\Catalog\Seat\Application\Search;
 
-use App\Shared\Application\Query\ListQuery;
+use App\Shared\Application\Query\SearchQuery;
 use App\Shared\Domain\Utils\PayloadMapper;
 
-class SearchSeatQuery extends ListQuery
+class SearchSeatQuery extends SearchQuery
 {
     public function __construct(
         private string $event,

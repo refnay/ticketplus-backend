@@ -2,10 +2,10 @@
 
 namespace App\Account\Member\Application\SearchCompany;
 
-use App\Shared\Application\Query\ListQuery;
+use App\Shared\Application\Query\SearchQuery;
 use App\Shared\Domain\Utils\PayloadMapper;
 
-class SearchMemberCompanyQuery extends ListQuery
+class SearchMemberCompanyQuery extends SearchQuery
 {
     public function __construct(
         string $orderBy,
