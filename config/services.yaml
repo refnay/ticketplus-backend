@@ -40,12 +40,13 @@ services:
     App\Shared\Application\Port\Mailer\Mailer:
         alias: App\Shared\Infrastructure\Mailer\SymfonyMailer
 
-    # Password
-    App\Account\User\Application\Port\Password\PasswordHasher:
-        alias: App\Account\User\Infrastructure\Password\SymfonyPasswordHasher
+    # Hash
+    App\Account\User\Application\Port\Hash\PasswordHasher:
+        alias: App\Account\User\Infrastructure\Hash\SymfonyPasswordHasher
 
-    App\Account\User\Application\Port\Recovery\PasswordResetter:
-        alias: App\Account\User\Infrastructure\Recovery\SymfonyPasswordResetter
+    # Reset
+    App\Account\User\Application\Port\Reset\PasswordResetter:
+        alias: App\Account\User\Infrastructure\Reset\SymfonyPasswordResetter
 
     # Slug
     App\Catalog\Event\Application\Port\Slug\SlugGenerator:

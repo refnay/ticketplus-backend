@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Account\User\Application\Port\Password;
+namespace App\Account\User\Application\Port\Hash;
 
 interface PasswordHasher
 {

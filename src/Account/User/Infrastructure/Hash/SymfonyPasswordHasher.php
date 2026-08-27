@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Account\User\Infrastructure\Password;
+namespace App\Account\User\Infrastructure\Hash;
 
-use App\Account\User\Application\Port\Password\PasswordHasher;
+use App\Account\User\Application\Port\Hash\PasswordHasher;
 use App\Shared\Infrastructure\Persistence\Entity\User;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 

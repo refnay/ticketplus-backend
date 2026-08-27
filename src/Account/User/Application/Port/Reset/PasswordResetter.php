@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Account\User\Application\Port\Recovery;
+namespace App\Account\User\Application\Port\Reset;
 
 use App\Account\User\Domain\UserId;
 

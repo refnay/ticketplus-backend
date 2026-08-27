@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Account\User\Infrastructure\Recovery;
+namespace App\Account\User\Infrastructure\Reset;
 
-use App\Account\User\Application\Port\Recovery\PasswordResetter;
+use App\Account\User\Application\Port\Reset\PasswordResetter;
 use App\Account\User\Domain\UserId;
 use App\Shared\Infrastructure\Persistence\Entity\User as UserEntity;
 use Doctrine\ORM\EntityManagerInterface;
