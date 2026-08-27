@@ -4,7 +4,7 @@ namespace App\Sale\Payment\Application\PaymentUpdatedEvent;
 
 use App\Sale\Order\Domain\OrderId;
 use App\Sale\Order\Domain\Services\OrderFinder;
-use App\Sale\Payment\Application\Resolver\PaymentProviderResolver;
+use App\Sale\Payment\Application\Resolver\TransactionGatewayResolver;
 use App\Sale\Payment\Domain\Events\PaymentWithEventApprovedDomainEvent;
 use App\Sale\Payment\Domain\Events\PaymentWithOrderApprovedDomainEvent;
 use App\Sale\Payment\Domain\Events\PaymentWithTicketApprovedDomainEvent;
@@ -12,7 +12,7 @@ use App\Sale\Payment\Domain\PaymentExternalReference;
 use App\Sale\Payment\Domain\PaymentId;
 use App\Sale\Payment\Domain\PaymentRepository;
 use App\Sale\Payment\Domain\PaymentStatus;
-use App\Sale\Payment\Domain\Provider\PaymentProviderList;
+use App\Sale\Payment\Domain\Gateway\TransactionGatewayList;
 use App\Sale\Payment\Domain\Services\PaymentFinder;
 use App\Sale\Reference\User\Domain\UserId;
 use App\Shared\Application\Bus\EventBus;
@@ -23,7 +23,7 @@ class PaymentProcessor
     public function __construct(
         private PaymentFinder $paymentFinder,
         private OrderFinder $orderFinder,
-        private PaymentProviderResolver $resolver,
+        private TransactionGatewayResolver $resolver,
         private PaymentRepository $repository,
         private EventBus $eventBus,
     ) {}
@@ -38,10 +38,10 @@ class PaymentProcessor
         }
 
         try {
-            $response = $this->resolver->__invoke(PaymentProviderList::MERCADO_PAGO->value)->process($payment, $token);
+            $result = $this->resolver->__invoke(TransactionGatewayList::MERCADO_PAGO->value)->charge($payment, $token);
 
-            $payment->changeStatus(PaymentStatus::fromInt($response->status()));
-            $payment->changeExternalReference(PaymentExternalReference::fromReference($response->id(), $response->provider()));
+            $payment->changeStatus(PaymentStatus::fromInt($result->status()));
+            $payment->changeExternalReference(PaymentExternalReference::fromReference($result->transactionId(), $result->gateway()));
         } catch (Throwable) {
             $payment->changeStatus(PaymentStatus::processing());
         }

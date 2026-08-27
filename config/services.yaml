@@ -19,12 +19,12 @@ services:
     App\:
         resource: '../src/'
 
-    # Payment Providers
-    App\Sale\Payment\Application\Resolver\PaymentProviderResolver:
+    # Transaction Gateways
+    App\Sale\Payment\Application\Resolver\TransactionGatewayResolver:
         arguments:
-            $mercadoPago: '@App\Sale\Payment\Infrastructure\Provider\MercadoPagoPaymentProvider'
+            $mercadoPago: '@App\Sale\Payment\Infrastructure\Gateway\MercadoPagoTransactionGateway'
 
-    App\Sale\Payment\Infrastructure\Provider\MercadoPagoPaymentProvider:
+    App\Sale\Payment\Infrastructure\Gateway\MercadoPagoTransactionGateway:
         arguments:
             $accessToken: '%env(MERCADO_PAGO_ACCESS_TOKEN)%'
 

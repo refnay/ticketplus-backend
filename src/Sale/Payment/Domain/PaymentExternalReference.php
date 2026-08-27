@@ -12,8 +12,8 @@ class PaymentExternalReference extends StringValueObject
     {
     }
 
-    public static function fromReference(string $id, string $provider): self
+    public static function fromReference(string $transactionId, string $gateway): self
     {
-        return new self(sprintf('%s::%s', $id, $provider));
+        return new self(sprintf('%s::%s', $transactionId, $gateway));
     }
 }
