@@ -11,6 +11,8 @@ class UpdateEventCommand
         private string $id,
         private string $name,
         private ?string $description,
+        private ?string $venue,
+        private ?array $coordinates,
         private string $location,
         private string $country,
         private string $city,
@@ -36,6 +38,8 @@ class UpdateEventCommand
             $payload->string('id'),
             $payload->string('name'),
             $payload->nullableString('description'),
+            $payload->nullableString('venue'),
+            $payload->nullableArray('coordinates'),
             $payload->string('location'),
             $payload->string('country'),
             $payload->string('city'),
@@ -60,6 +64,16 @@ class UpdateEventCommand
     public function description(): ?string
     {
         return $this->description;
+    }
+
+    public function venue(): ?string
+    {
+        return $this->venue;
+    }
+
+    public function coordinates(): ?array
+    {
+        return $this->coordinates;
     }
 
     public function location(): string

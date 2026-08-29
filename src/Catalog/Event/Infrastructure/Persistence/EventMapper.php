@@ -8,6 +8,7 @@ use App\Catalog\Event\Domain\EventBannerImage;
 use App\Catalog\Event\Domain\EventCanvas;
 use App\Catalog\Event\Domain\EventCity;
 use App\Catalog\Event\Domain\EventCountry;
+use App\Catalog\Event\Domain\EventCoordinates;
 use App\Catalog\Event\Domain\EventCoverImage;
 use App\Catalog\Event\Domain\EventCurrency;
 use App\Catalog\Event\Domain\EventDay;
@@ -20,10 +21,13 @@ use App\Catalog\Event\Domain\EventDayStatus;
 use App\Catalog\Event\Domain\EventDescription;
 use App\Catalog\Event\Domain\EventId;
 use App\Catalog\Event\Domain\EventLocation;
+use App\Catalog\Event\Domain\EventLogo;
 use App\Catalog\Event\Domain\EventName;
 use App\Catalog\Event\Domain\EventSlug;
 use App\Catalog\Event\Domain\EventStatus;
 use App\Catalog\Event\Domain\EventTaxRate;
+use App\Catalog\Event\Domain\EventThumbnail;
+use App\Catalog\Event\Domain\EventVenue;
 use App\Catalog\Shared\Domain\CompanyId;
 use App\Shared\Infrastructure\Persistence\Entity\Event as EventEntity;
 use App\Shared\Infrastructure\Persistence\Entity\Day as EventDayEntity;
@@ -42,6 +46,10 @@ class EventMapper
         $entity->setDescription($event->description()->value());
         $entity->setCoverImage($event->coverImage()->value());
         $entity->setBannerImage($event->bannerImage()->value());
+        $entity->setLogo($event->logo()->value());
+        $entity->setThumbnail($event->thumbnail()->value());
+        $entity->setVenue($event->venue()->value());
+        $entity->setCoordinates($event->coordinates()->value());
         $entity->setLocation($event->location()->value());
         $entity->setCountry($event->country()->value());
         $entity->setCity($event->city()->value());
@@ -77,6 +85,10 @@ class EventMapper
             EventDescription::fromString($entity->getDescription()),
             EventCoverImage::fromString($entity->getCoverImage()),
             EventBannerImage::fromString($entity->getBannerImage()),
+            EventLogo::fromString($entity->getLogo()),
+            EventThumbnail::fromString($entity->getThumbnail()),
+            EventVenue::fromString($entity->getVenue()),
+            EventCoordinates::fromArray($entity->getCoordinates()),
             EventLocation::fromString($entity->getLocation()),
             EventCountry::fromString($entity->getCountry()),
             EventCity::fromString($entity->getCity()),
@@ -112,6 +124,10 @@ class EventMapper
         $entity->setDescription($event->description()->value());
         $entity->setCoverImage($event->coverImage()->value());
         $entity->setBannerImage($event->bannerImage()->value());
+        $entity->setLogo($event->logo()->value());
+        $entity->setThumbnail($event->thumbnail()->value());
+        $entity->setVenue($event->venue()->value());
+        $entity->setCoordinates($event->coordinates()->value());
         $entity->setLocation($event->location()->value());
         $entity->setCountry($event->country()->value());
         $entity->setCity($event->city()->value());

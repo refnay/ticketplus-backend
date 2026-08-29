@@ -32,3 +32,13 @@ event-banner-image-upload:
     path: /api/event/{id}/banner
     controller: App\Catalog\Event\Infrastructure\Controller\EventBannerImageUploadController::upload
     methods: POST
+
+event-logo-upload:
+    path: /api/event/{id}/logo
+    controller: App\Catalog\Event\Infrastructure\Controller\EventLogoUploadController::upload
+    methods: POST
+
+event-thumbnail-upload:
+    path: /api/event/{id}/thumbnail
+    controller: App\Catalog\Event\Infrastructure\Controller\EventThumbnailUploadController::upload
+    methods: POST

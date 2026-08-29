@@ -35,6 +35,18 @@ class Event
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $bannerImage = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $logo = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $thumbnail = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $venue = null;
+
+    #[ORM\Column(type: Types::JSON, nullable: true)]
+    private ?array $coordinates = null;
+
     #[ORM\Column(length: 255)]
     private ?string $location = null;
 
@@ -172,6 +184,54 @@ class Event
     public function setBannerImage(?string $bannerImage): static
     {
         $this->bannerImage = $bannerImage;
+
+        return $this;
+    }
+
+    public function getLogo(): ?string
+    {
+        return $this->logo;
+    }
+
+    public function setLogo(?string $logo): static
+    {
+        $this->logo = $logo;
+
+        return $this;
+    }
+
+    public function getThumbnail(): ?string
+    {
+        return $this->thumbnail;
+    }
+
+    public function setThumbnail(?string $thumbnail): static
+    {
+        $this->thumbnail = $thumbnail;
+
+        return $this;
+    }
+
+    public function getVenue(): ?string
+    {
+        return $this->venue;
+    }
+
+    public function setVenue(?string $venue): static
+    {
+        $this->venue = $venue;
+
+        return $this;
+    }
+
+    public function getCoordinates(): ?array
+    {
+        return $this->coordinates;
+    }
+
+    public function setCoordinates(?array $coordinates): static
+    {
+        $this->coordinates = $coordinates;
 
         return $this;
     }

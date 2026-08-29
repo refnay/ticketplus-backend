@@ -15,7 +15,11 @@ class Event
     private EventDescription $description;
     private ?EventCoverImage $coverImage = null;
     private ?EventBannerImage $bannerImage = null;
+    private ?EventLogo $logo = null;
+    private ?EventThumbnail $thumbnail = null;
     private ?EventCanvas $canvas = null;
+    private EventVenue $venue;
+    private EventCoordinates $coordinates;
     private EventLocation $location;
     private EventCountry $country;
     private EventCity $city;
@@ -34,6 +38,10 @@ class Event
         EventDescription $description,
         EventCoverImage $coverImage,
         EventBannerImage $bannerImage,
+        EventLogo $logo,
+        EventThumbnail $thumbnail,
+        EventVenue $venue,
+        EventCoordinates $coordinates,
         EventLocation $location,
         EventCountry $country,
         EventCity $city,
@@ -50,6 +58,10 @@ class Event
         $this->description = $description;
         $this->coverImage = $coverImage;
         $this->bannerImage = $bannerImage;
+        $this->logo = $logo;
+        $this->thumbnail = $thumbnail;
+        $this->venue = $venue;
+        $this->coordinates = $coordinates;
         $this->location = $location;
         $this->country = $country;
         $this->city = $city;
@@ -65,6 +77,8 @@ class Event
         EventName $name,
         EventSlug $slug,
         EventDescription $description,
+        EventVenue $venue,
+        EventCoordinates $coordinates,
         EventLocation $location,
         EventCountry $country,
         EventCity $city,
@@ -80,6 +94,10 @@ class Event
             $description,
             EventCoverImage::fromNull(),
             EventBannerImage::fromNull(),
+            EventLogo::fromNull(),
+            EventThumbnail::fromNull(),
+            $venue,
+            $coordinates,
             $location,
             $country,
             $city,
@@ -125,6 +143,26 @@ class Event
     public function bannerImage(): EventBannerImage
     {
         return $this->bannerImage ?? EventBannerImage::fromNull();
+    }
+
+    public function logo(): EventLogo
+    {
+        return $this->logo ?? EventLogo::fromNull();
+    }
+
+    public function thumbnail(): EventThumbnail
+    {
+        return $this->thumbnail ?? EventThumbnail::fromNull();
+    }
+
+    public function venue(): EventVenue
+    {
+        return $this->venue;
+    }
+
+    public function coordinates(): EventCoordinates
+    {
+        return $this->coordinates;
     }
 
     public function location(): EventLocation
@@ -196,6 +234,26 @@ class Event
     public function changeBannerImage(EventBannerImage $bannerImage): void
     {
         $this->bannerImage = $bannerImage;
+    }
+
+    public function changeLogo(EventLogo $logo): void
+    {
+        $this->logo = $logo;
+    }
+
+    public function changeThumbnail(EventThumbnail $thumbnail): void
+    {
+        $this->thumbnail = $thumbnail;
+    }
+
+    public function changeVenue(EventVenue $venue): void
+    {
+        $this->venue = $venue;
+    }
+
+    public function changeCoordinates(EventCoordinates $coordinates): void
+    {
+        $this->coordinates = $coordinates;
     }
 
     public function changeLocation(EventLocation $location): void

@@ -7,6 +7,7 @@ use App\Catalog\Category\Domain\Services\CategoryFinder;
 use App\Catalog\Event\Domain\Event;
 use App\Catalog\Event\Domain\EventCity;
 use App\Catalog\Event\Domain\EventCountry;
+use App\Catalog\Event\Domain\EventCoordinates;
 use App\Catalog\Event\Domain\EventCurrency;
 use App\Catalog\Event\Domain\EventDay;
 use App\Catalog\Event\Domain\EventDayDate;
@@ -19,6 +20,7 @@ use App\Catalog\Event\Domain\EventName;
 use App\Catalog\Event\Domain\EventRepository;
 use App\Catalog\Event\Domain\EventSlug;
 use App\Catalog\Event\Domain\EventTaxRate;
+use App\Catalog\Event\Domain\EventVenue;
 use App\Catalog\Event\Domain\Exceptions\EventAlreadyExists;
 use App\Catalog\Event\Domain\Exceptions\EventNotFound;
 use App\Catalog\Event\Domain\Services\EventBySlugFinder;
@@ -38,6 +40,8 @@ class EventCreator
     public function __invoke(
         EventName $name,
         EventDescription $description,
+        EventVenue $venue,
+        EventCoordinates $coordinates,
         EventLocation $location,
         EventCountry $country,
         EventCity $city,
@@ -60,6 +64,8 @@ class EventCreator
             $name,
             $slug,
             $description,
+            $venue,
+            $coordinates,
             $location,
             $country,
             $city,

@@ -12,6 +12,9 @@ class EventResponse implements JsonSerializable
     public function __construct(
         readonly private string $id,
         readonly private string $name,
+        readonly private ?string $thumbnail,
+        readonly private ?string $venue,
+        readonly private ?array $coordinates,
         readonly private string $location,
         readonly private string $country,
         readonly private string $city,
@@ -28,6 +31,9 @@ class EventResponse implements JsonSerializable
         return new self(
             $event->id()->value(),
             $event->name()->value(),
+            $event->thumbnail()->value(),
+            $event->venue()->value(),
+            $event->coordinates()->value(),
             $event->location()->value(),
             $event->country()->value(),
             $event->city()->value(),

@@ -6,6 +6,7 @@ use App\Catalog\Category\Domain\CategoryId;
 use App\Catalog\Category\Domain\Services\CategoryFinder;
 use App\Catalog\Event\Domain\EventCity;
 use App\Catalog\Event\Domain\EventCountry;
+use App\Catalog\Event\Domain\EventCoordinates;
 use App\Catalog\Event\Domain\EventCurrency;
 use App\Catalog\Event\Domain\EventDescription;
 use App\Catalog\Event\Domain\EventId;
@@ -14,6 +15,7 @@ use App\Catalog\Event\Domain\EventName;
 use App\Catalog\Event\Domain\EventRepository;
 use App\Catalog\Event\Domain\EventStatus;
 use App\Catalog\Event\Domain\EventTaxRate;
+use App\Catalog\Event\Domain\EventVenue;
 use App\Catalog\Event\Domain\Services\EventFinder;
 use App\Catalog\Shared\Domain\CompanyId;
 
@@ -30,6 +32,8 @@ class EventUpdater
         EventId $id,
         EventName $name,
         EventDescription $description,
+        EventVenue $venue,
+        EventCoordinates $coordinates,
         EventLocation $location,
         EventCountry $country,
         EventCity $city,
@@ -45,6 +49,8 @@ class EventUpdater
 
         $event->changeName($name);
         $event->changeDescription($description);
+        $event->changeVenue($venue);
+        $event->changeCoordinates($coordinates);
         $event->changeLocation($location);
         $event->changeCountry($country);
         $event->changeCity($city);
