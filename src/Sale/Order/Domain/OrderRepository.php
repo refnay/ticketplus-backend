@@ -30,6 +30,14 @@ interface OrderRepository
         OrderPaidAt $to,
     ): float;
 
+    public function approvedSalesEvolution(
+        CompanyId $companyId,
+        OrderCurrency $currency,
+        OrderPaidAt $from,
+        OrderPaidAt $to,
+        string $interval,
+    ): array;
+
     public function approvedSalesByEvent(
         CompanyId $companyId,
         OrderCurrency $currency,

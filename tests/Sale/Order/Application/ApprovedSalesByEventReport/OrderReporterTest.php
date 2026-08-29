@@ -44,6 +44,7 @@ final class OrderReporterTest extends TestCase
             OrderPaidAt::fromString('2026-08-31'),
             OrderCurrency::fromString('PEN'),
             CompanyId::fromString('018f7c54-5f88-7e04-8a90-7af68c932555'),
+            4,
         );
 
         self::assertSame([

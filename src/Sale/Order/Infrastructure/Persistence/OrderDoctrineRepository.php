@@ -14,6 +14,7 @@ use App\Sale\Order\Domain\OrderRepository;
 use App\Sale\Order\Domain\OrderStatusList;
 use App\Sale\Reference\User\Domain\UserId;
 use App\Sale\Shared\Domain\CompanyId;
+use App\Shared\Domain\Enums\ReportIntervalList;
 use App\Shared\Infrastructure\Persistence\Doctrine\QueryBuilder;
 use Doctrine\ORM\EntityManagerInterface;
 use Override;
@@ -165,6 +166,59 @@ class OrderDoctrineRepository implements OrderRepository
         ])->fetchAssociative();
 
         return is_array($result) && isset($result['amount']) ? (float) $result['amount'] : 0.00;
+    }
+
+    #[Override]
+    public function approvedSalesEvolution(
+        CompanyId $companyId,
+        OrderCurrency $currency,
+        OrderPaidAt $from,
+        OrderPaidAt $to,
+        string $interval,
+    ): array {
+        $dateExpression = match (ReportIntervalList::from($interval)) {
+            ReportIntervalList::DAY => 'DATE(o.paid_at)',
+            ReportIntervalList::WEEK => "DATE(DATE_TRUNC('week', o.paid_at))",
+            ReportIntervalList::MONTH => "DATE(DATE_TRUNC('month', o.paid_at))",
+        };
+
+        $sql = sprintf(
+            "SELECT
+                %s AS date,
+                COALESCE(SUM(
+                    CASE
+                        WHEN o.currency = :currency THEN o.total
+                        WHEN :currency = 'PEN' AND o.currency = 'USD' AND o.exchange_rate > 0
+                            THEN o.total * o.exchange_rate
+                        WHEN :currency = 'USD' AND o.currency = 'PEN' AND o.exchange_rate > 0
+                            THEN o.total / o.exchange_rate
+                        ELSE 0
+                    END
+                ), 0) AS amount
+            FROM purchase o
+            INNER JOIN event e ON e.id = o.event_id
+            WHERE e.company_id = :companyId
+              AND o.status = %d
+              AND o.paid_at >= :from
+              AND o.paid_at < :to
+            GROUP BY %s
+            ORDER BY date ASC",
+            $dateExpression,
+            OrderStatusList::PAID->value,
+            $dateExpression,
+        );
+
+        $result = $this->entityManager->getConnection()->executeQuery($sql, [
+            'companyId' => $companyId->value(),
+            'currency' => $currency->value(),
+            'from' => $from->__toString(),
+            'to' => $to->__toString(),
+        ])->fetchAllAssociative();
+
+        return array_map(static fn(array $sale): array => [
+            'date' => (string) $sale['date'],
+            'amount' => round((float) $sale['amount'], 2),
+        ], $result);
     }
 
     #[Override]
