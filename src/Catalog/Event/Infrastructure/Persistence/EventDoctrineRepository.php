@@ -87,7 +87,7 @@ class EventDoctrineRepository implements EventRepository
         );
 
         $queryBuilder->equals('company', $filters['company'] ?? null)
-            ->likeMultiple(['name'], $filters['name'] ?? null, true)
+            ->likeMultiple(['name', 'venue'], $filters['value'] ?? null, true)
             ->equals('country', $filters['country'] ?? null)
             ->equals('city', $filters['city'] ?? null)
             ->equals('category', $filters['category'] ?? null)

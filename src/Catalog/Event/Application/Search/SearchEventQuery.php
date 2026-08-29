@@ -8,7 +8,7 @@ use App\Shared\Application\Input\PayloadMapper;
 class SearchEventQuery extends SearchQuery
 {
     public function __construct(
-        private ?string $name,
+        private ?string $value,
         private ?string $country,
         private ?string $city,
         private ?string $category,
@@ -27,7 +27,7 @@ class SearchEventQuery extends SearchQuery
         $payload = PayloadMapper::fromData($data);
         
         return new self(
-            $payload->nullableString('name'),
+            $payload->nullableString('value'),
             $payload->nullableString('country'),
             $payload->nullableString('city'),
             $payload->nullableString('category'),
