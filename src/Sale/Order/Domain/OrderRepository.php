@@ -35,6 +35,7 @@ interface OrderRepository
         OrderCurrency $currency,
         OrderPaidAt $from,
         OrderPaidAt $to,
+        int $limit,
     ): array;
 
     public function countPaidOrders(

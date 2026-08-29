@@ -24,6 +24,7 @@ class ReportOrderApprovedSalesByEventQueryHandler
             OrderPaidAt::fromString($query->to()),
             OrderCurrency::fromString($query->currency()),
             CompanyId::fromString($this->authorization->requireCompanyId()),
+            $query->limit(),
         );
     }
 }

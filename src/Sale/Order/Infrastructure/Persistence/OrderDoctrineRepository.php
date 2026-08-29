@@ -22,12 +22,11 @@ use Throwable;
 class OrderDoctrineRepository implements OrderRepository
 {
     private const string ORDER_PREFIX = 'o';
-    private const int APPROVED_SALES_BY_EVENT_LIMIT = 4;
 
     public function __construct(private EntityManagerInterface $entityManager, private OrderMapper $mapper)
     {
     }
-    
+
     #[Override]
     public function save(Order $order): void
     {
@@ -90,7 +89,7 @@ class OrderDoctrineRepository implements OrderRepository
         $queryBuilder = QueryBuilder::from(
             $this->entityManager->getRepository($this->mapper->entityClass())->createQueryBuilder(self::ORDER_PREFIX)
         );
-        
+
         $queryBuilder->equals('status', OrderStatusList::PENDING->value)
             ->lessOrEqual('expiresAt', OrderExpiresAt::now()->value());
 
@@ -98,7 +97,7 @@ class OrderDoctrineRepository implements OrderRepository
 
         return array_map(fn($entity) => $this->mapper->newDomain($entity), $entities);
     }
-    
+
     #[Override]
     public function searchByFilters(array $filters, string $orderBy, string $order, ?int $limit, ?int $offset): array
     {
@@ -111,7 +110,7 @@ class OrderDoctrineRepository implements OrderRepository
             ->paginate($limit, $offset);
 
         $entities = $queryBuilder->queryBuilder()->getQuery()->getResult();
-        
+
         return array_map(fn($entity) => $this->mapper->newDomain($entity), $entities);
     }
 
@@ -174,6 +173,7 @@ class OrderDoctrineRepository implements OrderRepository
         OrderCurrency $currency,
         OrderPaidAt $from,
         OrderPaidAt $to,
+        int $limit,
     ): array {
         $sql = sprintf(
             "SELECT
@@ -209,7 +209,7 @@ class OrderDoctrineRepository implements OrderRepository
             ORDER BY amount DESC, e.name ASC
             LIMIT %d",
             OrderStatusList::PAID->value,
-            self::APPROVED_SALES_BY_EVENT_LIMIT,
+            $limit,
         );
 
         $result = $this->entityManager->getConnection()->executeQuery($sql, [

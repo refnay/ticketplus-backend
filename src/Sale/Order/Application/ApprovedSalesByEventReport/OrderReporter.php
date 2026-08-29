@@ -19,12 +19,14 @@ class OrderReporter
         OrderPaidAt $to,
         OrderCurrency $currency,
         CompanyId $companyId,
+        int $limit,
     ): OrderByEventResponse {
         $events = $this->repository->approvedSalesByEvent(
             $companyId,
             $currency,
             $from,
             $to->add(new DateInterval('P1D')),
+            $limit,
         );
 
         return new OrderByEventResponse(

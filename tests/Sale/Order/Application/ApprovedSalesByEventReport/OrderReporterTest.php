@@ -30,6 +30,13 @@ final class OrderReporterTest extends TestCase
         $repository
             ->expects(self::once())
             ->method('approvedSalesByEvent')
+            ->with(
+                self::isInstanceOf(CompanyId::class),
+                self::isInstanceOf(OrderCurrency::class),
+                self::isInstanceOf(OrderPaidAt::class),
+                self::isInstanceOf(OrderPaidAt::class),
+                4,
+            )
             ->willReturn($events);
 
         $response = (new OrderReporter($repository))->__invoke(
