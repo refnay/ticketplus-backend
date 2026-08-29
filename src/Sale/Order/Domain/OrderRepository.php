@@ -3,6 +3,7 @@
 namespace App\Sale\Order\Domain;
 
 use App\Sale\Reference\User\Domain\UserId;
+use App\Sale\Shared\Domain\CompanyId;
 
 interface OrderRepository
 {
@@ -21,4 +22,11 @@ interface OrderRepository
     public function searchByFilters(array $filters, string $orderBy, string $order, ?int $limit, ?int $offset): array;
 
     public function countByFilters(array $filters): int;
+
+    public function amountPaidTotal(
+        CompanyId $companyId,
+        OrderCurrency $currency,
+        OrderPaidAt $from,
+        OrderPaidAt $to,
+    ): float;
 }

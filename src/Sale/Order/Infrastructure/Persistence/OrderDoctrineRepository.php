@@ -6,11 +6,14 @@ use App\Sale\Order\Domain\Exceptions\OrderNotCreated;
 use App\Sale\Order\Domain\Exceptions\OrderNotDeleted;
 use App\Sale\Order\Domain\Exceptions\OrderNotUpdated;
 use App\Sale\Order\Domain\Order;
+use App\Sale\Order\Domain\OrderCurrency;
 use App\Sale\Order\Domain\OrderExpiresAt;
 use App\Sale\Order\Domain\OrderId;
+use App\Sale\Order\Domain\OrderPaidAt;
 use App\Sale\Order\Domain\OrderRepository;
 use App\Sale\Order\Domain\OrderStatusList;
 use App\Sale\Reference\User\Domain\UserId;
+use App\Sale\Shared\Domain\CompanyId;
 use App\Shared\Infrastructure\Persistence\Doctrine\QueryBuilder;
 use Doctrine\ORM\EntityManagerInterface;
 use Override;
@@ -124,5 +127,43 @@ class OrderDoctrineRepository implements OrderRepository
             ->select('COUNT(' . self::ORDER_PREFIX . '.id)')
             ->getQuery()
             ->getSingleScalarResult();
-    } 
+    }
+
+    #[Override]
+    public function amountPaidTotal(
+        CompanyId $companyId,
+        OrderCurrency $currency,
+        OrderPaidAt $from,
+        OrderPaidAt $to,
+    ): float {
+        $sql = sprintf(
+            "SELECT
+                COALESCE(SUM(
+                    CASE
+                        WHEN o.currency = :currency THEN o.total
+                        WHEN :currency = 'PEN' AND o.currency = 'USD' AND o.exchange_rate > 0
+                            THEN o.total * o.exchange_rate
+                        WHEN :currency = 'USD' AND o.currency = 'PEN' AND o.exchange_rate > 0
+                            THEN o.total / o.exchange_rate
+                        ELSE 0
+                    END
+                ), 0) AS amount
+            FROM purchase o
+            INNER JOIN event e ON e.id = o.event_id
+            WHERE e.company_id = :companyId
+              AND o.status = %d
+              AND o.paid_at >= :from
+              AND o.paid_at < :to",
+            OrderStatusList::PAID->value,
+        );
+
+        $result = $this->entityManager->getConnection()->executeQuery($sql, [
+            'companyId' => $companyId->value(),
+            'currency' => $currency->value(),
+            'from' => $from->__toString(),
+            'to' => $to->__toString(),
+        ])->fetchAssociative();
+
+        return is_float($result['amount']) ? (float) $result['amount'] : 0.00;
+    }
 }

@@ -102,6 +102,14 @@ abstract class DateTimeValueObject
         return new static($this->value->sub($interval));
     }
 
+    public function diffDays(self $other): int
+    {
+        $this->ensureNotNull();
+        $other->ensureNotNull();
+
+        return (int) $this->value->diff($other->value())->days;
+    }
+
     public function format(string $format = DateTimeInterface::ATOM): string
     {
         $this->ensureNotNull();

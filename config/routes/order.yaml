@@ -3,6 +3,11 @@ order-create:
     controller: App\Sale\Order\Infrastructure\Controller\OrderCreateController::create
     methods: POST
 
+order-paid-summary-report:
+    path: /api/order/report/paid-summary
+    controller: App\Sale\Order\Infrastructure\Controller\OrderPaidSummaryReportController::report
+    methods: GET
+
 order-cancel:
     path: /api/order/{id}
     controller: App\Sale\Order\Infrastructure\Controller\OrderCancelController::cancel
