@@ -14,6 +14,7 @@ class ZoneResponse implements JsonSerializable
         readonly private int $hierarchy,
         readonly private array $quantity,
         readonly private float $price,
+        readonly private bool $numberedSeating,
     ) {
     }
 
@@ -25,6 +26,7 @@ class ZoneResponse implements JsonSerializable
             $zone->hierarchy()->value(),
             $zone->quantity()->toArray(),
             $zone->price()->value(),
+            $zone->numberedSeating()->value(),
         );
     }
 
