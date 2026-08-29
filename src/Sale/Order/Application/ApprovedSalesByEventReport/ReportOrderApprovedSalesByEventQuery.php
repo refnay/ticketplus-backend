@@ -41,8 +41,8 @@ class ReportOrderApprovedSalesByEventQuery
         return $this->currency;
     }
 
-    public function limit(): string
+    public function limit(): int
     {
-        return $this->currency;
+        return $this->limit;
     }
 }
