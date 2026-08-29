@@ -30,7 +30,7 @@ class EventDoctrineRepository implements EventRepository
             $entity = $this->mapper->newEntity($event);
             $this->entityManager->persist($entity);
             $this->entityManager->flush();
-        } catch (Throwable) {
+        } catch (Throwable $e) {
             throw new EventNotCreated();
         }
     }

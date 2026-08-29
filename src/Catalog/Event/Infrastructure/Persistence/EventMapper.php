@@ -61,6 +61,7 @@ class EventMapper
         $entity->setCompany($this->fetcher->company($event->companyId()));
         $entity->setCategory($this->fetcher->category($event->categoryId()));
         $entity->setCanvas($event->canvas()->value());
+        $entity->setOrderLimit($event->orderLimit()->value());
 
         foreach ($event->days() as $day) {
             $dayEntity = new EventDayEntity();
@@ -71,6 +72,7 @@ class EventMapper
             $dayEntity->setDescription($day->description()->value());
             $dayEntity->setStatus($day->status()->value());
             $dayEntity->setEvent($entity);
+            $dayEntity->setSaleStartAt($day->saleStartAt()->value());
 
             $entity->addDay($dayEntity);
         }
@@ -140,6 +142,7 @@ class EventMapper
         $entity->setStatus($event->status()->value());
         $entity->setCategory($this->fetcher->category($event->categoryId()));
         $entity->setCanvas($event->canvas()->value());
+        $entity->setOrderLimit($event->orderLimit()->value());
 
         $currentDays = [];
 
@@ -167,6 +170,7 @@ class EventMapper
             $dayEntity->setEndTime($day->endTime()->toDateTime());
             $dayEntity->setDescription($day->description()->value());
             $dayEntity->setStatus($day->status()->value());
+            $dayEntity->setSaleStartAt($day->saleStartAt()->value());
 
             $processedIds[] = $id;
         }
