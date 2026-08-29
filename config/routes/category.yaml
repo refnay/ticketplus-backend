@@ -8,6 +8,11 @@ category-search:
     controller: App\Catalog\Category\Infrastructure\Controller\CategorySearchController::search
     methods: GET
 
+category-choose:
+    path: /api/category/choose
+    controller: App\Catalog\Category\Infrastructure\Controller\CategoryChooseController::choose
+    methods: GET
+
 category-find:
     path: /api/category/{id}
     controller: App\Catalog\Category\Infrastructure\Controller\CategoryFindController::find
