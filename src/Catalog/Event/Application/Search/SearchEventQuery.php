@@ -11,6 +11,8 @@ class SearchEventQuery extends SearchQuery
         private ?string $name,
         private ?string $country,
         private ?string $city,
+        private ?string $category,
+        private ?string $date,
         private ?int $status,
         string $orderBy,
         string $order,
@@ -28,6 +30,8 @@ class SearchEventQuery extends SearchQuery
             $payload->nullableString('name'),
             $payload->nullableString('country'),
             $payload->nullableString('city'),
+            $payload->nullableString('category'),
+            $payload->nullableString('date'),
             $payload->nullableInt('status'),
             $payload->string('orderBy'),
             $payload->string('order'),
@@ -41,6 +45,6 @@ class SearchEventQuery extends SearchQuery
         $filters = get_object_vars($this);
         $filters['company'] = $companyId;
 
-        return $filters; 
+        return $filters;
     }
 }

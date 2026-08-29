@@ -90,8 +90,19 @@ class EventDoctrineRepository implements EventRepository
             ->likeMultiple(['name'], $filters['name'] ?? null, true)
             ->equals('country', $filters['country'] ?? null)
             ->equals('city', $filters['city'] ?? null)
-            ->equals('status', $filters['status'] ?? null)
-            ->applyOrder($orderBy, $order)
+            ->equals('category', $filters['category'] ?? null)
+            ->equals('status', $filters['status'] ?? null);
+
+        if (isset($filters['date'])) {
+            $queryBuilder->innerJoin('days', 'd');
+            $queryBuilder->queryBuilder()
+                ->andWhere('d.date > :date')
+                ->setParameter('date', $filters['date']);
+
+            $queryBuilder->queryBuilder()->groupBy(self::EVENT_PREFIX . '.id');
+        }
+
+        $queryBuilder->applyOrder($orderBy, $order)
             ->paginate($limit, $offset);
 
         $entities = $queryBuilder->queryBuilder()->getQuery()->getResult();
@@ -110,11 +121,20 @@ class EventDoctrineRepository implements EventRepository
             ->likeMultiple(['name'], $filters['name'] ?? null, true)
             ->equals('country', $filters['country'] ?? null)
             ->equals('city', $filters['city'] ?? null)
+            ->equals('category', $filters['category'] ?? null)
             ->equals('status', $filters['status'] ?? null);
 
+        if (isset($filters['date'])) {
+            $queryBuilder->innerJoin('days', 'd');
+            $queryBuilder->queryBuilder()
+                ->andWhere('d.date > :date')
+                ->setParameter('date', $filters['date']);
+        }
+
         return (int) $queryBuilder->queryBuilder()
-            ->select('COUNT(' . self::EVENT_PREFIX . '.id)')
+            ->select('COUNT(DISTINCT ' . self::EVENT_PREFIX . '.id)')
             ->getQuery()
             ->getSingleScalarResult();
-    } 
+    }
+
 }
