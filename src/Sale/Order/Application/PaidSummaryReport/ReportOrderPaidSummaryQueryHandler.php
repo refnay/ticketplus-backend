@@ -22,7 +22,7 @@ class ReportOrderPaidSummaryQueryHandler
         return $this->reporter->__invoke(
             OrderPaidAt::fromString($query->from()),
             OrderPaidAt::fromString($query->to()),
-            OrderCurrency::fromString($query->currency())->toUpper(),
+            OrderCurrency::fromString($query->currency()),
             CompanyId::fromString($this->authorization->requireCompanyId()),
         );
     }
