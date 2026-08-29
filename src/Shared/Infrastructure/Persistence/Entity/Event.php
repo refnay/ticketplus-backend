@@ -66,6 +66,9 @@ class Event
     private ?int $status = null;
 
     #[ORM\Column]
+    private ?int $orderLimit = null;
+
+    #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column]
@@ -304,6 +307,18 @@ class Event
     public function setStatus(int $status): static
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    public function getOrderLimit(): ?int
+    {
+        return $this->orderLimit;
+    }
+
+    public function setOrderLimit(int $orderLimit): static
+    {
+        $this->orderLimit = $orderLimit;
 
         return $this;
     }

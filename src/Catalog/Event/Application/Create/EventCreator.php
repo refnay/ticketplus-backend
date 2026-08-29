@@ -25,6 +25,8 @@ use App\Catalog\Event\Domain\Exceptions\EventAlreadyExists;
 use App\Catalog\Event\Domain\Exceptions\EventNotFound;
 use App\Catalog\Event\Domain\Services\EventBySlugFinder;
 use App\Catalog\Event\Application\Port\Slug\SlugGenerator;
+use App\Catalog\Event\Domain\EventDaySaleStartsAt;
+use App\Catalog\Event\Domain\EventOrderLimit;
 use App\Catalog\Shared\Domain\CompanyId;
 
 class EventCreator
@@ -43,6 +45,7 @@ class EventCreator
         EventVenue $venue,
         EventCoordinates $coordinates,
         EventLocation $location,
+        EventOrderLimit $orderLimit,
         EventCountry $country,
         EventCity $city,
         EventCurrency $currency,
@@ -67,6 +70,7 @@ class EventCreator
             $venue,
             $coordinates,
             $location,
+            $orderLimit,
             $country,
             $city,
             $currency,
@@ -81,6 +85,7 @@ class EventCreator
                 EventDayDate::fromString($dayCommand->date()),
                 EventDayStartTime::fromString($dayCommand->startTime()),
                 EventDayEndTime::fromString($dayCommand->endTime()),
+                EventDaySaleStartsAt::fromString($dayCommand->saleStartAt()),
                 EventDayDescription::fromString($dayCommand->description()),
                 $event,
             );

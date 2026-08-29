@@ -18,6 +18,7 @@ class CreateEventCommand
         private string $currency,
         private float $taxRate,
         private string $category,
+        private int $orderLimit,
         private array $days,
     ) {}
 
@@ -43,6 +44,7 @@ class CreateEventCommand
             $payload->string('currency'),
             $payload->float('taxRate'),
             $payload->string('category'),
+            $payload->int('orderLimit'),
             $days->items()
         );
     }
@@ -95,6 +97,11 @@ class CreateEventCommand
     public function category(): string
     {
         return $this->category;
+    }
+
+    public function orderLimit(): int
+    {
+        return $this->orderLimit;
     }
     
     public function days(): array

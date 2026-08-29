@@ -8,6 +8,7 @@ class EventDay
     private EventDayDate $date;
     private EventDayStartTime $startTime;
     private EventDayEndTime $endTime;
+    private EventDaySaleStartsAt $saleStartAt;
     private EventDayDescription $description;
     private EventDayStatus $status;
     private Event $event;
@@ -17,6 +18,7 @@ class EventDay
         EventDayDate $date,
         EventDayStartTime $startTime,
         EventDayEndTime $endTime,
+        EventDaySaleStartsAt $saleStartAt,
         EventDayDescription $description,
         EventDayStatus $status,
         Event $event,
@@ -25,6 +27,7 @@ class EventDay
         $this->date = $date;
         $this->startTime = $startTime;
         $this->endTime = $endTime;
+        $this->saleStartAt = $saleStartAt;
         $this->description = $description;
         $this->status = $status;
         $this->event = $event;
@@ -34,6 +37,7 @@ class EventDay
         EventDayDate $date,
         EventDayStartTime $startTime,
         EventDayEndTime $endTime,
+        EventDaySaleStartsAt $saleStartAt,
         EventDayDescription $description,
         Event $event,
     ): self {
@@ -42,6 +46,7 @@ class EventDay
             $date,
             $startTime,
             $endTime,
+            $saleStartAt,
             $description,
             EventDayStatus::scheduled(),
             $event,
@@ -66,6 +71,11 @@ class EventDay
     public function endTime(): EventDayEndTime
     {
         return $this->endTime;
+    }
+
+    public function saleStartAt(): EventDaySaleStartsAt
+    {
+        return $this->saleStartAt;
     }
 
     public function description(): EventDayDescription
@@ -96,6 +106,11 @@ class EventDay
     public function changeEndTime(EventDayEndTime $endTime): void
     {
         $this->endTime = $endTime;
+    }
+
+    public function changeSaleStartAt(EventDaySaleStartsAt $saleStartAt): void
+    {
+        $this->saleStartAt = $saleStartAt;
     }
 
     public function changeDescription(EventDayDescription $description): void

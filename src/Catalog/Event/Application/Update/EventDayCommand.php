@@ -11,6 +11,7 @@ class EventDayCommand
         private string $date,
         private string $startTime,
         private string $endTime,
+        private string $saleStartAt,
         private ?string $description,
         private int $status,
     ) {}
@@ -24,6 +25,7 @@ class EventDayCommand
             $payload->string('date'),
             $payload->string('startTime'),
             $payload->string('endTime'),
+            $payload->string('saleStartAt'),
             $payload->nullableString('description'),
             $payload->int('status'),
         );
@@ -52,6 +54,11 @@ class EventDayCommand
     public function endTime(): string
     {
         return $this->endTime;
+    }
+
+    public function saleStartAt(): string
+    {
+        return $this->saleStartAt;
     }
 
     public function status(): int

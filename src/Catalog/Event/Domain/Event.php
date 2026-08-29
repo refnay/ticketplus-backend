@@ -21,6 +21,7 @@ class Event
     private EventVenue $venue;
     private EventCoordinates $coordinates;
     private EventLocation $location;
+    private EventOrderLimit $orderLimit;
     private EventCountry $country;
     private EventCity $city;
     private EventCurrency $currency;
@@ -43,6 +44,7 @@ class Event
         EventVenue $venue,
         EventCoordinates $coordinates,
         EventLocation $location,
+        EventOrderLimit $orderLimit,
         EventCountry $country,
         EventCity $city,
         EventCurrency $currency,
@@ -63,6 +65,7 @@ class Event
         $this->venue = $venue;
         $this->coordinates = $coordinates;
         $this->location = $location;
+        $this->orderLimit = $orderLimit;
         $this->country = $country;
         $this->city = $city;
         $this->currency = $currency;
@@ -80,6 +83,7 @@ class Event
         EventVenue $venue,
         EventCoordinates $coordinates,
         EventLocation $location,
+        EventOrderLimit $orderLimit,
         EventCountry $country,
         EventCity $city,
         EventCurrency $currency,
@@ -99,6 +103,7 @@ class Event
             $venue,
             $coordinates,
             $location,
+            $orderLimit,
             $country,
             $city,
             $currency,
@@ -168,6 +173,11 @@ class Event
     public function location(): EventLocation
     {
         return $this->location;
+    }
+
+    public function orderLimit(): EventOrderLimit
+    {
+        return $this->orderLimit;
     }
 
     public function country(): EventCountry
@@ -259,6 +269,11 @@ class Event
     public function changeLocation(EventLocation $location): void
     {
         $this->location = $location;
+    }
+
+    public function changeOrderLimit(EventOrderLimit $orderLimit): void
+    {
+        $this->orderLimit = $orderLimit;
     }
 
     public function changeCountry(EventCountry $country): void

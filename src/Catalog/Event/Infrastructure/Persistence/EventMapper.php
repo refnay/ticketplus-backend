@@ -16,6 +16,7 @@ use App\Catalog\Event\Domain\EventDayDate;
 use App\Catalog\Event\Domain\EventDayDescription;
 use App\Catalog\Event\Domain\EventDayEndTime;
 use App\Catalog\Event\Domain\EventDayId;
+use App\Catalog\Event\Domain\EventDaySaleStartsAt;
 use App\Catalog\Event\Domain\EventDayStartTime;
 use App\Catalog\Event\Domain\EventDayStatus;
 use App\Catalog\Event\Domain\EventDescription;
@@ -23,6 +24,7 @@ use App\Catalog\Event\Domain\EventId;
 use App\Catalog\Event\Domain\EventLocation;
 use App\Catalog\Event\Domain\EventLogo;
 use App\Catalog\Event\Domain\EventName;
+use App\Catalog\Event\Domain\EventOrderLimit;
 use App\Catalog\Event\Domain\EventSlug;
 use App\Catalog\Event\Domain\EventStatus;
 use App\Catalog\Event\Domain\EventTaxRate;
@@ -90,6 +92,7 @@ class EventMapper
             EventVenue::fromString($entity->getVenue()),
             EventCoordinates::fromArray($entity->getCoordinates()),
             EventLocation::fromString($entity->getLocation()),
+            EventOrderLimit::fromInt($entity->getOrderLimit()),
             EventCountry::fromString($entity->getCountry()),
             EventCity::fromString($entity->getCity()),
             EventCurrency::fromString($entity->getCurrency()),
@@ -107,6 +110,7 @@ class EventMapper
                 EventDayDate::fromDate($dayEntity->getDate()),
                 EventDayStartTime::fromDateTime($dayEntity->getStartTime()),
                 EventDayEndTime::fromDateTime($dayEntity->getEndTime()),
+                EventDaySaleStartsAt::fromDateTime($dayEntity->getSaleStartAt()),
                 EventDayDescription::fromString($dayEntity->getDescription()),
                 EventDayStatus::fromInt($dayEntity->getStatus()),
                 $event,

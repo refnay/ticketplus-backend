@@ -11,6 +11,7 @@ use App\Catalog\Event\Domain\EventCurrency;
 use App\Catalog\Event\Domain\EventDescription;
 use App\Catalog\Event\Domain\EventLocation;
 use App\Catalog\Event\Domain\EventName;
+use App\Catalog\Event\Domain\EventOrderLimit;
 use App\Catalog\Event\Domain\EventTaxRate;
 use App\Catalog\Event\Domain\EventVenue;
 use App\Catalog\Shared\Domain\CompanyId;
@@ -31,6 +32,7 @@ class CreateEventCommandHandler
             EventVenue::fromString($command->venue()),
             EventCoordinates::fromArray($command->coordinates()),
             EventLocation::fromString($command->location()),
+            EventOrderLimit::fromInt($command->orderLimit()),
             EventCountry::fromString($command->country()),
             EventCity::fromString($command->city()),
             EventCurrency::fromString($command->currency()),

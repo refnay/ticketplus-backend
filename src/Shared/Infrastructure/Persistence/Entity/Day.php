@@ -38,6 +38,9 @@ class Day
     #[ORM\Column]
     private ?\DateTimeImmutable $updatedAt = null;
 
+    #[ORM\Column]
+    private ?\DateTimeImmutable $saleStartAt = null;
+
     #[ORM\ManyToOne(inversedBy: 'days')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Event $event = null;
@@ -152,6 +155,19 @@ class Day
     public function getEvent(): ?Event
     {
         return $this->event;
+    }
+
+    
+    public function getSaleStartAt(): ?\DateTimeImmutable
+    {
+        return $this->saleStartAt;
+    }
+
+    public function setSaleStartAt(\DateTimeImmutable $saleStartAt): static
+    {
+        $this->saleStartAt = $saleStartAt;
+
+        return $this;
     }
 
     public function setEvent(?Event $event): static
