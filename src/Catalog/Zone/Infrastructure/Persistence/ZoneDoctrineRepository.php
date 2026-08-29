@@ -117,7 +117,7 @@ class ZoneDoctrineRepository implements ZoneRepository
         $result = $this->entityManager->getConnection()->executeQuery($sql, [
             'companyId' => $companyId->value(),
         ])->fetchAssociative();
-
+        
         return [
             'total' => is_array($result) && isset($result['total']) ? (int) $result['total'] : 0,
             'sold' => is_array($result) && isset($result['sold']) ? (int) $result['sold'] : 0,
