@@ -36,8 +36,7 @@ final class SymfonyCurrentActor implements CurrentActor
 
         /** @var User $user */
         $user = $this->security->getUser();
-
-        foreach ($user->getCompanies() as $company) {
+        foreach ($user->getCompanies() as $key => $company) {
             if ($company->getCompany()->getId()->toRfc4122() === $this->companyId()) {
                 return $company->getId()->toRfc4122();
             } 

@@ -95,7 +95,7 @@ class OrderCreator
                 'zone' => $zoneId,
                 'quantity' => $quantity,
                 'seats' => $seatIds,
-                'price' => $zone->price(),
+                'price' => $zone->price() * $event->taxRate() / 100,
             ];
         }
 
@@ -116,13 +116,12 @@ class OrderCreator
 
         $this->repository->save($order);
 
-        $event = new OrderProcessedDomainEvent(
+        $this->eventBus->publish(new OrderProcessedDomainEvent(
             $eventId->value(),
             $dayId->value(),
             $details,
             $order->status()->value(),
-        );
-        $this->eventBus->publish($event);
+        ));
 
         return $order->id()->value();
     }
