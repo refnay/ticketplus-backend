@@ -130,6 +130,11 @@ abstract class DateTimeValueObject
         return $this->isNull() ? '' : $this->value->format('d/m/Y');
     }
 
+    public function asDMYHM(): string
+    {
+        return $this->isNull() ? '' : $this->value->format('d/m/Y H:i');
+    }
+
     public function toDateTime(): DateTime
     {
         $this->ensureNotNull();

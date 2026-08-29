@@ -13,6 +13,7 @@ class EventDayResponse implements JsonSerializable
         readonly private string $date,
         readonly private string $startTime,
         readonly private string $endTime,
+        readonly private string $saleStartAt,
         readonly private ?string $description,
         readonly private int $status,
     ) {
@@ -25,6 +26,7 @@ class EventDayResponse implements JsonSerializable
             $day->date()->asDMY(),
             $day->startTime()->asHM(),
             $day->endTime()->asHM(),
+            $day->saleStartAt()->asDMYHM(),
             $day->description()->value(),
             $day->status()->value(),
         );
