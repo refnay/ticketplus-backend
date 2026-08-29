@@ -14,8 +14,12 @@ class OrderReporter
     {
     }
 
-    public function __invoke(OrderPaidAt $from, OrderPaidAt $to, OrderCurrency $currency, CompanyId $companyId): OrderSummaryResponse
-    {
+    public function __invoke(
+        OrderPaidAt $from,
+        OrderPaidAt $to,
+        OrderCurrency $currency,
+        CompanyId $companyId
+    ): OrderSummaryResponse {
         $auxiliarTo = $to->add(new DateInterval('P1D'));
 
         $previousFrom = $from->sub(new DateInterval(sprintf('P%dD', $from->diffDays($auxiliarTo))));
@@ -24,10 +28,10 @@ class OrderReporter
         $previous = $this->repository->amountPaidTotal($companyId, $currency, $previousFrom, $from);
 
         return new OrderSummaryResponse(
-            $from->format('d/m/Y'),
-            $to->format('d/m/Y'),
-            $previousFrom->format('d/m/Y'),
-            $from->sub(new DateInterval('P1D'))->format('d/m/Y'),
+            $from->asDMY(),
+            $to->asDMY(),
+            $previousFrom->asDMY(),
+            $from->sub(new DateInterval('P1D'))->asDMY(),
             round($current, 2),
             $currency->value(),
             $this->variation($current, $previous),
