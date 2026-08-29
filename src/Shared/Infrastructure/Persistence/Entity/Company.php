@@ -20,6 +20,12 @@ class Company
     #[ORM\Column(length: 150)]
     private ?string $name = null;
 
+    #[ORM\Column(length: 64)]
+    private ?string $timezone = null;
+
+    #[ORM\Column(name: 'company_default', type: Types::JSON)]
+    private ?array $default = null;
+
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
@@ -104,6 +110,30 @@ class Company
     public function setName(string $name): static
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getTimezone(): ?string
+    {
+        return $this->timezone;
+    }
+
+    public function setTimezone(string $timezone): static
+    {
+        $this->timezone = $timezone;
+
+        return $this;
+    }
+
+    public function getDefault(): ?array
+    {
+        return $this->default;
+    }
+
+    public function setDefault(array $default): static
+    {
+        $this->default = $default;
 
         return $this;
     }

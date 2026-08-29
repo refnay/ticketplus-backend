@@ -11,6 +11,8 @@ class Company
     private CompanyEmail $email;
     private CompanyName $name;
     private CompanyStatus $status;
+    private CompanyTimezone $timezone;
+    private CompanyDefault $default;
     private ?CompanyLocation $location = null;
     private ?CompanyLogo $logo = null;
     private ?CompanyDescription $description = null;
@@ -25,6 +27,8 @@ class Company
         CompanyEmail $email,
         CompanyName $name,
         CompanyStatus $status,
+        CompanyTimezone $timezone,
+        CompanyDefault $default,
         CompanyLocation $location,
         CompanyLogo $logo,
         CompanyDescription $description,
@@ -38,6 +42,8 @@ class Company
         $this->email = $email;
         $this->name = $name;
         $this->status = $status;
+        $this->timezone = $timezone;
+        $this->default = $default;
         $this->location = $location;
         $this->logo = $logo;
         $this->description = $description;
@@ -51,6 +57,8 @@ class Company
         CompanyDocument $document,
         CompanyEmail $email,
         CompanyName $name,
+        CompanyTimezone $timezone,
+        CompanyDefault $default,
         CompanyLocation $location,
         CompanyDescription $description,
         CompanyTelephone $telephone,
@@ -64,6 +72,8 @@ class Company
             $email,
             $name,
             CompanyStatus::pending(),
+            $timezone,
+            $default,
             $location,
             CompanyLogo::fromNull(),
             $description,
@@ -105,6 +115,16 @@ class Company
     public function status(): CompanyStatus
     {
         return $this->status;
+    }
+
+    public function timezone(): CompanyTimezone
+    {
+        return $this->timezone;
+    }
+
+    public function default(): CompanyDefault
+    {
+        return $this->default;
     }
 
     public function location(): CompanyLocation
@@ -160,6 +180,16 @@ class Company
     public function changeStatus(CompanyStatus $status): void
     {
         $this->status = $status;
+    }
+
+    public function changeTimezone(CompanyTimezone $timezone): void
+    {
+        $this->timezone = $timezone;
+    }
+
+    public function changeDefault(CompanyDefault $default): void
+    {
+        $this->default = $default;
     }
 
     public function changeLocation(CompanyLocation $location): void

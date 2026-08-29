@@ -13,6 +13,8 @@ class UpdateCompanyCommand
         private string $documentNumber,
         private string $email,
         private string $name,
+        private string $timezone,
+        private array $default,
         private ?string $location,
         private ?string $description,
         private ?string $telephone,
@@ -31,6 +33,8 @@ class UpdateCompanyCommand
             $payload->string('documentNumber'),
             $payload->string('email'),
             $payload->string('name'),
+            $payload->string('timezone'),
+            $payload->array('default'),
             $payload->nullableString('location'),
             $payload->nullableString('description'),
             $payload->nullableString('telephone'),
@@ -65,6 +69,16 @@ class UpdateCompanyCommand
     public function name(): string
     {
         return $this->name;
+    }
+
+    public function timezone(): string
+    {
+        return $this->timezone;
+    }
+
+    public function default(): array
+    {
+        return $this->default;
     }
     
     public function location(): ?string

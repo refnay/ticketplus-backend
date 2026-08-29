@@ -6,12 +6,14 @@ use App\Shared\Application\Security\AuthorizationContext;
 use App\Account\Company\Domain\CompanyCity;
 use App\Account\Company\Domain\CompanyCountry;
 use App\Account\Company\Domain\CompanyDescription;
+use App\Account\Company\Domain\CompanyDefault;
 use App\Account\Company\Domain\CompanyDocument;
 use App\Account\Company\Domain\CompanyEmail;
 use App\Account\Company\Domain\CompanyId;
 use App\Account\Company\Domain\CompanyLocation;
 use App\Account\Company\Domain\CompanyName;
 use App\Account\Company\Domain\CompanyTelephone;
+use App\Account\Company\Domain\CompanyTimezone;
 use App\Account\Company\Domain\CompanyWebSite;
 
 class UpdateCompanyCommandHandler
@@ -29,6 +31,8 @@ class UpdateCompanyCommandHandler
             CompanyDocument::create($command->documentType(), $command->documentNumber()),
             CompanyEmail::fromString($command->email()),
             CompanyName::fromString($command->name()),
+            CompanyTimezone::fromString($command->timezone()),
+            CompanyDefault::fromArray($command->default()),
             CompanyLocation::fromString($command->location()),
             CompanyDescription::fromString($command->description()),
             CompanyTelephone::fromString($command->telephone()),

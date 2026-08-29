@@ -11,6 +11,8 @@ final class CompanyResponse implements JsonSerializable
     public function __construct(
         private readonly string $id,
         private readonly string $name,
+        private readonly string $timezone,
+        private readonly array $default,
         private readonly ?string $description,
         private readonly ?string $logo,
         private readonly string $email,
@@ -29,6 +31,8 @@ final class CompanyResponse implements JsonSerializable
         return new self(
             $company->id()->value(),
             $company->name()->value(),
+            $company->timezone()->value(),
+            $company->default()->value(),
             $company->description()->value(),
             $company->logo()->value(),
             $company->email()->value(),

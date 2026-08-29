@@ -7,6 +7,7 @@ use App\Account\Company\Domain\Company;
 use App\Account\Company\Domain\CompanyCity;
 use App\Account\Company\Domain\CompanyCountry;
 use App\Account\Company\Domain\CompanyDescription;
+use App\Account\Company\Domain\CompanyDefault;
 use App\Account\Company\Domain\CompanyDocument;
 use App\Account\Company\Domain\CompanyEmail;
 use App\Account\Company\Domain\CompanyId;
@@ -15,6 +16,7 @@ use App\Account\Company\Domain\CompanyLogo;
 use App\Account\Company\Domain\CompanyName;
 use App\Account\Company\Domain\CompanyStatus;
 use App\Account\Company\Domain\CompanyTelephone;
+use App\Account\Company\Domain\CompanyTimezone;
 use App\Account\Company\Domain\CompanyWebSite;
 use PHPUnit\Framework\TestCase;
 
@@ -30,6 +32,8 @@ final class CompanyResponseTest extends TestCase
             CompanyEmail::fromString('contacto@ticketplus.test'),
             CompanyName::fromString('Ticket Plus'),
             CompanyStatus::fromInt(1),
+            CompanyTimezone::fromString('America/Lima'),
+            CompanyDefault::fromArray(['currency' => 'PEN', 'taxRate' => 18.0]),
             CompanyLocation::fromString('Av. Principal 123'),
             CompanyLogo::fromString('https://images.test/logo.png'),
             CompanyDescription::fromString('Productora de eventos'),
@@ -40,6 +44,8 @@ final class CompanyResponseTest extends TestCase
         self::assertSame([
             'id' => '018f7c54-5f88-7e04-8a90-7af68c932551',
             'name' => 'Ticket Plus',
+            'timezone' => 'America/Lima',
+            'default' => ['currency' => 'PEN', 'taxRate' => 18.0],
             'description' => 'Productora de eventos',
             'logo' => 'https://images.test/logo.png',
             'email' => 'contacto@ticketplus.test',

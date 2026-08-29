@@ -5,6 +5,7 @@ namespace App\Account\Company\Application\Update;
 use App\Account\Company\Domain\CompanyCity;
 use App\Account\Company\Domain\CompanyCountry;
 use App\Account\Company\Domain\CompanyDescription;
+use App\Account\Company\Domain\CompanyDefault;
 use App\Account\Company\Domain\CompanyDocument;
 use App\Account\Company\Domain\CompanyEmail;
 use App\Account\Company\Domain\CompanyId;
@@ -12,6 +13,7 @@ use App\Account\Company\Domain\CompanyLocation;
 use App\Account\Company\Domain\CompanyName;
 use App\Account\Company\Domain\CompanyRepository;
 use App\Account\Company\Domain\CompanyTelephone;
+use App\Account\Company\Domain\CompanyTimezone;
 use App\Account\Company\Domain\CompanyWebSite;
 use App\Account\Company\Domain\Exceptions\CompanyDocumentAlreadyExists;
 use App\Account\Company\Domain\Exceptions\CompanyNotFound;
@@ -33,6 +35,8 @@ class CompanyUpdater
         CompanyDocument $document,
         CompanyEmail $email,
         CompanyName $name,
+        CompanyTimezone $timezone,
+        CompanyDefault $default,
         CompanyLocation $location,
         CompanyDescription $description,
         CompanyTelephone $telephone,
@@ -53,6 +57,8 @@ class CompanyUpdater
         $company->changeCity($city);
         $company->changeEmail($email);
         $company->changeName($name);
+        $company->changeTimezone($timezone);
+        $company->changeDefault($default);
         $company->changeLocation($location);
         $company->changeDescription($description);
         $company->changeTelephone($telephone);
