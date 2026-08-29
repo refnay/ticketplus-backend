@@ -28,6 +28,10 @@ services:
         arguments:
             $accessToken: '%env(MERCADO_PAGO_ACCESS_TOKEN)%'
 
+    # Exchange Rate
+    App\Sale\Order\Application\Port\ExchangeRate\ExchangeRateProvider:
+        alias: App\Sale\Order\Infrastructure\ExchangeRate\FrankfurterExchangeRateProvider
+
     # Image
     App\Shared\Application\Port\Image\ImageUploader:
         alias: App\Shared\Infrastructure\Image\ImgBBImageUploader
