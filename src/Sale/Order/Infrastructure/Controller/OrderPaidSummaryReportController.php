@@ -2,7 +2,7 @@
 
 namespace App\Sale\Order\Infrastructure\Controller;
 
-use App\Sale\Order\Application\PaidSummaryReport\SummaryResponse;
+use App\Sale\Order\Application\PaidSummaryReport\OrderSummaryResponse;
 use App\Sale\Order\Application\PaidSummaryReport\ReportOrderPaidSummaryQuery;
 use App\Shared\Application\Bus\QueryBus;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,7 +15,7 @@ class OrderPaidSummaryReportController extends AbstractController
     {
         $query = ReportOrderPaidSummaryQuery::fromQuery($request->query->all());
 
-        /** @var SummaryResponse $response */
+        /** @var OrderSummaryResponse $response */
         $response = $queryBus->ask($query);
 
         return new JsonResponse($response->jsonSerialize());

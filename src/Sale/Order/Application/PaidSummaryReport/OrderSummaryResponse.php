@@ -5,7 +5,7 @@ namespace App\Sale\Order\Application\PaidSummaryReport;
 use JsonSerializable;
 use Override;
 
-class SummaryResponse implements JsonSerializable
+class OrderSummaryResponse implements JsonSerializable
 {
     public function __construct(
         readonly private string $from,

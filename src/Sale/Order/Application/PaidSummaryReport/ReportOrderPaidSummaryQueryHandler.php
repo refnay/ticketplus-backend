@@ -15,7 +15,7 @@ class ReportOrderPaidSummaryQueryHandler
     ) {
     }
 
-    public function __invoke(ReportOrderPaidSummaryQuery $query): SummaryResponse
+    public function __invoke(ReportOrderPaidSummaryQuery $query): OrderSummaryResponse
     {
         $this->authorization->requireAllPermissions();
 
