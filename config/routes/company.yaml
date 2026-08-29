@@ -3,6 +3,11 @@ company-create:
     controller: App\Account\Company\Infrastructure\Controller\CompanyCreateController::create
     methods: POST
 
+company-find:
+    path: /api/company
+    controller: App\Account\Company\Infrastructure\Controller\CompanyFindController::find
+    methods: GET
+
 company-update:
     path: /api/company
     controller: App\Account\Company\Infrastructure\Controller\CompanyUpdateController::update
