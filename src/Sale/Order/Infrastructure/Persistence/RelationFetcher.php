@@ -4,10 +4,13 @@ namespace App\Sale\Order\Infrastructure\Persistence;
 
 use App\Sale\Discount\Domain\DiscountId;
 use App\Sale\Discount\Domain\Exceptions\DiscountNotFound;
+use App\Sale\Reference\Event\Domain\EventId;
+use App\Sale\Reference\Event\Domain\Exceptions\EventNotFound;
 use App\Sale\Reference\User\Domain\Exceptions\UserNotFound;
 use App\Sale\Reference\User\Domain\UserId;
 use App\Shared\Infrastructure\Persistence\Entity\User as UserEntity;
 use App\Shared\Infrastructure\Persistence\Entity\Discount as DiscountEntity;
+use App\Shared\Infrastructure\Persistence\Entity\Event as EventEntity;
 use Doctrine\ORM\EntityManagerInterface;
 use Throwable;
 
@@ -32,6 +35,15 @@ class RelationFetcher
             return $this->entityManager->getReference(DiscountEntity::class, $id->toUuid());
         } catch (Throwable) {
             throw new DiscountNotFound();
+        }
+    }
+
+    public function event(EventId $id): EventEntity
+    {
+        try {
+            return $this->entityManager->getReference(EventEntity::class, $id->toUuid());
+        } catch (Throwable) {
+            throw new EventNotFound();
         }
     }
 }

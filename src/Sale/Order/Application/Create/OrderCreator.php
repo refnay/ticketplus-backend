@@ -110,6 +110,7 @@ class OrderCreator
             OrderTax::fromFloat($tax),
             OrderTotal::fromFloat($total),
             OrderDetails::fromPattern($eventId->value(), $dayId->value(), $details),
+            $eventId,
             $userId,
         );
         $order->changeDiscountId($discountId);

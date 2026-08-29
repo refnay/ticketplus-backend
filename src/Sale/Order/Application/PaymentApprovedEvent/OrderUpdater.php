@@ -3,6 +3,7 @@
 namespace App\Sale\Order\Application\PaymentApprovedEvent;
 
 use App\Sale\Order\Domain\OrderId;
+use App\Sale\Order\Domain\OrderPaidAt;
 use App\Sale\Order\Domain\OrderRepository;
 use App\Sale\Order\Domain\OrderStatus;
 use App\Sale\Order\Domain\Services\OrderFinder;
@@ -18,6 +19,7 @@ class OrderUpdater
     {
         $order = $this->finder->__invoke($id, $userId);
         $order->changeStatus(OrderStatus::paid());
+        $order->changePaidAt(OrderPaidAt::now());
 
         $this->repository->update($order);
     }

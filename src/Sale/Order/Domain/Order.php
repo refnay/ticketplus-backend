@@ -3,6 +3,7 @@
 namespace App\Sale\Order\Domain;
 
 use App\Sale\Discount\Domain\DiscountId;
+use App\Sale\Reference\Event\Domain\EventId;
 use App\Sale\Reference\User\Domain\UserId;
 
 class Order
@@ -16,7 +17,10 @@ class Order
     private OrderTax $tax;
     private OrderTotal $total;
     private OrderExpiresAt $expiresAt;
+    private OrderPaidAt $paidAt;
+    private OrderExchangeRate $exchangeRate;
     private OrderDetails $details;
+    private EventId $eventId;
     private UserId $userId;
     private ?DiscountId $discountId = null;
 
@@ -30,7 +34,10 @@ class Order
         OrderTax $tax,
         OrderTotal $total,
         OrderExpiresAt $expiresAt,
+        OrderPaidAt $paidAt,
+        OrderExchangeRate $exchangeRate,
         OrderDetails $details,
+        EventId $eventId,
         UserId $userId,
     ) {
         $this->id = $id;
@@ -42,7 +49,10 @@ class Order
         $this->tax = $tax;
         $this->total = $total;
         $this->expiresAt = $expiresAt;
+        $this->paidAt = $paidAt;
+        $this->exchangeRate = $exchangeRate;
         $this->details = $details;
+        $this->eventId = $eventId;
         $this->userId = $userId;
     }
 
@@ -53,6 +63,7 @@ class Order
         OrderTax $tax,
         OrderTotal $total,
         OrderDetails $details,
+        EventId $eventId,
         UserId $userId,
     ): self {
         return new self(
@@ -65,7 +76,10 @@ class Order
             $tax,
             $total,
             OrderExpiresAt::start(),
+            OrderPaidAt::fromNull(),
+            OrderExchangeRate::fromNull(),
             $details,
+            $eventId,
             $userId,
         );
     }
@@ -120,6 +134,21 @@ class Order
         return $this->expiresAt;
     }
 
+    public function paidAt(): OrderPaidAt
+    {
+        return $this->paidAt;
+    }
+
+    public function exchangeRate(): OrderExchangeRate
+    {
+        return $this->exchangeRate;
+    }
+
+    public function eventId(): EventId
+    {
+        return $this->eventId;
+    }
+
     public function userId(): UserId
     {
         return $this->userId;
@@ -143,6 +172,16 @@ class Order
     public function changeExpiresAt(OrderExpiresAt $expiresAt): void
     {
         $this->expiresAt = $expiresAt;
+    }
+
+    public function changePaidAt(OrderPaidAt $paidAt): void
+    {
+        $this->paidAt = $paidAt;
+    }
+
+    public function changeExchangeRate(OrderExchangeRate $exchangeRate): void
+    {
+        $this->exchangeRate = $exchangeRate;
     }
 
     public function changeStatus(OrderStatus $status): void

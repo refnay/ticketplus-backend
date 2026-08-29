@@ -5,15 +5,18 @@ namespace App\Sale\Order\Infrastructure\Persistence;
 use App\Sale\Order\Domain\Order;
 use App\Sale\Order\Domain\OrderCurrency;
 use App\Sale\Order\Domain\OrderDetails;
+use App\Sale\Order\Domain\OrderExchangeRate;
 use App\Sale\Order\Domain\OrderExpiresAt;
 use App\Sale\Order\Domain\OrderId;
 use App\Sale\Order\Domain\OrderPaymentMethod;
+use App\Sale\Order\Domain\OrderPaidAt;
 use App\Sale\Order\Domain\OrderPrice;
 use App\Sale\Order\Domain\OrderStatus;
 use App\Sale\Order\Domain\OrderSubTotal;
 use App\Sale\Order\Domain\OrderTax;
 use App\Sale\Order\Domain\OrderTotal;
 use App\Sale\Reference\User\Domain\UserId;
+use App\Sale\Reference\Event\Domain\EventId;
 use App\Shared\Infrastructure\Persistence\Entity\Purchase as OrderEntity;
 
 class OrderMapper
@@ -32,8 +35,11 @@ class OrderMapper
         $entity->setStatus($order->status()->value());
         $entity->setPaymentMethod($order->paymentMethod()->value());
         $entity->setExpiresdAt($order->expiresAt()->value());
+        $entity->setPaidAt($order->paidAt()->value());
+        $entity->setExchangeRate($order->exchangeRate()->value());
         $entity->setPrice($order->price()->value());
         $entity->setDetails($order->details()->value());
+        $entity->setEvent($this->fetcher->event($order->eventId()));
         $entity->setAttendee($this->fetcher->user($order->userId()));
 
         if (!is_null($order->discountId())) {
@@ -55,7 +61,10 @@ class OrderMapper
             OrderTax::fromFloat($entity->getTax()),
             OrderTotal::fromFloat($entity->getTotal()),
             OrderExpiresAt::fromDateTime($entity->getExpiresAt()),
+            OrderPaidAt::fromDateTime($entity->getPaidAt()),
+            OrderExchangeRate::fromFloat($entity->getExchangeRate()),
             OrderDetails::fromArray($entity->getDetails()),
+            EventId::fromString($entity->getEvent()->getId()),
             UserId::fromString($entity->getAttendee()->getId())
         );
         $order->changeDiscountId($entity->getDiscount()?->getId());
@@ -71,6 +80,8 @@ class OrderMapper
         $entity->setCurrency($order->currency()->value());
         $entity->setStatus($order->status()->value());
         $entity->setPaymentMethod($order->paymentMethod()->value());
+        $entity->setPaidAt($order->paidAt()->value());
+        $entity->setExchangeRate($order->exchangeRate()->value());
     }
 
     public function entityClass(): string

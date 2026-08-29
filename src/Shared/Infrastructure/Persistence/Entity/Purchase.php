@@ -10,6 +10,7 @@ use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: PurchaseRepository::class)]
 #[ORM\Table(name: '`purchase`')]
+#[ORM\Index(name: 'IDX_PURCHASE_APPROVED_SALES', columns: ['event_id', 'status', 'paid_at'])]
 #[ORM\HasLifecycleCallbacks]
 class Purchase
 {
@@ -50,9 +51,19 @@ class Purchase
     #[ORM\Column]
     private ?\DateTimeImmutable $expiresAt = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $paidAt = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?float $exchangeRate = null;
+
     #[ORM\ManyToOne(inversedBy: 'purchases')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $attendee = null;
+
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Event $event = null;
 
     /**
      * @var Collection<int, Ticket>
@@ -213,6 +224,30 @@ class Purchase
         return $this;
     }
 
+    public function getPaidAt(): ?\DateTimeImmutable
+    {
+        return $this->paidAt;
+    }
+
+    public function setPaidAt(?\DateTimeImmutable $paidAt): static
+    {
+        $this->paidAt = $paidAt;
+
+        return $this;
+    }
+
+    public function getExchangeRate(): ?float
+    {
+        return $this->exchangeRate;
+    }
+
+    public function setExchangeRate(?float $exchangeRate): static
+    {
+        $this->exchangeRate = $exchangeRate;
+
+        return $this;
+    }
+
     public function getAttendee(): ?User
     {
         return $this->attendee;
@@ -221,6 +256,18 @@ class Purchase
     public function setAttendee(?User $attendee): static
     {
         $this->attendee = $attendee;
+
+        return $this;
+    }
+
+    public function getEvent(): ?Event
+    {
+        return $this->event;
+    }
+
+    public function setEvent(?Event $event): static
+    {
+        $this->event = $event;
 
         return $this;
     }
