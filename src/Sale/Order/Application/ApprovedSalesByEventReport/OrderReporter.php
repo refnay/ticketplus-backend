@@ -1,0 +1,37 @@
+<?php
+
+namespace App\Sale\Order\Application\ApprovedSalesByEventReport;
+
+use App\Sale\Order\Domain\OrderCurrency;
+use App\Sale\Order\Domain\OrderPaidAt;
+use App\Sale\Order\Domain\OrderRepository;
+use App\Sale\Shared\Domain\CompanyId;
+use DateInterval;
+
+class OrderReporter
+{
+    public function __construct(private OrderRepository $repository)
+    {
+    }
+
+    public function __invoke(
+        OrderPaidAt $from,
+        OrderPaidAt $to,
+        OrderCurrency $currency,
+        CompanyId $companyId,
+    ): OrderByEventResponse {
+        $events = $this->repository->approvedSalesByEvent(
+            $companyId,
+            $currency,
+            $from,
+            $to->add(new DateInterval('P1D')),
+        );
+
+        return new OrderByEventResponse(
+            $from->asDMY(),
+            $to->asDMY(),
+            $currency->value(),
+            $events,
+        );
+    }
+}

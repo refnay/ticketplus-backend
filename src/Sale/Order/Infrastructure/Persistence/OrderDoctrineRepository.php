@@ -22,6 +22,7 @@ use Throwable;
 class OrderDoctrineRepository implements OrderRepository
 {
     private const string ORDER_PREFIX = 'o';
+    private const int APPROVED_SALES_BY_EVENT_LIMIT = 4;
 
     public function __construct(private EntityManagerInterface $entityManager, private OrderMapper $mapper)
     {
@@ -165,6 +166,64 @@ class OrderDoctrineRepository implements OrderRepository
         ])->fetchAssociative();
 
         return is_array($result) && isset($result['amount']) ? (float) $result['amount'] : 0.00;
+    }
+
+    #[Override]
+    public function approvedSalesByEvent(
+        CompanyId $companyId,
+        OrderCurrency $currency,
+        OrderPaidAt $from,
+        OrderPaidAt $to,
+    ): array {
+        $sql = sprintf(
+            "SELECT
+                e.id,
+                e.name,
+                COALESCE(SUM(
+                    CASE
+                        WHEN o.currency = :currency THEN o.total
+                        WHEN :currency = 'PEN' AND o.currency = 'USD' AND o.exchange_rate > 0
+                            THEN o.total * o.exchange_rate
+                        WHEN :currency = 'USD' AND o.currency = 'PEN' AND o.exchange_rate > 0
+                            THEN o.total / o.exchange_rate
+                        ELSE 0
+                    END
+                ), 0) AS amount
+            FROM purchase o
+            INNER JOIN event e ON e.id = o.event_id
+            WHERE e.company_id = :companyId
+              AND o.status = %d
+              AND o.paid_at >= :from
+              AND o.paid_at < :to
+            GROUP BY e.id, e.name
+            HAVING COALESCE(SUM(
+                CASE
+                    WHEN o.currency = :currency THEN o.total
+                    WHEN :currency = 'PEN' AND o.currency = 'USD' AND o.exchange_rate > 0
+                        THEN o.total * o.exchange_rate
+                    WHEN :currency = 'USD' AND o.currency = 'PEN' AND o.exchange_rate > 0
+                        THEN o.total / o.exchange_rate
+                    ELSE 0
+                END
+            ), 0) > 0
+            ORDER BY amount DESC, e.name ASC
+            LIMIT %d",
+            OrderStatusList::PAID->value,
+            self::APPROVED_SALES_BY_EVENT_LIMIT,
+        );
+
+        $result = $this->entityManager->getConnection()->executeQuery($sql, [
+            'companyId' => $companyId->value(),
+            'currency' => $currency->value(),
+            'from' => $from->__toString(),
+            'to' => $to->__toString(),
+        ])->fetchAllAssociative();
+
+        return array_map(static fn(array $event): array => [
+            'id' => (string) $event['id'],
+            'name' => (string) $event['name'],
+            'amount' => round((float) $event['amount'], 2),
+        ], $result);
     }
 
     #[Override]

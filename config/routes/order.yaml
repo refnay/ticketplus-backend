@@ -8,6 +8,11 @@ order-approved-sales-summary-report:
     controller: App\Sale\Order\Infrastructure\Controller\OrderApprovedSalesSummaryReportController::report
     methods: GET
 
+order-approved-sales-by-event-report:
+    path: /api/order/report/approved-sales-by-event
+    controller: App\Sale\Order\Infrastructure\Controller\OrderApprovedSalesByEventReportController::report
+    methods: GET
+
 order-paid-count-summary-report:
     path: /api/order/report/paid-count-summary
     controller: App\Sale\Order\Infrastructure\Controller\OrderPaidCountSummaryReportController::report
