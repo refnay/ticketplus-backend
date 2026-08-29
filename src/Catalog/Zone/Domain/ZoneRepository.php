@@ -3,6 +3,7 @@
 namespace App\Catalog\Zone\Domain;
 
 use App\Catalog\Event\Domain\EventDayId;
+use App\Catalog\Shared\Domain\CompanyId;
 
 interface ZoneRepository
 {
@@ -17,4 +18,6 @@ interface ZoneRepository
     public function searchByFilters(array $filters, string $orderBy, string $order, ?int $limit, ?int $offset): array;
 
     public function countByFilters(array $filters): int;
+
+    public function occupancySummary(CompanyId $companyId): array;
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Sale\Order\Application\PaidSummaryReport;
+namespace App\Sale\Order\Application\ApprovedSalesSummaryReport;
 
 use App\Sale\Order\Domain\OrderCurrency;
 use App\Sale\Order\Domain\OrderPaidAt;
@@ -18,14 +18,13 @@ class OrderReporter
         OrderPaidAt $from,
         OrderPaidAt $to,
         OrderCurrency $currency,
-        CompanyId $companyId
+        CompanyId $companyId,
     ): OrderSummaryResponse {
-        $auxiliarTo = $to->add(new DateInterval('P1D'));
+        $auxiliaryTo = $to->add(new DateInterval('P1D'));
+        $previousFrom = $from->sub(new DateInterval(sprintf('P%dD', $from->diffDays($auxiliaryTo))));
 
-        $previousFrom = $from->sub(new DateInterval(sprintf('P%dD', $from->diffDays($auxiliarTo))));
-
-        $current = $this->repository->amountPaidTotal($companyId, $currency, $from, $auxiliarTo);
-        $previous = $this->repository->amountPaidTotal($companyId, $currency, $previousFrom, $from);
+        $current = $this->repository->approvedSalesTotal($companyId, $currency, $from, $auxiliaryTo);
+        $previous = $this->repository->approvedSalesTotal($companyId, $currency, $previousFrom, $from);
 
         return new OrderSummaryResponse(
             $from->asDMY(),
@@ -44,6 +43,6 @@ class OrderReporter
             return null;
         }
 
-        return round((($current - $previous) / $previous), 2);
+        return round(($current - $previous) / $previous, 2);
     }
 }

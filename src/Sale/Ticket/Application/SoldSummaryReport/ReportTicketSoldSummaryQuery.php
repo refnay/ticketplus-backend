@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Sale\Order\Application\PaidSummaryReport;
+namespace App\Sale\Ticket\Application\SoldSummaryReport;
 
 use App\Shared\Application\Input\PayloadMapper;
 
-class ReportOrderPaidSummaryQuery
+class ReportTicketSoldSummaryQuery
 {
-    public function __construct(private string $from, private string $to, private string $currency)
+    public function __construct(private string $from, private string $to)
     {
     }
 
@@ -17,7 +17,6 @@ class ReportOrderPaidSummaryQuery
         return new self(
             $payload->string('from'),
             $payload->string('to'),
-            $payload->string('currency'),
         );
     }
 
@@ -29,10 +28,5 @@ class ReportOrderPaidSummaryQuery
     public function to(): string
     {
         return $this->to;
-    }
-
-    public function currency(): string
-    {
-        return $this->currency;
     }
 }

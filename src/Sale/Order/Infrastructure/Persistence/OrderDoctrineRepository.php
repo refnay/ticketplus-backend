@@ -130,7 +130,7 @@ class OrderDoctrineRepository implements OrderRepository
     }
 
     #[Override]
-    public function amountPaidTotal(
+    public function approvedSalesTotal(
         CompanyId $companyId,
         OrderCurrency $currency,
         OrderPaidAt $from,
@@ -164,6 +164,32 @@ class OrderDoctrineRepository implements OrderRepository
             'to' => $to->__toString(),
         ])->fetchAssociative();
 
-        return is_float($result['amount']) ? (float) $result['amount'] : 0.00;
+        return is_array($result) && isset($result['amount']) ? (float) $result['amount'] : 0.00;
+    }
+
+    #[Override]
+    public function countPaidOrders(
+        CompanyId $companyId,
+        OrderPaidAt $from,
+        OrderPaidAt $to,
+    ): int {
+        $sql = sprintf(
+            "SELECT COUNT(o.id) AS quantity
+            FROM purchase o
+            INNER JOIN event e ON e.id = o.event_id
+            WHERE e.company_id = :companyId
+              AND o.status = %d
+              AND o.paid_at >= :from
+              AND o.paid_at < :to",
+            OrderStatusList::PAID->value,
+        );
+
+        $result = $this->entityManager->getConnection()->executeQuery($sql, [
+            'companyId' => $companyId->value(),
+            'from' => $from->__toString(),
+            'to' => $to->__toString(),
+        ])->fetchAssociative();
+
+        return is_array($result) && isset($result['quantity']) ? (int) $result['quantity'] : 0;
     }
 }

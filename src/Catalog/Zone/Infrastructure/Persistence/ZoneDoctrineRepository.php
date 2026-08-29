@@ -3,6 +3,7 @@
 namespace App\Catalog\Zone\Infrastructure\Persistence;
 
 use App\Catalog\Event\Domain\EventDayId;
+use App\Catalog\Shared\Domain\CompanyId;
 use App\Catalog\Zone\Domain\Exceptions\ZoneNotCreated;
 use App\Catalog\Zone\Domain\Exceptions\ZoneNotDeleted;
 use App\Catalog\Zone\Domain\Exceptions\ZoneNotUpdated;
@@ -99,5 +100,28 @@ class ZoneDoctrineRepository implements ZoneRepository
             ->select('COUNT(' . self::ZONE_PREFIX . '.id)')
             ->getQuery()
             ->getSingleScalarResult();
-    } 
+    }
+
+    #[Override]
+    public function occupancySummary(CompanyId $companyId): array
+    {
+        $sql = "SELECT
+                COALESCE(SUM(z.total_quantity), 0) AS total,
+                COALESCE(SUM(z.sold_quantity), 0) AS sold,
+                COALESCE(SUM(z.reserved_quantity), 0) AS reserved
+            FROM zone z
+            INNER JOIN day d ON d.id = z.day_id
+            INNER JOIN event e ON e.id = d.event_id
+            WHERE e.company_id = :companyId";
+
+        $result = $this->entityManager->getConnection()->executeQuery($sql, [
+            'companyId' => $companyId->value(),
+        ])->fetchAssociative();
+
+        return [
+            'total' => is_array($result) && isset($result['total']) ? (int) $result['total'] : 0,
+            'sold' => is_array($result) && isset($result['sold']) ? (int) $result['sold'] : 0,
+            'reserved' => is_array($result) && isset($result['reserved']) ? (int) $result['reserved'] : 0,
+        ];
+    }
 }

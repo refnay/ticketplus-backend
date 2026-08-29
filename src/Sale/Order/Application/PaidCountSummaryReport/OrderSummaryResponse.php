@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Sale\Order\Application\PaidSummaryReport;
+namespace App\Sale\Order\Application\PaidCountSummaryReport;
 
 use JsonSerializable;
 use Override;
@@ -10,11 +10,9 @@ class OrderSummaryResponse implements JsonSerializable
     public function __construct(
         readonly private string $from,
         readonly private string $to,
-        readonly private string $previousFrom,
-        readonly private string $previousTo,
-        readonly private float $amount,
+        readonly private int $quantity,
+        readonly private float $averageAmount,
         readonly private string $currency,
-        readonly private ?float $variation,
     ) {
     }
 

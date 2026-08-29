@@ -22,3 +22,8 @@ zone-delete:
     path: /api/zone/{id}/event/{event}/day/{day}
     controller: App\Catalog\Zone\Infrastructure\Controller\ZoneDeleteController::delete
     methods: DELETE
+
+zone-occupancy-summary-report:
+    path: /api/zone/report/occupancy-summary
+    controller: App\Catalog\Zone\Infrastructure\Controller\ZoneOccupancySummaryReportController::report
+    methods: GET

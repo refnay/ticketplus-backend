@@ -23,10 +23,16 @@ interface OrderRepository
 
     public function countByFilters(array $filters): int;
 
-    public function amountPaidTotal(
+    public function approvedSalesTotal(
         CompanyId $companyId,
         OrderCurrency $currency,
         OrderPaidAt $from,
         OrderPaidAt $to,
     ): float;
+
+    public function countPaidOrders(
+        CompanyId $companyId,
+        OrderPaidAt $from,
+        OrderPaidAt $to,
+    ): int;
 }

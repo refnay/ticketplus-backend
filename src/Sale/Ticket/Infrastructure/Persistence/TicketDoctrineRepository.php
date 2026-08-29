@@ -3,6 +3,9 @@
 namespace App\Sale\Ticket\Infrastructure\Persistence;
 
 use App\Sale\Order\Domain\OrderId;
+use App\Sale\Order\Domain\OrderPaidAt;
+use App\Sale\Order\Domain\OrderStatusList;
+use App\Sale\Shared\Domain\CompanyId;
 use App\Sale\Ticket\Domain\Exceptions\TicketNotCreated;
 use App\Sale\Ticket\Domain\Exceptions\TicketNotDeleted;
 use App\Sale\Ticket\Domain\Exceptions\TicketNotUpdated;
@@ -97,5 +100,32 @@ class TicketDoctrineRepository implements TicketRepository
             ->select('COUNT(' . self::TICKET_PREFIX . '.id)')
             ->getQuery()
             ->getSingleScalarResult();
-    } 
+    }
+
+    #[Override]
+    public function countSoldTickets(
+        CompanyId $companyId,
+        OrderPaidAt $from,
+        OrderPaidAt $to,
+    ): int {
+        $sql = sprintf(
+            "SELECT COUNT(t.id) AS quantity
+            FROM ticket t
+            INNER JOIN purchase o ON o.id = t.purchase_id
+            INNER JOIN event e ON e.id = o.event_id
+            WHERE e.company_id = :companyId
+              AND o.status = %d
+              AND o.paid_at >= :from
+              AND o.paid_at < :to",
+            OrderStatusList::PAID->value,
+        );
+
+        $result = $this->entityManager->getConnection()->executeQuery($sql, [
+            'companyId' => $companyId->value(),
+            'from' => $from->__toString(),
+            'to' => $to->__toString(),
+        ])->fetchAssociative();
+
+        return is_array($result) && isset($result['quantity']) ? (int) $result['quantity'] : 0;
+    }
 }

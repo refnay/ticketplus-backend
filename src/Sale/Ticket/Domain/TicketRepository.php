@@ -3,6 +3,8 @@
 namespace App\Sale\Ticket\Domain;
 
 use App\Sale\Order\Domain\OrderId;
+use App\Sale\Order\Domain\OrderPaidAt;
+use App\Sale\Shared\Domain\CompanyId;
 
 interface TicketRepository
 {
@@ -17,4 +19,10 @@ interface TicketRepository
     public function searchByFilters(array $filters, string $orderBy, string $order, ?int $limit, ?int $offset): array;
 
     public function countByFilters(array $filters): int;
+
+    public function countSoldTickets(
+        CompanyId $companyId,
+        OrderPaidAt $from,
+        OrderPaidAt $to,
+    ): int;
 }

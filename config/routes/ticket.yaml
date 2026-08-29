@@ -2,3 +2,8 @@ ticket-render:
     path: /api/ticket/{id}/order/{order}
     controller: App\Sale\Ticket\Infrastructure\Controller\TicketRenderController::create
     methods: GET
+
+ticket-sold-summary-report:
+    path: /api/ticket/report/sold-summary
+    controller: App\Sale\Ticket\Infrastructure\Controller\TicketSoldSummaryReportController::report
+    methods: GET

@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Sale\Order\Application\PaidSummaryReport;
+namespace App\Sale\Order\Application\ApprovedSalesSummaryReport;
 
 use App\Sale\Order\Domain\OrderCurrency;
 use App\Sale\Order\Domain\OrderPaidAt;
 use App\Sale\Shared\Domain\CompanyId;
 use App\Shared\Application\Security\AuthorizationContext;
 
-class ReportOrderPaidSummaryQueryHandler
+class ReportOrderApprovedSalesSummaryQueryHandler
 {
     public function __construct(
         private AuthorizationContext $authorization,
@@ -15,7 +15,7 @@ class ReportOrderPaidSummaryQueryHandler
     ) {
     }
 
-    public function __invoke(ReportOrderPaidSummaryQuery $query): OrderSummaryResponse
+    public function __invoke(ReportOrderApprovedSalesSummaryQuery $query): OrderSummaryResponse
     {
         $this->authorization->requireAllPermissions();
 
