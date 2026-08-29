@@ -22,3 +22,8 @@ seat-delete:
     path: /api/seat/{id}/event/{event}/day/{day}/zone/{zone}
     controller: App\Catalog\Seat\Infrastructure\Controller\SeatDeleteController::delete
     methods: DELETE
+
+seat-bulk-create:
+    path: /api/seat/event/{event}/day/{day}/zone/{zone}/bulk
+    controller: App\Catalog\Seat\Infrastructure\Controller\SeatBulkCreateController::create
+    methods: POST
