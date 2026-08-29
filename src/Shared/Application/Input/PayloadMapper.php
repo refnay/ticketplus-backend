@@ -43,7 +43,7 @@ class PayloadMapper
     {
         $value = $this->get($key);
 
-        return is_int($value) ? $value : 0;
+        return is_numeric($value) ? $value : 0;
     }
 
     public function nullableInt(string $key): ?int
@@ -54,7 +54,7 @@ class PayloadMapper
             return null;
         }
 
-        return is_int($value) ? $value : null;
+        return is_numeric($value) ? $value : null;
     }
 
     public function bool(string $key): bool
@@ -105,7 +105,7 @@ class PayloadMapper
     {
         $value = $this->get($key);
 
-        if (!is_float($value) && !is_int($value)) {
+        if (!is_numeric($value)) {
             return 0.0;
         }
 
@@ -120,7 +120,7 @@ class PayloadMapper
             return null;
         }
 
-        if (!is_float($value) && !is_int($value)) {
+        if (!is_numeric($value)) {
             return null;
         }
 
