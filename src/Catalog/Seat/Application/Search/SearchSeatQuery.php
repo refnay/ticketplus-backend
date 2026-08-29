@@ -12,6 +12,7 @@ class SearchSeatQuery extends SearchQuery
         private string $day,
         private string $zone,
         private ?string $code,
+        private ?bool $numberedSeating,
         string $orderBy,
         string $order,
         ?int $limit,
@@ -29,6 +30,7 @@ class SearchSeatQuery extends SearchQuery
             $day,
             $zone,
             $payload->nullableString('code'),
+            $payload->nullableBoolFromString('numberedSeating'),
             $payload->string('orderBy'),
             $payload->string('order'),
             $payload->nullableInt('limit'),
@@ -49,6 +51,11 @@ class SearchSeatQuery extends SearchQuery
     public function zone(): string
     {
         return $this->zone;
+    }
+    
+    public function numberedSeating(): string
+    {
+        return $this->numberedSeating;
     }
 
     public function filters(): array

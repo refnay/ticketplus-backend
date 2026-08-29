@@ -49,7 +49,7 @@ class SeatUpdater
         
         $seat = $this->seatFinder->__invoke($id, $zoneId);
 
-        if (!$seat->status()->equals($status)) {
+        if (!$seat->code()->equals($code)) {
             try {
                 $this->seatByCodeFinder->__invoke($code, $zoneId);
                 throw new SeatAlreadyExists();

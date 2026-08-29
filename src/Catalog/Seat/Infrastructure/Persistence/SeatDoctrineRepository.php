@@ -87,6 +87,7 @@ class SeatDoctrineRepository implements SeatRepository
         );
 
         $queryBuilder->equals('zone', $filters['zone'] ?? null)
+            ->equals('numberedSeating', $filters['numberedSeating'] ?? null)
             ->likeMultiple(['code'], $filters['code'] ?? null, true)
             ->applyOrder($orderBy, $order)
             ->paginate($limit, $offset);
@@ -104,6 +105,7 @@ class SeatDoctrineRepository implements SeatRepository
         );
 
         $queryBuilder->equals('zone', $filters['zone'] ?? null)
+            ->equals('numberedSeating', $filters['numberedSeating'] ?? null)
             ->likeMultiple(['code'], $filters['code'] ?? null, true);
 
         return (int) $queryBuilder->queryBuilder()

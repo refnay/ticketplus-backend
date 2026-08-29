@@ -75,6 +75,17 @@ class PayloadMapper
         return $this->stringToBool($value);
     }
 
+    public function nullableBoolFromString(string $key): ?bool
+    {
+        $value = $this->get($key);
+
+        if (!is_string($value)) {
+            return null;
+        }
+
+        return $this->stringToBool($value);
+    }
+
     public function nullableBool(string $key): ?bool
     {
         $value = $this->get($key);
