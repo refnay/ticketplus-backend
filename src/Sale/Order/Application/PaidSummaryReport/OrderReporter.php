@@ -44,6 +44,6 @@ class OrderReporter
             return null;
         }
 
-        return round((($current - $previous) / $previous) * 100, 2);
+        return round((($current - $previous) / $previous), 2);
     }
 }

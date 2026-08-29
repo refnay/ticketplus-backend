@@ -14,7 +14,7 @@ class OrderSummaryResponse implements JsonSerializable
         readonly private string $previousTo,
         readonly private float $amount,
         readonly private string $currency,
-        readonly private ?float $variationPercentage,
+        readonly private ?float $variation,
     ) {
     }
 
