@@ -4,27 +4,20 @@ namespace App\Sale\Discount\Application\Search;
 
 use App\Sale\Discount\Domain\Discount;
 use App\Sale\Discount\Domain\DiscountRepository;
-use App\Sale\Shared\Domain\CompanyId;
-use App\Sale\Reference\Event\Domain\EventId;
-use App\Sale\Reference\Event\Domain\Services\EventFinder;
 
 class DiscountSearcher
 {
-    public function __construct(private DiscountRepository $repository, private EventFinder $eventFinder)
+    public function __construct(private DiscountRepository $repository)
     {
     }
 
     public function __invoke(
-        EventId $eventId,
-        CompanyId $companyId,
         array $filters,
         string $orderBy,
         string $order,
         ?int $limit,
         ?int $offset,
     ): DiscountsResponse {
-        $this->eventFinder->__invoke($eventId, $companyId);
-
         $discounts = $this->repository->searchByFilters($filters, $orderBy, $order, $limit, $offset);
         $total = $this->repository->countByFilters($filters);
 

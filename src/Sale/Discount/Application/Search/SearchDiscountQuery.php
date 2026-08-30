@@ -8,7 +8,7 @@ use App\Shared\Application\Input\PayloadMapper;
 class SearchDiscountQuery extends SearchQuery
 {
     public function __construct(
-        private string $event,
+        private ?string $event,
         private ?string $code,
         private ?int $type,
         private ?bool $active,
@@ -20,12 +20,12 @@ class SearchDiscountQuery extends SearchQuery
         parent::__construct($orderBy, $order, $limit, $page);
     }
 
-    public static function fromQuery(string $event, array $data): self
+    public static function fromQuery(array $data): self
     {
         $payload = PayloadMapper::fromData($data);
 
         return new self(
-            $event,
+            $payload->nullableString('event'),
             $payload->nullableString('code'),
             $payload->nullableInt('type'),
             $payload->nullableBool('active'),
@@ -36,13 +36,19 @@ class SearchDiscountQuery extends SearchQuery
         );
     }
 
-    public function event(): string
+    public function event(): ?string
     {
         return $this->event;
     }
 
-    public function filters(): array
+    public function filters(string $companyId): array
     {
-        return get_object_vars($this);
+        return [
+            'event' => $this->event,
+            'company' => $companyId,
+            'code' => $this->code,
+            'type' => $this->type,
+            'active' => $this->active,
+        ];
     }
 }

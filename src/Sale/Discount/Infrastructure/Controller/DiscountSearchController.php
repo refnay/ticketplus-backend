@@ -11,9 +11,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 class DiscountSearchController extends AbstractController
 {
-    public function search(string $event, Request $request, QueryBus $queryBus): JsonResponse
+    public function search(Request $request, QueryBus $queryBus): JsonResponse
     {
-        $query = SearchDiscountQuery::fromQuery($event, $request->query->all());
+        $query = SearchDiscountQuery::fromQuery($request->query->all());
 
         /** @var DiscountsResponse $response */
         $response = $queryBus->ask($query);

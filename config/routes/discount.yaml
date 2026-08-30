@@ -4,7 +4,7 @@ discount-create:
     methods: POST
 
 discount-search:
-    path: /api/discount/event/{event}
+    path: /api/discount
     controller: App\Sale\Discount\Infrastructure\Controller\DiscountSearchController::search
     methods: GET
 

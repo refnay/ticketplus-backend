@@ -2,8 +2,6 @@
 
 namespace App\Sale\Discount\Application\Search;
 
-use App\Sale\Shared\Domain\CompanyId;
-use App\Sale\Reference\Event\Domain\EventId;
 use App\Shared\Application\Security\AuthorizationContext;
 
 class SearchDiscountQueryHandler
@@ -16,10 +14,10 @@ class SearchDiscountQueryHandler
     {
         $this->authorization->requireAllPermissions();
 
+        $companyId = $this->authorization->requireCompanyId();
+
         return $this->searcher->__invoke(
-            EventId::fromString($query->event()),
-            CompanyId::fromString($this->authorization->requireCompanyId()),
-            $query->filters(),
+            $query->filters($companyId),
             $query->orderBy(),
             $query->order(),
             $query->limit(),
