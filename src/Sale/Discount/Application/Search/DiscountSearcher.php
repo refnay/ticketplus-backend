@@ -4,10 +4,11 @@ namespace App\Sale\Discount\Application\Search;
 
 use App\Sale\Discount\Domain\Discount;
 use App\Sale\Discount\Domain\DiscountRepository;
+use App\Sale\Reference\Event\Domain\Services\EventFinder;
 
 class DiscountSearcher
 {
-    public function __construct(private DiscountRepository $repository)
+    public function __construct(private DiscountRepository $repository, private EventFinder $eventFinder)
     {
     }
 
@@ -26,6 +27,10 @@ class DiscountSearcher
 
     private function makeResponse(): callable
     {
-        return fn(Discount $discount) => DiscountResponse::create($discount);
+        return function (Discount $discount): DiscountResponse {
+            $event = $this->eventFinder->__invoke($discount->eventId());
+
+            return DiscountResponse::create($discount, $event);
+        };
     }
 }

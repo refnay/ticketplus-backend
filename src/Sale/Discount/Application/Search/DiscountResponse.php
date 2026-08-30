@@ -3,6 +3,7 @@
 namespace App\Sale\Discount\Application\Search;
 
 use App\Sale\Discount\Domain\Discount;
+use App\Sale\Reference\Event\Domain\Event;
 use JsonSerializable;
 use Override;
 
@@ -17,10 +18,12 @@ class DiscountResponse implements JsonSerializable
         readonly private int $type,
         readonly private array $usage,
         readonly private float $value,
+        readonly private string $eventId,
+        readonly private string $eventName,
     ) {
     }
 
-    public static function create(Discount $discount): self
+    public static function create(Discount $discount, Event $event): self
     {
         return new self(
             $discount->id()->value(),
@@ -31,6 +34,8 @@ class DiscountResponse implements JsonSerializable
             $discount->type()->value(),
             $discount->usage()->toArray(),
             $discount->value()->value(),
+            $event->id(),
+            $event->name(),
         );
     }
 

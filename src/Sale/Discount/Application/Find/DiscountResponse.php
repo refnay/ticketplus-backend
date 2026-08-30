@@ -17,6 +17,7 @@ class DiscountResponse implements JsonSerializable
         readonly private int $type,
         readonly private array $usage,
         readonly private float $value,
+        readonly private string $eventId,
     ) {
     }
 
@@ -31,6 +32,7 @@ class DiscountResponse implements JsonSerializable
             $discount->type()->value(),
             $discount->usage()->toArray(),
             $discount->value()->value(),
+            $discount->eventId()->value(),
         );
     }
 
