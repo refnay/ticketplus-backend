@@ -11,6 +11,7 @@ class MemberCompanyResponse implements JsonSerializable
         readonly private string $id,
         readonly private string $companyId,
         readonly private string $companyName,
+        readonly private ?string $companyLogo,
         readonly private int $role,
         readonly private int $status,
     ) {

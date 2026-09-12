@@ -33,6 +33,7 @@ class MemberCompanySearcher
                 $member->id()->value(),
                 $company->id()->value(),
                 $company->name()->value(),
+                $company->logo()->value(),
                 $member->role()->value(),
                 $member->status()->value(),
             );
