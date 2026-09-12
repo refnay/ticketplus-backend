@@ -5,7 +5,7 @@ namespace App\Account\Member\Application\SearchCompany;
 use JsonSerializable;
 use Override;
 
-class MemberCompaniesResponse implements JsonSerializable 
+class MemberCompaniesResponse implements JsonSerializable
 {
     private array $companies = [];
 
@@ -27,6 +27,6 @@ class MemberCompaniesResponse implements JsonSerializable
     #[Override]
     public function jsonSerialize(): mixed
     {
-        return get_object_vars($this); 
+        return get_object_vars($this);
     }
 }

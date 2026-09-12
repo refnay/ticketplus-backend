@@ -14,7 +14,7 @@ class UserFinder
     public function __invoke(UserId $id): UserResponse
     {
         $user = $this->finder->__invoke($id);
-        
+
         return UserResponse::create($user);
     }
 }

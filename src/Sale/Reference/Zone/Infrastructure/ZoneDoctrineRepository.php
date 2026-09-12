@@ -2,8 +2,6 @@
 
 namespace App\Sale\Reference\Zone\Infrastructure;
 
-use App\Sale\Reference\EventDay\Domain\EventDayId;
-use App\Sale\Reference\Event\Domain\EventId;
 use App\Sale\Reference\Zone\Domain\Zone;
 use App\Sale\Reference\Zone\Domain\ZoneId;
 use App\Sale\Reference\Zone\Domain\ZoneRepository;
@@ -17,28 +15,20 @@ class ZoneDoctrineRepository implements ZoneRepository
     }
 
     #[Override]
-    public function findById(ZoneId $id, EventId $eventId, EventDayId $dayId): ?Zone
+    public function findById(ZoneId $id): ?Zone
     {
-        $sql = sprintf(
-            "SELECT
+        $sql = "SELECT
                 z.name,
                 z.price,
                 (z.total_quantity - z.sold_quantity - z.reserved_quantity) AS quantity,
-                z.numbered_seating
+                z.numbered_seating,
+                z.day_id
             FROM zone z
-            INNER JOIN day d ON d.id = z.day_id
-            INNER JOIN event e ON e.id = d.event_id
-            WHERE z.id = '%s'
-                AND d.id = '%s'
-                AND e.id = '%s'",
-            $id->value(),
-            $dayId->value(),
-            $eventId->value(),
-        );
+            WHERE z.id = :id";
 
         $result = $this->entityManager
             ->getConnection()
-            ->executeQuery($sql)
+            ->executeQuery($sql, ['id' => $id->value()])
             ->fetchAssociative();
 
         if (!is_array($result)) {
@@ -51,6 +41,7 @@ class ZoneDoctrineRepository implements ZoneRepository
             (float) $result['price'],
             (int) $result['quantity'],
             (bool) $result['numbered_seating'],
+            (string) $result['day_id'],
         );
     }
 }

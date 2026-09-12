@@ -13,8 +13,10 @@ class UploadCompanyLogoCommandHandler
 
     public function __invoke(UploadCompanyLogoCommand $command): void
     {
+        $companyId = $this->authorization->ownerCompanyId();
+
         $this->uploader->__invoke(
-            CompanyId::fromString($this->authorization->requireCompanyId()),
+            CompanyId::fromString($companyId),
             $command->logo(),
         );
     }

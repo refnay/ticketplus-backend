@@ -8,9 +8,7 @@ use App\Shared\Application\Input\PayloadMapper;
 class SearchSeatQuery extends SearchQuery
 {
     public function __construct(
-        private string $event,
-        private string $day,
-        private string $zone,
+        private ?string $zone,
         private ?string $code,
         private ?bool $numberedSeating,
         string $orderBy,
@@ -21,14 +19,12 @@ class SearchSeatQuery extends SearchQuery
         parent::__construct($orderBy, $order, $limit, $page);
     }
 
-    public static function fromQuery(string $event, string $day, string $zone, array $data): self
+    public static function fromQuery(array $data): self
     {
         $payload = PayloadMapper::fromData($data);
-        
+
         return new self(
-            $event,
-            $day,
-            $zone,
+            $payload->nullableString('zone'),
             $payload->nullableString('code'),
             $payload->nullableBoolFromString('numberedSeating'),
             $payload->string('orderBy'),
@@ -38,30 +34,16 @@ class SearchSeatQuery extends SearchQuery
         );
     }
 
-    public function event(): string
-    {
-        return $this->event;
-    }
-
-    public function day(): string
-    {
-        return $this->day;
-    }
-
-    public function zone(): string
-    {
-        return $this->zone;
-    }
-    
-    public function numberedSeating(): string
+    public function numberedSeating(): ?bool
     {
         return $this->numberedSeating;
     }
 
-    public function filters(): array
+    public function filters(string $companyId): array
     {
         $filters = get_object_vars($this);
+        $filters['company'] = $companyId;
 
-        return $filters; 
+        return $filters;
     }
 }

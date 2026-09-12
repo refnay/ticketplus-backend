@@ -14,10 +14,10 @@ class SwitchUserCompanyCommandHandler
 
     public function __invoke(SwitchUserCompanyCommand $command): void
     {
-        $this->authorization->workerAllowed();
+        $userId = $this->authorization->userId();
 
         $this->switcher->__invoke(
-            UserId::fromString($this->authorization->userId()),
+            UserId::fromString($userId),
             UserCurrentCompany::fromString($command->company()),
         );
     }

@@ -1,29 +1,29 @@
 seat-create:
-    path: /api/seat/event/{event}/day/{day}/zone/{zone}
+    path: /api/seat/zone/{zone}
     controller: App\Catalog\Seat\Infrastructure\Controller\SeatCreateController::create
     methods: POST
 
 seat-search:
-    path: /api/seat/event/{event}/day/{day}/zone/{zone}
+    path: /api/seat
     controller: App\Catalog\Seat\Infrastructure\Controller\SeatSearchController::search
     methods: GET
 
 seat-find:
-    path: /api/seat/{id}/event/{event}/day/{day}/zone/{zone}
+    path: /api/seat/{id}
     controller: App\Catalog\Seat\Infrastructure\Controller\SeatFindController::find
     methods: GET
 
 seat-update:
-    path: /api/seat/{id}/event/{event}/day/{day}/zone/{zone}
+    path: /api/seat/{id}
     controller: App\Catalog\Seat\Infrastructure\Controller\SeatUpdateController::update
     methods: PUT
 
 seat-delete:
-    path: /api/seat/{id}/event/{event}/day/{day}/zone/{zone}
+    path: /api/seat/{id}
     controller: App\Catalog\Seat\Infrastructure\Controller\SeatDeleteController::delete
     methods: DELETE
 
 seat-bulk-create:
-    path: /api/seat/event/{event}/day/{day}/zone/{zone}/bulk
+    path: /api/seat/zone/{zone}/bulk
     controller: App\Catalog\Seat\Infrastructure\Controller\SeatBulkCreateController::create
     methods: POST

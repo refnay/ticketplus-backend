@@ -9,6 +9,7 @@ use App\Catalog\Seat\Domain\Seat;
 use App\Catalog\Seat\Domain\SeatCode;
 use App\Catalog\Seat\Domain\SeatId;
 use App\Catalog\Seat\Domain\SeatRepository;
+use App\Catalog\Shared\Domain\CompanyId;
 use App\Catalog\Zone\Domain\ZoneId;
 use App\Shared\Infrastructure\Persistence\Doctrine\QueryBuilder;
 use Doctrine\ORM\EntityManagerInterface;
@@ -22,7 +23,7 @@ class SeatDoctrineRepository implements SeatRepository
     public function __construct(private EntityManagerInterface $entityManager, private SeatMapper $mapper)
     {
     }
-    
+
     #[Override]
     public function save(Seat $seat): void
     {
@@ -60,11 +61,31 @@ class SeatDoctrineRepository implements SeatRepository
     }
 
     #[Override]
-    public function findById(SeatId $id, ZoneId $zoneId): ?Seat
+    public function find(SeatId $id): ?Seat
     {
         $entity = $this->entityManager
             ->getRepository($this->mapper->entityClass())
-            ->findOneBy(['id' => $id->value(), 'zone' => $zoneId->value()]);
+            ->find($id->value());
+
+        return !is_null($entity) ? $this->mapper->newDomain($entity) : null;
+    }
+
+    #[Override]
+    public function findById(SeatId $id, CompanyId $companyId): ?Seat
+    {
+        $query = $this->entityManager
+            ->getRepository($this->mapper->entityClass())
+            ->createQueryBuilder(self::SEAT_PREFIX);
+        $entity = $query
+            ->innerJoin(self::SEAT_PREFIX . '.zone', 'z')
+            ->innerJoin('z.day', 'd')
+            ->innerJoin('d.event', 'e')
+            ->andWhere(self::SEAT_PREFIX . '.id = :id')
+            ->andWhere('e.company = :companyId')
+            ->setParameter('id', $id->value())
+            ->setParameter('companyId', $companyId->value())
+            ->getQuery()
+            ->getOneOrNullResult();
 
         return !is_null($entity) ? $this->mapper->newDomain($entity) : null;
     }
@@ -78,7 +99,7 @@ class SeatDoctrineRepository implements SeatRepository
 
         return !is_null($entity) ? $this->mapper->newDomain($entity) : null;
     }
-    
+
     #[Override]
     public function searchByFilters(array $filters, string $orderBy, string $order, ?int $limit, ?int $offset): array
     {
@@ -88,12 +109,23 @@ class SeatDoctrineRepository implements SeatRepository
 
         $queryBuilder->equals('zone', $filters['zone'] ?? null)
             ->equals('numberedSeating', $filters['numberedSeating'] ?? null)
-            ->likeMultiple(['code'], $filters['code'] ?? null, true)
-            ->applyOrder($orderBy, $order)
+            ->equals('status', $filters['status'] ?? null)
+            ->likeMultiple(['code'], $filters['code'] ?? null, true);
+
+        if (isset($filters['company'])) {
+            $queryBuilder->queryBuilder()
+                ->innerJoin(self::SEAT_PREFIX . '.zone', 'company_zone')
+                ->innerJoin('company_zone.day', 'company_day')
+                ->innerJoin('company_day.event', 'company_event')
+                ->andWhere('company_event.company = :company')
+                ->setParameter('company', $filters['company']);
+        }
+
+        $queryBuilder->applyOrder($orderBy, $order)
             ->paginate($limit, $offset);
 
         $entities = $queryBuilder->queryBuilder()->getQuery()->getResult();
-        
+
         return array_map(fn($entity) => $this->mapper->newDomain($entity), $entities);
     }
 
@@ -106,11 +138,21 @@ class SeatDoctrineRepository implements SeatRepository
 
         $queryBuilder->equals('zone', $filters['zone'] ?? null)
             ->equals('numberedSeating', $filters['numberedSeating'] ?? null)
+            ->equals('status', $filters['status'] ?? null)
             ->likeMultiple(['code'], $filters['code'] ?? null, true);
+
+        if (isset($filters['company'])) {
+            $queryBuilder->queryBuilder()
+                ->innerJoin(self::SEAT_PREFIX . '.zone', 'company_zone')
+                ->innerJoin('company_zone.day', 'company_day')
+                ->innerJoin('company_day.event', 'company_event')
+                ->andWhere('company_event.company = :company')
+                ->setParameter('company', $filters['company']);
+        }
 
         return (int) $queryBuilder->queryBuilder()
             ->select('COUNT(' . self::SEAT_PREFIX . '.id)')
             ->getQuery()
             ->getSingleScalarResult();
-    } 
+    }
 }

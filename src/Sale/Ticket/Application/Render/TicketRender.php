@@ -19,10 +19,10 @@ final readonly class TicketRender
     ) {
     }
 
-    public function __invoke(TicketId $id, OrderId $orderId, UserId $userId): TicketRenderResponse
+    public function __invoke(TicketId $id, UserId $userId): TicketRenderResponse
     {
-        $order = $this->orderFinder->__invoke($orderId, $userId);
-        $ticket = $this->ticketFinder->__invoke($id, $orderId);
+        $ticket = $this->ticketFinder->__invoke($id, $userId);
+        $order = $this->orderFinder->__invoke($ticket->orderId(), $userId);
 
         $filename = StringValue::normalize($ticket->filename());
 

@@ -10,10 +10,10 @@ use Symfony\Component\HttpFoundation\Request;
 
 class SeatCreateController extends AbstractController
 {
-    public function create(string $event, string $day, string $zone, Request $request, CommandBus $commandBus): JsonResponse
+    public function create(string $zone, Request $request, CommandBus $commandBus): JsonResponse
     {
-        $command = CreateSeatCommand::create($event, $day, $zone, $request->toArray());
-        
+        $command = CreateSeatCommand::create($zone, $request->toArray());
+
         /** @var string $id */
         $id = $commandBus->dispatch($command);
 

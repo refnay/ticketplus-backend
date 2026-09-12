@@ -21,7 +21,7 @@ class ReviewDoctrineRepository implements ReviewRepository
     public function __construct(private EntityManagerInterface $entityManager, private ReviewMapper $mapper)
     {
     }
-    
+
     #[Override]
     public function save(Review $review): void
     {
@@ -67,7 +67,7 @@ class ReviewDoctrineRepository implements ReviewRepository
 
         return !is_null($entity) ? $this->mapper->newDomain($entity) : null;
     }
-    
+
     #[Override]
     public function searchByFilters(array $filters, string $orderBy, string $order, ?int $limit, ?int $offset): array
     {
@@ -81,7 +81,7 @@ class ReviewDoctrineRepository implements ReviewRepository
             ->paginate($limit, $offset);
 
         $entities = $queryBuilder->queryBuilder()->getQuery()->getResult();
-        
+
         return array_map(fn($entity) => $this->mapper->newDomain($entity), $entities);
     }
 
@@ -99,5 +99,5 @@ class ReviewDoctrineRepository implements ReviewRepository
             ->select('COUNT(' . self::REVIEW_PREFIX . '.id)')
             ->getQuery()
             ->getSingleScalarResult();
-    } 
+    }
 }

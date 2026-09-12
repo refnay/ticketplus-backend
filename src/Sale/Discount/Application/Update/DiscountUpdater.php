@@ -11,17 +11,14 @@ use App\Sale\Discount\Domain\DiscountStartDate;
 use App\Sale\Discount\Domain\DiscountType;
 use App\Sale\Discount\Domain\DiscountUsage;
 use App\Sale\Discount\Domain\DiscountValue;
-use App\Sale\Discount\Domain\Services\DiscountFinder;
+use App\Sale\Discount\Domain\Services\CompanyDiscountFinder;
 use App\Sale\Shared\Domain\CompanyId;
-use App\Sale\Reference\Event\Domain\EventId;
-use App\Sale\Reference\Event\Domain\Services\EventFinder;
 
 class DiscountUpdater
 {
     public function __construct(
         private DiscountRepository $repository,
-        private DiscountFinder $discountFinder,
-        private EventFinder $eventFinder,
+        private CompanyDiscountFinder $discountFinder,
     ) {
     }
 
@@ -33,13 +30,10 @@ class DiscountUpdater
         DiscountEndDate $endDate,
         DiscountType $type,
         DiscountValue $value,
-        EventId $eventId,
         CompanyId $companyId,
         int $usageLimit,
     ): void {
-        $this->eventFinder->__invoke($eventId, $companyId);
-
-        $discount = $this->discountFinder->__invoke($id, $eventId);
+        $discount = $this->discountFinder->__invoke($id, $companyId);
         $discount->changeActive($active);
         $discount->changeCode($code);
         $discount->changeStartDate($startDate);

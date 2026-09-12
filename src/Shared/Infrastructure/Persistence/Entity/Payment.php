@@ -152,7 +152,7 @@ class Payment
 
         return $this;
     }
-    
+
     #[ORM\PrePersist]
     public function createTimestamps(): void
     {

@@ -345,7 +345,7 @@ class Event
         foreach ($this->days() as $index => $day) {
             if ($day->id()->equals($id)) {
                 unset($this->days[$index]);
-                
+
                 return true;
             }
         }

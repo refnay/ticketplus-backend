@@ -10,9 +10,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 class DiscountUpdateController extends AbstractController
 {
-    public function update(string $id, string $event, Request $request, CommandBus $commandBus): JsonResponse
+    public function update(string $id, Request $request, CommandBus $commandBus): JsonResponse
     {
-        $command = UpdateDiscountCommand::create($id, $event, $request->toArray());
+        $command = UpdateDiscountCommand::create($id, $request->toArray());
 
         $commandBus->dispatch($command);
 

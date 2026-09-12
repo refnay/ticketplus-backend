@@ -2,8 +2,8 @@
 
 namespace App\Catalog\Zone\Infrastructure\Controller;
 
-use App\Catalog\Zone\Application\OccupancySummaryReport\ReportZoneOccupancySummaryQuery;
-use App\Catalog\Zone\Application\OccupancySummaryReport\ZoneSummaryResponse;
+use App\Catalog\Zone\Application\ReportOccupancySummary\ReportZoneOccupancySummaryQuery;
+use App\Catalog\Zone\Application\ReportOccupancySummary\ZoneSummaryResponse;
 use App\Shared\Application\Bus\QueryBus;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;

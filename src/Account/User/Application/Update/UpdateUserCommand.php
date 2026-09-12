@@ -17,8 +17,8 @@ class UpdateUserCommand
         private string $documentNumber,
     ) {
     }
-    
-    
+
+
     public static function create(array $data): self
     {
         $payload = PayloadMapper::fromData($data);

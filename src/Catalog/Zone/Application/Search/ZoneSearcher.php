@@ -2,37 +2,22 @@
 
 namespace App\Catalog\Zone\Application\Search;
 
-use App\Catalog\Event\Domain\EventDayId;
-use App\Catalog\Event\Domain\EventId;
-use App\Catalog\Event\Domain\Exceptions\EventDayNotFound;
-use App\Catalog\Event\Domain\Services\EventFinder;
-use App\Catalog\Shared\Domain\CompanyId;
 use App\Catalog\Zone\Domain\Zone;
 use App\Catalog\Zone\Domain\ZoneRepository;
 
 class ZoneSearcher
 {
-    public function __construct(private ZoneRepository $repository, private EventFinder $eventFinder)
+    public function __construct(private ZoneRepository $repository)
     {
     }
 
     public function __invoke(
-        EventId $eventId,
-        EventDayId $dayId,
-        CompanyId $companyId,
         array $filters,
         string $orderBy,
         string $order,
         ?int $limit,
         ?int $offset,
     ): ZonesResponse {
-        $event = $this->eventFinder->__invoke($eventId, $companyId);
-        $day = $event->findDayById($dayId);
-
-        if (is_null($day)) {
-            throw new EventDayNotFound();
-        }
-
         $zones = $this->repository->searchByFilters($filters, $orderBy, $order, $limit, $offset);
         $total = $this->repository->countByFilters($filters);
 

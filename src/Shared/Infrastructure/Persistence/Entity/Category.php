@@ -101,7 +101,7 @@ class Category
 
         return $this;
     }
-    
+
     #[ORM\PrePersist]
     public function createTimestamps(): void
     {

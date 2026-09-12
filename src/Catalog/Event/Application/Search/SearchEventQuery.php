@@ -25,7 +25,7 @@ class SearchEventQuery extends SearchQuery
     public static function fromQuery(array $data): self
     {
         $payload = PayloadMapper::fromData($data);
-        
+
         return new self(
             $payload->nullableString('value'),
             $payload->nullableString('country'),
@@ -39,7 +39,7 @@ class SearchEventQuery extends SearchQuery
             $payload->nullableInt('page') ,
         );
     }
-    
+
     public function filters(string $companyId): array
     {
         $filters = get_object_vars($this);

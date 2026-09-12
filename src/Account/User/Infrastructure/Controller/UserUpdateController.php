@@ -13,7 +13,7 @@ class UserUpdateController extends AbstractController
     public function update(Request $request, CommandBus $commandBus): JsonResponse
     {
         $command = UpdateUserCommand::create($request->toArray());
-        
+
         $commandBus->dispatch($command);
 
         return new JsonResponse([]);

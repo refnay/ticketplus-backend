@@ -109,7 +109,7 @@ class Purchase
 
         return $this;
     }
-    
+
     public function getSubTotal(): ?float
     {
         return $this->subTotal;
@@ -211,7 +211,7 @@ class Purchase
 
         return $this;
     }
-    
+
     public function getExpiresAt(): ?\DateTimeImmutable
     {
         return $this->expiresAt;
@@ -343,7 +343,7 @@ class Purchase
 
         return $this;
     }
-    
+
     #[ORM\PrePersist]
     public function createTimestamps(): void
     {
@@ -358,7 +358,7 @@ class Purchase
     {
         $this->updatedAt = new \DateTimeImmutable();
     }
-    
+
     public function getCurrency(): ?string
     {
         return $this->currency;

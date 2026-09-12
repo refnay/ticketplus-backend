@@ -5,7 +5,6 @@ namespace App\Sale\Discount\Application\Delete;
 use App\Shared\Application\Security\AuthorizationContext;
 use App\Sale\Discount\Domain\DiscountId;
 use App\Sale\Shared\Domain\CompanyId;
-use App\Sale\Reference\Event\Domain\EventId;
 
 class DeleteDiscountCommandHandler
 {
@@ -15,12 +14,11 @@ class DeleteDiscountCommandHandler
 
     public function __invoke(DeleteDiscountCommand $command): void
     {
-        $this->authorization->requireAllPermissions();
+        $companyId = $this->authorization->companyId();
 
         $this->deleter->__invoke(
             DiscountId::fromString($command->id()),
-            EventId::fromString($command->event()),
-            CompanyId::fromString($this->authorization->requireCompanyId()),
+            CompanyId::fromString($companyId),
         );
     }
 }

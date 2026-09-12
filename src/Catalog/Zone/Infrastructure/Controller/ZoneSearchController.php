@@ -11,9 +11,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ZoneSearchController extends AbstractController
 {
-    public function search(string $event, string $day, Request $request, QueryBus $queryBus): JsonResponse
+    public function search(Request $request, QueryBus $queryBus): JsonResponse
     {
-        $query = SearchZoneQuery::fromQuery($event, $day, $request->query->all());
+        $query = SearchZoneQuery::fromQuery($request->query->all());
 
         /** @var ZonesResponse $response */
         $response = $queryBus->ask($query);

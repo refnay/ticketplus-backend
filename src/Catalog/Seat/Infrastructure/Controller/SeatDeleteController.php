@@ -9,9 +9,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class SeatDeleteController extends AbstractController
 {
-    public function delete(string $id, string $event, string $day, string $zone, CommandBus $commandBus): JsonResponse
+    public function delete(string $id, CommandBus $commandBus): JsonResponse
     {
-        $command = DeleteSeatCommand::create($id, $event, $day, $zone);
+        $command = DeleteSeatCommand::create($id);
 
         $commandBus->dispatch($command);
 

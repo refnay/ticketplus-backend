@@ -10,9 +10,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class SeatFindController extends AbstractController
 {
-    public function find(string $id, string $event, string $day, string $zone, QueryBus $queryBus): JsonResponse
+    public function find(string $id, QueryBus $queryBus): JsonResponse
     {
-        $query = FindSeatQuery::create($id, $event, $day, $zone);
+        $query = FindSeatQuery::create($id);
 
         /** @var SeatResponse $response */
         $response = $queryBus->ask($query);

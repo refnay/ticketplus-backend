@@ -5,7 +5,7 @@ namespace App\Catalog\Seat\Application\Search;
 use JsonSerializable;
 use Override;
 
-class SeatsResponse implements JsonSerializable 
+class SeatsResponse implements JsonSerializable
 {
     private array $seats = [];
 
@@ -27,6 +27,6 @@ class SeatsResponse implements JsonSerializable
     #[Override]
     public function jsonSerialize(): mixed
     {
-        return get_object_vars($this); 
+        return get_object_vars($this);
     }
 }

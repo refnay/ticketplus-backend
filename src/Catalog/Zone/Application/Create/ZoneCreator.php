@@ -3,9 +3,7 @@
 namespace App\Catalog\Zone\Application\Create;
 
 use App\Catalog\Event\Domain\EventDayId;
-use App\Catalog\Event\Domain\EventId;
-use App\Catalog\Event\Domain\Exceptions\EventDayNotFound;
-use App\Catalog\Event\Domain\Services\EventFinder;
+use App\Catalog\Event\Domain\Services\EventByDayFinder;
 use App\Catalog\Shared\Domain\CompanyId;
 use App\Catalog\Zone\Domain\Zone;
 use App\Catalog\Zone\Domain\ZoneHierarchy;
@@ -17,7 +15,7 @@ use App\Catalog\Zone\Domain\ZoneRepository;
 
 class ZoneCreator
 {
-    public function __construct(private ZoneRepository $repository, private EventFinder $eventFinder)
+    public function __construct(private ZoneRepository $repository, private EventByDayFinder $eventFinder)
     {
     }
 
@@ -27,16 +25,10 @@ class ZoneCreator
         ZoneQuantity $quantity,
         ZoneHierarchy $hierarchy,
         ZoneNumberedSeating $numberedSeating,
-        EventId $eventId,
         EventDayId $dayId,
         CompanyId $companyId
     ): string {
-        $event = $this->eventFinder->__invoke($eventId, $companyId);
-        $day = $event->findDayById($dayId);
-
-        if (is_null($day)) {
-            throw new EventDayNotFound();
-        }
+        $this->eventFinder->__invoke($dayId, $companyId);
 
         $zone = Zone::create(
             $name,

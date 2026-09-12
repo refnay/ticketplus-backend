@@ -15,12 +15,12 @@ class CreateCategoryCommandHandler
 
     public function __invoke(CreateCategoryCommand $command): string
     {
-        $this->authorization->requireAllPermissions();
+        $companyId = $this->authorization->companyId();
 
         return $this->creator->__invoke(
             CategoryName::fromString($command->name()),
             CategoryReference::fromInt($command->reference()),
-            CompanyId::fromString($this->authorization->requireCompanyId()),
+            CompanyId::fromString($companyId),
         );
     }
 }

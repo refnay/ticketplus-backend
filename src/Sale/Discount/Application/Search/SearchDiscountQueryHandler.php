@@ -12,9 +12,7 @@ class SearchDiscountQueryHandler
 
     public function __invoke(SearchDiscountQuery $query): DiscountsResponse
     {
-        $this->authorization->requireAllPermissions();
-
-        $companyId = $this->authorization->requireCompanyId();
+        $companyId = $this->authorization->companyId();
 
         return $this->searcher->__invoke(
             $query->filters($companyId),

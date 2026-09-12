@@ -13,7 +13,7 @@ class UserFindController extends AbstractController
     public function find(QueryBus $queryBus): JsonResponse
     {
         $query = FindUserQuery::create();
-        
+
         /** @var UserResponse $response */
         $response = $queryBus->ask($query);
 

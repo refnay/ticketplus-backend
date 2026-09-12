@@ -3,8 +3,6 @@
 namespace App\Catalog\Zone\Application\Update;
 
 use App\Shared\Application\Security\AuthorizationContext;
-use App\Catalog\Event\Domain\EventDayId;
-use App\Catalog\Event\Domain\EventId;
 use App\Catalog\Shared\Domain\CompanyId;
 use App\Catalog\Zone\Domain\ZoneHierarchy;
 use App\Catalog\Zone\Domain\ZoneId;
@@ -21,7 +19,7 @@ class UpdateZoneCommandHandler
 
     public function __invoke(UpdateZoneCommand $command): void
     {
-        $this->authorization->requireAllPermissions();
+        $companyId = $this->authorization->companyId();
 
         $this->updater->__invoke(
             ZoneId::fromString($command->id()),
@@ -30,9 +28,7 @@ class UpdateZoneCommandHandler
             ZoneQuantity::fromTotal($command->total()),
             ZoneHierarchy::fromInt($command->hierarchy()),
             ZoneNumberedSeating::fromBool($command->numberedSeating()),
-            EventId::fromString($command->event()),
-            EventDayId::fromString($command->day()),
-            CompanyId::fromString($this->authorization->requireCompanyId()),
+            CompanyId::fromString($companyId),
         );
     }
 }

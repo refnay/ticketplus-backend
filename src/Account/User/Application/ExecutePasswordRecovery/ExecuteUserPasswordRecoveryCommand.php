@@ -1,0 +1,29 @@
+<?php
+
+namespace App\Account\User\Application\ExecutePasswordRecovery;
+
+use App\Shared\Application\Input\PayloadMapper;
+
+class ExecuteUserPasswordRecoveryCommand
+{
+    public function __construct(private string $token, private string $newPassword)
+    {
+    }
+
+    public static function create(array $data): self
+    {
+        $payload = PayloadMapper::fromData($data);
+
+        return new self($payload->string('token'), $payload->string('newPassword'));
+    }
+
+    public function token(): string
+    {
+        return $this->token;
+    }
+
+    public function newPassword(): string
+    {
+        return $this->newPassword;
+    }
+}

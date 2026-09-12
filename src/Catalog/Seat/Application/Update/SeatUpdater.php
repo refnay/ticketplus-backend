@@ -2,10 +2,6 @@
 
 namespace App\Catalog\Seat\Application\Update;
 
-use App\Catalog\Event\Domain\EventDayId;
-use App\Catalog\Event\Domain\EventId;
-use App\Catalog\Event\Domain\Exceptions\EventDayNotFound;
-use App\Catalog\Event\Domain\Services\EventFinder;
 use App\Catalog\Seat\Domain\Exceptions\SeatAlreadyExists;
 use App\Catalog\Seat\Domain\Exceptions\SeatNotFound;
 use App\Catalog\Seat\Domain\SeatCode;
@@ -13,18 +9,14 @@ use App\Catalog\Seat\Domain\SeatId;
 use App\Catalog\Seat\Domain\SeatRepository;
 use App\Catalog\Seat\Domain\SeatStatus;
 use App\Catalog\Seat\Domain\Services\SeatByCodeFinder;
-use App\Catalog\Seat\Domain\Services\SeatFinder;
+use App\Catalog\Seat\Domain\Services\CompanySeatFinder;
 use App\Catalog\Shared\Domain\CompanyId;
-use App\Catalog\Zone\Domain\Services\ZoneFinder;
-use App\Catalog\Zone\Domain\ZoneId;
 
 class SeatUpdater
 {
     public function __construct(
         private SeatRepository $repository,
-        private EventFinder $eventFinder,
-        private ZoneFinder $zoneFinder,
-        private SeatFinder $seatFinder,
+        private CompanySeatFinder $seatFinder,
         private SeatByCodeFinder $seatByCodeFinder,
     ) {
     }
@@ -33,21 +25,10 @@ class SeatUpdater
         SeatId $id,
         SeatCode $code,
         SeatStatus $status,
-        EventId $eventId,
-        EventDayId $dayId,
-        ZoneId $zoneId,
         CompanyId $companyId,
     ): void {
-        $event = $this->eventFinder->__invoke($eventId, $companyId);
-        $day = $event->findDayById($dayId);
-
-        if (is_null($day)) {
-            throw new EventDayNotFound();
-        }
-
-        $this->zoneFinder->__invoke($zoneId, $dayId);
-        
-        $seat = $this->seatFinder->__invoke($id, $zoneId);
+        $seat = $this->seatFinder->__invoke($id, $companyId);
+        $zoneId = $seat->zoneId();
 
         if (!$seat->code()->equals($code)) {
             try {
@@ -56,7 +37,7 @@ class SeatUpdater
             } catch (SeatNotFound) {
             }
         }
-        
+
         $seat->changeCode($code);
         $seat->changeStatus($status);
 

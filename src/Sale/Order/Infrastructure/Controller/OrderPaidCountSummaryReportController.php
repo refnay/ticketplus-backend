@@ -2,8 +2,8 @@
 
 namespace App\Sale\Order\Infrastructure\Controller;
 
-use App\Sale\Order\Application\PaidCountSummaryReport\OrderSummaryResponse;
-use App\Sale\Order\Application\PaidCountSummaryReport\ReportOrderPaidCountSummaryQuery;
+use App\Sale\Order\Application\ReportPaidCountSummary\OrderSummaryResponse;
+use App\Sale\Order\Application\ReportPaidCountSummary\ReportOrderPaidCountSummaryQuery;
 use App\Shared\Application\Bus\QueryBus;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;

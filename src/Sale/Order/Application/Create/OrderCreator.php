@@ -3,6 +3,7 @@
 namespace App\Sale\Order\Application\Create;
 
 use App\Sale\Discount\Domain\DiscountId;
+use App\Sale\Discount\Domain\Exceptions\DiscountNotFound;
 use App\Sale\Discount\Domain\Services\DiscountApply;
 use App\Sale\Discount\Domain\Services\DiscountFinder;
 use App\Sale\Order\Domain\Events\OrderProcessedDomainEvent;
@@ -15,6 +16,7 @@ use App\Sale\Order\Domain\OrderSubTotal;
 use App\Sale\Order\Domain\OrderTax;
 use App\Sale\Order\Domain\OrderTotal;
 use App\Sale\Reference\EventDay\Domain\EventDayId;
+use App\Sale\Reference\EventDay\Domain\Services\EventDayFinder;
 use App\Sale\Reference\Event\Domain\EventId;
 use App\Sale\Reference\Seat\Domain\Exceptions\SeatNotAvailable;
 use App\Sale\Reference\Seat\Domain\Exceptions\SeatNotFound;
@@ -34,6 +36,7 @@ class OrderCreator
 {
     public function __construct(
         private EventFinder $eventFinder,
+        private EventDayFinder $dayFinder,
         private ZoneFinder $zoneFinder,
         private SeatFinder $seatFinder,
         private DiscountFinder $discountFinder,
@@ -43,7 +46,6 @@ class OrderCreator
     ) {}
 
     public function __invoke(
-        EventId $eventId,
         EventDayId $dayId,
         ?DiscountId $discountId,
         UserId $userId,
@@ -53,11 +55,16 @@ class OrderCreator
             throw new ZoneNotFound();
         }
 
+        $day = $this->dayFinder->__invoke($dayId);
+        $eventId = EventId::fromString($day->eventId());
         $event = $this->eventFinder->__invoke($eventId);
         $discount = null;
 
         if (!is_null($discountId)) {
-            $discount = $this->discountFinder->__invoke($discountId, $eventId);
+            $discount = $this->discountFinder->__invoke($discountId);
+            if (!$discount->eventId()->equals($eventId)) {
+                throw new DiscountNotFound();
+            }
         }
 
         $details = [];
@@ -69,7 +76,10 @@ class OrderCreator
             $quantity = $item->quantity();
             $seatIds = $item->seats();
 
-            $zone = $this->zoneFinder->__invoke($zoneId, $eventId, $dayId);
+            $zone = $this->zoneFinder->__invoke($zoneId);
+            if ($zone->dayId() !== $dayId->value()) {
+                throw new ZoneNotFound();
+            }
 
             if ($zone->quantity() === 0) {
                 throw new ZoneQuantitySoldOut();
@@ -83,7 +93,10 @@ class OrderCreator
                 }
 
                 foreach ($seatIds as $seatId) {
-                    $seat = $this->seatFinder->__invoke(SeatId::fromString($seatId), $zoneId);
+                    $seat = $this->seatFinder->__invoke(SeatId::fromString($seatId));
+                    if ($seat->zoneId() !== $zoneId->value()) {
+                        throw new SeatNotFound();
+                    }
                     if (!SeatStatusList::AVAILABLE->sameValue($seat->status())) {
                         throw new SeatNotAvailable();
                     }

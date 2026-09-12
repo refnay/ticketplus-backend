@@ -5,7 +5,6 @@ namespace App\Sale\Reference\EventDay\Infrastructure;
 use App\Sale\Reference\EventDay\Domain\EventDay;
 use App\Sale\Reference\EventDay\Domain\EventDayId;
 use App\Sale\Reference\EventDay\Domain\EventDayRepository;
-use App\Sale\Reference\Event\Domain\EventId;
 use Doctrine\ORM\EntityManagerInterface;
 use Override;
 
@@ -16,18 +15,16 @@ class EventDayDoctrineRepository implements EventDayRepository
     }
 
     #[Override]
-    public function findById(EventId $eventId, EventDayId $id): ?EventDay
+    public function findById(EventDayId $id): ?EventDay
     {
         $sql = 'SELECT d.id, d.date, d.event_id
                 FROM day d
-                WHERE d.id = :id
-                    AND d.event_id = :event';
+                WHERE d.id = :id';
 
         $result = $this->entityManager
             ->getConnection()
             ->executeQuery($sql, [
                 'id' => $id->value(),
-                'event' => $eventId->value(),
             ])
             ->fetchAssociative();
 

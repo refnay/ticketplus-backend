@@ -48,7 +48,7 @@ abstract class StringValueObject
     public function toUpper(): static
     {
         $this->ensureNotNull();
-        
+
         return new static(mb_strtoupper($this->value));
     }
 
@@ -69,7 +69,7 @@ abstract class StringValueObject
     public function contains(string $needle): bool
     {
         $this->ensureNotNull();
-        
+
         return mb_strpos($this->value, $needle) !== false;
     }
 

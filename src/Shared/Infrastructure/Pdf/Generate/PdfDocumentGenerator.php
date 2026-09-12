@@ -50,7 +50,7 @@ final class PdfDocumentGenerator implements PdfGenerator
         return $this;
     }
 
-    
+
     public function filename(): string
     {
         return $this->filename;

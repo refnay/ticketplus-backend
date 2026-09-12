@@ -8,7 +8,6 @@ use App\Shared\Application\Support\ArrayBuilder;
 class CreateOrderCommand
 {
     public function __construct(
-        private string $event,
         private string $day,
         private ?string $discount,
         private array $items,
@@ -27,16 +26,10 @@ class CreateOrderCommand
         $items->removeDuplicates();
 
         return new self(
-            $payload->string('event'),
             $payload->string('day'),
             $payload->nullableString('discount'),
             $items->items(),
         );
-    }
-
-    public function event(): string
-    {
-        return $this->event;
     }
 
     public function day(): string

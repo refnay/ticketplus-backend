@@ -19,7 +19,7 @@ class Company
     private ?CompanyTelephone $telephone = null;
     private ?CompanyWebSite $webSite = null;
 
-    public function __construct( 
+    public function __construct(
         CompanyId $id,
         CompanyCity $city,
         CompanyCountry $country,

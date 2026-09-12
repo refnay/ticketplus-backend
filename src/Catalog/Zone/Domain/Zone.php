@@ -124,12 +124,12 @@ class Zone
     {
         $this->quantity = $this->quantity->changeTotal($total);
     }
-    
+
     public function changeSoldQuantity(int $sold): void
     {
         $this->quantity = $this->quantity->changeSold($sold);
     }
-    
+
     public function changeReservedQuantity(int $reserved): void
     {
         $this->quantity = $this->quantity->changeReserved($reserved);

@@ -8,7 +8,6 @@ class UpdateDiscountCommand
 {
     public function __construct(
         private string $id,
-        private string $event,
         private bool $active,
         private string $code,
         private string $startDate,
@@ -19,13 +18,12 @@ class UpdateDiscountCommand
     ) {
     }
 
-    public static function create(string $id, string $event, array $data): self
+    public static function create(string $id, array $data): self
     {
         $payload = PayloadMapper::fromData($data);
 
         return new self(
             $id,
-            $event,
             $payload->bool('active'),
             $payload->string('code'),
             $payload->string('startDate'),
@@ -39,11 +37,6 @@ class UpdateDiscountCommand
     public function id(): string
     {
         return $this->id;
-    }
-
-    public function event(): string
-    {
-        return $this->event;
     }
 
     public function active(): bool
@@ -75,7 +68,7 @@ class UpdateDiscountCommand
     {
         return $this->usageLimit;
     }
-    
+
     public function value(): float
     {
         return $this->value;

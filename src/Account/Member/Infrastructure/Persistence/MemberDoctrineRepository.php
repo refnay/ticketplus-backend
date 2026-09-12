@@ -2,12 +2,14 @@
 
 namespace App\Account\Member\Infrastructure\Persistence;
 
+use App\Account\Company\Domain\CompanyId;
 use App\Account\Member\Domain\Member;
 use App\Account\Member\Domain\MemberId;
 use App\Account\Member\Domain\MemberRepository;
 use App\Account\Member\Domain\Exceptions\MemberNotCreated;
 use App\Account\Member\Domain\Exceptions\MemberNotDeleted;
 use App\Account\Member\Domain\Exceptions\MemberNotUpdated;
+use App\Account\User\Domain\UserId;
 use App\Shared\Infrastructure\Persistence\Doctrine\QueryBuilder;
 use Doctrine\ORM\EntityManagerInterface;
 use Override;
@@ -20,7 +22,7 @@ class MemberDoctrineRepository implements MemberRepository
     public function __construct(private EntityManagerInterface $entityManager, private MemberMapper $mapper)
     {
     }
-    
+
     #[Override]
     public function save(Member $member): void
     {
@@ -68,6 +70,16 @@ class MemberDoctrineRepository implements MemberRepository
     }
 
     #[Override]
+    public function findByUserAndCompany(UserId $userId, CompanyId $companyId): ?Member
+    {
+        $entity = $this->entityManager
+            ->getRepository($this->mapper->entityClass())
+            ->findOneBy(['member' => $userId->value(), 'company' => $companyId->value()]);
+
+        return !is_null($entity) ? $this->mapper->newDomain($entity) : null;
+    }
+
+    #[Override]
     public function searchByFilters(array $filters, string $orderBy, string $order, ?int $limit, ?int $offset): array
     {
         $queryBuilder = QueryBuilder::from(
@@ -80,7 +92,7 @@ class MemberDoctrineRepository implements MemberRepository
             ->paginate($limit, $offset);
 
         $entities = $queryBuilder->queryBuilder()->getQuery()->getResult();
-        
+
         return array_map(fn($entity) => $this->mapper->newDomain($entity), $entities);
     }
 
@@ -98,5 +110,5 @@ class MemberDoctrineRepository implements MemberRepository
             ->select('COUNT(' . self::MEMBER_PREFIX . '.id)')
             ->getQuery()
             ->getSingleScalarResult();
-    } 
+    }
 }

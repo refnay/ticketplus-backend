@@ -37,10 +37,10 @@ final class UserResponse implements JsonSerializable
             $user->profileImage()->value(),
         );
     }
-    
+
     #[Override]
     public function jsonSerialize(): mixed
     {
         return get_object_vars($this);
-    } 
+    }
 }

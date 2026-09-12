@@ -100,11 +100,11 @@ class Ticket
     {
         return $this->seatId;
     }
-    
+
     public function changePrice(TicketPrice $price): void
     {
         $this->price = $price;
-    } 
+    }
 
     public function changeCode(TicketCode $code): void
     {

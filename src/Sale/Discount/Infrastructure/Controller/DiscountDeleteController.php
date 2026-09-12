@@ -9,9 +9,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class DiscountDeleteController extends AbstractController
 {
-    public function delete(string $id, string $event, CommandBus $commandBus): JsonResponse
+    public function delete(string $id, CommandBus $commandBus): JsonResponse
     {
-        $command = DeleteDiscountCommand::create($id, $event);
+        $command = DeleteDiscountCommand::create($id);
 
         $commandBus->dispatch($command);
 

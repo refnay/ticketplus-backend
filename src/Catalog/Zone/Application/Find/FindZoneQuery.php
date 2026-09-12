@@ -5,13 +5,13 @@ namespace App\Catalog\Zone\Application\Find;
 
 class FindZoneQuery
 {
-    public function __construct(private string $id, private string $event, private string $day)
+    public function __construct(private string $id)
     {
     }
 
-    public static function create(string $id, string $event, string $day): self
+    public static function create(string $id): self
     {
-        return new self($id, $event, $day);
+        return new self($id);
     }
 
     public function id(): string
@@ -19,13 +19,4 @@ class FindZoneQuery
         return $this->id;
     }
 
-    public function event(): string
-    {
-        return $this->event;
-    }
-
-    public function day(): string
-    {
-        return $this->day;
-    }
 }

@@ -11,7 +11,7 @@ class PaymentPayer extends ArrayValueObject
     public function validate(): void
     {
     }
-    
+
     public function email(): ?string
     {
         return isset($this->value['email']) ? (string) $this->value['email'] : null;

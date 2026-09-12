@@ -9,9 +9,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class ZoneDeleteController extends AbstractController
 {
-    public function delete(string $id, string $event, string $day, CommandBus $commandBus): JsonResponse
+    public function delete(string $id, CommandBus $commandBus): JsonResponse
     {
-        $command = DeleteZoneCommand::create($id, $event, $day);
+        $command = DeleteZoneCommand::create($id);
 
         $commandBus->dispatch($command);
 

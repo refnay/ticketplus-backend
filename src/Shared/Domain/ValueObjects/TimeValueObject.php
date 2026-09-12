@@ -27,7 +27,7 @@ abstract class TimeValueObject
         }
 
         $dateTime = DateTimeImmutable::createFromFormat('H:i:s', $time);
-    
+
         if (is_bool($dateTime)) {
             $dateTime = DateTimeImmutable::createFromFormat('H:i', $time);
         }

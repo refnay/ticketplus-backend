@@ -27,7 +27,7 @@ abstract class DateTimeValueObject
         }
 
         $date = DateTimeImmutable::createFromFormat('!Y-m-d', $dateTime);
-        
+
         if ($date !== false && $date->format('Y-m-d') === $dateTime) {
             return new static($date);
         }
@@ -42,11 +42,11 @@ abstract class DateTimeValueObject
         if (is_null($dateTime)) {
             return new static(null);
         }
-         
+
         $immutable = $dateTime instanceof DateTimeImmutable
             ? $dateTime
             : DateTimeImmutable::createFromMutable($dateTime);
-            
+
         return new static($immutable);
     }
 
@@ -121,7 +121,7 @@ abstract class DateTimeValueObject
     public function format(string $format = DateTimeInterface::ATOM): string
     {
         $this->ensureNotNull();
-        
+
         return $this->value->format($format);
     }
 

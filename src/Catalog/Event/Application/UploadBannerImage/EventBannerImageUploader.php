@@ -38,7 +38,7 @@ class EventBannerImageUploader
         } else {
             $event->changeBannerImage(EventBannerImage::fromNull());
         }
-        
+
         $this->repository->update($event);
     }
 }

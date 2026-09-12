@@ -8,14 +8,12 @@ use App\Shared\Application\Support\ArrayBuilder;
 class BulkCreateSeatCommand
 {
     public function __construct(
-        private string $event,
-        private string $day,
         private string $zone,
         private array $seats,
     ) {
     }
 
-    public static function create(string $event, string $day, string $zone, array $data): self
+    public static function create(string $zone, array $data): self
     {
         $payload = PayloadMapper::fromData($data);
         $seats = ArrayBuilder::generate();
@@ -25,21 +23,9 @@ class BulkCreateSeatCommand
         }
 
         return new self(
-            $event,
-            $day,
             $zone,
             $seats->items(),
         );
-    }
-
-    public function event(): string
-    {
-        return $this->event;
-    }
-
-    public function day(): string
-    {
-        return $this->day;
     }
 
     public function zone(): string

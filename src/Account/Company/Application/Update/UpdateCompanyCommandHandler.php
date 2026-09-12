@@ -24,8 +24,10 @@ class UpdateCompanyCommandHandler
 
     public function __invoke(UpdateCompanyCommand $command): void
     {
+        $companyId = $this->authorization->ownerCompanyId();
+
         $this->updater->__invoke(
-            CompanyId::fromString($this->authorization->requireCompanyId()),
+            CompanyId::fromString($companyId),
             CompanyCountry::fromString($command->country()),
             CompanyCity::fromString($command->city()),
             CompanyDocument::create($command->documentType(), $command->documentNumber()),

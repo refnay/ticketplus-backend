@@ -6,7 +6,6 @@ use App\Sale\Reference\Seat\Domain\Exceptions\SeatNotFound;
 use App\Sale\Reference\Seat\Domain\Seat;
 use App\Sale\Reference\Seat\Domain\SeatId;
 use App\Sale\Reference\Seat\Domain\SeatRepository;
-use App\Sale\Reference\Zone\Domain\ZoneId;
 
 class SeatFinder
 {
@@ -14,9 +13,9 @@ class SeatFinder
     {
     }
 
-    public function __invoke(SeatId $id, ZoneId $zoneId): Seat
+    public function __invoke(SeatId $id): Seat
     {
-        $seat = $this->repository->findById($id, $zoneId);
+        $seat = $this->repository->findById($id);
 
         if (is_null($seat)) {
             throw new SeatNotFound();

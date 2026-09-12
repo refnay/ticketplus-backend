@@ -14,11 +14,11 @@ class DeleteEventCommandHandler
 
     public function __invoke(DeleteEventCommand $query): void
     {
-        $this->authorization->requireAllPermissions();
+        $companyId = $this->authorization->companyId();
 
         $this->deleter->__invoke(
             EventId::fromString($query->id()),
-            CompanyId::fromString($this->authorization->requireCompanyId()),
+            CompanyId::fromString($companyId),
         );
     }
 }

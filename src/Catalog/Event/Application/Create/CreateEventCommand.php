@@ -103,7 +103,7 @@ class CreateEventCommand
     {
         return $this->orderLimit;
     }
-    
+
     public function days(): array
     {
         return $this->days;

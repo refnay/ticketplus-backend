@@ -33,8 +33,8 @@ class CompanyLogoUploader
             }
         } else {
             $company->changeLogo(CompanyLogo::fromNull());
-        }   
-        
+        }
+
         $this->repository->update($company);
     }
 }

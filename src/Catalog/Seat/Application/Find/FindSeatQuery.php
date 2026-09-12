@@ -5,13 +5,13 @@ namespace App\Catalog\Seat\Application\Find;
 
 class FindSeatQuery
 {
-    public function __construct(private string $id, private string $event, private string $day, private string $zone)
+    public function __construct(private string $id)
     {
     }
 
-    public static function create(string $id, string $event, string $day, string $zone): self
+    public static function create(string $id): self
     {
-        return new self($id, $event, $day, $zone);
+        return new self($id);
     }
 
     public function id(): string
@@ -19,18 +19,4 @@ class FindSeatQuery
         return $this->id;
     }
 
-    public function event(): string
-    {
-        return $this->event;
-    }
-
-    public function day(): string
-    {
-        return $this->day;
-    }
-
-    public function zone(): string
-    {
-        return $this->zone;
-    }
 }

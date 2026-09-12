@@ -52,7 +52,7 @@ class Discount
     {
         return $this->id;
     }
-    
+
     public function setId(Uuid $id): static
     {
         $this->id = $id;
@@ -191,7 +191,7 @@ class Discount
 
         return $this;
     }
-    
+
     #[ORM\PrePersist]
     public function createTimestamps(): void
     {

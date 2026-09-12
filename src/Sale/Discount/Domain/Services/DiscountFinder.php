@@ -6,7 +6,6 @@ use App\Sale\Discount\Domain\Discount;
 use App\Sale\Discount\Domain\DiscountId;
 use App\Sale\Discount\Domain\DiscountRepository;
 use App\Sale\Discount\Domain\Exceptions\DiscountNotFound;
-use App\Sale\Reference\Event\Domain\EventId;
 
 class DiscountFinder
 {
@@ -14,9 +13,9 @@ class DiscountFinder
     {
     }
 
-    public function __invoke(DiscountId $id, EventId $eventId): Discount
+    public function __invoke(DiscountId $id): Discount
     {
-        $discount = $this->repository->findById($id, $eventId);
+        $discount = $this->repository->find($id);
 
         if (is_null($discount)) {
             throw new DiscountNotFound();

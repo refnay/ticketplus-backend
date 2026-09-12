@@ -13,7 +13,7 @@ class CompanyCreateController extends AbstractController
     public function create(Request $request, CommandBus $commandBus): JsonResponse
     {
         $command = CreateCompanyCommand::create($request->toArray());
-        
+
         /** @var string $id */
         $id = $commandBus->dispatch($command);
 

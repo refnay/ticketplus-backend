@@ -24,7 +24,7 @@ abstract class DateValueObject
         if (is_null($date)) {
             return new static(null);
         }
-        
+
         return new static(DateTimeImmutable::createFromFormat('Y-m-d', $date));
     }
 

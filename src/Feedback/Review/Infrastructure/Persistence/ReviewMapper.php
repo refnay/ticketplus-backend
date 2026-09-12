@@ -19,7 +19,7 @@ class ReviewMapper
     public function newEntity(Review $review): ReviewEntity
     {
         $entity = new ReviewEntity();
-        
+
         $entity->setId($review->id()->toUuid());
         $entity->setRating($review->rating()->value());
         $entity->setComment($review->comment()->value());

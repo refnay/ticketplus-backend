@@ -66,7 +66,7 @@ class Zone
     {
         return $this->id;
     }
-    
+
     public function setId(Uuid $id): static
     {
         $this->id = $id;
@@ -109,7 +109,7 @@ class Zone
 
         return $this;
     }
-    
+
     public function getReservedQuantity(): ?int
     {
         return $this->reservedQuantity;
@@ -238,7 +238,7 @@ class Zone
     {
         $this->updatedAt = new \DateTimeImmutable();
     }
-    
+
     public function getCanvas(): ?array
     {
         return $this->canvas;

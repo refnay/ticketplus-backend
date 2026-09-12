@@ -13,7 +13,7 @@ class RelationFetcher
     public function __construct(private EntityManagerInterface $entityManager)
     {
     }
-    
+
     public function event(EventId $id): EventEntity
     {
         try {

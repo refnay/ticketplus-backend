@@ -16,13 +16,13 @@ class UpdateCategoryCommandHandler
 
     public function __invoke(UpdateCategoryCommand $command): void
     {
-        $this->authorization->requireAllPermissions();
+        $companyId = $this->authorization->companyId();
 
         $this->updater->__invoke(
             CategoryId::fromString($command->id()),
             CategoryName::fromString($command->name()),
             CategoryReference::fromInt($command->reference()),
-            CompanyId::fromString($this->authorization->requireCompanyId()),
+            CompanyId::fromString($companyId),
         );
     }
 }

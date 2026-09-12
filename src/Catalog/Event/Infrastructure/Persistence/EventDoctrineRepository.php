@@ -3,9 +3,11 @@
 namespace App\Catalog\Event\Infrastructure\Persistence;
 
 use App\Catalog\Event\Domain\Event;
+use App\Catalog\Event\Domain\EventDayId;
 use App\Catalog\Event\Domain\EventId;
 use App\Catalog\Event\Domain\EventRepository;
 use App\Catalog\Event\Domain\EventSlug;
+use App\Catalog\Event\Domain\EventStatusList;
 use App\Catalog\Event\Domain\Exceptions\EventNotCreated;
 use App\Catalog\Event\Domain\Exceptions\EventNotDeleted;
 use App\Catalog\Event\Domain\Exceptions\EventNotUpdated;
@@ -22,7 +24,7 @@ class EventDoctrineRepository implements EventRepository
     public function __construct(private EntityManagerInterface $entityManager, private EventMapper $mapper)
     {
     }
-    
+
     #[Override]
     public function save(Event $event): void
     {
@@ -70,6 +72,52 @@ class EventDoctrineRepository implements EventRepository
     }
 
     #[Override]
+    public function findByDayId(EventDayId $dayId, CompanyId $companyId): ?Event
+    {
+        $query = $this->entityManager
+            ->getRepository($this->mapper->entityClass())
+            ->createQueryBuilder(self::EVENT_PREFIX);
+        $entity = $query
+            ->innerJoin(self::EVENT_PREFIX . '.days', 'd')
+            ->andWhere('d.id = :dayId')
+            ->andWhere(self::EVENT_PREFIX . '.company = :companyId')
+            ->setParameter('dayId', $dayId->value())
+            ->setParameter('companyId', $companyId->value())
+            ->getQuery()
+            ->getOneOrNullResult();
+
+        return !is_null($entity) ? $this->mapper->newDomain($entity) : null;
+    }
+
+    #[Override]
+    public function findPublishedById(EventId $id): ?Event
+    {
+        $entity = $this->entityManager
+            ->getRepository($this->mapper->entityClass())
+            ->findOneBy(['id' => $id->value(), 'status' => EventStatusList::PUBLISHED->value]);
+
+        return !is_null($entity) ? $this->mapper->newDomain($entity) : null;
+    }
+
+    #[Override]
+    public function findPublishedByDayId(EventDayId $dayId): ?Event
+    {
+        $query = $this->entityManager
+            ->getRepository($this->mapper->entityClass())
+            ->createQueryBuilder(self::EVENT_PREFIX);
+        $entity = $query
+            ->innerJoin(self::EVENT_PREFIX . '.days', 'd')
+            ->andWhere('d.id = :dayId')
+            ->andWhere(self::EVENT_PREFIX . '.status = :status')
+            ->setParameter('dayId', $dayId->value())
+            ->setParameter('status', EventStatusList::PUBLISHED->value)
+            ->getQuery()
+            ->getOneOrNullResult();
+
+        return !is_null($entity) ? $this->mapper->newDomain($entity) : null;
+    }
+
+    #[Override]
     public function findBySlug(EventSlug $slug, CompanyId $companyId): ?Event
     {
         $entity = $this->entityManager
@@ -78,7 +126,7 @@ class EventDoctrineRepository implements EventRepository
 
         return !is_null($entity) ? $this->mapper->newDomain($entity) : null;
     }
-    
+
     #[Override]
     public function searchByFilters(array $filters, string $orderBy, string $order, ?int $limit, ?int $offset): array
     {
@@ -106,7 +154,7 @@ class EventDoctrineRepository implements EventRepository
             ->paginate($limit, $offset);
 
         $entities = $queryBuilder->queryBuilder()->getQuery()->getResult();
-        
+
         return array_map(fn($entity) => $this->mapper->newDomain($entity), $entities);
     }
 
@@ -118,7 +166,7 @@ class EventDoctrineRepository implements EventRepository
         );
 
         $queryBuilder->equals('company', $filters['company'] ?? null)
-            ->likeMultiple(['name'], $filters['name'] ?? null, true)
+            ->likeMultiple(['name', 'venue'], $filters['value'] ?? null, true)
             ->equals('country', $filters['country'] ?? null)
             ->equals('city', $filters['city'] ?? null)
             ->equals('category', $filters['category'] ?? null)

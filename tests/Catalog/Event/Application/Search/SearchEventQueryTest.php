@@ -17,7 +17,7 @@ final class SearchEventQueryTest extends TestCase
         ]);
 
         self::assertSame([
-            'name' => null,
+            'value' => null,
             'country' => null,
             'city' => null,
             'category' => '018f7c54-5f88-7e04-8a90-7af68c932551',

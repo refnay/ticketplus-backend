@@ -24,7 +24,7 @@ class CompanyMapper
     public function newEntity(Company $company): CompanyEntity
     {
         $entity = new CompanyEntity();
-        
+
         $entity->setId($company->id()->toUuid());
         $entity->setName($company->name()->value());
         $entity->setTimezone($company->timezone()->value());

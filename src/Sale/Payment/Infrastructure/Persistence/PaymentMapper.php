@@ -22,7 +22,7 @@ class PaymentMapper
     public function newEntity(Payment $payment): PaymentEntity
     {
         $entity = new PaymentEntity();
-        
+
         $entity->setId($payment->id()->toUuid());
         $entity->setAmount($payment->amount()->value());
         $entity->setPaymentMethod($payment->method()->value());
@@ -35,7 +35,7 @@ class PaymentMapper
     }
 
     public function newDomain(PaymentEntity $entity): Payment
-    {   
+    {
         $payment = new Payment(
             PaymentId::fromString($entity->getId()),
             PaymentAmount::fromFloat($entity->getAmount()),

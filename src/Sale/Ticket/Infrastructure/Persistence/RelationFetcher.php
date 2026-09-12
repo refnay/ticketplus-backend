@@ -19,7 +19,7 @@ class RelationFetcher
     public function __construct(private EntityManagerInterface $entityManager)
     {
     }
-    
+
     public function zone(ZoneId $id): ZoneEntity
     {
         try {

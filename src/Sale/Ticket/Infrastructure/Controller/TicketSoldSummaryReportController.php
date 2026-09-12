@@ -2,8 +2,8 @@
 
 namespace App\Sale\Ticket\Infrastructure\Controller;
 
-use App\Sale\Ticket\Application\SoldSummaryReport\ReportTicketSoldSummaryQuery;
-use App\Sale\Ticket\Application\SoldSummaryReport\TicketSummaryResponse;
+use App\Sale\Ticket\Application\ReportSoldSummary\ReportTicketSoldSummaryQuery;
+use App\Sale\Ticket\Application\ReportSoldSummary\TicketSummaryResponse;
 use App\Shared\Application\Bus\QueryBus;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;

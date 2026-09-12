@@ -118,7 +118,7 @@ class Event
 
         return $this;
     }
-    
+
     public function getName(): ?string
     {
         return $this->name;
@@ -460,7 +460,7 @@ class Event
 
         return $this;
     }
-    
+
     #[ORM\PrePersist]
     public function createTimestamps(): void
     {

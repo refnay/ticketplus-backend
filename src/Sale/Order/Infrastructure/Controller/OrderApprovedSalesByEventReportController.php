@@ -2,8 +2,8 @@
 
 namespace App\Sale\Order\Infrastructure\Controller;
 
-use App\Sale\Order\Application\ApprovedSalesByEventReport\OrderByEventResponse;
-use App\Sale\Order\Application\ApprovedSalesByEventReport\ReportOrderApprovedSalesByEventQuery;
+use App\Sale\Order\Application\ReportApprovedSalesByEvent\OrderByEventResponse;
+use App\Sale\Order\Application\ReportApprovedSalesByEvent\ReportOrderApprovedSalesByEventQuery;
 use App\Shared\Application\Bus\QueryBus;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;

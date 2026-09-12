@@ -23,7 +23,7 @@ class OrderCancelator
     public function __invoke(OrderId $id, UserId $userId): void
     {
         $order = $this->orderFinder->__invoke($id, $userId);
-        
+
         if (!$order->status()->isPending()) {
             throw new OrderNotCancelable();
         }
@@ -41,7 +41,7 @@ class OrderCancelator
         }
 
         $order->changeStatus(OrderStatus::cancelled());
-        
+
         $this->repository->update($order);
     }
 }

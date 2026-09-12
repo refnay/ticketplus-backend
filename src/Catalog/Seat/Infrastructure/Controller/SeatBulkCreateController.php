@@ -10,10 +10,10 @@ use Symfony\Component\HttpFoundation\Request;
 
 class SeatBulkCreateController extends AbstractController
 {
-    public function create(string $event, string $day, string $zone, Request $request, CommandBus $commandBus): JsonResponse
+    public function create(string $zone, Request $request, CommandBus $commandBus): JsonResponse
     {
-        $command = BulkCreateSeatCommand::create($event, $day, $zone, $request->toArray());
-        
+        $command = BulkCreateSeatCommand::create($zone, $request->toArray());
+
         $commandBus->dispatch($command);
 
         return new JsonResponse([]);

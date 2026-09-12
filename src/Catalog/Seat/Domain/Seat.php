@@ -38,18 +38,18 @@ class Seat
     {
         return $this->status;
     }
-    
+
     public function zoneId(): ZoneId
     {
         return $this->zoneId;
     }
 
-    public function changeCode(SeatCode $code): void 
+    public function changeCode(SeatCode $code): void
     {
         $this->code = $code;
     }
 
-    public function changeStatus(SeatStatus $status): void 
+    public function changeStatus(SeatStatus $status): void
     {
         $this->status = $status;
     }

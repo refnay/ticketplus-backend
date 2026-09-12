@@ -13,7 +13,7 @@ class EventCreateController extends AbstractController
     public function create(Request $request, CommandBus $commandBus): JsonResponse
     {
         $command = CreateEventCommand::create($request->toArray());
-        
+
         /** @var string $id */
         $id = $commandBus->dispatch($command);
 

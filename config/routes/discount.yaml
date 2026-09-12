@@ -9,16 +9,16 @@ discount-search:
     methods: GET
 
 discount-find:
-    path: /api/discount/{id}/event/{event}
+    path: /api/discount/{id}
     controller: App\Sale\Discount\Infrastructure\Controller\DiscountFindController::find
     methods: GET
 
 discount-update:
-    path: /api/discount/{id}/event/{event}
+    path: /api/discount/{id}
     controller: App\Sale\Discount\Infrastructure\Controller\DiscountUpdateController::update
     methods: PUT
 
 discount-delete:
-    path: /api/discount/{id}/event/{event}
+    path: /api/discount/{id}
     controller: App\Sale\Discount\Infrastructure\Controller\DiscountDeleteController::delete
     methods: DELETE

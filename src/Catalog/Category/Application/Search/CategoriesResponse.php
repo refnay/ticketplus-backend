@@ -5,7 +5,7 @@ namespace App\Catalog\Category\Application\Search;
 use JsonSerializable;
 use Override;
 
-class CategoriesResponse implements JsonSerializable 
+class CategoriesResponse implements JsonSerializable
 {
     private array $categories = [];
 
@@ -27,6 +27,6 @@ class CategoriesResponse implements JsonSerializable
     #[Override]
     public function jsonSerialize(): mixed
     {
-        return get_object_vars($this); 
+        return get_object_vars($this);
     }
 }

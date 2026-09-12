@@ -14,7 +14,7 @@ class EventSearchController extends AbstractController
     public function search(Request $request, QueryBus $queryBus): JsonResponse
     {
         $query = SearchEventQuery::fromQuery($request->query->all());
-        
+
         /** @var EventsResponse $response */
         $response = $queryBus->ask($query);
 

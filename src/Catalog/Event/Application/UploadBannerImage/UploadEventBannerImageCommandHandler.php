@@ -14,12 +14,12 @@ class UploadEventBannerImageCommandHandler
 
     public function __invoke(UploadEventBannerImageCommand $command): void
     {
-        $this->authorization->requireAllPermissions();
+        $companyId = $this->authorization->companyId();
 
         $this->uploader->__invoke(
             EventId::fromString($command->id()),
             $command->bannerImage(),
-            CompanyId::fromString($this->authorization->requireCompanyId()),
+            CompanyId::fromString($companyId),
         );
     }
 }

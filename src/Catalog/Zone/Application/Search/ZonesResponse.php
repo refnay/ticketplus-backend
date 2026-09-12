@@ -5,7 +5,7 @@ namespace App\Catalog\Zone\Application\Search;
 use JsonSerializable;
 use Override;
 
-class ZonesResponse implements JsonSerializable 
+class ZonesResponse implements JsonSerializable
 {
     private array $zones = [];
 
@@ -27,6 +27,6 @@ class ZonesResponse implements JsonSerializable
     #[Override]
     public function jsonSerialize(): mixed
     {
-        return get_object_vars($this); 
+        return get_object_vars($this);
     }
 }

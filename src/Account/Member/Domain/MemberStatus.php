@@ -15,5 +15,5 @@ class MemberStatus extends IntValueObject
     public static function active(): self
     {
         return new self(MemberStatusList::ACTIVE->value);
-    } 
+    }
 }

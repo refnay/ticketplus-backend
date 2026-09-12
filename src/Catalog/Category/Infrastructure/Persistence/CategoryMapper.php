@@ -18,7 +18,7 @@ class CategoryMapper
     public function newEntity(Category $category): CategoryEntity
     {
         $entity = new CategoryEntity();
-        
+
         $entity->setId($category->id()->toUuid());
         $entity->setName($category->name()->value());
         $entity->setReference($category->reference()->value());

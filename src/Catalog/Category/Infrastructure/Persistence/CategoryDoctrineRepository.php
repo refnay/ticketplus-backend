@@ -21,7 +21,7 @@ class CategoryDoctrineRepository implements CategoryRepository
     public function __construct(private EntityManagerInterface $entityManager, private CategoryMapper $mapper)
     {
     }
-    
+
     #[Override]
     public function save(Category $category): void
     {
@@ -67,7 +67,7 @@ class CategoryDoctrineRepository implements CategoryRepository
 
         return !is_null($entity) ? $this->mapper->newDomain($entity) : null;
     }
-    
+
     #[Override]
     public function searchByFilters(array $filters, string $orderBy, string $order, ?int $limit, ?int $offset): array
     {
@@ -82,7 +82,7 @@ class CategoryDoctrineRepository implements CategoryRepository
             ->paginate($limit, $offset);
 
         $entities = $queryBuilder->queryBuilder()->getQuery()->getResult();
-        
+
         return array_map(fn($entity) => $this->mapper->newDomain($entity), $entities);
     }
 
@@ -101,5 +101,5 @@ class CategoryDoctrineRepository implements CategoryRepository
             ->select('COUNT(' . self::CATEGORY_PREFIX . '.id)')
             ->getQuery()
             ->getSingleScalarResult();
-    } 
+    }
 }

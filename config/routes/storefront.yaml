@@ -1,0 +1,25 @@
+public-event-browse:
+    path: /events
+    controller: App\Catalog\Event\Infrastructure\Controller\PublicEventBrowseController::browse
+    methods: GET
+
+public-event-view:
+    path: /events/{id}
+    controller: App\Catalog\Event\Infrastructure\Controller\PublicEventViewController::view
+    methods: GET
+    requirements:
+        id: '[0-9a-fA-F-]{36}'
+
+public-event-zone-availability:
+    path: /days/{day}/zones
+    controller: App\Catalog\Zone\Infrastructure\Controller\PublicAvailableZoneSearchController::search
+    methods: GET
+    requirements:
+        day: '[0-9a-fA-F-]{36}'
+
+public-event-seat-availability:
+    path: /zones/{zone}/seats
+    controller: App\Catalog\Seat\Infrastructure\Controller\PublicAvailableSeatSearchController::search
+    methods: GET
+    requirements:
+        zone: '[0-9a-fA-F-]{36}'

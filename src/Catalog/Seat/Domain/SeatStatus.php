@@ -11,7 +11,7 @@ class SeatStatus extends IntValueObject
     {
         return new self(SeatStatusList::AVAILABLE->value);
     }
-    
+
     public static function reserved(): self
     {
         return new self(SeatStatusList::RESERVED->value);

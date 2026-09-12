@@ -19,7 +19,7 @@ class NewUserValidator
         $this->email($email);
         $this->document($document);
     }
-    
+
     public function email(UserEmail $email): void
     {
         try {

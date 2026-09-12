@@ -6,18 +6,13 @@ use App\Shared\Domain\Events\DomainEvent;
 
 class PaymentUpdatedDomainEvent extends DomainEvent
 {
-    public function __construct(private string $paymentId, private string $orderId, private string $userId, private string $token)
+    public function __construct(private string $paymentId, private string $userId, private string $token)
     {
     }
 
     public function paymentId(): string
     {
         return $this->paymentId;
-    }
-
-    public function orderId(): string
-    {
-        return $this->orderId;
     }
 
     public function userId(): string
@@ -33,7 +28,6 @@ class PaymentUpdatedDomainEvent extends DomainEvent
     public function payload(): array
     {
         return [
-            'orderId' => $this->orderId,
             'paymentId' => $this->paymentId,
             'userId' => $this->userId,
             'token' => $this->token,

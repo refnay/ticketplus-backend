@@ -18,7 +18,7 @@ class DiscountsResponse implements JsonSerializable
     {
         return $this->discounts;
     }
-    
+
     public function total(): int
     {
         return $this->total;

@@ -14,11 +14,11 @@ class DeleteCategoryCommandHandler
 
     public function __invoke(DeleteCategoryCommand $command): void
     {
-        $this->authorization->requireAllPermissions();
+        $companyId = $this->authorization->companyId();
 
         $this->deleter->__invoke(
             CategoryId::fromString($command->id()),
-            CompanyId::fromString($this->authorization->requireCompanyId()),
+            CompanyId::fromString($companyId),
         );
     }
 }

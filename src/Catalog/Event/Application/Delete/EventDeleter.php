@@ -16,7 +16,7 @@ class EventDeleter
     public function __invoke(EventId $id, CompanyId $companyId): void
     {
         $event = $this->finder->__invoke($id, $companyId);
-        
+
         $this->repository->delete($event);
     }
 }

@@ -24,6 +24,8 @@ class CreateCompanyCommandHandler
 
     public function __invoke(CreateCompanyCommand $command): string
     {
+        $userId = $this->authorization->userId();
+
         return $this->creator->__invoke(
             CompanyCountry::fromString($command->country()),
             CompanyCity::fromString($command->city()),
@@ -36,7 +38,7 @@ class CreateCompanyCommandHandler
             CompanyDescription::fromString($command->description()),
             CompanyTelephone::fromString($command->telephone()),
             CompanyWebSite::fromString($command->webSite()),
-            UserId::fromString($this->authorization->userId()),
+            UserId::fromString($userId),
         );
     }
 }

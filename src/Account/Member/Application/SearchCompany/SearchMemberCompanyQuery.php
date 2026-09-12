@@ -19,7 +19,7 @@ class SearchMemberCompanyQuery extends SearchQuery
     public static function fromQuery(array $data): self
     {
         $payload = PayloadMapper::fromData($data);
-        
+
         return new self(
             $payload->string('orderBy'),
             $payload->string('order'),
@@ -27,12 +27,12 @@ class SearchMemberCompanyQuery extends SearchQuery
             $payload->nullableInt('page') ,
         );
     }
-    
+
     public function filters(string $userId): array
     {
         $filters = get_object_vars($this);
         $filters['user'] = $userId;
-        
-        return $filters; 
+
+        return $filters;
     }
 }

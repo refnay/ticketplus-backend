@@ -5,7 +5,7 @@ namespace App\Feedback\Shared\Domain;
 use App\Shared\Domain\ValueObjects\UuidValueObject;
 use Override;
 
-class UserId extends UuidValueObject 
+class UserId extends UuidValueObject
 {
     #[Override]
     public function validate(): void

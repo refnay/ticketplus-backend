@@ -13,7 +13,7 @@ class MemberFindController extends AbstractController
     public function find(QueryBus $queryBus): JsonResponse
     {
         $query = FindMemberQuery::create();
-        
+
         /** @var MemberResponse $response */
         $response = $queryBus->ask($query);
 

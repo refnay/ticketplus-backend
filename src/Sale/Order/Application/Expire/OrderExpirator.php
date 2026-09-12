@@ -23,7 +23,7 @@ class OrderExpirator
     public function __invoke(OrderId $id): void
     {
         $order = $this->orderFinder->__invoke($id);
-        
+
         if (!$order->status()->isPending()) {
             return;
         }
@@ -41,7 +41,7 @@ class OrderExpirator
         }
 
         $order->changeStatus(OrderStatus::expired());
-        
+
         $this->repository->update($order);
 
         $details = $order->details();

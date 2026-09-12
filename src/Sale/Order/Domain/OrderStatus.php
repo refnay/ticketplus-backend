@@ -5,7 +5,7 @@ namespace App\Sale\Order\Domain;
 use App\Shared\Domain\ValueObjects\IntValueObject;
 use Override;
 
-class OrderStatus extends IntValueObject  
+class OrderStatus extends IntValueObject
 {
     #[Override]
     public function validate(): void
@@ -14,22 +14,22 @@ class OrderStatus extends IntValueObject
 
     public static function pending(): self
     {
-        return new self(OrderStatusList::PENDING->value); 
+        return new self(OrderStatusList::PENDING->value);
     }
 
     public static function cancelled(): self
     {
-        return new self(OrderStatusList::CANCELLED->value); 
+        return new self(OrderStatusList::CANCELLED->value);
     }
 
     public static function paid(): self
     {
-        return new self(OrderStatusList::PAID->value); 
+        return new self(OrderStatusList::PAID->value);
     }
 
     public static function expired(): self
     {
-        return new self(OrderStatusList::EXPIRED->value); 
+        return new self(OrderStatusList::EXPIRED->value);
     }
 
     public function isPending(): bool

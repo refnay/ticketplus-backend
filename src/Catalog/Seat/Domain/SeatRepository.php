@@ -3,6 +3,7 @@
 namespace App\Catalog\Seat\Domain;
 
 use App\Catalog\Zone\Domain\ZoneId;
+use App\Catalog\Shared\Domain\CompanyId;
 
 interface SeatRepository
 {
@@ -12,7 +13,9 @@ interface SeatRepository
 
     public function delete(Seat $seat): void;
 
-    public function findById(SeatId $id, ZoneId $zoneId): ?Seat;
+    public function find(SeatId $id): ?Seat;
+
+    public function findById(SeatId $id, CompanyId $companyId): ?Seat;
 
     public function findByCode(SeatCode $code, ZoneId $zoneId): ?Seat;
 

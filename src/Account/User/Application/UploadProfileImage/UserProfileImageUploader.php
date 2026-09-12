@@ -33,8 +33,8 @@ class UserProfileImageUploader
             }
         } else {
             $user->changeProfileImage(UserProfileImage::fromNull());
-        }   
-        
+        }
+
         $this->repository->update($user);
     }
 }

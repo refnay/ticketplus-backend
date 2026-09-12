@@ -5,7 +5,6 @@ namespace App\Sale\Order\Application\Create;
 use App\Shared\Application\Security\AuthorizationContext;
 use App\Sale\Discount\Domain\DiscountId;
 use App\Sale\Reference\EventDay\Domain\EventDayId;
-use App\Sale\Reference\Event\Domain\EventId;
 use App\Sale\Reference\User\Domain\UserId;
 
 class CreateOrderCommandHandler
@@ -16,13 +15,12 @@ class CreateOrderCommandHandler
 
     public function __invoke(CreateOrderCommand $command): string
     {
-        $this->authorization->requireAllPermissions();
+        $userId = $this->authorization->userId();
 
         return $this->creator->__invoke(
-            EventId::fromString($command->event()),
             EventDayId::fromString($command->day()),
             DiscountId::fromNullable($command->discount()),
-            UserId::fromString($this->authorization->userId()),
+            UserId::fromString($userId),
             $command->items(),
         );
     }

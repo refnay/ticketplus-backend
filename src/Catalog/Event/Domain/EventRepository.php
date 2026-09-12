@@ -14,6 +14,12 @@ interface EventRepository
 
     public function findById(EventId $id, CompanyId $companyId): ?Event;
 
+    public function findByDayId(EventDayId $dayId, CompanyId $companyId): ?Event;
+
+    public function findPublishedById(EventId $id): ?Event;
+
+    public function findPublishedByDayId(EventDayId $dayId): ?Event;
+
     public function findBySlug(EventSlug $slug, CompanyId $companyId): ?Event;
 
     public function searchByFilters(array $filters, string $orderBy, string $order, ?int $limit, ?int $offset): array;

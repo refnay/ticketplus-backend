@@ -11,9 +11,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 class SeatSearchController extends AbstractController
 {
-    public function search(string $event, string $day, string $zone, Request $request, QueryBus $queryBus): JsonResponse
+    public function search(Request $request, QueryBus $queryBus): JsonResponse
     {
-        $query = SearchSeatQuery::fromQuery($event, $day, $zone, $request->query->all());
+        $query = SearchSeatQuery::fromQuery($request->query->all());
 
         /** @var SeatsResponse $response */
         $response = $queryBus->ask($query);

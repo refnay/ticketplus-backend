@@ -27,7 +27,7 @@ class UserDoctrineRepository implements UserRepository
         private UserMapper $mapper,
     ) {
     }
-    
+
     #[Override]
     public function save(User $user): string
     {
@@ -113,7 +113,7 @@ class UserDoctrineRepository implements UserRepository
     public function resetPassword(UserId $id, UserPassword $newPassword): void
     {
         $entity = $this->entityManager->getReference($this->mapper->entityClass(), $id->value());
-        
+
         $this->mapper->updatePassword($entity, $newPassword);
         $this->entityManager->flush();
     }

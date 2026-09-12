@@ -28,7 +28,7 @@ class CompanyCreator
 {
     public function __construct(
         private CompanyRepository $repository,
-        private UserFinder $userFinder, 
+        private UserFinder $userFinder,
         private EventBus $eventBus,
         private CompanyByDocumentFinder $companyFinder,
     ) {}
@@ -48,17 +48,17 @@ class CompanyCreator
         UserId $userId,
     ): string {
         $user = $this->userFinder->__invoke($userId);
-        
+
         if ($user->owner()->isDisable()) {
             throw new UserNotOwner();
         }
-        
+
         try {
             $this->companyFinder->__invoke($document);
             throw new CompanyDocumentAlreadyExists();
         } catch (CompanyNotFound) {
         }
-        
+
         $company = Company::create(
             $city,
             $country,

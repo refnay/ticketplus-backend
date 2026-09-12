@@ -24,7 +24,7 @@ class TicketMapper
     public function newEntity(Ticket $ticket): TicketEntity
     {
         $entity = new TicketEntity();
-        
+
         $entity->setId($ticket->id()->toUuid());
         $entity->setQRCode($ticket->qrCode()->toUuid());
         $entity->setEventName($ticket->information()->eventName());
@@ -45,7 +45,7 @@ class TicketMapper
     }
 
     public function newDomain(TicketEntity $entity): Ticket
-    { 
+    {
         $ticket = new Ticket(
             TicketId::fromString($entity->getId()),
             TicketInformation::create(

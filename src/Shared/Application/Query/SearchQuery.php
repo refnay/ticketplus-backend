@@ -31,13 +31,13 @@ class SearchQuery
     {
         return $this->page;
     }
-    
+
     public function offset(): ?int
     {
         if (is_null($this->page) || is_null($this->limit)) {
             return null;
         }
-        
+
         return ($this->page - 1) * $this->limit;
     }
 }

@@ -3,7 +3,7 @@
 namespace App\Sale\Discount\Application\Find;
 
 use App\Sale\Discount\Domain\DiscountId;
-use App\Sale\Reference\Event\Domain\EventId;
+use App\Sale\Shared\Domain\CompanyId;
 use App\Shared\Application\Security\AuthorizationContext;
 
 class FindDiscountQueryHandler
@@ -16,11 +16,11 @@ class FindDiscountQueryHandler
 
     public function __invoke(FindDiscountQuery $query): DiscountResponse
     {
-        $this->authorization->requireAllPermissions();
+        $companyId = $this->authorization->companyId();
 
         return $this->finder->__invoke(
             DiscountId::fromString($query->id()),
-            EventId::fromString($query->event()),
+            CompanyId::fromString($companyId),
         );
     }
 }

@@ -20,7 +20,7 @@ class CompanyDoctrineRepository implements CompanyRepository
         private CompanyMapper $mapper,
     ) {
     }
-    
+
     #[Override]
     public function save(Company $company): void
     {

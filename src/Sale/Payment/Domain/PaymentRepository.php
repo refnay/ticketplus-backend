@@ -5,6 +5,7 @@ namespace App\Sale\Payment\Domain;
 use App\Sale\Payment\Domain\Payment;
 use App\Sale\Payment\Domain\PaymentId;
 use App\Sale\Order\Domain\OrderId;
+use App\Sale\Reference\User\Domain\UserId;
 
 interface PaymentRepository
 {
@@ -14,7 +15,9 @@ interface PaymentRepository
 
     public function delete(Payment $payment): void;
 
-    public function findById(PaymentId $id, OrderId $orderId): ?Payment;
+    public function find(PaymentId $id): ?Payment;
+
+    public function findById(PaymentId $id, UserId $userId): ?Payment;
 
     public function findByOrder(OrderId $orderId): ?Payment;
 

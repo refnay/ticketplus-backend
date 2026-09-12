@@ -21,7 +21,7 @@ class CreateDiscountCommandHandler
 
     public function __invoke(CreateDiscountCommand $command): string
     {
-        $this->authorization->requireAllPermissions();
+        $companyId = $this->authorization->companyId();
 
         return $this->creator->__invoke(
             DiscountActive::fromBool($command->active()),
@@ -32,7 +32,7 @@ class CreateDiscountCommandHandler
             DiscountUsage::fromLimit($command->usageLimit()),
             DiscountValue::fromFloat($command->value()),
             EventId::fromString($command->event()),
-            CompanyId::fromString($this->authorization->requireCompanyId()),
+            CompanyId::fromString($companyId),
         );
     }
 }

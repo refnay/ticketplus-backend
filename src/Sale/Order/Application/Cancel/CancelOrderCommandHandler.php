@@ -14,11 +14,11 @@ class CancelOrderCommandHandler
 
     public function __invoke(CancelOrderCommand $command): void
     {
-        $this->authorization->requireAllPermissions();
+        $userId = $this->authorization->userId();
 
         $this->cancelator->__invoke(
             OrderId::fromString($command->id()),
-            UserId::fromString($this->authorization->userId()),
+            UserId::fromString($userId),
         );
     }
 }

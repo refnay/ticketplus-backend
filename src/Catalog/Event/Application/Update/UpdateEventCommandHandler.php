@@ -25,7 +25,7 @@ class UpdateEventCommandHandler
 
     public function __invoke(UpdateEventCommand $command): void
     {
-        $this->authorization->requireAllPermissions();
+        $companyId = $this->authorization->companyId();
 
         $this->updater->__invoke(
             EventId::fromString($command->id()),
@@ -40,7 +40,7 @@ class UpdateEventCommandHandler
             EventTaxRate::fromFloat($command->taxRate()),
             EventStatus::fromInt($command->status()),
             CategoryId::fromString($command->category()),
-            CompanyId::fromString($this->authorization->requireCompanyId()),
+            CompanyId::fromString($companyId),
             $command->days(),
         );
     }

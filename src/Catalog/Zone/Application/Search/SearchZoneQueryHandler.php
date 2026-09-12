@@ -2,9 +2,6 @@
 
 namespace App\Catalog\Zone\Application\Search;
 
-use App\Catalog\Event\Domain\EventDayId;
-use App\Catalog\Event\Domain\EventId;
-use App\Catalog\Shared\Domain\CompanyId;
 use App\Shared\Application\Security\AuthorizationContext;
 
 class SearchZoneQueryHandler
@@ -15,13 +12,10 @@ class SearchZoneQueryHandler
 
     public function __invoke(SearchZoneQuery $query): ZonesResponse
     {
-        $this->authorization->requireAllPermissions();
+        $companyId = $this->authorization->companyId();
 
         return $this->searcher->__invoke(
-            EventId::fromString($query->event()),
-            EventDayId::fromString($query->day()),
-            CompanyId::fromString($this->authorization->requireCompanyId()),
-            $query->filters(),
+            $query->filters($companyId),
             $query->orderBy(),
             $query->order(),
             $query->limit(),

@@ -11,6 +11,7 @@ use App\Sale\Payment\Domain\PaymentRepository;
 use App\Sale\Order\Domain\OrderId;
 use App\Sale\Payment\Domain\PaymentExternalReference;
 use App\Sale\Payment\Domain\PaymentStatus;
+use App\Sale\Reference\User\Domain\UserId;
 use App\Shared\Infrastructure\Persistence\Doctrine\QueryBuilder;
 use Doctrine\ORM\EntityManagerInterface;
 use Override;
@@ -23,7 +24,7 @@ class PaymentDoctrineRepository implements PaymentRepository
     public function __construct(private EntityManagerInterface $entityManager, private PaymentMapper $mapper)
     {
     }
-    
+
     #[Override]
     public function save(Payment $payment): void
     {
@@ -61,11 +62,29 @@ class PaymentDoctrineRepository implements PaymentRepository
     }
 
     #[Override]
-    public function findById(PaymentId $id, OrderId $orderId): ?Payment
+    public function find(PaymentId $id): ?Payment
     {
         $entity = $this->entityManager
             ->getRepository($this->mapper->entityClass())
-            ->findOneBy(['id' => $id->value(), 'purchase' => $orderId->value()]);
+            ->find($id->value());
+
+        return !is_null($entity) ? $this->mapper->newDomain($entity) : null;
+    }
+
+    #[Override]
+    public function findById(PaymentId $id, UserId $userId): ?Payment
+    {
+        $query = $this->entityManager
+            ->getRepository($this->mapper->entityClass())
+            ->createQueryBuilder(self::PAYMENT_PREFIX);
+        $entity = $query
+            ->innerJoin(self::PAYMENT_PREFIX . '.purchase', 'o')
+            ->andWhere(self::PAYMENT_PREFIX . '.id = :id')
+            ->andWhere('o.attendee = :userId')
+            ->setParameter('id', $id->value())
+            ->setParameter('userId', $userId->value())
+            ->getQuery()
+            ->getOneOrNullResult();
 
         return !is_null($entity) ? $this->mapper->newDomain($entity) : null;
     }
@@ -99,7 +118,7 @@ class PaymentDoctrineRepository implements PaymentRepository
 
         return !is_null($entity) ? $this->mapper->newDomain($entity) : null;
     }
-    
+
     #[Override]
     public function searchByFilters(array $filters, string $orderBy, string $order, ?int $limit, ?int $offset): array
     {
@@ -112,7 +131,7 @@ class PaymentDoctrineRepository implements PaymentRepository
             ->paginate($limit, $offset);
 
         $entities = $queryBuilder->queryBuilder()->getQuery()->getResult();
-        
+
         return array_map(fn($entity) => $this->mapper->newDomain($entity), $entities);
     }
 
@@ -129,5 +148,5 @@ class PaymentDoctrineRepository implements PaymentRepository
             ->select('COUNT(' . self::PAYMENT_PREFIX . '.id)')
             ->getQuery()
             ->getSingleScalarResult();
-    } 
+    }
 }

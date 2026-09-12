@@ -50,7 +50,7 @@ class EventCreator
         EventCity $city,
         EventCurrency $currency,
         EventTaxRate $taxRate,
-        CategoryId $categoryId, 
+        CategoryId $categoryId,
         CompanyId $companyId,
         array $days,
     ): string {
@@ -62,7 +62,7 @@ class EventCreator
             throw new EventAlreadyExists();
         } catch (EventNotFound) {
         }
-        
+
         $event = Event::create(
             $name,
             $slug,

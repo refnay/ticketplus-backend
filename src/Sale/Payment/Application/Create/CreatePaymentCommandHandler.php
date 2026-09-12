@@ -16,13 +16,13 @@ class CreatePaymentCommandHandler
 
     public function __invoke(CreatePaymentCommand $command): string
     {
-        $this->authorization->requireAllPermissions();
+        $userId = $this->authorization->userId();
 
         return $this->creator->__invoke(
             OrderId::fromString($command->order()),
             PaymentMethod::fromInt($command->method()),
             PaymentPayer::fromArray($command->payer()),
-            UserId::fromString($this->authorization->userId()),
+            UserId::fromString($userId),
         );
     }
 }

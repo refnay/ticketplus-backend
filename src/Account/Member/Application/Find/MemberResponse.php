@@ -17,10 +17,10 @@ final class MemberResponse implements JsonSerializable
         private readonly int $status,
     ) {
     }
-    
+
     #[Override]
     public function jsonSerialize(): mixed
     {
         return get_object_vars($this);
-    } 
+    }
 }

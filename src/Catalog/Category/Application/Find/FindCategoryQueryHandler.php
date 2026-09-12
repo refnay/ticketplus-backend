@@ -14,11 +14,11 @@ class FindCategoryQueryHandler
 
     public function __invoke(FindCategoryQuery $query): CategoryResponse
     {
-        $this->authorization->requireAllPermissions();
+        $companyId = $this->authorization->companyId();
 
         return $this->finder->__invoke(
             CategoryId::fromString($query->id()),
-            CompanyId::fromString($this->authorization->requireCompanyId()),
+            CompanyId::fromString($companyId),
         );
     }
 }

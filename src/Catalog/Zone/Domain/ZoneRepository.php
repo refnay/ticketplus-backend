@@ -13,7 +13,11 @@ interface ZoneRepository
 
     public function delete(Zone $zone): void;
 
-    public function findById(ZoneId $id, EventDayId $dayId): ?Zone;
+    public function find(ZoneId $id): ?Zone;
+
+    public function findById(ZoneId $id, CompanyId $companyId): ?Zone;
+
+    public function findPublishedById(ZoneId $id): ?Zone;
 
     public function searchByFilters(array $filters, string $orderBy, string $order, ?int $limit, ?int $offset): array;
 

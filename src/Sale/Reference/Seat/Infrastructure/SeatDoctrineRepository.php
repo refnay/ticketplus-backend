@@ -5,7 +5,6 @@ namespace App\Sale\Reference\Seat\Infrastructure;
 use App\Sale\Reference\Seat\Domain\Seat;
 use App\Sale\Reference\Seat\Domain\SeatId;
 use App\Sale\Reference\Seat\Domain\SeatRepository;
-use App\Sale\Reference\Zone\Domain\ZoneId;
 use Doctrine\ORM\EntityManagerInterface;
 use Override;
 
@@ -16,23 +15,18 @@ class SeatDoctrineRepository implements SeatRepository
     }
 
     #[Override]
-    public function findById(SeatId $id, ZoneId $zoneId): ?Seat
+    public function findById(SeatId $id): ?Seat
     {
-        $sql = sprintf(
-            "SELECT
+        $sql = "SELECT
                 s.code,
-                s.status
+                s.status,
+                s.zone_id
             FROM seat s
-            INNER JOIN zone z ON z.id = s.zone_id
-            WHERE s.id = '%s'
-                AND z.id = '%s'",
-            $id->value(),
-            $zoneId->value(),
-        );
+            WHERE s.id = :id";
 
         $result = $this->entityManager
             ->getConnection()
-            ->executeQuery($sql)
+            ->executeQuery($sql, ['id' => $id->value()])
             ->fetchAssociative();
 
         if (!is_array($result)) {
@@ -43,6 +37,7 @@ class SeatDoctrineRepository implements SeatRepository
             $id->value(),
             (string) $result['code'],
             (int) $result['status'],
+            (string) $result['zone_id'],
         );
     }
 }

@@ -8,8 +8,7 @@ use App\Shared\Application\Input\PayloadMapper;
 class SearchZoneQuery extends SearchQuery
 {
     public function __construct(
-        private string $event,
-        private string $day,
+        private ?string $day,
         private ?string $name,
         string $orderBy,
         string $order,
@@ -19,13 +18,12 @@ class SearchZoneQuery extends SearchQuery
         parent::__construct($orderBy, $order, $limit, $page);
     }
 
-    public static function fromQuery(string $event, string $day, array $data): self
+    public static function fromQuery(array $data): self
     {
         $payload = PayloadMapper::fromData($data);
-        
+
         return new self(
-            $event,
-            $day,
+            $payload->nullableString('day'),
             $payload->nullableString('name'),
             $payload->string('orderBy'),
             $payload->string('order'),
@@ -34,20 +32,11 @@ class SearchZoneQuery extends SearchQuery
         );
     }
 
-    public function event(): string
-    {
-        return $this->event;
-    }
-
-    public function day(): string
-    {
-        return $this->day;
-    }
-
-    public function filters(): array
+    public function filters(string $companyId): array
     {
         $filters = get_object_vars($this);
+        $filters['company'] = $companyId;
 
-        return $filters; 
+        return $filters;
     }
 }

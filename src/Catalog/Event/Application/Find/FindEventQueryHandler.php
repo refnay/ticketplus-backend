@@ -14,11 +14,11 @@ class FindEventQueryHandler
 
     public function __invoke(FindEventQuery $query): EventResponse
     {
-        $this->authorization->requireAllPermissions();
+        $companyId = $this->authorization->companyId();
 
         return $this->finder->__invoke(
             EventId::fromString($query->id()),
-            CompanyId::fromString($this->authorization->requireCompanyId()),
+            CompanyId::fromString($companyId),
         );
     }
 }

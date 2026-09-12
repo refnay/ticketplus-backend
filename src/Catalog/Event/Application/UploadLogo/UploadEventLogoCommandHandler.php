@@ -14,12 +14,12 @@ class UploadEventLogoCommandHandler
 
     public function __invoke(UploadEventLogoCommand $command): void
     {
-        $this->authorization->requireAllPermissions();
+        $companyId = $this->authorization->companyId();
 
         $this->uploader->__invoke(
             EventId::fromString($command->id()),
             $command->logo(),
-            CompanyId::fromString($this->authorization->requireCompanyId()),
+            CompanyId::fromString($companyId),
         );
     }
 }

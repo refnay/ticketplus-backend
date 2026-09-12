@@ -2,10 +2,6 @@
 
 namespace App\Catalog\Seat\Application\Search;
 
-use App\Catalog\Event\Domain\EventDayId;
-use App\Catalog\Event\Domain\EventId;
-use App\Catalog\Shared\Domain\CompanyId;
-use App\Catalog\Zone\Domain\ZoneId;
 use App\Shared\Application\Security\AuthorizationContext;
 
 class SearchSeatQueryHandler
@@ -16,14 +12,10 @@ class SearchSeatQueryHandler
 
     public function __invoke(SearchSeatQuery $query): SeatsResponse
     {
-        $this->authorization->requireAllPermissions();
+        $companyId = $this->authorization->companyId();
 
         return $this->searcher->__invoke(
-            EventId::fromString($query->event()),
-            EventDayId::fromString($query->day()),
-            ZoneId::fromString($query->zone()),
-            CompanyId::fromString($this->authorization->requireCompanyId()),
-            $query->filters(),
+            $query->filters($companyId),
             $query->orderBy(),
             $query->order(),
             $query->limit(),

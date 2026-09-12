@@ -24,15 +24,15 @@ class CreatePaymentCommand
     public function order(): string
     {
         return $this->order;
-    } 
+    }
 
     public function method(): int
     {
         return $this->method;
-    } 
+    }
 
     public function payer(): array
     {
         return $this->payer;
-    } 
+    }
 }

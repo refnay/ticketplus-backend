@@ -1,5 +1,5 @@
 ticket-render:
-    path: /api/ticket/{id}/order/{order}
+    path: /api/ticket/{id}
     controller: App\Sale\Ticket\Infrastructure\Controller\TicketRenderController::create
     methods: GET
 

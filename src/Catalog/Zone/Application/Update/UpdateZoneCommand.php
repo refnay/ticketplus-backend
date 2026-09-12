@@ -8,8 +8,6 @@ class UpdateZoneCommand
 {
     public function __construct(
         private string $id,
-        private string $event,
-        private string $day,
         private string $name,
         private float $price,
         private int $total,
@@ -18,14 +16,12 @@ class UpdateZoneCommand
     ) {
     }
 
-    public static function create(string $id, string $event, string $day, array $data): self
+    public static function create(string $id, array $data): self
     {
         $payload = PayloadMapper::fromData($data);
 
         return new self(
             $id,
-            $event,
-            $day,
             $payload->string('name'),
             $payload->float('price'),
             $payload->int('total'),
@@ -37,16 +33,6 @@ class UpdateZoneCommand
     public function id(): string
     {
         return $this->id;
-    }
-
-    public function event(): string
-    {
-        return $this->event;
-    }
-
-    public function day(): string
-    {
-        return $this->day;
     }
 
     public function name(): string

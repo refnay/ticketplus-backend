@@ -19,7 +19,7 @@ class MemberMapper
     public function newEntity(Member $member): MemberEntity
     {
         $entity = new MemberEntity();
-        
+
         $entity->setId($member->id()->toUuid());
         $entity->setRole($member->role()->value());
         $entity->setStatus($member->status()->value());

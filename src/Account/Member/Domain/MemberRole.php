@@ -11,7 +11,7 @@ class MemberRole extends IntValueObject
     {
         return new self(MemberRoleList::OWNER->value);
     }
-    
+
     #[Override]
     public function validate(): void
     {

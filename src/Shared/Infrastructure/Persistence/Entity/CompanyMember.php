@@ -30,7 +30,7 @@ class CompanyMember
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
-    
+
     #[ORM\Column]
     private ?\DateTimeImmutable $updatedAt = null;
 
@@ -69,7 +69,7 @@ class CompanyMember
 
         return $this;
     }
-    
+
     public function getCompany(): ?Company
     {
         return $this->company;
@@ -81,7 +81,7 @@ class CompanyMember
 
         return $this;
     }
-    
+
     public function getMember(): ?User
     {
         return $this->member;
@@ -117,7 +117,7 @@ class CompanyMember
 
         return $this;
     }
-    
+
     #[ORM\PrePersist]
     public function createTimestamps(): void
     {

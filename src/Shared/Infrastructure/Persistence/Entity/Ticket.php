@@ -60,7 +60,7 @@ class Ticket
     {
         return $this->id;
     }
-    
+
     public function setId(Uuid $id): static
     {
         $this->id = $id;
@@ -223,7 +223,7 @@ class Ticket
 
         return $this;
     }
-    
+
     #[ORM\PrePersist]
     public function createTimestamps(): void
     {

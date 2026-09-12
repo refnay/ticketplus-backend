@@ -23,7 +23,7 @@ class DiscountMapper
     public function newEntity(Discount $discount): DiscountEntity
     {
         $entity = new DiscountEntity();
-        
+
         $entity->setId($discount->id()->toUuid());
         $entity->setCode($discount->code()->value());
         $entity->setType($discount->type()->value());

@@ -16,7 +16,7 @@ class RelationFetcher
     public function __construct(private EntityManagerInterface $entityManager)
     {
     }
-    
+
     public function company(CompanyId $id): CompanyEntity
     {
         try {

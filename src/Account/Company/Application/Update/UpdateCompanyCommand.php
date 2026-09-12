@@ -60,7 +60,7 @@ class UpdateCompanyCommand
     {
         return $this->documentNumber;
     }
-    
+
     public function email(): string
     {
         return $this->email;
@@ -80,7 +80,7 @@ class UpdateCompanyCommand
     {
         return $this->default;
     }
-    
+
     public function location(): ?string
     {
         return $this->location;
@@ -90,7 +90,7 @@ class UpdateCompanyCommand
     {
         return $this->description;
     }
-    
+
     public function telephone(): ?string
     {
         return $this->telephone;

@@ -38,7 +38,7 @@ class EventCoverImageUploader
         } else {
             $event->changeCoverImage(EventCoverImage::fromNull());
         }
-        
+
         $this->repository->update($event);
     }
 }

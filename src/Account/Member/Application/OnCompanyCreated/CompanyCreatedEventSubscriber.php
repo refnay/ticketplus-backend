@@ -1,0 +1,19 @@
+<?php
+
+namespace App\Account\Member\Application\OnCompanyCreated;
+
+use App\Account\Company\Domain\CompanyId;
+use App\Account\Company\Domain\Events\CompanyCreatedDomainEvent;
+use App\Account\User\Domain\UserId;
+
+class CompanyCreatedEventSubscriber
+{
+    public function __construct(private MemberCreator $creator)
+    {
+    }
+
+    public function __invoke(CompanyCreatedDomainEvent $event): void
+    {
+        $this->creator->__invoke(UserId::fromString($event->userId()), CompanyId::fromString($event->companyId()));
+    }
+}

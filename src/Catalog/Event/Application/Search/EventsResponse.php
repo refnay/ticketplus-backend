@@ -5,7 +5,7 @@ namespace App\Catalog\Event\Application\Search;
 use JsonSerializable;
 use Override;
 
-class EventsResponse implements JsonSerializable 
+class EventsResponse implements JsonSerializable
 {
     private array $events = [];
 
@@ -27,6 +27,6 @@ class EventsResponse implements JsonSerializable
     #[Override]
     public function jsonSerialize(): mixed
     {
-        return get_object_vars($this); 
+        return get_object_vars($this);
     }
 }

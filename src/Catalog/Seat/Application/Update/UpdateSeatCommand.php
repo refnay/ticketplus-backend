@@ -8,23 +8,17 @@ class UpdateSeatCommand
 {
     public function __construct(
         private string $id,
-        private string $event,
-        private string $day,
-        private string $zone,
         private string $code,
         private int $status,
     ) {
     }
 
-    public static function create(string $id, string $event, string $day, string $zone, array $data): self
+    public static function create(string $id, array $data): self
     {
         $payload = PayloadMapper::fromData($data);
 
         return new self(
             $id,
-            $event,
-            $day,
-            $zone,
             $payload->string('code'),
             $payload->int('status'),
         );
@@ -33,21 +27,6 @@ class UpdateSeatCommand
     public function id(): string
     {
         return $this->id;
-    }
-
-    public function event(): string
-    {
-        return $this->event;
-    }
-
-    public function day(): string
-    {
-        return $this->day;
-    }
-
-    public function zone(): string
-    {
-        return $this->zone;
     }
 
     public function code(): string

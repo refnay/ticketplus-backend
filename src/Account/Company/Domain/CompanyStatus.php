@@ -11,7 +11,7 @@ class CompanyStatus extends IntValueObject
     {
         return new self(CompanyStatusList::PENDING->value);
     }
-    
+
     #[Override]
     public function validate(): void
     {

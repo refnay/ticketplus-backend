@@ -2,7 +2,6 @@
 
 namespace App\Sale\Ticket\Infrastructure\Persistence;
 
-use App\Sale\Order\Domain\OrderId;
 use App\Sale\Order\Domain\OrderPaidAt;
 use App\Sale\Order\Domain\OrderStatusList;
 use App\Sale\Shared\Domain\CompanyId;
@@ -12,6 +11,7 @@ use App\Sale\Ticket\Domain\Exceptions\TicketNotUpdated;
 use App\Sale\Ticket\Domain\Ticket;
 use App\Sale\Ticket\Domain\TicketId;
 use App\Sale\Ticket\Domain\TicketRepository;
+use App\Sale\Reference\User\Domain\UserId;
 use App\Shared\Infrastructure\Persistence\Doctrine\QueryBuilder;
 use Doctrine\ORM\EntityManagerInterface;
 use Override;
@@ -24,7 +24,7 @@ class TicketDoctrineRepository implements TicketRepository
     public function __construct(private EntityManagerInterface $entityManager, private TicketMapper $mapper)
     {
     }
-    
+
     #[Override]
     public function save(Ticket $ticket): void
     {
@@ -62,15 +62,23 @@ class TicketDoctrineRepository implements TicketRepository
     }
 
     #[Override]
-    public function findById(TicketId $id, OrderId $orderId): ?Ticket
+    public function findById(TicketId $id, UserId $userId): ?Ticket
     {
-        $entity = $this->entityManager
+        $query = $this->entityManager
             ->getRepository($this->mapper->entityClass())
-            ->findOneBy(['id' => $id->value(), 'purchase' => $orderId->value()]);
+            ->createQueryBuilder(self::TICKET_PREFIX);
+        $entity = $query
+            ->innerJoin(self::TICKET_PREFIX . '.purchase', 'o')
+            ->andWhere(self::TICKET_PREFIX . '.id = :id')
+            ->andWhere('o.attendee = :userId')
+            ->setParameter('id', $id->value())
+            ->setParameter('userId', $userId->value())
+            ->getQuery()
+            ->getOneOrNullResult();
 
         return !is_null($entity) ? $this->mapper->newDomain($entity) : null;
     }
-    
+
     #[Override]
     public function searchByFilters(array $filters, string $orderBy, string $order, ?int $limit, ?int $offset): array
     {
@@ -83,7 +91,7 @@ class TicketDoctrineRepository implements TicketRepository
             ->paginate($limit, $offset);
 
         $entities = $queryBuilder->queryBuilder()->getQuery()->getResult();
-        
+
         return array_map(fn($entity) => $this->mapper->newDomain($entity), $entities);
     }
 

@@ -2,8 +2,8 @@
 
 namespace App\Sale\Order\Infrastructure\Controller;
 
-use App\Sale\Order\Application\ApprovedSalesEvolutionReport\OrderEvolutionResponse;
-use App\Sale\Order\Application\ApprovedSalesEvolutionReport\ReportOrderApprovedSalesEvolutionQuery;
+use App\Sale\Order\Application\ReportApprovedSalesEvolution\OrderEvolutionResponse;
+use App\Sale\Order\Application\ReportApprovedSalesEvolution\ReportOrderApprovedSalesEvolutionQuery;
 use App\Shared\Application\Bus\QueryBus;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;

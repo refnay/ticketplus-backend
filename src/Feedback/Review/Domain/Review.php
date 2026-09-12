@@ -57,7 +57,7 @@ class Review
         return $this->eventId;
     }
 
-    public function changeRating(ReviewRating $rating): void 
+    public function changeRating(ReviewRating $rating): void
     {
         $this->rating = $rating;
     }

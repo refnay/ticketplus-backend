@@ -13,8 +13,6 @@ class FindMemberQueryHandler
 
     public function __invoke(FindMemberQuery $query): MemberResponse
     {
-        $this->authorization->requireAllPermissions();
-
-        return $this->finder->__invoke(MemberId::fromString($this->authorization->requireMemberId()));
+        return $this->finder->__invoke(MemberId::fromString($this->authorization->memberId()));
     }
 }

@@ -28,7 +28,7 @@ class TicketInformation
         return new self($data['date'], $data['eventName'], $data['zoneName'], $data['seatCode']);
     }
 
-    public function date(): DateTimeInterface 
+    public function date(): DateTimeInterface
     {
         return $this->date;
     }

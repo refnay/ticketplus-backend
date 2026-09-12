@@ -2,11 +2,12 @@
 
 namespace App\Shared\Application\Security;
 
-use App\Shared\Domain\Enums\UserTypeList;
-use App\Shared\Application\Security\Exception\MemberRequired;
+use App\Account\Member\Domain\MemberRoleList;
+use App\Account\Member\Domain\MemberStatusList;
+use App\Shared\Application\Security\Exception\AuthenticationRequired;
 use App\Shared\Application\Security\Exception\CompanyRequired;
-use App\Shared\Application\Security\Exception\UserNotAllowed;
-use App\Shared\Domain\Utils\IntegerHelper as Integer;
+use App\Shared\Application\Security\Exception\CompanyOwnerRequired;
+use App\Shared\Application\Security\Exception\MemberRequired;
 
 final readonly class AuthorizationContext
 {
@@ -16,55 +17,51 @@ final readonly class AuthorizationContext
 
     public function userId(): string
     {
-        return $this->actor->userId();
-    }
-
-    public function companyId(): ?string
-    {
-        return $this->actor->companyId();
-    }
-
-    public function memberId(): ?string
-    {
-        return $this->actor->memberId();
-    }
-
-    public function requireAllPermissions(): void
-    {
-        $this->requireCompanyId();
-        $this->requireMemberId();
-        
-        $this->workerAllowed();
-
-        return;
-    }
-
-    public function workerAllowed(): void
-    {
-        if (!Integer::equals(UserTypeList::WORKER->value, $this->actor->userType())) {
-            throw new UserNotAllowed();
+        $userId = $this->actor->userId();
+        if (is_null($userId)) {
+            throw new AuthenticationRequired();
         }
 
-        return;
+        return $userId;
     }
 
-    public function requireCompanyId(): string
+    public function companyId(): string
     {
-        $companyId = $this->companyId();
+        $companyId = $this->actor->companyId();
         if (is_null($companyId)) {
             throw new CompanyRequired();
+        }
+
+        if (
+            is_null($this->actor->memberId())
+            || $this->actor->memberStatus() !== MemberStatusList::ACTIVE->value
+        ) {
+            throw new MemberRequired();
         }
 
         return $companyId;
     }
 
-    public function requireMemberId(): string
+    public function memberId(): string
     {
-        $memberId = $this->memberId();
+        $this->companyId();
+
+        $memberId = $this->actor->memberId();
         if (is_null($memberId)) {
             throw new MemberRequired();
         }
 
         return $memberId;
+    }
+
+    public function ownerCompanyId(): string
+    {
+        $companyId = $this->companyId();
+
+        if ($this->actor->memberRole() !== MemberRoleList::OWNER->value) {
+            throw new CompanyOwnerRequired();
+        }
+
+        return $companyId;
     }
 }

@@ -11,7 +11,6 @@ use App\Sale\Discount\Domain\DiscountStartDate;
 use App\Sale\Discount\Domain\DiscountType;
 use App\Sale\Discount\Domain\DiscountValue;
 use App\Sale\Shared\Domain\CompanyId;
-use App\Sale\Reference\Event\Domain\EventId;
 
 class UpdateDiscountCommandHandler
 {
@@ -21,7 +20,7 @@ class UpdateDiscountCommandHandler
 
     public function __invoke(UpdateDiscountCommand $command): void
     {
-        $this->authorization->requireAllPermissions();
+        $companyId = $this->authorization->companyId();
 
         $this->updater->__invoke(
             DiscountId::fromString($command->id()),
@@ -31,8 +30,7 @@ class UpdateDiscountCommandHandler
             DiscountEndDate::fromString($command->endDate()),
             DiscountType::fromInt($command->type()),
             DiscountValue::fromFloat($command->value()),
-            EventId::fromString($command->event()),
-            CompanyId::fromString($this->authorization->requireCompanyId()),
+            CompanyId::fromString($companyId),
             $command->usageLimit(),
         );
     }

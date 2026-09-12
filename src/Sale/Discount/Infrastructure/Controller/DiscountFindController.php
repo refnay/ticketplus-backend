@@ -10,9 +10,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class DiscountFindController extends AbstractController
 {
-    public function find(string $id, string $event, QueryBus $queryBus): JsonResponse
+    public function find(string $id, QueryBus $queryBus): JsonResponse
     {
-        $query = FindDiscountQuery::create($id, $event);
+        $query = FindDiscountQuery::create($id);
 
         /** @var DiscountResponse $response */
         $response = $queryBus->ask($query);

@@ -7,7 +7,6 @@ use App\Shared\Application\Input\PayloadMapper;
 class CreateZoneCommand
 {
     public function __construct(
-        private string $event,
         private string $day,
         private string $name,
         private float $price,
@@ -17,12 +16,11 @@ class CreateZoneCommand
     ) {
     }
 
-    public static function create(string $event, string $day, array $data): self
+    public static function create(string $day, array $data): self
     {
         $payload = PayloadMapper::fromData($data);
 
         return new self(
-            $event,
             $day,
             $payload->string('name'),
             $payload->float('price'),
@@ -30,11 +28,6 @@ class CreateZoneCommand
             $payload->int('hierarchy'),
             $payload->bool('numberedSeating'),
         );
-    }
-
-    public function event(): string
-    {
-        return $this->event;
     }
 
     public function day(): string

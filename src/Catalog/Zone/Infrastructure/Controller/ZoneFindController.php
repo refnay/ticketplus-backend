@@ -10,9 +10,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class ZoneFindController extends AbstractController
 {
-    public function find(string $id, string $event, string $day, QueryBus $queryBus): JsonResponse
+    public function find(string $id, QueryBus $queryBus): JsonResponse
     {
-        $query = FindZoneQuery::create($id, $event, $day);
+        $query = FindZoneQuery::create($id);
 
         /** @var ZoneResponse $response */
         $response = $queryBus->ask($query);

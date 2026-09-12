@@ -8,7 +8,7 @@ use App\Sale\Discount\Domain\DiscountRepository;
 use App\Sale\Discount\Domain\Exceptions\DiscountNotCreated;
 use App\Sale\Discount\Domain\Exceptions\DiscountNotDeleted;
 use App\Sale\Discount\Domain\Exceptions\DiscountNotUpdated;
-use App\Sale\Reference\Event\Domain\EventId;
+use App\Sale\Shared\Domain\CompanyId;
 use App\Shared\Infrastructure\Persistence\Doctrine\QueryBuilder;
 use Doctrine\ORM\EntityManagerInterface;
 use Override;
@@ -21,7 +21,7 @@ class DiscountDoctrineRepository implements DiscountRepository
     public function __construct(private EntityManagerInterface $entityManager, private DiscountMapper $mapper)
     {
     }
-    
+
     #[Override]
     public function save(Discount $discount): void
     {
@@ -59,15 +59,33 @@ class DiscountDoctrineRepository implements DiscountRepository
     }
 
     #[Override]
-    public function findById(DiscountId $id, EventId $eventId): ?Discount
+    public function find(DiscountId $id): ?Discount
     {
         $entity = $this->entityManager
             ->getRepository($this->mapper->entityClass())
-            ->findOneBy(['id' => $id->value(), 'event' => $eventId->value()]);
+            ->find($id->value());
 
         return !is_null($entity) ? $this->mapper->newDomain($entity) : null;
     }
-    
+
+    #[Override]
+    public function findById(DiscountId $id, CompanyId $companyId): ?Discount
+    {
+        $query = $this->entityManager
+            ->getRepository($this->mapper->entityClass())
+            ->createQueryBuilder(self::DISCOUNT_PREFIX);
+        $entity = $query
+            ->innerJoin(self::DISCOUNT_PREFIX . '.event', 'e')
+            ->andWhere(self::DISCOUNT_PREFIX . '.id = :id')
+            ->andWhere('e.company = :companyId')
+            ->setParameter('id', $id->value())
+            ->setParameter('companyId', $companyId->value())
+            ->getQuery()
+            ->getOneOrNullResult();
+
+        return !is_null($entity) ? $this->mapper->newDomain($entity) : null;
+    }
+
     #[Override]
     public function searchByFilters(array $filters, string $orderBy, string $order, ?int $limit, ?int $offset): array
     {
@@ -85,7 +103,7 @@ class DiscountDoctrineRepository implements DiscountRepository
             ->paginate($limit, $offset);
 
         $entities = $queryBuilder->queryBuilder()->getQuery()->getResult();
-        
+
         return array_map(fn($entity) => $this->mapper->newDomain($entity), $entities);
     }
 
@@ -107,5 +125,5 @@ class DiscountDoctrineRepository implements DiscountRepository
             ->select('COUNT(' . self::DISCOUNT_PREFIX . '.id)')
             ->getQuery()
             ->getSingleScalarResult();
-    } 
+    }
 }

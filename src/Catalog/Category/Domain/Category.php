@@ -38,18 +38,18 @@ class Category
     {
         return $this->reference;
     }
-    
+
     public function companyId(): CompanyId
     {
         return $this->companyId;
     }
 
-    public function changeName(CategoryName $name): void 
+    public function changeName(CategoryName $name): void
     {
         $this->name = $name;
     }
 
-    public function changeReference(CategoryReference $reference): void 
+    public function changeReference(CategoryReference $reference): void
     {
         $this->reference = $reference;
     }

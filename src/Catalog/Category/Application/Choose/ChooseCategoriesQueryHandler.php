@@ -14,8 +14,8 @@ class ChooseCategoriesQueryHandler
 
     public function __invoke(ChooseCategoriesQuery $query): CategoryChoicesResponse
     {
-        $this->authorization->requireAllPermissions();
+        $companyId = $this->authorization->companyId();
 
-        return $this->chooser->__invoke($this->authorization->requireCompanyId());
+        return $this->chooser->__invoke($companyId);
     }
 }

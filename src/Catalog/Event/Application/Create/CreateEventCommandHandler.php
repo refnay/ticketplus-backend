@@ -24,7 +24,7 @@ class CreateEventCommandHandler
 
     public function __invoke(CreateEventCommand $command): string
     {
-        $this->authorization->requireAllPermissions();
+        $companyId = $this->authorization->companyId();
 
         return $this->creator->__invoke(
             EventName::fromString($command->name()),
@@ -38,7 +38,7 @@ class CreateEventCommandHandler
             EventCurrency::fromString($command->currency()),
             EventTaxRate::fromFloat($command->taxRate()),
             CategoryId::fromString($command->category()),
-            CompanyId::fromString($this->authorization->requireCompanyId()),
+            CompanyId::fromString($companyId),
             $command->days(),
         );
     }

@@ -70,7 +70,7 @@ class Company
      */
     #[ORM\OneToMany(targetEntity: CompanyMember::class, mappedBy: 'company', cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $members;
-    
+
     /**
      * @var Collection<int, Event>
      */

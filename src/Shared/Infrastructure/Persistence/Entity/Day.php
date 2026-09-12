@@ -60,7 +60,7 @@ class Day
     {
         return $this->id;
     }
-    
+
     public function setId(Uuid $id): static
     {
         $this->id = $id;
@@ -157,7 +157,7 @@ class Day
         return $this->event;
     }
 
-    
+
     public function getSaleStartAt(): ?\DateTimeImmutable
     {
         return $this->saleStartAt;
@@ -206,7 +206,7 @@ class Day
 
         return $this;
     }
-    
+
     #[ORM\PrePersist]
     public function createTimestamps(): void
     {

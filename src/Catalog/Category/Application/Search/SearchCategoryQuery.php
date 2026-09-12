@@ -21,7 +21,7 @@ class SearchCategoryQuery extends SearchQuery
     public static function fromQuery(array $data): self
     {
         $payload = PayloadMapper::fromData($data);
-        
+
         return new self(
             $payload->nullableString('name'),
             $payload->nullableInt('reference'),
@@ -31,12 +31,12 @@ class SearchCategoryQuery extends SearchQuery
             $payload->nullableInt('page') ,
         );
     }
-    
+
     public function filters(string $companyId): array
     {
         $filters = get_object_vars($this);
         $filters['company'] = $companyId;
 
-        return $filters; 
+        return $filters;
     }
 }

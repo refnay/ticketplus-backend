@@ -2,7 +2,6 @@
 
 namespace App\Catalog\Zone\Domain\Services;
 
-use App\Catalog\Event\Domain\EventDayId;
 use App\Catalog\Zone\Domain\Exceptions\ZoneNotFound;
 use App\Catalog\Zone\Domain\Zone;
 use App\Catalog\Zone\Domain\ZoneId;
@@ -14,9 +13,9 @@ class ZoneFinder
     {
     }
 
-    public function __invoke(ZoneId $id, EventDayId $dayId): Zone
+    public function __invoke(ZoneId $id): Zone
     {
-        $zone = $this->repository->findById($id, $dayId);
+        $zone = $this->repository->find($id);
 
         if (is_null($zone)) {
             throw new ZoneNotFound();
