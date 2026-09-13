@@ -15,9 +15,7 @@ use App\Catalog\Zone\Domain\ZoneRepository;
 
 class ZoneCreator
 {
-    public function __construct(private ZoneRepository $repository, private EventByDayFinder $eventFinder)
-    {
-    }
+    public function __construct(private ZoneRepository $repository, private EventByDayFinder $eventFinder) {}
 
     public function __invoke(
         ZoneName $name,

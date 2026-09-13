@@ -5,9 +5,7 @@ namespace App\Catalog\Zone\Application\Find;
 
 class FindZoneQuery
 {
-    public function __construct(private string $id)
-    {
-    }
+    public function __construct(private string $id) {}
 
     public static function create(string $id): self
     {
@@ -18,5 +16,4 @@ class FindZoneQuery
     {
         return $this->id;
     }
-
 }

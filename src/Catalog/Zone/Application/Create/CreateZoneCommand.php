@@ -13,8 +13,7 @@ class CreateZoneCommand
         private int $quantity,
         private int $hierarchy,
         private bool $numberedSeating,
-    ) {
-    }
+    ) {}
 
     public static function create(string $day, array $data): self
     {

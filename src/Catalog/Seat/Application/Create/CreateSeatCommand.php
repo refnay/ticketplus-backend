@@ -9,8 +9,7 @@ class CreateSeatCommand
     public function __construct(
         private string $zone,
         private string $code,
-    ) {
-    }
+    ) {}
 
     public static function create(string $zone, array $data): self
     {

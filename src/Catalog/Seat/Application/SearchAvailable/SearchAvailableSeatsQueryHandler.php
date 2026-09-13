@@ -4,16 +4,15 @@ namespace App\Catalog\Seat\Application\SearchAvailable;
 
 use App\Catalog\Seat\Domain\Seat;
 use App\Catalog\Seat\Domain\SeatRepository;
-use App\Catalog\Zone\Domain\Services\PublishedZoneFinder;
+use App\Catalog\Zone\Domain\Services\ZonePublishedFinder;
 use App\Catalog\Zone\Domain\ZoneId;
 
 class SearchAvailableSeatsQueryHandler
 {
     public function __construct(
-        private PublishedZoneFinder $zoneFinder,
+        private ZonePublishedFinder $zoneFinder,
         private SeatRepository $repository,
-    ) {
-    }
+    ) {}
 
     public function __invoke(SearchAvailableSeatsQuery $query): AvailableSeatsResponse
     {

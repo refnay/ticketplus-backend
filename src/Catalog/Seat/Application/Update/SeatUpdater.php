@@ -9,17 +9,16 @@ use App\Catalog\Seat\Domain\SeatId;
 use App\Catalog\Seat\Domain\SeatRepository;
 use App\Catalog\Seat\Domain\SeatStatus;
 use App\Catalog\Seat\Domain\Services\SeatByCodeFinder;
-use App\Catalog\Seat\Domain\Services\CompanySeatFinder;
+use App\Catalog\Seat\Domain\Services\SeatByCompanyFinder;
 use App\Catalog\Shared\Domain\CompanyId;
 
 class SeatUpdater
 {
     public function __construct(
         private SeatRepository $repository,
-        private CompanySeatFinder $seatFinder,
+        private SeatByCompanyFinder $seatFinder,
         private SeatByCodeFinder $seatByCodeFinder,
-    ) {
-    }
+    ) {}
 
     public function __invoke(
         SeatId $id,
@@ -28,11 +27,10 @@ class SeatUpdater
         CompanyId $companyId,
     ): void {
         $seat = $this->seatFinder->__invoke($id, $companyId);
-        $zoneId = $seat->zoneId();
 
         if (!$seat->code()->equals($code)) {
             try {
-                $this->seatByCodeFinder->__invoke($code, $zoneId);
+                $this->seatByCodeFinder->__invoke($code, $companyId);
                 throw new SeatAlreadyExists();
             } catch (SeatNotFound) {
             }

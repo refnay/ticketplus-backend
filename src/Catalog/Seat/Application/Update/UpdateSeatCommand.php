@@ -10,8 +10,7 @@ class UpdateSeatCommand
         private string $id,
         private string $code,
         private int $status,
-    ) {
-    }
+    ) {}
 
     public static function create(string $id, array $data): self
     {

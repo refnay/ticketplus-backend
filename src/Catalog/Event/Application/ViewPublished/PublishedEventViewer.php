@@ -4,12 +4,12 @@ namespace App\Catalog\Event\Application\ViewPublished;
 
 use App\Catalog\Category\Domain\Services\CategoryFinder;
 use App\Catalog\Event\Domain\EventId;
-use App\Catalog\Event\Domain\Services\PublishedEventFinder;
+use App\Catalog\Event\Domain\Services\EventPublishedFinder;
 
 class PublishedEventViewer
 {
     public function __construct(
-        private PublishedEventFinder $eventFinder,
+        private EventPublishedFinder $eventFinder,
         private CategoryFinder $categoryFinder,
     ) {}
 

@@ -10,7 +10,6 @@ use App\Catalog\Seat\Domain\SeatCode;
 use App\Catalog\Seat\Domain\SeatId;
 use App\Catalog\Seat\Domain\SeatRepository;
 use App\Catalog\Shared\Domain\CompanyId;
-use App\Catalog\Zone\Domain\ZoneId;
 use App\Shared\Infrastructure\Persistence\Doctrine\QueryBuilder;
 use Doctrine\ORM\EntityManagerInterface;
 use Override;
@@ -91,11 +90,21 @@ class SeatDoctrineRepository implements SeatRepository
     }
 
     #[Override]
-    public function findByCode(SeatCode $code, ZoneId $zoneId): ?Seat
+    public function findByCode(SeatCode $code, CompanyId $companyId): ?Seat
     {
         $entity = $this->entityManager
             ->getRepository($this->mapper->entityClass())
-            ->findOneBy(['code' => $code->value(), 'zone' => $zoneId->value()]);
+            ->createQueryBuilder(self::SEAT_PREFIX)
+            ->innerJoin(self::SEAT_PREFIX . '.zone', 'z')
+            ->innerJoin('z.day', 'd')
+            ->innerJoin('d.event', 'e')
+            ->andWhere(self::SEAT_PREFIX . '.code = :code')
+            ->andWhere('e.company = :companyId')
+            ->setParameter('code', $code->value())
+            ->setParameter('companyId', $companyId->value())
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
 
         return !is_null($entity) ? $this->mapper->newDomain($entity) : null;
     }

@@ -5,9 +5,7 @@ namespace App\Catalog\Seat\Application\Delete;
 
 class DeleteSeatCommand
 {
-    public function __construct(private string $id)
-    {
-    }
+    public function __construct(private string $id) {}
 
     public static function create(string $id): self
     {
@@ -18,5 +16,4 @@ class DeleteSeatCommand
     {
         return $this->id;
     }
-
 }

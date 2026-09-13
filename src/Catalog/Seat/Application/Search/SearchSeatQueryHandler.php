@@ -6,9 +6,7 @@ use App\Shared\Application\Security\AuthorizationContext;
 
 class SearchSeatQueryHandler
 {
-    public function __construct(private AuthorizationContext $authorization, private SeatSearcher $searcher)
-    {
-    }
+    public function __construct(private AuthorizationContext $authorization, private SeatSearcher $searcher) {}
 
     public function __invoke(SearchSeatQuery $query): SeatsResponse
     {

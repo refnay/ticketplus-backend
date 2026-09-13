@@ -4,16 +4,15 @@ namespace App\Catalog\Seat\Application\Delete;
 
 use App\Catalog\Seat\Domain\SeatId;
 use App\Catalog\Seat\Domain\SeatRepository;
-use App\Catalog\Seat\Domain\Services\CompanySeatFinder;
+use App\Catalog\Seat\Domain\Services\SeatByCompanyFinder;
 use App\Catalog\Shared\Domain\CompanyId;
 
 class SeatDeleter
 {
     public function __construct(
         private SeatRepository $repository,
-        private CompanySeatFinder $seatFinder,
-    ) {
-    }
+        private SeatByCompanyFinder $seatFinder,
+    ) {}
 
     public function __invoke(SeatId $id, CompanyId $companyId): void
     {

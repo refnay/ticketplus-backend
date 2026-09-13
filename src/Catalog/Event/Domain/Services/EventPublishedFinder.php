@@ -7,7 +7,7 @@ use App\Catalog\Event\Domain\EventId;
 use App\Catalog\Event\Domain\EventRepository;
 use App\Catalog\Event\Domain\Exceptions\EventNotFound;
 
-class PublishedEventFinder
+class EventPublishedFinder
 {
     public function __construct(private EventRepository $repository) {}
 

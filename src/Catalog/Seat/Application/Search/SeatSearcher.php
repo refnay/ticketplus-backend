@@ -7,9 +7,7 @@ use App\Catalog\Seat\Domain\SeatRepository;
 
 class SeatSearcher
 {
-    public function __construct(private SeatRepository $repository)
-    {
-    }
+    public function __construct(private SeatRepository $repository) {}
 
     public function __invoke(
         array $filters,

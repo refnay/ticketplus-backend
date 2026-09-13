@@ -15,8 +15,7 @@ class ZoneResponse implements JsonSerializable
         readonly private array $quantity,
         readonly private float $price,
         readonly private bool $numberedSeating,
-    ) {
-    }
+    ) {}
 
     public static function create(Zone $zone): self
     {

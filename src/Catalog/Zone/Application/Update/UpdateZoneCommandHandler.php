@@ -13,14 +13,10 @@ use App\Catalog\Zone\Domain\ZoneQuantity;
 
 class UpdateZoneCommandHandler
 {
-    public function __construct(private AuthorizationContext $authorization, private ZoneUpdater $updater)
-    {
-    }
+    public function __construct(private AuthorizationContext $authorization, private ZoneUpdater $updater) {}
 
     public function __invoke(UpdateZoneCommand $command): void
     {
-        $companyId = $this->authorization->companyId();
-
         $this->updater->__invoke(
             ZoneId::fromString($command->id()),
             ZoneName::fromString($command->name()),
@@ -28,7 +24,7 @@ class UpdateZoneCommandHandler
             ZoneQuantity::fromTotal($command->total()),
             ZoneHierarchy::fromInt($command->hierarchy()),
             ZoneNumberedSeating::fromBool($command->numberedSeating()),
-            CompanyId::fromString($companyId),
+            CompanyId::fromString($this->authorization->companyId()),
         );
     }
 }

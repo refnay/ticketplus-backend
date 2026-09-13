@@ -7,7 +7,7 @@ use App\Catalog\Event\Domain\EventDayId;
 use App\Catalog\Event\Domain\EventRepository;
 use App\Catalog\Event\Domain\Exceptions\EventDayNotFound;
 
-class PublishedEventByDayFinder
+class EventByDayPublishedFinder
 {
     public function __construct(private EventRepository $repository) {}
 

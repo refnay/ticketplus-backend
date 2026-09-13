@@ -8,9 +8,7 @@ use App\Catalog\Zone\Domain\ZoneRepository;
 
 class ZoneUpdater
 {
-    public function __construct(private ZoneRepository $repository, private ZoneFinder $finder)
-    {
-    }
+    public function __construct(private ZoneRepository $repository, private ZoneFinder $finder) {}
 
     public function __invoke(ZoneId $id, int $quantity): void
     {

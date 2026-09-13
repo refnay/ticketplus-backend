@@ -13,8 +13,7 @@ class ZoneSummaryResponse implements JsonSerializable
         readonly private int $reserved,
         readonly private int $available,
         readonly private float $occupancy,
-    ) {
-    }
+    ) {}
 
     #[Override]
     public function jsonSerialize(): mixed

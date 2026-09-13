@@ -8,7 +8,7 @@ use App\Catalog\Seat\Domain\SeatId;
 use App\Catalog\Seat\Domain\SeatRepository;
 use App\Catalog\Shared\Domain\CompanyId;
 
-class CompanySeatFinder
+class SeatByCompanyFinder
 {
     public function __construct(private SeatRepository $repository)
     {

@@ -7,7 +7,7 @@ use App\Catalog\Zone\Domain\Zone;
 use App\Catalog\Zone\Domain\ZoneId;
 use App\Catalog\Zone\Domain\ZoneRepository;
 
-class PublishedZoneFinder
+class ZonePublishedFinder
 {
     public function __construct(private ZoneRepository $repository)
     {

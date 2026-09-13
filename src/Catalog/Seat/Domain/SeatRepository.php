@@ -2,7 +2,6 @@
 
 namespace App\Catalog\Seat\Domain;
 
-use App\Catalog\Zone\Domain\ZoneId;
 use App\Catalog\Shared\Domain\CompanyId;
 
 interface SeatRepository
@@ -17,7 +16,7 @@ interface SeatRepository
 
     public function findById(SeatId $id, CompanyId $companyId): ?Seat;
 
-    public function findByCode(SeatCode $code, ZoneId $zoneId): ?Seat;
+    public function findByCode(SeatCode $code, CompanyId $companyId): ?Seat;
 
     public function searchByFilters(array $filters, string $orderBy, string $order, ?int $limit, ?int $offset): array;
 

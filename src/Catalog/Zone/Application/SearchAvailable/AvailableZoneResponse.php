@@ -15,8 +15,7 @@ class AvailableZoneResponse implements JsonSerializable
         private int $available,
         private float $price,
         private bool $numberedSeating,
-    ) {
-    }
+    ) {}
 
     public static function create(Zone $zone): self
     {

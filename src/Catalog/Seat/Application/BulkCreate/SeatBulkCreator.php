@@ -11,7 +11,7 @@ use App\Catalog\Seat\Domain\SeatRepository;
 use App\Catalog\Seat\Domain\Services\SeatByCodeFinder;
 use App\Catalog\Shared\Domain\CompanyId;
 use App\Catalog\Zone\Domain\Exceptions\ZoneNotNumberedSeating;
-use App\Catalog\Zone\Domain\Services\CompanyZoneFinder;
+use App\Catalog\Zone\Domain\Services\ZoneByCompanyFinder;
 use App\Catalog\Zone\Domain\ZoneId;
 use App\Shared\Application\Transaction\TransactionService;
 use Throwable;
@@ -20,7 +20,7 @@ class SeatBulkCreator
 {
     public function __construct(
         private SeatRepository $repository,
-        private CompanyZoneFinder $zoneFinder,
+        private ZoneByCompanyFinder $zoneFinder,
         private SeatByCodeFinder $seatFinder,
         private TransactionService $transaction,
     ) {}
@@ -42,7 +42,7 @@ class SeatBulkCreator
                 $code = SeatCode::fromString($seat);
 
                 try {
-                    $this->seatFinder->__invoke($code, $zoneId);
+                    $this->seatFinder->__invoke($code, $companyId);
                     throw new SeatAlreadyExists();
                 } catch (SeatNotFound) {
                 }

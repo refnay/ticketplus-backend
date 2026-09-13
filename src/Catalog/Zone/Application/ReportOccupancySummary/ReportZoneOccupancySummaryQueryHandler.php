@@ -10,15 +10,12 @@ class ReportZoneOccupancySummaryQueryHandler
     public function __construct(
         private AuthorizationContext $authorization,
         private ZoneReporter $reporter,
-    ) {
-    }
+    ) {}
 
     public function __invoke(ReportZoneOccupancySummaryQuery $query): ZoneSummaryResponse
     {
-        $companyId = $this->authorization->companyId();
-
         return $this->reporter->__invoke(
-            CompanyId::fromString($companyId),
+            CompanyId::fromString($this->authorization->companyId()),
         );
     }
 }

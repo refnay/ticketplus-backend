@@ -13,14 +13,10 @@ use App\Catalog\Zone\Domain\ZoneQuantity;
 
 class CreateZoneCommandHandler
 {
-    public function __construct(private AuthorizationContext $authorization, private ZoneCreator $creator)
-    {
-    }
+    public function __construct(private AuthorizationContext $authorization, private ZoneCreator $creator) {}
 
     public function __invoke(CreateZoneCommand $command): string
     {
-        $companyId = $this->authorization->companyId();
-
         return $this->creator->__invoke(
             ZoneName::fromString($command->name()),
             ZonePrice::fromFloat($command->price()),
@@ -28,7 +24,7 @@ class CreateZoneCommandHandler
             ZoneHierarchy::fromInt($command->hierarchy()),
             ZoneNumberedSeating::fromBool($command->numberedSeating()),
             EventDayId::fromString($command->day()),
-            CompanyId::fromString($companyId),
+            CompanyId::fromString($this->authorization->companyId()),
         );
     }
 }

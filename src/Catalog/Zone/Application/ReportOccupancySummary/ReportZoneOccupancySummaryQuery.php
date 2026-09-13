@@ -2,6 +2,4 @@
 
 namespace App\Catalog\Zone\Application\ReportOccupancySummary;
 
-class ReportZoneOccupancySummaryQuery
-{
-}
+class ReportZoneOccupancySummaryQuery {}

@@ -10,17 +10,16 @@ use App\Catalog\Seat\Domain\SeatRepository;
 use App\Catalog\Seat\Domain\Services\SeatByCodeFinder;
 use App\Catalog\Shared\Domain\CompanyId;
 use App\Catalog\Zone\Domain\Exceptions\ZoneNotNumberedSeating;
-use App\Catalog\Zone\Domain\Services\CompanyZoneFinder;
+use App\Catalog\Zone\Domain\Services\ZoneByCompanyFinder;
 use App\Catalog\Zone\Domain\ZoneId;
 
 class SeatCreator
 {
     public function __construct(
         private SeatRepository $repository,
-        private CompanyZoneFinder $zoneFinder,
+        private ZoneByCompanyFinder $zoneFinder,
         private SeatByCodeFinder $seatFinder,
-    ) {
-    }
+    ) {}
 
     public function __invoke(
         SeatCode $code,
@@ -34,7 +33,7 @@ class SeatCreator
         }
 
         try {
-            $this->seatFinder->__invoke($code, $zoneId);
+            $this->seatFinder->__invoke($code, $companyId);
             throw new SeatAlreadyExists();
         } catch (SeatNotFound) {
         }

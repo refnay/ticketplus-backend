@@ -12,8 +12,7 @@ class SeatResponse implements JsonSerializable
         readonly private string $id,
         readonly private string $code,
         readonly private int $status,
-    ) {
-    }
+    ) {}
 
     public static function create(Seat $seat): self
     {

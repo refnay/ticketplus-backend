@@ -6,9 +6,7 @@ use App\Shared\Application\Security\AuthorizationContext;
 
 class SearchZoneQueryHandler
 {
-    public function __construct(private AuthorizationContext $authorization, private ZoneSearcher $searcher)
-    {
-    }
+    public function __construct(private AuthorizationContext $authorization, private ZoneSearcher $searcher) {}
 
     public function __invoke(SearchZoneQuery $query): ZonesResponse
     {

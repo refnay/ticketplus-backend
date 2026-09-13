@@ -8,9 +8,7 @@ use Override;
 
 class AvailableSeatResponse implements JsonSerializable
 {
-    public function __construct(private string $id, private string $code)
-    {
-    }
+    public function __construct(private string $id, private string $code) {}
 
     public static function create(Seat $seat): self
     {

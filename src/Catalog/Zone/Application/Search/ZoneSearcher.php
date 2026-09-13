@@ -7,9 +7,7 @@ use App\Catalog\Zone\Domain\ZoneRepository;
 
 class ZoneSearcher
 {
-    public function __construct(private ZoneRepository $repository)
-    {
-    }
+    public function __construct(private ZoneRepository $repository) {}
 
     public function __invoke(
         array $filters,

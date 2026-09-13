@@ -9,18 +9,14 @@ use App\Catalog\Zone\Domain\ZoneId;
 
 class CreateSeatCommandHandler
 {
-    public function __construct(private AuthorizationContext $authorization, private SeatCreator $creator)
-    {
-    }
+    public function __construct(private AuthorizationContext $authorization, private SeatCreator $creator) {}
 
     public function __invoke(CreateSeatCommand $command): string
     {
-        $companyId = $this->authorization->companyId();
-
         return $this->creator->__invoke(
             SeatCode::fromString($command->code()),
             ZoneId::fromString($command->zone()),
-            CompanyId::fromString($companyId),
+            CompanyId::fromString($this->authorization->companyId()),
         );
     }
 }

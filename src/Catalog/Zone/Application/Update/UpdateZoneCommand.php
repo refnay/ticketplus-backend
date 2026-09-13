@@ -13,8 +13,7 @@ class UpdateZoneCommand
         private int $total,
         private int $hierarchy,
         private bool $numberedSeating,
-    ) {
-    }
+    ) {}
 
     public static function create(string $id, array $data): self
     {
