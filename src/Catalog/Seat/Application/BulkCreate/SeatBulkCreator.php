@@ -42,7 +42,7 @@ class SeatBulkCreator
                 $code = SeatCode::fromString($seat);
 
                 try {
-                    $this->seatFinder->__invoke($code, $companyId);
+                    $this->seatFinder->__invoke($code, $zoneId, $companyId);
                     throw new SeatAlreadyExists();
                 } catch (SeatNotFound) {
                 }

@@ -2,6 +2,7 @@
 
 namespace App\Catalog\Seat\Application\Update;
 
+use App\Catalog\Zone\Domain\Services\ZoneByCompanyFinder;
 use App\Catalog\Seat\Domain\Exceptions\SeatAlreadyExists;
 use App\Catalog\Seat\Domain\Exceptions\SeatNotFound;
 use App\Catalog\Seat\Domain\SeatCode;
@@ -30,7 +31,7 @@ class SeatUpdater
 
         if (!$seat->code()->equals($code)) {
             try {
-                $this->seatByCodeFinder->__invoke($code, $companyId);
+                $this->seatByCodeFinder->__invoke($code, $seat->zoneId(), $companyId);
                 throw new SeatAlreadyExists();
             } catch (SeatNotFound) {
             }

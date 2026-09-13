@@ -10,6 +10,7 @@ use App\Catalog\Seat\Domain\SeatCode;
 use App\Catalog\Seat\Domain\SeatId;
 use App\Catalog\Seat\Domain\SeatRepository;
 use App\Catalog\Shared\Domain\CompanyId;
+use App\Catalog\Zone\Domain\ZoneId;
 use App\Shared\Infrastructure\Persistence\Doctrine\QueryBuilder;
 use Doctrine\ORM\EntityManagerInterface;
 use Override;
@@ -19,9 +20,7 @@ class SeatDoctrineRepository implements SeatRepository
 {
     private const string SEAT_PREFIX = 's';
 
-    public function __construct(private EntityManagerInterface $entityManager, private SeatMapper $mapper)
-    {
-    }
+    public function __construct(private EntityManagerInterface $entityManager, private SeatMapper $mapper) {}
 
     #[Override]
     public function save(Seat $seat): void
@@ -90,7 +89,7 @@ class SeatDoctrineRepository implements SeatRepository
     }
 
     #[Override]
-    public function findByCode(SeatCode $code, CompanyId $companyId): ?Seat
+    public function findByCode(SeatCode $code, ZoneId $zoneId, CompanyId $companyId): ?Seat
     {
         $entity = $this->entityManager
             ->getRepository($this->mapper->entityClass())
@@ -99,8 +98,10 @@ class SeatDoctrineRepository implements SeatRepository
             ->innerJoin('z.day', 'd')
             ->innerJoin('d.event', 'e')
             ->andWhere(self::SEAT_PREFIX . '.code = :code')
+            ->andWhere('z.id = :zoneId')
             ->andWhere('e.company = :companyId')
             ->setParameter('code', $code->value())
+            ->setParameter('zoneId', $zoneId->value())
             ->setParameter('companyId', $companyId->value())
             ->setMaxResults(1)
             ->getQuery()

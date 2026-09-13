@@ -7,16 +7,15 @@ use App\Catalog\Seat\Domain\Seat;
 use App\Catalog\Seat\Domain\SeatCode;
 use App\Catalog\Seat\Domain\SeatRepository;
 use App\Catalog\Shared\Domain\CompanyId;
+use App\Catalog\Zone\Domain\ZoneId;
 
 class SeatByCodeFinder
 {
-    public function __construct(private SeatRepository $repository)
-    {
-    }
+    public function __construct(private SeatRepository $repository) {}
 
-    public function __invoke(SeatCode $code, CompanyId $companyId): Seat
+    public function __invoke(SeatCode $code, ZoneId $zoneId, CompanyId $companyId): Seat
     {
-        $seat = $this->repository->findByCode($code, $companyId);
+        $seat = $this->repository->findByCode($code, $zoneId, $companyId);
 
         if (is_null($seat)) {
             throw new SeatNotFound();
