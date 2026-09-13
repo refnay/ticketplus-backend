@@ -20,7 +20,7 @@ services:
         resource: '../src/'
 
     # Transaction Gateways
-    App\Sale\Payment\Application\Resolver\TransactionGatewayResolver:
+    App\Sale\Payment\Application\OnPaymentUpdated\TransactionGatewayResolver:
         arguments:
             $mercadoPago: '@App\Sale\Payment\Infrastructure\Gateway\MercadoPagoTransactionGateway'
 
