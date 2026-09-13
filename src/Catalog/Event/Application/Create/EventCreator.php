@@ -2,6 +2,7 @@
 
 namespace App\Catalog\Event\Application\Create;
 
+use App\Catalog\Event\Application\Shared\EventDayCommand;
 use App\Catalog\Category\Domain\CategoryId;
 use App\Catalog\Category\Domain\Services\CategoryFinder;
 use App\Catalog\Event\Domain\Event;

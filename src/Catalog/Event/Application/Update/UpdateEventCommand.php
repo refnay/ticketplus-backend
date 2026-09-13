@@ -2,6 +2,7 @@
 
 namespace App\Catalog\Event\Application\Update;
 
+use App\Catalog\Event\Application\Shared\EventDayCommand;
 use App\Shared\Application\Input\PayloadMapper;
 use App\Shared\Application\Support\ArrayBuilder;
 

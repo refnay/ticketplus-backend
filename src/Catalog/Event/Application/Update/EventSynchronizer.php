@@ -2,6 +2,7 @@
 
 namespace App\Catalog\Event\Application\Update;
 
+use App\Catalog\Event\Application\Shared\EventDayCommand;
 use App\Catalog\Event\Domain\Event;
 use App\Catalog\Event\Domain\EventDay;
 use App\Catalog\Event\Domain\EventDayDate;

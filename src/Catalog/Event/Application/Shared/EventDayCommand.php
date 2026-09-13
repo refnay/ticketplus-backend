@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Catalog\Event\Application\Update;
+namespace App\Catalog\Event\Application\Shared;
 
 use App\Shared\Application\Input\PayloadMapper;
 
