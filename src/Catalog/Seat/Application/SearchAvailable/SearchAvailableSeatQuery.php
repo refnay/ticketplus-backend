@@ -2,11 +2,10 @@
 
 namespace App\Catalog\Seat\Application\SearchAvailable;
 
-use App\Catalog\Seat\Domain\SeatStatusList;
 use App\Shared\Application\Input\PayloadMapper;
 use App\Shared\Application\Query\SearchQuery;
 
-class SearchAvailableSeatsQuery extends SearchQuery
+class SearchAvailableSeatQuery extends SearchQuery
 {
     public function __construct(
         private string $zone,
@@ -22,17 +21,14 @@ class SearchAvailableSeatsQuery extends SearchQuery
     public static function fromQuery(string $zone, array $data): self
     {
         $payload = PayloadMapper::fromData($data);
-        $order = strtoupper($payload->nullableString('order') ?? 'ASC');
-        $limit = $payload->nullableInt('limit') ?? 100;
-        $page = $payload->nullableInt('page') ?? 1;
 
         return new self(
             $zone,
             $payload->nullableString('code'),
-            'code',
-            in_array($order, ['ASC', 'DESC'], true) ? $order : 'ASC',
-            min(max($limit, 1), 500),
-            max($page, 1),
+            $payload->string('orderBy'),
+            $payload->string('order'),
+            $payload->nullableInt('limit'),
+            $payload->nullableInt('page'),
         );
     }
 
@@ -43,10 +39,6 @@ class SearchAvailableSeatsQuery extends SearchQuery
 
     public function filters(): array
     {
-        return [
-            'zone' => $this->zone,
-            'code' => $this->code,
-            'status' => SeatStatusList::AVAILABLE->value,
-        ];
+        return get_object_vars($this);
     }
 }

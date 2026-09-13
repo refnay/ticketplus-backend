@@ -6,7 +6,7 @@ use App\Catalog\Event\Domain\EventStatusList;
 use App\Shared\Application\Input\PayloadMapper;
 use App\Shared\Application\Query\SearchQuery;
 
-class BrowsePublishedEventsQuery extends SearchQuery
+class BrowsePublishedEventQuery extends SearchQuery
 {
     public function __construct(
         private ?string $value,
@@ -25,10 +25,6 @@ class BrowsePublishedEventsQuery extends SearchQuery
     public static function fromQuery(array $data): self
     {
         $payload = PayloadMapper::fromData($data);
-        $orderBy = $payload->nullableString('orderBy');
-        $order = strtoupper($payload->nullableString('order') ?? 'DESC');
-        $limit = $payload->nullableInt('limit') ?? 10;
-        $page = $payload->nullableInt('page') ?? 1;
 
         return new self(
             $payload->nullableString('value'),
@@ -36,22 +32,18 @@ class BrowsePublishedEventsQuery extends SearchQuery
             $payload->nullableString('city'),
             $payload->nullableString('category'),
             $payload->nullableString('date'),
-            in_array($orderBy, ['createdAt', 'name', 'city'], true) ? $orderBy : 'createdAt',
-            in_array($order, ['ASC', 'DESC'], true) ? $order : 'DESC',
-            min(max($limit, 1), 100),
-            max($page, 1),
+            $payload->string('orderBy'),
+            $payload->string('order'),
+            $payload->nullableInt('limit'),
+            $payload->nullableInt('page'),
         );
     }
 
     public function filters(): array
     {
-        return [
-            'value' => $this->value,
-            'country' => $this->country,
-            'city' => $this->city,
-            'category' => $this->category,
-            'date' => $this->date,
-            'status' => EventStatusList::PUBLISHED->value,
-        ];
+        $filters = get_object_vars($this);
+        $filters['status'] = EventStatusList::PUBLISHED->value;
+
+        return $filters;
     }
 }

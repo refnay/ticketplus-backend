@@ -6,16 +6,16 @@ use App\Catalog\Event\Domain\EventDay;
 use JsonSerializable;
 use Override;
 
-class PublishedEventDayResponse implements JsonSerializable
+class EventDayResponse implements JsonSerializable
 {
     public function __construct(
-        private string $id,
-        private string $date,
-        private string $startTime,
-        private string $endTime,
-        private string $saleStartsAt,
-        private ?string $description,
-        private int $status,
+        readonly private string $id,
+        readonly private string $date,
+        readonly private string $startTime,
+        readonly private string $endTime,
+        readonly private string $saleStartsAt,
+        readonly private ?string $description,
+        readonly private int $status,
     ) {}
 
     public static function create(EventDay $day): self
@@ -32,7 +32,7 @@ class PublishedEventDayResponse implements JsonSerializable
     }
 
     #[Override]
-    public function jsonSerialize(): array
+    public function jsonSerialize(): mixed
     {
         return get_object_vars($this);
     }

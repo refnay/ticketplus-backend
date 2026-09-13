@@ -8,28 +8,28 @@ use App\Catalog\Event\Domain\EventDay;
 use JsonSerializable;
 use Override;
 
-class PublishedEventResponse implements JsonSerializable
+class EventResponse implements JsonSerializable
 {
-    private array $days;
+    private array $days = [];
 
     public function __construct(
-        private string $id,
-        private string $name,
-        private string $slug,
-        private ?string $description,
-        private ?string $coverImage,
-        private ?string $bannerImage,
-        private ?string $logo,
-        private ?string $thumbnail,
-        private ?string $venue,
-        private ?array $coordinates,
-        private string $location,
-        private string $country,
-        private string $city,
-        private string $currency,
-        private int $orderLimit,
-        private array $category,
-        PublishedEventDayResponse ...$days,
+        readonly private string $id,
+        readonly private string $name,
+        readonly private string $slug,
+        readonly private ?string $description,
+        readonly private ?string $coverImage,
+        readonly private ?string $bannerImage,
+        readonly private ?string $logo,
+        readonly private ?string $thumbnail,
+        readonly private ?string $venue,
+        readonly private ?array $coordinates,
+        readonly private string $location,
+        readonly private string $country,
+        readonly private string $city,
+        readonly private string $currency,
+        readonly private int $orderLimit,
+        readonly private array $category,
+        EventDayResponse ...$days,
     ) {
         $this->days = $days;
     }
@@ -53,15 +53,17 @@ class PublishedEventResponse implements JsonSerializable
             $event->currency()->value(),
             $event->orderLimit()->value(),
             $category->toChooser(),
-            ...array_map(
-                static fn(EventDay $day): PublishedEventDayResponse => PublishedEventDayResponse::create($day),
-                $event->days(),
-            ),
+            ...array_map(self::dayResponse(...), $event->days()),
         );
     }
 
+    private static function dayResponse(EventDay $day): EventDayResponse
+    {
+        return EventDayResponse::create($day);
+    }
+
     #[Override]
-    public function jsonSerialize(): array
+    public function jsonSerialize(): mixed
     {
         return get_object_vars($this);
     }

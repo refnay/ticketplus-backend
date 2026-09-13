@@ -6,15 +6,16 @@ use App\Catalog\Zone\Domain\Zone;
 use JsonSerializable;
 use Override;
 
-class AvailableZoneResponse implements JsonSerializable
+class ZoneResponse implements JsonSerializable
 {
     public function __construct(
-        private string $id,
-        private string $name,
-        private int $hierarchy,
-        private int $available,
-        private float $price,
-        private bool $numberedSeating,
+        readonly private string $id,
+        readonly private string $name,
+        readonly private int $hierarchy,
+        readonly private int $available,
+        readonly private array $quantity,
+        readonly private float $price,
+        readonly private bool $numberedSeating,
     ) {}
 
     public static function create(Zone $zone): self
@@ -26,13 +27,14 @@ class AvailableZoneResponse implements JsonSerializable
             $zone->name()->value(),
             $zone->hierarchy()->value(),
             max(0, $quantity->total() - $quantity->sold() - $quantity->reserved()),
+            $quantity->toArray(),
             $zone->price()->value(),
             $zone->numberedSeating()->value(),
         );
     }
 
     #[Override]
-    public function jsonSerialize(): array
+    public function jsonSerialize(): mixed
     {
         return get_object_vars($this);
     }

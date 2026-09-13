@@ -2,8 +2,8 @@
 
 namespace App\Catalog\Seat\Infrastructure\Controller;
 
-use App\Catalog\Seat\Application\SearchAvailable\AvailableSeatsResponse;
-use App\Catalog\Seat\Application\SearchAvailable\SearchAvailableSeatsQuery;
+use App\Catalog\Seat\Application\SearchAvailable\SeatsResponse;
+use App\Catalog\Seat\Application\SearchAvailable\SearchAvailableSeatQuery;
 use App\Shared\Application\Bus\QueryBus;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -16,9 +16,9 @@ class PublicAvailableSeatSearchController extends AbstractController
         Request $request,
         QueryBus $queryBus,
     ): JsonResponse {
-        $query = SearchAvailableSeatsQuery::fromQuery($zone, $request->query->all());
+        $query = SearchAvailableSeatQuery::fromQuery($zone, $request->query->all());
 
-        /** @var AvailableSeatsResponse $response */
+        /** @var SeatsResponse $response */
         $response = $queryBus->ask($query);
 
         return new JsonResponse($response->jsonSerialize());

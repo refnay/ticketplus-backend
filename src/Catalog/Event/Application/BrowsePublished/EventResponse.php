@@ -7,20 +7,20 @@ use App\Catalog\Event\Domain\Event;
 use JsonSerializable;
 use Override;
 
-class PublishedEventResponse implements JsonSerializable
+class EventResponse implements JsonSerializable
 {
     public function __construct(
-        private string $id,
-        private string $name,
-        private string $slug,
-        private ?string $thumbnail,
-        private ?string $venue,
-        private string $location,
-        private string $country,
-        private string $city,
-        private string $currency,
-        private array $category,
-        private ?string $date,
+        readonly private string $id,
+        readonly private string $name,
+        readonly private string $slug,
+        readonly private ?string $thumbnail,
+        readonly private ?string $venue,
+        readonly private string $location,
+        readonly private string $country,
+        readonly private string $city,
+        readonly private string $currency,
+        readonly private array $category,
+        readonly private ?string $date,
     ) {}
 
     public static function create(Event $event, Category $category): self
@@ -41,7 +41,7 @@ class PublishedEventResponse implements JsonSerializable
     }
 
     #[Override]
-    public function jsonSerialize(): array
+    public function jsonSerialize(): mixed
     {
         return get_object_vars($this);
     }

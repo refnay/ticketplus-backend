@@ -2,16 +2,19 @@
 
 namespace App\Tests\Catalog\Event\Application\BrowsePublished;
 
-use App\Catalog\Event\Application\BrowsePublished\BrowsePublishedEventsQuery;
+use App\Catalog\Event\Application\BrowsePublished\BrowsePublishedEventQuery;
 use App\Catalog\Event\Domain\EventStatusList;
 use PHPUnit\Framework\TestCase;
 
-final class BrowsePublishedEventsQueryTest extends TestCase
+final class BrowsePublishedEventQueryTest extends TestCase
 {
     public function testItAlwaysRestrictsTheCatalogToPublishedEvents(): void
     {
-        $query = BrowsePublishedEventsQuery::fromQuery([
+        $query = BrowsePublishedEventQuery::fromQuery([
             'value' => 'festival',
+            'orderBy' => 'createdAt',
+            'order' => 'DESC',
+            'limit' => 10,
             'status' => EventStatusList::DRAFT->value,
         ]);
 
@@ -28,18 +31,19 @@ final class BrowsePublishedEventsQueryTest extends TestCase
         self::assertSame(10, $query->limit());
     }
 
-    public function testItNormalizesUnsafePaginationAndOrdering(): void
+    public function testItMapsOrderingAndPaginationLikeSearchEvent(): void
     {
-        $query = BrowsePublishedEventsQuery::fromQuery([
-            'orderBy' => 'invalid_column',
-            'order' => 'invalid_order',
-            'limit' => 9999,
-            'page' => -4,
+        $query = BrowsePublishedEventQuery::fromQuery([
+            'orderBy' => 'name',
+            'order' => 'ASC',
+            'limit' => 25,
+            'page' => 3,
         ]);
 
-        self::assertSame('createdAt', $query->orderBy());
-        self::assertSame('DESC', $query->order());
-        self::assertSame(100, $query->limit());
-        self::assertSame(1, $query->page());
+        self::assertSame('name', $query->orderBy());
+        self::assertSame('ASC', $query->order());
+        self::assertSame(25, $query->limit());
+        self::assertSame(3, $query->page());
+        self::assertSame(50, $query->offset());
     }
 }
