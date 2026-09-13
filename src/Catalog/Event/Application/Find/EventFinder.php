@@ -9,9 +9,7 @@ use App\Catalog\Shared\Domain\CompanyId;
 
 class EventFinder
 {
-    public function __construct(private ServicesEventFinder $eventfinder, private CategoryFinder $categoryFinder)
-    {
-    }
+    public function __construct(private ServicesEventFinder $eventfinder, private CategoryFinder $categoryFinder) {}
 
     public function __invoke(EventId $id, CompanyId $companyId): EventResponse
     {

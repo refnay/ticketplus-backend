@@ -6,9 +6,7 @@ use App\Catalog\Event\Domain\EventId;
 
 class ViewPublishedEventQueryHandler
 {
-    public function __construct(private PublishedEventViewer $viewer)
-    {
-    }
+    public function __construct(private PublishedEventViewer $viewer) {}
 
     public function __invoke(ViewPublishedEventQuery $query): PublishedEventResponse
     {

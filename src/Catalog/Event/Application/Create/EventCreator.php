@@ -36,8 +36,7 @@ class EventCreator
         private SlugGenerator $slugGenerator,
         private CategoryFinder $categoryFinder,
         private EventBySlugFinder $eventFinder,
-    ) {
-    }
+    ) {}
 
     public function __invoke(
         EventName $name,

@@ -8,17 +8,13 @@ use App\Catalog\Shared\Domain\CompanyId;
 
 class FindEventQueryHandler
 {
-    public function __construct(private AuthorizationContext $authorization, private EventFinder $finder)
-    {
-    }
+    public function __construct(private AuthorizationContext $authorization, private EventFinder $finder) {}
 
     public function __invoke(FindEventQuery $query): EventResponse
     {
-        $companyId = $this->authorization->companyId();
-
         return $this->finder->__invoke(
             EventId::fromString($query->id()),
-            CompanyId::fromString($companyId),
+            CompanyId::fromString($this->authorization->companyId()),
         );
     }
 }

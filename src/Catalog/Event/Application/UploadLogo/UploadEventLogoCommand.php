@@ -6,9 +6,7 @@ use App\Shared\Application\Input\FileUpload;
 
 class UploadEventLogoCommand
 {
-    public function __construct(private string $id, private ?FileUpload $logo)
-    {
-    }
+    public function __construct(private string $id, private ?FileUpload $logo) {}
 
     public function id(): string
     {

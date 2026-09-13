@@ -10,19 +10,15 @@ use App\Catalog\Shared\Domain\CompanyId;
 
 class UpdateCategoryCommandHandler
 {
-    public function __construct(private AuthorizationContext $authorization, private CategoryUpdater $updater)
-    {
-    }
+    public function __construct(private AuthorizationContext $authorization, private CategoryUpdater $updater) {}
 
     public function __invoke(UpdateCategoryCommand $command): void
     {
-        $companyId = $this->authorization->companyId();
-
         $this->updater->__invoke(
             CategoryId::fromString($command->id()),
             CategoryName::fromString($command->name()),
             CategoryReference::fromInt($command->reference()),
-            CompanyId::fromString($companyId),
+            CompanyId::fromString($this->authorization->companyId()),
         );
     }
 }

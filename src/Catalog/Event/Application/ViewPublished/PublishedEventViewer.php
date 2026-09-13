@@ -11,8 +11,7 @@ class PublishedEventViewer
     public function __construct(
         private PublishedEventFinder $eventFinder,
         private CategoryFinder $categoryFinder,
-    ) {
-    }
+    ) {}
 
     public function __invoke(EventId $id): PublishedEventResponse
     {

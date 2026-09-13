@@ -19,14 +19,10 @@ use App\Catalog\Shared\Domain\CompanyId;
 
 class UpdateEventCommandHandler
 {
-    public function __construct(private AuthorizationContext $authorization, private EventUpdater $updater)
-    {
-    }
+    public function __construct(private AuthorizationContext $authorization, private EventUpdater $updater) {}
 
     public function __invoke(UpdateEventCommand $command): void
     {
-        $companyId = $this->authorization->companyId();
-
         $this->updater->__invoke(
             EventId::fromString($command->id()),
             EventName::fromString($command->name()),
@@ -40,7 +36,7 @@ class UpdateEventCommandHandler
             EventTaxRate::fromFloat($command->taxRate()),
             EventStatus::fromInt($command->status()),
             CategoryId::fromString($command->category()),
-            CompanyId::fromString($companyId),
+            CompanyId::fromString($this->authorization->companyId()),
             $command->days(),
         );
     }

@@ -18,8 +18,7 @@ class EventBannerImageUploader
         private EventRepository $repository,
         private EventFinder $finder,
         private ImageUploader $uploader
-    ) {
-    }
+    ) {}
 
     public function __invoke(
         EventId $id,

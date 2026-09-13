@@ -6,9 +6,7 @@ use App\Shared\Application\Input\PayloadMapper;
 
 class ViewPublishedEventQuery
 {
-    public function __construct(private string $id)
-    {
-    }
+    public function __construct(private string $id) {}
 
     public static function create(string $id): self
     {

@@ -16,4 +16,9 @@ class MemberStatus extends IntValueObject
     {
         return new self(MemberStatusList::ACTIVE->value);
     }
+
+    public function isInactive(): bool
+    {
+        return $this->value() === MemberStatusList::INACTIVE->value;
+    }
 }

@@ -7,11 +7,7 @@ use App\Shared\Application\Support\ArrayBuilder;
 
 class BulkCreateSeatCommand
 {
-    public function __construct(
-        private string $zone,
-        private array $seats,
-    ) {
-    }
+    public function __construct(private string $zone, private array $seats) {}
 
     public static function create(string $zone, array $data): self
     {

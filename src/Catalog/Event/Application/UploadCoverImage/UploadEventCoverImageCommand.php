@@ -9,8 +9,7 @@ class UploadEventCoverImageCommand
     public function __construct(
         private string $id,
         private ?FileUpload $coverImage,
-    ) {
-    }
+    ) {}
 
     public function id(): string
     {

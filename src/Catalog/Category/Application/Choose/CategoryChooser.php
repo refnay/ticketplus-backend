@@ -7,9 +7,7 @@ use App\Catalog\Category\Domain\CategoryRepository;
 
 class CategoryChooser
 {
-    public function __construct(private CategoryRepository $repository)
-    {
-    }
+    public function __construct(private CategoryRepository $repository) {}
 
     public function __invoke(string $companyId): CategoryChoicesResponse
     {

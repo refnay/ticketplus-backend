@@ -12,10 +12,8 @@ class SearchMemberCompanyQueryHandler
 
     public function __invoke(SearchMemberCompanyQuery $query): MemberCompaniesResponse
     {
-        $userId = $this->authorization->userId();
-
         return $this->searcher->__invoke(
-            $query->filters($userId),
+            $query->filters($this->authorization->userId()),
             $query->orderBy(),
             $query->order(),
             $query->limit(),

@@ -8,17 +8,13 @@ use App\Catalog\Category\Domain\CategoryId;
 
 class FindCategoryQueryHandler
 {
-    public function __construct(private AuthorizationContext $authorization, private CategoryFinder $finder)
-    {
-    }
+    public function __construct(private AuthorizationContext $authorization, private CategoryFinder $finder) {}
 
     public function __invoke(FindCategoryQuery $query): CategoryResponse
     {
-        $companyId = $this->authorization->companyId();
-
         return $this->finder->__invoke(
             CategoryId::fromString($query->id()),
-            CompanyId::fromString($companyId),
+            CompanyId::fromString($this->authorization->companyId()),
         );
     }
 }

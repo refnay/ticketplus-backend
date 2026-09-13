@@ -6,9 +6,7 @@ use App\Shared\Application\Input\PayloadMapper;
 
 class UpdateCategoryCommand
 {
-    public function __construct(private string $id, private string $name, private int $reference)
-    {
-    }
+    public function __construct(private string $id, private string $name, private int $reference) {}
 
     public static function create(string $id, array $data): self
     {

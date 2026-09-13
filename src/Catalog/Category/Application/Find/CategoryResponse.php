@@ -12,8 +12,7 @@ class CategoryResponse implements JsonSerializable
         readonly private string $id,
         readonly private string $name,
         readonly private int $reference,
-    ) {
-    }
+    ) {}
 
     public static function create(Category $category): self
     {

@@ -18,8 +18,7 @@ class EventThumbnailUploader
         private EventRepository $repository,
         private EventFinder $finder,
         private ImageUploader $uploader,
-    ) {
-    }
+    ) {}
 
     public function __invoke(EventId $id, ?FileUpload $thumbnail, CompanyId $companyId): void
     {

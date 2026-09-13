@@ -8,17 +8,13 @@ use App\Catalog\Shared\Domain\CompanyId;
 
 class DeleteCategoryCommandHandler
 {
-    public function __construct(private AuthorizationContext $authorization, private CategoryDeleter $deleter)
-    {
-    }
+    public function __construct(private AuthorizationContext $authorization, private CategoryDeleter $deleter) {}
 
     public function __invoke(DeleteCategoryCommand $command): void
     {
-        $companyId = $this->authorization->companyId();
-
         $this->deleter->__invoke(
             CategoryId::fromString($command->id()),
-            CompanyId::fromString($companyId),
+            CompanyId::fromString($this->authorization->companyId()),
         );
     }
 }

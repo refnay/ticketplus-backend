@@ -10,9 +10,7 @@ use App\Catalog\Shared\Domain\CompanyId;
 
 class CategoryCreator
 {
-    public function __construct(private CategoryRepository $repository)
-    {
-    }
+    public function __construct(private CategoryRepository $repository) {}
 
     public function __invoke(CategoryName $name, CategoryReference $reference, CompanyId $companyId): string
     {

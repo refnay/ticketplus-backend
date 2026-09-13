@@ -15,9 +15,7 @@ use App\Account\User\Domain\UserRepository;
 
 class UserUpdater
 {
-    public function __construct(private UserRepository $repository, private UserFinder $finder)
-    {
-    }
+    public function __construct(private UserRepository $repository, private UserFinder $finder) {}
 
     public function __invoke(
         UserId $id,

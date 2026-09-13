@@ -5,9 +5,7 @@ namespace App\Catalog\Event\Application\Delete;
 
 class DeleteEventCommand
 {
-    public function __construct(private string $id)
-    {
-    }
+    public function __construct(private string $id) {}
 
     public static function create(string $id): self
     {

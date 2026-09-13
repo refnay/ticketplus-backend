@@ -16,8 +16,7 @@ class PublishedEventDayResponse implements JsonSerializable
         private string $saleStartsAt,
         private ?string $description,
         private int $status,
-    ) {
-    }
+    ) {}
 
     public static function create(EventDay $day): self
     {

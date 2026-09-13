@@ -8,9 +8,7 @@ use App\Catalog\Category\Domain\CategoryId;
 
 class CategoryFinder
 {
-    public function __construct(private ServicesCategoryFinder $finder)
-    {
-    }
+    public function __construct(private ServicesCategoryFinder $finder) {}
 
     public function __invoke(CategoryId $id, CompanyId $companyId): CategoryResponse
     {

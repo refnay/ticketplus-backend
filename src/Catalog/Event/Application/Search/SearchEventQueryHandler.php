@@ -6,9 +6,7 @@ use App\Shared\Application\Security\AuthorizationContext;
 
 class SearchEventQueryHandler
 {
-    public function __construct(private AuthorizationContext $authorization, private EventSearcher $searcher)
-    {
-    }
+    public function __construct(private AuthorizationContext $authorization, private EventSearcher $searcher) {}
 
     public function __invoke(SearchEventQuery $query): EventsResponse
     {

@@ -8,9 +8,7 @@ use App\Catalog\Event\Domain\EventRepository;
 
 class EventSearcher
 {
-    public function __construct(private EventRepository $repository, private CategoryFinder $categoryFinder)
-    {
-    }
+    public function __construct(private EventRepository $repository, private CategoryFinder $categoryFinder) {}
 
     public function __invoke(
         array $filters,

@@ -7,9 +7,7 @@ use App\Catalog\Category\Domain\CategoryRepository;
 
 class CategorySearcher
 {
-    public function __construct(private CategoryRepository $repository)
-    {
-    }
+    public function __construct(private CategoryRepository $repository) {}
 
     public function __invoke(
         array $filters,

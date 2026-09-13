@@ -9,18 +9,14 @@ use App\Catalog\Shared\Domain\CompanyId;
 
 class CreateCategoryCommandHandler
 {
-    public function __construct(private AuthorizationContext $authorization, private CategoryCreator $creator)
-    {
-    }
+    public function __construct(private AuthorizationContext $authorization, private CategoryCreator $creator) {}
 
     public function __invoke(CreateCategoryCommand $command): string
     {
-        $companyId = $this->authorization->companyId();
-
         return $this->creator->__invoke(
             CategoryName::fromString($command->name()),
             CategoryReference::fromInt($command->reference()),
-            CompanyId::fromString($companyId),
+            CompanyId::fromString($this->authorization->companyId()),
         );
     }
 }

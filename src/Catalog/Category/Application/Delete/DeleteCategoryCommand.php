@@ -5,9 +5,7 @@ namespace App\Catalog\Category\Application\Delete;
 
 class DeleteCategoryCommand
 {
-    public function __construct(private string $id)
-    {
-    }
+    public function __construct(private string $id) {}
 
     public static function create(string $id): self
     {

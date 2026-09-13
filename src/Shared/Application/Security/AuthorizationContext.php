@@ -18,6 +18,7 @@ final readonly class AuthorizationContext
     public function userId(): string
     {
         $userId = $this->actor->userId();
+
         if (is_null($userId)) {
             throw new AuthenticationRequired();
         }
@@ -28,6 +29,7 @@ final readonly class AuthorizationContext
     public function companyId(): string
     {
         $companyId = $this->actor->companyId();
+
         if (is_null($companyId)) {
             throw new CompanyRequired();
         }
@@ -54,14 +56,12 @@ final readonly class AuthorizationContext
         return $memberId;
     }
 
-    public function ownerCompanyId(): string
+    public function validateOwner(): void
     {
-        $companyId = $this->companyId();
-
-        if ($this->actor->memberRole() !== MemberRoleList::OWNER->value) {
-            throw new CompanyOwnerRequired();
+        if ($this->actor->memberRole() === MemberRoleList::OWNER->value) {
+            return;
         }
 
-        return $companyId;
+        throw new CompanyOwnerRequired();
     }
 }

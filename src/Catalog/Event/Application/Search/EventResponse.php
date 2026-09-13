@@ -23,8 +23,7 @@ class EventResponse implements JsonSerializable
         readonly private int $status,
         readonly private string $category,
         readonly private ?string $date,
-    ) {
-    }
+    ) {}
 
     public static function create(Event $event, Category $category): self
     {

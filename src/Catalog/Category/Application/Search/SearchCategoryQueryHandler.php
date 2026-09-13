@@ -6,9 +6,7 @@ use App\Shared\Application\Security\AuthorizationContext;
 
 class SearchCategoryQueryHandler
 {
-    public function __construct(private AuthorizationContext $authorization, private CategorySearcher $searcher)
-    {
-    }
+    public function __construct(private AuthorizationContext $authorization, private CategorySearcher $searcher) {}
 
     public function __invoke(SearchCategoryQuery $query): CategoriesResponse
     {

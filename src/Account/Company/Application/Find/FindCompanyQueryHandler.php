@@ -15,10 +15,8 @@ class FindCompanyQueryHandler
 
     public function __invoke(FindCompanyQuery $query): CompanyResponse
     {
-        $companyId = $this->authorization->companyId();
-
         return $this->finder->__invoke(
-            CompanyId::fromString($companyId),
+            CompanyId::fromString($this->authorization->companyId()),
         );
     }
 }

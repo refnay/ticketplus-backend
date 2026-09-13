@@ -9,9 +9,7 @@ use App\Catalog\Shared\Domain\CompanyId;
 
 class CategoryDeleter
 {
-    public function __construct(private CategoryRepository $repository, private CategoryFinder $finder)
-    {
-    }
+    public function __construct(private CategoryRepository $repository, private CategoryFinder $finder) {}
 
     public function __invoke(CategoryId $id, CompanyId $companyId): void
     {

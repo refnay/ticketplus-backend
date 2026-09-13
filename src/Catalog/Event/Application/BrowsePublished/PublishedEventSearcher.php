@@ -11,8 +11,7 @@ class PublishedEventSearcher
     public function __construct(
         private EventRepository $repository,
         private CategoryFinder $categoryFinder,
-    ) {
-    }
+    ) {}
 
     public function __invoke(BrowsePublishedEventsQuery $query): PublishedEventsResponse
     {

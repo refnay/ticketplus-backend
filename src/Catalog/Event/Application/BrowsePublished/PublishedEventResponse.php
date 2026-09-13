@@ -21,8 +21,7 @@ class PublishedEventResponse implements JsonSerializable
         private string $currency,
         private array $category,
         private ?string $date,
-    ) {
-    }
+    ) {}
 
     public static function create(Event $event, Category $category): self
     {
