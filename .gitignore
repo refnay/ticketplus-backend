@@ -13,8 +13,4 @@
 /config/jwt/*.pem
 ###< lexik/jwt-authentication-bundle ###
 
-###> phpunit/phpunit ###
-/phpunit.xml
-/.phpunit.cache/
 /.deptrac.cache
-###< phpunit/phpunit ###
