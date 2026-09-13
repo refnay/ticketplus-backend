@@ -8,9 +8,7 @@ use App\Sale\Reference\User\Domain\UserId;
 
 class PaymentApprovedEventSubscriber
 {
-    public function __construct(private OrderUpdater $updater)
-    {
-    }
+    public function __construct(private OrderUpdater $updater) {}
 
     public function __invoke(PaymentWithOrderApprovedDomainEvent $event): void
     {

@@ -14,9 +14,7 @@ use App\Sale\Shared\Domain\CompanyId;
 
 class UpdateDiscountCommandHandler
 {
-    public function __construct(private AuthorizationContext $authorization, private DiscountUpdater $updater)
-    {
-    }
+    public function __construct(private AuthorizationContext $authorization, private DiscountUpdater $updater) {}
 
     public function __invoke(UpdateDiscountCommand $command): void
     {

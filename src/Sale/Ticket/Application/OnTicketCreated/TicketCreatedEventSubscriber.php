@@ -8,9 +8,7 @@ use App\Sale\Ticket\Domain\Events\TicketCreatedDomainEvent;
 
 class TicketCreatedEventSubscriber
 {
-    public function __construct(private TicketSender $sender)
-    {
-    }
+    public function __construct(private TicketSender $sender) {}
 
     public function __invoke(TicketCreatedDomainEvent $event): void
     {

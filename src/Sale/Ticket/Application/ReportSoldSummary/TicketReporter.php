@@ -9,9 +9,7 @@ use DateInterval;
 
 class TicketReporter
 {
-    public function __construct(private TicketRepository $repository)
-    {
-    }
+    public function __construct(private TicketRepository $repository) {}
 
     public function __invoke(
         OrderPaidAt $from,

@@ -8,17 +8,13 @@ use App\Sale\Ticket\Domain\TicketId;
 
 class RenderTicketQueryHandler
 {
-    public function __construct(private AuthorizationContext $authorization, private TicketRender $finder)
-    {
-    }
+    public function __construct(private AuthorizationContext $authorization, private TicketRender $finder) {}
 
     public function __invoke(RenderTicketQuery $query): TicketRenderResponse
     {
-        $userId = $this->authorization->userId();
-
         return $this->finder->__invoke(
             TicketId::fromString($query->id()),
-            UserId::fromString($userId),
+            UserId::fromString($this->authorization->userId()),
         );
     }
 }

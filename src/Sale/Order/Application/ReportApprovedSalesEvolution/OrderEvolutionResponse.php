@@ -13,8 +13,7 @@ class OrderEvolutionResponse implements JsonSerializable
         readonly private string $currency,
         readonly private string $interval,
         readonly private array $sales,
-    ) {
-    }
+    ) {}
 
     #[Override]
     public function jsonSerialize(): mixed

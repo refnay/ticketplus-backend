@@ -8,9 +8,7 @@ use App\Sale\Reference\User\Domain\UserId;
 
 class PaymentUpdatedEventSubscriber
 {
-    public function __construct(private PaymentProcessor $processor)
-    {
-    }
+    public function __construct(private PaymentProcessor $processor) {}
 
     public function __invoke(PaymentUpdatedDomainEvent $event): void
     {

@@ -14,8 +14,7 @@ class TicketSummaryResponse implements JsonSerializable
         readonly private string $previousTo,
         readonly private int $quantity,
         readonly private ?float $variation,
-    ) {
-    }
+    ) {}
 
     #[Override]
     public function jsonSerialize(): mixed

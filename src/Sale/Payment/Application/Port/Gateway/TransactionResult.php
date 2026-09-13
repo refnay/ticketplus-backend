@@ -11,8 +11,7 @@ class TransactionResult implements JsonSerializable
         readonly private string $transactionId,
         readonly private string $gateway,
         readonly private int $status,
-    ) {
-    }
+    ) {}
 
     public function transactionId(): string
     {

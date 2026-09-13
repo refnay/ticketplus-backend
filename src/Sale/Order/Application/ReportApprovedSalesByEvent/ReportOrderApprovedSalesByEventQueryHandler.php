@@ -12,18 +12,15 @@ class ReportOrderApprovedSalesByEventQueryHandler
     public function __construct(
         private AuthorizationContext $authorization,
         private OrderReporter $reporter,
-    ) {
-    }
+    ) {}
 
     public function __invoke(ReportOrderApprovedSalesByEventQuery $query): OrderByEventResponse
     {
-        $companyId = $this->authorization->companyId();
-
         return $this->reporter->__invoke(
             OrderPaidAt::fromString($query->from()),
             OrderPaidAt::fromString($query->to()),
             OrderCurrency::fromString($query->currency()),
-            CompanyId::fromString($companyId),
+            CompanyId::fromString($this->authorization->companyId()),
             $query->limit(),
         );
     }

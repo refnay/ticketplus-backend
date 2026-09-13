@@ -12,8 +12,7 @@ class OrderByEventResponse implements JsonSerializable
         readonly private string $to,
         readonly private string $currency,
         readonly private array $events,
-    ) {
-    }
+    ) {}
 
     #[Override]
     public function jsonSerialize(): mixed

@@ -3,7 +3,7 @@ payment-create:
     controller: App\Sale\Payment\Infrastructure\Controller\PaymentCreateController::create
     methods: POST
 
-payment-update:
+payment-confirm:
     path: /api/payment/{id}
-    controller: App\Sale\Payment\Infrastructure\Controller\PaymentUpdateController::update
+    controller: App\Sale\Payment\Infrastructure\Controller\PaymentConfirmController::confirm
     methods: PUT

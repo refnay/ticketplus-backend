@@ -15,14 +15,10 @@ use App\Sale\Reference\Event\Domain\EventId;
 
 class CreateDiscountCommandHandler
 {
-    public function __construct(private AuthorizationContext $authorization, private DiscountCreator $creator)
-    {
-    }
+    public function __construct(private AuthorizationContext $authorization, private DiscountCreator $creator) {}
 
     public function __invoke(CreateDiscountCommand $command): string
     {
-        $companyId = $this->authorization->companyId();
-
         return $this->creator->__invoke(
             DiscountActive::fromBool($command->active()),
             DiscountCode::fromString($command->code()),
@@ -32,7 +28,7 @@ class CreateDiscountCommandHandler
             DiscountUsage::fromLimit($command->usageLimit()),
             DiscountValue::fromFloat($command->value()),
             EventId::fromString($command->event()),
-            CompanyId::fromString($companyId),
+            CompanyId::fromString($this->authorization->companyId()),
         );
     }
 }

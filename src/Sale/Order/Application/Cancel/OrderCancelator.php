@@ -17,8 +17,7 @@ class OrderCancelator
         private OrderFinder $orderFinder,
         private PaymentByOrderFinder $paymentFinder,
         private OrderRepository $repository,
-    ) {
-    }
+    ) {}
 
     public function __invoke(OrderId $id, UserId $userId): void
     {

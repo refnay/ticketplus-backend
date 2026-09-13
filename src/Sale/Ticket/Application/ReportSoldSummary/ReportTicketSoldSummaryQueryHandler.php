@@ -11,17 +11,14 @@ class ReportTicketSoldSummaryQueryHandler
     public function __construct(
         private AuthorizationContext $authorization,
         private TicketReporter $reporter,
-    ) {
-    }
+    ) {}
 
     public function __invoke(ReportTicketSoldSummaryQuery $query): TicketSummaryResponse
     {
-        $companyId = $this->authorization->companyId();
-
         return $this->reporter->__invoke(
             OrderPaidAt::fromString($query->from()),
             OrderPaidAt::fromString($query->to()),
-            CompanyId::fromString($companyId),
+            CompanyId::fromString($this->authorization->companyId()),
         );
     }
 }

@@ -6,9 +6,7 @@ use App\Shared\Application\Security\AuthorizationContext;
 
 class SearchDiscountQueryHandler
 {
-    public function __construct(private AuthorizationContext $authorization, private DiscountSearcher $searcher)
-    {
-    }
+    public function __construct(private AuthorizationContext $authorization, private DiscountSearcher $searcher) {}
 
     public function __invoke(SearchDiscountQuery $query): DiscountsResponse
     {

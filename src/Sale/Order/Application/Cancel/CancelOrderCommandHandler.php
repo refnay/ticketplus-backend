@@ -8,17 +8,13 @@ use App\Sale\Reference\User\Domain\UserId;
 
 class CancelOrderCommandHandler
 {
-    public function __construct(private AuthorizationContext $authorization, private OrderCancelator $cancelator)
-    {
-    }
+    public function __construct(private AuthorizationContext $authorization, private OrderCancelator $cancelator) {}
 
     public function __invoke(CancelOrderCommand $command): void
     {
-        $userId = $this->authorization->userId();
-
         $this->cancelator->__invoke(
             OrderId::fromString($command->id()),
-            UserId::fromString($userId),
+            UserId::fromString($this->authorization->userId()),
         );
     }
 }

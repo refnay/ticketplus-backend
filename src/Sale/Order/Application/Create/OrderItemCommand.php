@@ -6,9 +6,7 @@ use App\Shared\Application\Input\PayloadMapper;
 
 class OrderItemCommand
 {
-    public function __construct(private string $zone, private int $quantity, private ?array $seats)
-    {
-    }
+    public function __construct(private string $zone, private int $quantity, private ?array $seats) {}
 
     public static function create(array $data): self
     {

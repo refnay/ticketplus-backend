@@ -27,8 +27,7 @@ class TicketCreator
         private TicketRepository $repository,
         private ZoneFinder $zoneFinder,
         private SeatFinder $seatFinder,
-    ) {
-    }
+    ) {}
 
     public function __invoke(Order $order, array $item, ?SeatId $seatId): string
     {

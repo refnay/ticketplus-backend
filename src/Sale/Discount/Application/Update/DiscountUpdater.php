@@ -11,16 +11,15 @@ use App\Sale\Discount\Domain\DiscountStartDate;
 use App\Sale\Discount\Domain\DiscountType;
 use App\Sale\Discount\Domain\DiscountUsage;
 use App\Sale\Discount\Domain\DiscountValue;
-use App\Sale\Discount\Domain\Services\CompanyDiscountFinder;
+use App\Sale\Discount\Domain\Services\DiscountByCompanyFinder;
 use App\Sale\Shared\Domain\CompanyId;
 
 class DiscountUpdater
 {
     public function __construct(
         private DiscountRepository $repository,
-        private CompanyDiscountFinder $discountFinder,
-    ) {
-    }
+        private DiscountByCompanyFinder $discountFinder,
+    ) {}
 
     public function __invoke(
         DiscountId $id,

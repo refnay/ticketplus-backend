@@ -12,8 +12,7 @@ class ReportOrderApprovedSalesEvolutionQueryHandler
     public function __construct(
         private AuthorizationContext $authorization,
         private OrderReporter $reporter,
-    ) {
-    }
+    ) {}
 
     public function __invoke(ReportOrderApprovedSalesEvolutionQuery $query): OrderEvolutionResponse
     {

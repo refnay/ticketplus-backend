@@ -10,19 +10,15 @@ use App\Sale\Reference\User\Domain\UserId;
 
 class CreatePaymentCommandHandler
 {
-    public function __construct(private AuthorizationContext $authorization, private PaymentCreator $creator)
-    {
-    }
+    public function __construct(private AuthorizationContext $authorization, private PaymentCreator $creator) {}
 
     public function __invoke(CreatePaymentCommand $command): string
     {
-        $userId = $this->authorization->userId();
-
         return $this->creator->__invoke(
             OrderId::fromString($command->order()),
             PaymentMethod::fromInt($command->method()),
             PaymentPayer::fromArray($command->payer()),
-            UserId::fromString($userId),
+            UserId::fromString($this->authorization->userId()),
         );
     }
 }

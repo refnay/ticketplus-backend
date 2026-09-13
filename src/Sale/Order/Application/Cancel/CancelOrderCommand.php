@@ -5,9 +5,7 @@ namespace App\Sale\Order\Application\Cancel;
 
 class CancelOrderCommand
 {
-    public function __construct(private string $id)
-    {
-    }
+    public function __construct(private string $id) {}
 
     public static function create(string $id): self
     {

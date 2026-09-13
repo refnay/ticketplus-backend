@@ -10,9 +10,7 @@ use App\Sale\Reference\User\Domain\UserId;
 
 class OrderUpdater
 {
-    public function __construct(private OrderRepository $repository, private OrderFinder $finder)
-    {
-    }
+    public function __construct(private OrderRepository $repository, private OrderFinder $finder) {}
 
     public function __invoke(OrderId $id, OrderPaymentMethod $paymentMethod, UserId $userId): void
     {

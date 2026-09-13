@@ -11,8 +11,7 @@ class ReportOrderApprovedSalesByEventQuery
         private string $to,
         private string $currency,
         private int $limit,
-    ) {
-    }
+    ) {}
 
     public static function fromQuery(array $data): self
     {

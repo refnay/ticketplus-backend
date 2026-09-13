@@ -6,9 +6,7 @@ use App\Shared\Application\Input\PayloadMapper;
 
 class CreatePaymentCommand
 {
-    public function __construct(private string $order, private int $method, private array $payer)
-    {
-    }
+    public function __construct(private string $order, private int $method, private array $payer) {}
 
     public static function create(array $data): self
     {

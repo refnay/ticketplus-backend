@@ -8,13 +8,11 @@ use App\Sale\Payment\Domain\Gateway\TransactionGatewayList;
 
 final readonly class TransactionGatewayResolver
 {
-    public function __construct(private TransactionGateway $mercadoPago)
-    {
-    }
+    public function __construct(private TransactionGateway $mercadoPago) {}
 
     public function __invoke(string $gateway): TransactionGateway
     {
-        return match($gateway) {
+        return match ($gateway) {
             TransactionGatewayList::MERCADO_PAGO->value => $this->mercadoPago,
             default => throw new TransactionGatewayNotFound(),
         };

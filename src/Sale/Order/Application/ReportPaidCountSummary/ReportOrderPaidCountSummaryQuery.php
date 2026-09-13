@@ -6,9 +6,7 @@ use App\Shared\Application\Input\PayloadMapper;
 
 class ReportOrderPaidCountSummaryQuery
 {
-    public function __construct(private string $from, private string $to, private string $currency)
-    {
-    }
+    public function __construct(private string $from, private string $to, private string $currency) {}
 
     public static function fromQuery(array $data): self
     {

@@ -4,11 +4,9 @@ namespace App\Sale\Payment\Application\Confirm;
 
 use App\Shared\Application\Input\PayloadMapper;
 
-class UpdatePaymentCommand
+class ConfirmPaymentCommand
 {
-    public function __construct(private string $payment, private string $token)
-    {
-    }
+    public function __construct(private string $payment, private string $token) {}
 
     public static function create(string $payment, array $data): self
     {

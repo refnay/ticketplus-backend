@@ -13,8 +13,7 @@ class OrderSummaryResponse implements JsonSerializable
         readonly private int $quantity,
         readonly private float $averageAmount,
         readonly private string $currency,
-    ) {
-    }
+    ) {}
 
     #[Override]
     public function jsonSerialize(): mixed

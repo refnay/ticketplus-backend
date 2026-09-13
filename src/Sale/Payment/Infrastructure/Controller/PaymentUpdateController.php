@@ -2,17 +2,17 @@
 
 namespace App\Sale\Payment\Infrastructure\Controller;
 
-use App\Sale\Payment\Application\Confirm\UpdatePaymentCommand;
+use App\Sale\Payment\Application\Confirm\ConfirmPaymentCommand;
 use App\Shared\Application\Bus\CommandBus;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-class PaymentUpdateController extends AbstractController
+class PaymentConfirmController extends AbstractController
 {
-    public function update(string $id, Request $request, CommandBus $commandBus): JsonResponse
+    public function confirm(string $id, Request $request, CommandBus $commandBus): JsonResponse
     {
-        $command = UpdatePaymentCommand::create($id, $request->toArray());
+        $command = ConfirmPaymentCommand::create($id, $request->toArray());
 
         $commandBus->dispatch($command);
 

@@ -11,8 +11,7 @@ class CreateOrderCommand
         private string $day,
         private ?string $discount,
         private array $items,
-    ) {
-    }
+    ) {}
 
     public static function create(array $data): self
     {

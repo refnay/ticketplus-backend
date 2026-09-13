@@ -11,16 +11,13 @@ class FindDiscountQueryHandler
     public function __construct(
         private DiscountFinder $finder,
         private AuthorizationContext $authorization,
-    ) {
-    }
+    ) {}
 
     public function __invoke(FindDiscountQuery $query): DiscountResponse
     {
-        $companyId = $this->authorization->companyId();
-
         return $this->finder->__invoke(
             DiscountId::fromString($query->id()),
-            CompanyId::fromString($companyId),
+            CompanyId::fromString($this->authorization->companyId()),
         );
     }
 }

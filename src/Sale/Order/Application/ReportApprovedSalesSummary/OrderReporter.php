@@ -10,9 +10,7 @@ use DateInterval;
 
 class OrderReporter
 {
-    public function __construct(private OrderRepository $repository)
-    {
-    }
+    public function __construct(private OrderRepository $repository) {}
 
     public function __invoke(
         OrderPaidAt $from,

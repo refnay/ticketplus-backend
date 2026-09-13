@@ -8,7 +8,7 @@ use App\Sale\Discount\Domain\DiscountRepository;
 use App\Sale\Discount\Domain\Exceptions\DiscountNotFound;
 use App\Sale\Shared\Domain\CompanyId;
 
-class CompanyDiscountFinder
+class DiscountByCompanyFinder
 {
     public function __construct(private DiscountRepository $repository)
     {

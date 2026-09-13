@@ -18,8 +18,7 @@ class DiscountResponse implements JsonSerializable
         readonly private array $usage,
         readonly private float $value,
         readonly private string $eventId,
-    ) {
-    }
+    ) {}
 
     public static function create(Discount $discount): self
     {

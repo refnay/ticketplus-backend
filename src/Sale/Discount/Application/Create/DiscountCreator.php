@@ -17,9 +17,7 @@ use App\Sale\Reference\Event\Domain\Services\EventFinder;
 
 class DiscountCreator
 {
-    public function __construct(private DiscountRepository $repository, private EventFinder $eventFinder)
-    {
-    }
+    public function __construct(private DiscountRepository $repository, private EventFinder $eventFinder) {}
 
     public function __invoke(
         DiscountActive $active,

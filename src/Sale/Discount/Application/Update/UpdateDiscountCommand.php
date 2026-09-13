@@ -15,8 +15,7 @@ class UpdateDiscountCommand
         private int $type,
         private int $usageLimit,
         private float $value,
-    ) {
-    }
+    ) {}
 
     public static function create(string $id, array $data): self
     {

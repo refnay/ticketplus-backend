@@ -9,18 +9,14 @@ use App\Sale\Reference\User\Domain\UserId;
 
 class CreateOrderCommandHandler
 {
-    public function __construct(private AuthorizationContext $authorization, private OrderCreator $creator)
-    {
-    }
+    public function __construct(private AuthorizationContext $authorization, private OrderCreator $creator) {}
 
     public function __invoke(CreateOrderCommand $command): string
     {
-        $userId = $this->authorization->userId();
-
         return $this->creator->__invoke(
             EventDayId::fromString($command->day()),
             DiscountId::fromNullable($command->discount()),
-            UserId::fromString($userId),
+            UserId::fromString($this->authorization->userId()),
             $command->items(),
         );
     }

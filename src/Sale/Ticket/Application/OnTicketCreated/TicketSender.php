@@ -18,8 +18,7 @@ final readonly class TicketSender
         private TicketRender $ticketRender,
         private UserFinder $userFinder,
         private Mailer $mailer,
-    ) {
-    }
+    ) {}
 
     public function __invoke(array $ticketIds, OrderId $orderId, UserId $userId): void
     {

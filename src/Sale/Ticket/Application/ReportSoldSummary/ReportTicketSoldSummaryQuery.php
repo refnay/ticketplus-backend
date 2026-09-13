@@ -6,9 +6,7 @@ use App\Shared\Application\Input\PayloadMapper;
 
 class ReportTicketSoldSummaryQuery
 {
-    public function __construct(private string $from, private string $to)
-    {
-    }
+    public function __construct(private string $from, private string $to) {}
 
     public static function fromQuery(array $data): self
     {

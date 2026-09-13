@@ -8,9 +8,7 @@ use App\Sale\Reference\User\Domain\UserId;
 
 class PaymentApprovedEventSubscriber
 {
-    public function __construct(private TicketCreator $creator)
-    {
-    }
+    public function __construct(private TicketCreator $creator) {}
 
     public function __invoke(PaymentWithTicketApprovedDomainEvent $event): void
     {
