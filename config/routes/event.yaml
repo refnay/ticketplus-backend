@@ -53,6 +53,11 @@ event-day-delete:
     controller: App\Catalog\Event\Infrastructure\Controller\EventDayDeleteController::delete
     methods: DELETE
 
+event-day-update:
+    path: /api/event/{id}/day/{dayId}
+    controller: App\Catalog\Event\Infrastructure\Controller\EventDayUpdateController::update
+    methods: PUT
+
 event-banner-image-upload:
     path: /api/event/{id}/banner
     controller: App\Catalog\Event\Infrastructure\Controller\EventBannerImageUploadController::upload
