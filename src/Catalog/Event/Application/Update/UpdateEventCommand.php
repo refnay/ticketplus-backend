@@ -23,7 +23,7 @@ class UpdateEventCommand
         private array $days,
     ) {}
 
-    public static function create(array $data): self
+    public static function create(string $id, array $data): self
     {
         $payload = PayloadMapper::fromData($data);
         $days = ArrayBuilder::generate();

@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
+use Symfony\Component\Messenger\Exception\HandlerFailedException;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[AsEventListener(event: KernelEvents::EXCEPTION)]
@@ -22,6 +23,10 @@ final class ApiExceptionSubscriber
     public function __invoke(ExceptionEvent $event): void
     {
         $exception = $event->getThrowable();
+        while ($exception instanceof HandlerFailedException && $exception->getPrevious() !== null) {
+            $exception = $exception->getPrevious();
+        }
+
         $status = match (true) {
             $exception instanceof HttpExceptionInterface => $exception->getStatusCode(),
             $exception instanceof AuthenticationRequired => JsonResponse::HTTP_UNAUTHORIZED,
