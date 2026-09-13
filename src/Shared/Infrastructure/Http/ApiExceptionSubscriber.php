@@ -12,10 +12,13 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[AsEventListener(event: KernelEvents::EXCEPTION)]
 final class ApiExceptionSubscriber
 {
+    public function __construct(private TranslatorInterface $translator) {}
+
     public function __invoke(ExceptionEvent $event): void
     {
         $exception = $event->getThrowable();
@@ -33,6 +36,7 @@ final class ApiExceptionSubscriber
         $event->setResponse(new JsonResponse([
             'error' => [
                 'code' => $exception->getMessage(),
+                'message' => $this->translator->trans($exception->getMessage(), [], 'messages'),
                 'status' => $status,
             ],
         ], $status));

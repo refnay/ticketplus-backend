@@ -9,6 +9,6 @@ class PaymentAlreadyProcessing extends Exception
 {
     public function __construct(?Throwable $previous = null)
     {
-        parent::__construct('payment.payment_alreaady_processing', 0, $previous);
+        parent::__construct('payment.payment_already_processing', 0, $previous);
     }
 }
