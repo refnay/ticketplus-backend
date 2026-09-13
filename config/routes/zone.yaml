@@ -1,5 +1,5 @@
 zone-create:
-    path: /api/zone/day/{day}
+    path: /api/zone
     controller: App\Catalog\Zone\Infrastructure\Controller\ZoneCreateController::create
     methods: POST
 

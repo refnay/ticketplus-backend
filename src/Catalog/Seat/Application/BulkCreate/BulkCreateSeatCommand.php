@@ -9,7 +9,7 @@ class BulkCreateSeatCommand
 {
     public function __construct(private string $zone, private array $seats) {}
 
-    public static function create(string $zone, array $data): self
+    public static function create(array $data): self
     {
         $payload = PayloadMapper::fromData($data);
         $seats = ArrayBuilder::generate();
@@ -19,7 +19,7 @@ class BulkCreateSeatCommand
         }
 
         return new self(
-            $zone,
+            $payload->string('zone'),
             $seats->items(),
         );
     }

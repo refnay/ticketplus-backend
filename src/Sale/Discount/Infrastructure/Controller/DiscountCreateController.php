@@ -10,9 +10,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 class DiscountCreateController extends AbstractController
 {
-    public function create(string $event, Request $request, CommandBus $commandBus): JsonResponse
+    public function create(Request $request, CommandBus $commandBus): JsonResponse
     {
-        $command = CreateDiscountCommand::create($event, $request->toArray());
+        $command = CreateDiscountCommand::create($request->toArray());
 
         /** @var string $id */
         $id = $commandBus->dispatch($command);

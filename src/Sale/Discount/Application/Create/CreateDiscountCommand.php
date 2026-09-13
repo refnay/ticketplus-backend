@@ -17,12 +17,12 @@ class CreateDiscountCommand
         private float $value,
     ) {}
 
-    public static function create(string $event, array $data): self
+    public static function create(array $data): self
     {
         $payload = PayloadMapper::fromData($data);
 
         return new self(
-            $event,
+            $payload->string('event'),
             $payload->bool('active'),
             $payload->string('code'),
             $payload->string('startDate'),

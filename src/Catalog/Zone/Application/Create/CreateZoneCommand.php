@@ -15,12 +15,12 @@ class CreateZoneCommand
         private bool $numberedSeating,
     ) {}
 
-    public static function create(string $day, array $data): self
+    public static function create(array $data): self
     {
         $payload = PayloadMapper::fromData($data);
 
         return new self(
-            $day,
+            $payload->string('day'),
             $payload->string('name'),
             $payload->float('price'),
             $payload->int('quantity'),

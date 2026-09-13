@@ -1,5 +1,5 @@
 discount-create:
-    path: /api/discount/event/{event}
+    path: /api/discount
     controller: App\Sale\Discount\Infrastructure\Controller\DiscountCreateController::create
     methods: POST
 

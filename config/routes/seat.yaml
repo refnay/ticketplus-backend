@@ -1,5 +1,5 @@
 seat-create:
-    path: /api/seat/zone/{zone}
+    path: /api/seat
     controller: App\Catalog\Seat\Infrastructure\Controller\SeatCreateController::create
     methods: POST
 
@@ -24,6 +24,6 @@ seat-delete:
     methods: DELETE
 
 seat-bulk-create:
-    path: /api/seat/zone/{zone}/bulk
+    path: /api/seat/bulk
     controller: App\Catalog\Seat\Infrastructure\Controller\SeatBulkCreateController::create
     methods: POST

@@ -11,12 +11,12 @@ class CreateSeatCommand
         private string $code,
     ) {}
 
-    public static function create(string $zone, array $data): self
+    public static function create(array $data): self
     {
         $payload = PayloadMapper::fromData($data);
 
         return new self(
-            $zone,
+            $payload->string('zone'),
             $payload->string('code'),
         );
     }
