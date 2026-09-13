@@ -10,6 +10,7 @@ class SearchZoneQuery extends SearchQuery
     public function __construct(
         private ?string $day,
         private ?string $name,
+        private ?bool $numberedSeating,
         string $orderBy,
         string $order,
         ?int $limit,
@@ -25,6 +26,7 @@ class SearchZoneQuery extends SearchQuery
         return new self(
             $payload->nullableString('day'),
             $payload->nullableString('name'),
+            $payload->nullableBoolFromString('numberedSeating'),
             $payload->string('orderBy'),
             $payload->string('order'),
             $payload->nullableInt('limit'),

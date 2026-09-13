@@ -116,6 +116,7 @@ class ZoneDoctrineRepository implements ZoneRepository
         );
 
         $queryBuilder->equals('day', $filters['day'] ?? null)
+            ->equals('numberedSeating', $filters['numberedSeating'] ?? null)
             ->likeMultiple(['name'], $filters['name'] ?? null, true);
 
         if (isset($filters['company'])) {
@@ -153,6 +154,7 @@ class ZoneDoctrineRepository implements ZoneRepository
         );
 
         $queryBuilder->equals('day', $filters['day'] ?? null)
+            ->equals('numberedSeating', $filters['numberedSeating'] ?? null)
             ->likeMultiple(['name'], $filters['name'] ?? null, true);
 
         if (isset($filters['company'])) {

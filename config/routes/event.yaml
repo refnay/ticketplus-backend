@@ -33,6 +33,11 @@ event-quick-update-location:
     controller: App\Catalog\Event\Infrastructure\Controller\EventQuickUpdateLocationController::update
     methods: PATCH
 
+event-quick-update-commercial-settings:
+    path: /api/event/{id}/quick-update/commercial-settings
+    controller: App\Catalog\Event\Infrastructure\Controller\EventQuickUpdateCommercialSettingsController::update
+    methods: PATCH
+
 event-cover-image-upload:
     path: /api/event/{id}/cover
     controller: App\Catalog\Event\Infrastructure\Controller\EventCoverImageUploadController::upload
