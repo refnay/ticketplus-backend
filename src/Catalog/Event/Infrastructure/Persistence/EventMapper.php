@@ -176,7 +176,7 @@ class EventMapper
         }
 
         foreach ($entity->getDays()->toArray() as $dayEntity) {
-            if (!in_array($dayEntity->getId(), $processedIds, true)) {
+            if (!in_array($dayEntity->getId()->toRfc4122(), $processedIds, true)) {
                 $entity->removeDay($dayEntity);
             }
         }

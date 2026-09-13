@@ -61,6 +61,6 @@ class EventUpdater
 
         $this->synchronizer->days($event, $days);
 
-        $this->repository->save($event);
+        $this->repository->update($event);
     }
 }
