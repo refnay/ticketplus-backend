@@ -28,6 +28,11 @@ event-quick-update-general:
     controller: App\Catalog\Event\Infrastructure\Controller\EventQuickUpdateGeneralController::update
     methods: PATCH
 
+event-quick-update-status:
+    path: /api/event/{id}/quick-update/status
+    controller: App\Catalog\Event\Infrastructure\Controller\EventQuickUpdateStatusController::update
+    methods: PATCH
+
 event-quick-update-location:
     path: /api/event/{id}/quick-update/location
     controller: App\Catalog\Event\Infrastructure\Controller\EventQuickUpdateLocationController::update
