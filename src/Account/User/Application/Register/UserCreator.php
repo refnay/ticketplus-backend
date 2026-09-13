@@ -17,9 +17,7 @@ use App\Account\User\Domain\UserRepository;
 
 class UserCreator
 {
-    public function __construct(private UserRepository $repository, private NewUserValidator $validator)
-    {
-    }
+    public function __construct(private UserRepository $repository, private NewUserValidator $validator) {}
 
     public function __invoke(
         UserEmail $email,

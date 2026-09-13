@@ -14,8 +14,7 @@ class MemberCompanyResponse implements JsonSerializable
         readonly private ?string $companyLogo,
         readonly private int $role,
         readonly private int $status,
-    ) {
-    }
+    ) {}
 
     #[Override]
     public function jsonSerialize(): mixed

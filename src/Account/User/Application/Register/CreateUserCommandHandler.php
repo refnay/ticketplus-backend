@@ -15,9 +15,7 @@ use App\Account\User\Application\Port\Hash\PasswordHasher;
 
 class CreateUserCommandHandler
 {
-    public function __construct(private UserCreator $creator, private PasswordHasher $hasher)
-    {
-    }
+    public function __construct(private UserCreator $creator, private PasswordHasher $hasher) {}
 
     public function __invoke(CreateUserCommand $command): string
     {

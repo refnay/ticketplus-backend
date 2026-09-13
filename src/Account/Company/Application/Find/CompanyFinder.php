@@ -7,9 +7,7 @@ use App\Account\Company\Domain\Services\CompanyFinder as DomainCompanyFinder;
 
 class CompanyFinder
 {
-    public function __construct(private DomainCompanyFinder $finder)
-    {
-    }
+    public function __construct(private DomainCompanyFinder $finder) {}
 
     public function __invoke(CompanyId $id): CompanyResponse
     {

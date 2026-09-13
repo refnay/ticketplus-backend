@@ -7,9 +7,7 @@ use App\Account\User\Domain\UserId;
 
 class UploadUserProfileImageCommandHandler
 {
-    public function __construct(private AuthorizationContext $authorization, private UserProfileImageUploader $uploader)
-    {
-    }
+    public function __construct(private AuthorizationContext $authorization, private UserProfileImageUploader $uploader) {}
 
     public function __invoke(UploadUserProfileImageCommand $command): void
     {

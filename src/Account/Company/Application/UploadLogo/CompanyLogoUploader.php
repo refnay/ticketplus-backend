@@ -17,8 +17,7 @@ class CompanyLogoUploader
         private CompanyRepository $repository,
         private CompanyFinder $finder,
         private ImageUploader $uploader
-    ) {
-    }
+    ) {}
 
     public function __invoke(CompanyId $id, ?FileUpload $logo): void
     {

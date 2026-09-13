@@ -9,9 +9,7 @@ use App\Account\User\Application\Port\Hash\PasswordHasher;
 
 class UpdateUserPasswordCommandHandler
 {
-    public function __construct(private AuthorizationContext $authorization, private UserPasswordUpdater $updater, private PasswordHasher $hasher)
-    {
-    }
+    public function __construct(private AuthorizationContext $authorization, private UserPasswordUpdater $updater, private PasswordHasher $hasher) {}
 
     public function __invoke(UpdateUserPasswordCommand $command): void
     {

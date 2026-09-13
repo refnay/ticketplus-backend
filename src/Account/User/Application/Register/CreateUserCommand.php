@@ -17,8 +17,7 @@ class CreateUserCommand
         private string $name,
         private string $lastName,
         private ?string $mobile,
-    ) {
-    }
+    ) {}
 
     public static function create(array $data): self
     {

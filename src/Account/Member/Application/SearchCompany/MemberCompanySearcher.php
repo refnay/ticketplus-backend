@@ -8,9 +8,7 @@ use App\Account\Company\Domain\Services\CompanyFinder;
 
 class MemberCompanySearcher
 {
-    public function __construct(private MemberRepository $repository, private CompanyFinder $companyFinder)
-    {
-    }
+    public function __construct(private MemberRepository $repository, private CompanyFinder $companyFinder) {}
 
     public function __invoke(
         array $filters,

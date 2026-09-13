@@ -19,8 +19,7 @@ class UpdateCompanyCommand
         private ?string $description,
         private ?string $telephone,
         private ?string $webSite,
-    ) {
-    }
+    ) {}
 
     public static function create(array $data): self
     {
@@ -51,7 +50,7 @@ class UpdateCompanyCommand
     {
         return $this->city;
     }
-        public function documentType(): int
+    public function documentType(): int
     {
         return $this->documentType;
     }

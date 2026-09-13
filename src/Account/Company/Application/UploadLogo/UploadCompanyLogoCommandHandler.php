@@ -7,9 +7,7 @@ use App\Account\Company\Domain\CompanyId;
 
 class UploadCompanyLogoCommandHandler
 {
-    public function __construct(private AuthorizationContext $authorization, private CompanyLogoUploader $uploader)
-    {
-    }
+    public function __construct(private AuthorizationContext $authorization, private CompanyLogoUploader $uploader) {}
 
     public function __invoke(UploadCompanyLogoCommand $command): void
     {

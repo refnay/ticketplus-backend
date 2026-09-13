@@ -15,8 +15,7 @@ final class MemberResponse implements JsonSerializable
         private readonly string $companyName,
         private readonly int $role,
         private readonly int $status,
-    ) {
-    }
+    ) {}
 
     #[Override]
     public function jsonSerialize(): mixed

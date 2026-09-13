@@ -10,10 +10,8 @@ class SearchZoneQueryHandler
 
     public function __invoke(SearchZoneQuery $query): ZonesResponse
     {
-        $companyId = $this->authorization->companyId();
-
         return $this->searcher->__invoke(
-            $query->filters($companyId),
+            $query->filters($this->authorization->companyId()),
             $query->orderBy(),
             $query->order(),
             $query->limit(),

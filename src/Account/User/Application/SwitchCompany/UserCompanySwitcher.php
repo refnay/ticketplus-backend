@@ -16,14 +16,13 @@ class UserCompanySwitcher
         private UserRepository $repository,
         private UserFinder $userFinder,
         private MemberByUserAndCompanyFinder $memberFinder,
-    ) {
-    }
+    ) {}
 
     public function __invoke(UserId $id, UserCurrentCompany $currentCompany): void
     {
         $user = $this->userFinder->__invoke($id);
         $member = $this->memberFinder->__invoke($id, CompanyId::fromString($currentCompany->value()));
-        
+
         if ($member->status()->isInactive()) {
             throw new MemberNotAllowed();
         }

@@ -5,9 +5,7 @@ namespace App\Account\User\Application\Find;
 
 class FindUserQuery
 {
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     public static function create(): self
     {

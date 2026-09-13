@@ -6,9 +6,7 @@ use App\Shared\Application\Security\AuthorizationContext;
 
 class SearchMemberCompanyQueryHandler
 {
-    public function __construct(private AuthorizationContext $authorization, private MemberCompanySearcher $searcher)
-    {
-    }
+    public function __construct(private AuthorizationContext $authorization, private MemberCompanySearcher $searcher) {}
 
     public function __invoke(SearchMemberCompanyQuery $query): MemberCompaniesResponse
     {

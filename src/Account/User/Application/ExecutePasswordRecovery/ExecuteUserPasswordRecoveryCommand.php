@@ -6,9 +6,7 @@ use App\Shared\Application\Input\PayloadMapper;
 
 class ExecuteUserPasswordRecoveryCommand
 {
-    public function __construct(private string $token, private string $newPassword)
-    {
-    }
+    public function __construct(private string $token, private string $newPassword) {}
 
     public static function create(array $data): self
     {

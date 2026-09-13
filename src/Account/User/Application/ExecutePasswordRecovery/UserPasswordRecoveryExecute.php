@@ -11,9 +11,7 @@ use Throwable;
 
 class UserPasswordRecoveryExecute
 {
-    public function __construct(private PasswordResetter $passwordResetter, private UserRepository $repository)
-    {
-    }
+    public function __construct(private PasswordResetter $passwordResetter, private UserRepository $repository) {}
 
     public function __invoke(UserPassword $newPassword, string $token): void
     {

@@ -7,9 +7,7 @@ use App\Account\User\Domain\UserId;
 
 class UserFinder
 {
-    public function __construct(private ServicesUserFinder $finder)
-    {
-    }
+    public function __construct(private ServicesUserFinder $finder) {}
 
     public function __invoke(UserId $id): UserResponse
     {

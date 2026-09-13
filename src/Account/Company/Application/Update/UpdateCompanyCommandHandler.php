@@ -18,9 +18,7 @@ use App\Account\Company\Domain\CompanyWebSite;
 
 class UpdateCompanyCommandHandler
 {
-    public function __construct(private AuthorizationContext $authorization, private CompanyUpdater $updater)
-    {
-    }
+    public function __construct(private AuthorizationContext $authorization, private CompanyUpdater $updater) {}
 
     public function __invoke(UpdateCompanyCommand $command): void
     {

@@ -23,8 +23,7 @@ final class CompanyResponse implements JsonSerializable
         private readonly array $document,
         private readonly ?string $location,
         private readonly int $status,
-    ) {
-    }
+    ) {}
 
     public static function create(Company $company): self
     {

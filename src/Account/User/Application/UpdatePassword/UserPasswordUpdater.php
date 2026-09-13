@@ -8,9 +8,7 @@ use App\Account\User\Domain\UserRepository;
 
 class UserPasswordUpdater
 {
-    public function __construct(private UserRepository $repository)
-    {
-    }
+    public function __construct(private UserRepository $repository) {}
 
     public function __invoke(UserId $id, UserPassword $oldPassword, UserPassword $newPassword): void
     {

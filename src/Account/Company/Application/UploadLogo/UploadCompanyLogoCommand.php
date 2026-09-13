@@ -6,9 +6,7 @@ use App\Shared\Application\Input\FileUpload;
 
 class UploadCompanyLogoCommand
 {
-    public function __construct(private ?FileUpload $logo)
-    {
-    }
+    public function __construct(private ?FileUpload $logo) {}
 
     public function logo(): ?FileUpload
     {

@@ -6,9 +6,7 @@ use App\Shared\Application\Input\PayloadMapper;
 
 class SendUserPasswordRecoveryEmailCommand
 {
-    public function __construct(private string $email)
-    {
-    }
+    public function __construct(private string $email) {}
 
     public static function create(array $data): self
     {

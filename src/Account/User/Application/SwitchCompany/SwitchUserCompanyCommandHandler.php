@@ -8,16 +8,12 @@ use App\Account\User\Domain\UserId;
 
 class SwitchUserCompanyCommandHandler
 {
-    public function __construct(private AuthorizationContext $authorization, private UserCompanySwitcher $switcher)
-    {
-    }
+    public function __construct(private AuthorizationContext $authorization, private UserCompanySwitcher $switcher) {}
 
     public function __invoke(SwitchUserCompanyCommand $command): void
     {
-        $userId = $this->authorization->userId();
-
         $this->switcher->__invoke(
-            UserId::fromString($userId),
+            UserId::fromString($this->authorization->userId()),
             UserCurrentCompany::fromString($command->company()),
         );
     }

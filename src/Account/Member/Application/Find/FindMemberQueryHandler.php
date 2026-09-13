@@ -7,9 +7,7 @@ use App\Account\Member\Domain\MemberId;
 
 class FindMemberQueryHandler
 {
-    public function __construct(private AuthorizationContext $authorization, private MemberFinder $finder)
-    {
-    }
+    public function __construct(private AuthorizationContext $authorization, private MemberFinder $finder) {}
 
     public function __invoke(FindMemberQuery $query): MemberResponse
     {

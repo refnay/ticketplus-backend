@@ -15,8 +15,7 @@ class UpdateUserCommand
         private ?string $mobile,
         private int $documentType,
         private string $documentNumber,
-    ) {
-    }
+    ) {}
 
 
     public static function create(array $data): self

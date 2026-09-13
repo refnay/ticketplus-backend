@@ -8,9 +8,7 @@ use App\Account\User\Domain\UserId;
 
 class CompanyCreatedEventSubscriber
 {
-    public function __construct(private UserUpdater $updater)
-    {
-    }
+    public function __construct(private UserUpdater $updater) {}
 
     public function __invoke(CompanyCreatedDomainEvent $event): void
     {

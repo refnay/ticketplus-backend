@@ -10,10 +10,8 @@ class SearchSeatQueryHandler
 
     public function __invoke(SearchSeatQuery $query): SeatsResponse
     {
-        $companyId = $this->authorization->companyId();
-
         return $this->searcher->__invoke(
-            $query->filters($companyId),
+            $query->filters($this->authorization->companyId()),
             $query->orderBy(),
             $query->order(),
             $query->limit(),

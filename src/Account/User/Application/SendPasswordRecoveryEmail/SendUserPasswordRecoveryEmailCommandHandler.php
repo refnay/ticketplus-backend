@@ -6,9 +6,7 @@ use App\Account\User\Domain\UserEmail;
 
 class SendUserPasswordRecoveryEmailCommandHandler
 {
-    public function __construct(private UserPasswordRecoveryEmailSender $sender)
-    {
-    }
+    public function __construct(private UserPasswordRecoveryEmailSender $sender) {}
 
     public function __invoke(SendUserPasswordRecoveryEmailCommand $command): void
     {

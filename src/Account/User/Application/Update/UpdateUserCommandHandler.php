@@ -14,9 +14,7 @@ use App\Account\User\Domain\UserName;
 
 class UpdateUserCommandHandler
 {
-    public function __construct(private AuthorizationContext $authorization, private UserUpdater $updater)
-    {
-    }
+    public function __construct(private AuthorizationContext $authorization, private UserUpdater $updater) {}
 
     public function __invoke(UpdateUserCommand $command): void
     {

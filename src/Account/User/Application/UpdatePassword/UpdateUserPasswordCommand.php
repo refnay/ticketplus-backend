@@ -6,9 +6,7 @@ use App\Shared\Application\Input\PayloadMapper;
 
 class UpdateUserPasswordCommand
 {
-    public function __construct(private string $oldPassword, private string $newPassword)
-    {
-    }
+    public function __construct(private string $oldPassword, private string $newPassword) {}
 
     public static function create(array $data): self
     {

@@ -18,9 +18,7 @@ use App\Account\User\Domain\UserId;
 
 class CreateCompanyCommandHandler
 {
-    public function __construct(private AuthorizationContext $authorization, private CompanyCreator $creator)
-    {
-    }
+    public function __construct(private AuthorizationContext $authorization, private CompanyCreator $creator) {}
 
     public function __invoke(CreateCompanyCommand $command): string
     {

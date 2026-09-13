@@ -19,8 +19,7 @@ final class UserResponse implements JsonSerializable
         private readonly array $document,
         private readonly ?string $mobile,
         private readonly ?string $profileImage,
-    ) {
-    }
+    ) {}
 
     public static function create(User $user): self
     {

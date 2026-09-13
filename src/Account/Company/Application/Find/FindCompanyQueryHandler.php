@@ -10,8 +10,7 @@ class FindCompanyQueryHandler
     public function __construct(
         private AuthorizationContext $authorization,
         private CompanyFinder $finder,
-    ) {
-    }
+    ) {}
 
     public function __invoke(FindCompanyQuery $query): CompanyResponse
     {

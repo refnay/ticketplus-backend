@@ -17,8 +17,7 @@ class UserProfileImageUploader
         private UserRepository $repository,
         private UserFinder $finder,
         private ImageUploader $uploader
-    ) {
-    }
+    ) {}
 
     public function __invoke(UserId $id, ?FileUpload $profileImage): void
     {

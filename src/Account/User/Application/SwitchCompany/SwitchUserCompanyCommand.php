@@ -6,9 +6,7 @@ use App\Shared\Application\Input\PayloadMapper;
 
 class SwitchUserCompanyCommand
 {
-    public function __construct(private string $company)
-    {
-    }
+    public function __construct(private string $company) {}
 
 
     public static function create(array $data): self

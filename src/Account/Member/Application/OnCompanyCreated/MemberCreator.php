@@ -10,9 +10,7 @@ use App\Account\User\Domain\UserId;
 
 class MemberCreator
 {
-    public function __construct(private MemberRepository $repository)
-    {
-    }
+    public function __construct(private MemberRepository $repository) {}
 
     public function __invoke(UserId $userId, CompanyId $companyId): void
     {

@@ -24,7 +24,7 @@ class SearchMemberCompanyQuery extends SearchQuery
             $payload->string('orderBy'),
             $payload->string('order'),
             $payload->nullableInt('limit'),
-            $payload->nullableInt('page') ,
+            $payload->nullableInt('page'),
         );
     }
 

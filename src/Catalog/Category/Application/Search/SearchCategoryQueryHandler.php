@@ -10,10 +10,8 @@ class SearchCategoryQueryHandler
 
     public function __invoke(SearchCategoryQuery $query): CategoriesResponse
     {
-        $companyId = $this->authorization->companyId();
-
         return $this->searcher->__invoke(
-            $query->filters($companyId),
+            $query->filters($this->authorization->companyId()),
             $query->orderBy(),
             $query->order(),
             $query->limit(),

@@ -10,10 +10,8 @@ class SearchEventQueryHandler
 
     public function __invoke(SearchEventQuery $query): EventsResponse
     {
-        $companyId = $this->authorization->companyId();
-
         return $this->searcher->__invoke(
-            $query->filters($companyId),
+            $query->filters($this->authorization->companyId()),
             $query->orderBy(),
             $query->order(),
             $query->limit(),
