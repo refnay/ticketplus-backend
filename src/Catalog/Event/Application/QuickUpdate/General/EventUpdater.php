@@ -8,7 +8,6 @@ use App\Catalog\Event\Domain\EventDescription;
 use App\Catalog\Event\Domain\EventId;
 use App\Catalog\Event\Domain\EventName;
 use App\Catalog\Event\Domain\EventRepository;
-use App\Catalog\Event\Domain\Exceptions\EventNotCreated;
 use App\Catalog\Event\Domain\Services\EventFinder;
 use App\Catalog\Shared\Domain\CompanyId;
 
