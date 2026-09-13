@@ -7,9 +7,7 @@ use Doctrine\ORM\EntityManagerInterface;
 
 final class TransactionManager implements TransactionService
 {
-    public function __construct(private EntityManagerInterface $entityManager)
-    {
-    }
+    public function __construct(private EntityManagerInterface $entityManager) {}
 
     public function begin(): void
     {
@@ -25,5 +23,10 @@ final class TransactionManager implements TransactionService
     public function rollback(): void
     {
         $this->entityManager->getConnection()->rollBack();
+    }
+
+    public function clear(): void
+    {
+        $this->entityManager->clear();
     }
 }

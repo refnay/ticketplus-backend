@@ -9,4 +9,6 @@ interface TransactionService
     public function commit(): void;
 
     public function rollback(): void;
+
+    public function clear(): void;
 }

@@ -50,6 +50,7 @@ class SeatBulkCreator
                 $seat = Seat::create($code, $zoneId);
 
                 $this->repository->save($seat);
+                $this->transaction->clear();
             }
             $this->transaction->commit();
         } catch (Throwable) {
