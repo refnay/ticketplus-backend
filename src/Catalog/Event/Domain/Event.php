@@ -222,7 +222,8 @@ class Event
             'label' => $this->name()->value(),
             'status' => $this->status()->value(),
             'logo' => $this->logo()->value(),
-            'fecha' => $this->firstDay()?->date()->asDMY(),
+            'date' => $this->firstDay()?->date()->asDMY(),
+            'currency' => $this->currency()->value(),
         ];
     }
 
