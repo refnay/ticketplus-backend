@@ -215,6 +215,17 @@ class Event
         return $this->companyId;
     }
 
+    public function toChooser(): array
+    {
+        return [
+            'code' => $this->id()->value(),
+            'label' => $this->name()->value(),
+            'status' => $this->status()->value(),
+            'logo' => $this->logo()->value(),
+            'fecha' => $this->firstDay()?->date()->asDMY(),
+        ];
+    }
+
     /** @return EventDay[] */
     public function days()
     {

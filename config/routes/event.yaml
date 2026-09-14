@@ -8,6 +8,11 @@ event-search:
     controller: App\Catalog\Event\Infrastructure\Controller\EventSearchController::search
     methods: GET
 
+event-choose:
+    path: /api/event/choose
+    controller: App\Catalog\Event\Infrastructure\Controller\EventChooseController::choose
+    methods: GET
+
 event-find:
     path: /api/event/{id}
     controller: App\Catalog\Event\Infrastructure\Controller\EventFindController::find
