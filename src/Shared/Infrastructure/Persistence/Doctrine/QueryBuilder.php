@@ -2,7 +2,7 @@
 
 namespace App\Shared\Infrastructure\Persistence\Doctrine;
 
-use App\Shared\Domain\Utils\IntegerHelper as Integer;
+use App\Shared\Domain\Utils\IntValue;
 use Doctrine\ORM\QueryBuilder as DoctrineQueryBuilder;
 
 class QueryBuilder
@@ -169,7 +169,7 @@ class QueryBuilder
         $fields = array_map('trim', explode(',', $orderBy));
 
         foreach ($fields as $index => $field) {
-            if (Integer::equals((int) $index, 0)) {
+            if (IntValue::equals((int) $index, 0)) {
                 $this->queryBuilder->orderBy("{$this->alias}.{$field}", $order);
             } else {
                 $this->queryBuilder->addOrderBy("{$this->alias}.{$field}", $order);

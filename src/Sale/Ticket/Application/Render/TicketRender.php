@@ -2,13 +2,12 @@
 
 namespace App\Sale\Ticket\Application\Render;
 
-use App\Sale\Order\Domain\OrderId;
 use App\Sale\Order\Domain\Services\OrderFinder;
 use App\Sale\Reference\User\Domain\UserId;
 use App\Sale\Ticket\Domain\Services\TicketFinder;
 use App\Sale\Ticket\Domain\TicketId;
 use App\Shared\Application\Port\Pdf\PdfGenerator;
-use App\Shared\Domain\Utils\StringHelper as StringValue;
+use App\Shared\Domain\Utils\StringValue;
 
 final readonly class TicketRender
 {
@@ -16,8 +15,7 @@ final readonly class TicketRender
         private TicketFinder $ticketFinder,
         private OrderFinder $orderFinder,
         private PdfGenerator $pdfGenerator,
-    ) {
-    }
+    ) {}
 
     public function __invoke(TicketId $id, UserId $userId): TicketRenderResponse
     {

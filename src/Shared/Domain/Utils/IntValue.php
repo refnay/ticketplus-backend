@@ -2,7 +2,7 @@
 
 namespace App\Shared\Domain\Utils;
 
-class IntegerHelper
+class IntValue
 {
     public static function equals(int $a, int $b): bool
     {
