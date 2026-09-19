@@ -4,6 +4,7 @@ namespace App\Sale\Ticket\Application\Validate;
 
 use App\Sale\Shared\Domain\CompanyId;
 use App\Sale\Ticket\Domain\Exceptions\TicketAlreadyValidated;
+use App\Sale\Ticket\Domain\Exceptions\TicketNotValidToday;
 use App\Sale\Ticket\Domain\Services\TicketByKeyFinder;
 use App\Sale\Ticket\Domain\TicketRepository;
 use App\Sale\Ticket\Domain\TicketValidatedBy;
@@ -21,6 +22,10 @@ final readonly class TicketValidator
 
         if (!$ticket->status()->isActive()) {
             throw new TicketAlreadyValidated();
+        }
+
+        if (!$ticket->information()->isToday()) {
+            throw new TicketNotValidToday();
         }
 
         $ticket->validate($userId);

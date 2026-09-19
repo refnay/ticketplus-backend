@@ -71,6 +71,15 @@ abstract class DateValueObject
         return $this->value < $other->value();
     }
 
+    public function isToday(): bool
+    {
+        if ($this->isNull()) {
+            return false;
+        }
+
+        return $this->value->format('Y-m-d') === (new DateTimeImmutable('now'))->format('Y-m-d');
+    }
+
     public function after(self $other): bool
     {
         $this->ensureNotNull();

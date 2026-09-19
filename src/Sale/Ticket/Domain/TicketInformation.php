@@ -2,6 +2,7 @@
 
 namespace App\Sale\Ticket\Domain;
 
+use DateTimeImmutable;
 use DateTimeInterface;
 
 class TicketInformation
@@ -46,6 +47,11 @@ class TicketInformation
     public function seatCode(): ?string
     {
         return $this->seatCode;
+    }
+
+    public function isToday(): bool
+    {
+        return $this->date->format('Y-m-d') === (new DateTimeImmutable('now'))->format('Y-m-d');
     }
 
     public function toArray(): array

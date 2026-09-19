@@ -2,17 +2,13 @@
 
 namespace App\Sale\Ticket\Application\Validate;
 
-use App\Shared\Application\Input\PayloadMapper;
-
 class ValidateTicketCommand
 {
     public function __construct(private string $key) {}
 
-    public static function create(array $data): self
+    public static function create(string $key): self
     {
-        $payload = PayloadMapper::fromData($data);
-
-        return new self($payload->string('key'));
+        return new self($key);
     }
 
     public function key(): string
