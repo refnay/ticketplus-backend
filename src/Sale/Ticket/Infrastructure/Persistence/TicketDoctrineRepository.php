@@ -4,6 +4,8 @@ namespace App\Sale\Ticket\Infrastructure\Persistence;
 
 use App\Sale\Order\Domain\OrderPaidAt;
 use App\Sale\Order\Domain\OrderStatusList;
+use App\Sale\Reference\Event\Domain\EventId;
+use App\Sale\Reference\EventDay\Domain\EventDayId;
 use App\Sale\Shared\Domain\CompanyId;
 use App\Sale\Ticket\Domain\Exceptions\TicketNotCreated;
 use App\Sale\Ticket\Domain\Exceptions\TicketNotDeleted;
@@ -13,6 +15,7 @@ use App\Sale\Ticket\Domain\TicketCode;
 use App\Sale\Ticket\Domain\TicketId;
 use App\Sale\Ticket\Domain\TicketQRCode;
 use App\Sale\Ticket\Domain\TicketRepository;
+use App\Sale\Ticket\Domain\TicketStatusList;
 use App\Sale\Reference\User\Domain\UserId;
 use App\Shared\Infrastructure\Persistence\Doctrine\NativeQueryBuilder;
 use App\Shared\Infrastructure\Persistence\Doctrine\QueryBuilder;
@@ -176,5 +179,38 @@ class TicketDoctrineRepository implements TicketRepository
             ->fetchAssociative();
 
         return (int) ($result['quantity'] ?? 0);
+    }
+
+    #[Override]
+    public function validationSummary(
+        CompanyId $companyId,
+        EventId $eventId,
+        EventDayId $dayId,
+    ): array {
+        $result = NativeQueryBuilder::from($this->entityManager->getConnection(), 'ticket', self::TICKET_PREFIX)
+            ->select(
+                sprintf(
+                    'COUNT(CASE WHEN t.status = %d THEN 1 END) AS validated',
+                    TicketStatusList::USED->value,
+                ),
+                sprintf(
+                    'COUNT(CASE WHEN t.status = %d THEN 1 END) AS pending',
+                    TicketStatusList::ACTIVE->value,
+                ),
+            )
+            ->innerJoin('zone', 'z', 'z.id = t.zone_id')
+            ->innerJoin('day', 'd', 'd.id = z.day_id', 'z')
+            ->innerJoin('event', 'e', 'e.id = d.event_id', 'd')
+            ->equals('company_id', $companyId->value(), 'e')
+            ->andWhere('e.id = :event')
+            ->setParameter('event', $eventId->value())
+            ->andWhere('d.id = :day')
+            ->setParameter('day', $dayId->value())
+            ->fetchAssociative();
+
+        return [
+            'validated' => (int) ($result['validated'] ?? 0),
+            'pending' => (int) ($result['pending'] ?? 0),
+        ];
     }
 }

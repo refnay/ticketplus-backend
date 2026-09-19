@@ -3,6 +3,8 @@
 namespace App\Sale\Ticket\Domain;
 
 use App\Sale\Order\Domain\OrderPaidAt;
+use App\Sale\Reference\Event\Domain\EventId;
+use App\Sale\Reference\EventDay\Domain\EventDayId;
 use App\Sale\Reference\User\Domain\UserId;
 use App\Sale\Shared\Domain\CompanyId;
 
@@ -29,4 +31,10 @@ interface TicketRepository
         OrderPaidAt $from,
         OrderPaidAt $to,
     ): int;
+
+    public function validationSummary(
+        CompanyId $companyId,
+        EventId $eventId,
+        EventDayId $dayId,
+    ): array;
 }
