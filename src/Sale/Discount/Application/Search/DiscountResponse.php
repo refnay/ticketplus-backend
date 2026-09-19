@@ -20,6 +20,7 @@ class DiscountResponse implements JsonSerializable
         readonly private float $value,
         readonly private string $eventId,
         readonly private string $eventName,
+        readonly private string $eventCurrency,
     ) {}
 
     public static function create(Discount $discount, Event $event): self
@@ -35,6 +36,7 @@ class DiscountResponse implements JsonSerializable
             $discount->value()->value(),
             $event->id(),
             $event->name(),
+            $event->currency(),
         );
     }
 
