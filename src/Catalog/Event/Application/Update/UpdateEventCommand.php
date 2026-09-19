@@ -36,7 +36,7 @@ class UpdateEventCommand
         $days->removeDuplicates();
 
         return new self(
-            $payload->string('id'),
+            $id,
             $payload->string('name'),
             $payload->nullableString('description'),
             $payload->nullableString('venue'),

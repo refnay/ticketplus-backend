@@ -13,12 +13,13 @@ use App\Catalog\Event\Domain\EventDaySaleStartsAt;
 use App\Catalog\Event\Domain\EventDayStartTime;
 use App\Catalog\Event\Domain\EventDayStatus;
 use App\Catalog\Event\Domain\Exceptions\EventDayNotFound;
+use App\Shared\Application\Support\ArrayBuilder;
 
 class EventSynchronizer
 {
     public function days(Event $event, array $days): void
     {
-        $processedDayIds = [];
+        $processedDayIds = ArrayBuilder::generate();
 
         /** @var EventDayCommand $dayCommand */
         foreach ($days as $dayCommand) {
@@ -55,11 +56,11 @@ class EventSynchronizer
                 $day->changeStatus($status);
             }
 
-            $processedDayIds[] = $day->id()->value();
+            $processedDayIds->add($day->id()->value());
         }
 
         foreach ($event->days() as $day) {
-            if (!in_array($day->id()->value(), $processedDayIds, true)) {
+            if (!in_array($day->id()->value(), $processedDayIds->items(), true)) {
                 $event->removeDayById($day->id());
             }
         }

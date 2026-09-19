@@ -13,6 +13,12 @@ class ChooseCategoriesQueryHandler
 
     public function __invoke(ChooseCategoriesQuery $query): CategoryChoicesResponse
     {
-        return $this->chooser->__invoke($this->authorization->companyId());
+        return $this->chooser->__invoke(
+            $query->filters($this->authorization->companyId()),
+            $query->orderBy(),
+            $query->order(),
+            $query->limit(),
+            $query->offset(),
+        );
     }
 }

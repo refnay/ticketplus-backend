@@ -9,14 +9,19 @@ class EventChooser
 {
     public function __construct(private EventRepository $repository) {}
 
-    public function __invoke(string $companyId): EventChoicesResponse
-    {
+    public function __invoke(
+        array $filters,
+        string $orderBy,
+        string $order,
+        ?int $limit,
+        ?int $offset,
+    ): EventChoicesResponse {
         $events = $this->repository->searchByFilters(
-            ['company' => $companyId],
-            'name',
-            'ASC',
-            null,
-            null,
+            $filters,
+            $orderBy,
+            $order,
+            $limit,
+            $offset,
         );
 
         return new EventChoicesResponse(

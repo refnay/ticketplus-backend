@@ -9,14 +9,19 @@ class CategoryChooser
 {
     public function __construct(private CategoryRepository $repository) {}
 
-    public function __invoke(string $companyId): CategoryChoicesResponse
-    {
+    public function __invoke(
+        array $filters,
+        string $orderBy,
+        string $order,
+        ?int $limit,
+        ?int $offset,
+    ): CategoryChoicesResponse {
         $categories = $this->repository->searchByFilters(
-            ['company' => $companyId],
-            'name',
-            'ASC',
-            null,
-            null,
+            $filters,
+            $orderBy,
+            $order,
+            $limit,
+            $offset,
         );
 
         return new CategoryChoicesResponse(

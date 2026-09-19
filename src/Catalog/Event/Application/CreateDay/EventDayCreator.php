@@ -32,6 +32,6 @@ class EventDayCreator
 
         $this->repository->update($event);
 
-        return $day->id()->toUuid()->toRfc4122();
+        return $day->id()->value();
     }
 }

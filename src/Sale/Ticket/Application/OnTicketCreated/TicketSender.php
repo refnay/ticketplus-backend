@@ -2,7 +2,6 @@
 
 namespace App\Sale\Ticket\Application\OnTicketCreated;
 
-use App\Sale\Order\Domain\OrderId;
 use App\Sale\Reference\User\Domain\Services\UserFinder;
 use App\Sale\Reference\User\Domain\UserId;
 use App\Sale\Ticket\Application\Render\TicketRender;
@@ -20,7 +19,7 @@ final readonly class TicketSender
         private Mailer $mailer,
     ) {}
 
-    public function __invoke(array $ticketIds, OrderId $orderId, UserId $userId): void
+    public function __invoke(array $ticketIds, UserId $userId): void
     {
         if (empty($ticketIds)) {
             return;

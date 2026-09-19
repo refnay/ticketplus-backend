@@ -15,23 +15,24 @@ use App\Catalog\Event\Domain\EventRepository;
 use App\Catalog\Event\Domain\Exceptions\EventDayNotFound;
 use App\Catalog\Event\Domain\Services\EventFinder;
 use App\Catalog\Shared\Domain\CompanyId;
+use App\Shared\Application\Support\ArrayBuilder;
 
 class EventUpdater
 {
     public function __construct(private EventRepository $repository, private EventFinder $eventFinder) {}
 
-    /** @param EventDayCommand[] $days */
     public function __invoke(EventId $id, CompanyId $companyId, array $days): void
     {
         $event = $this->eventFinder->__invoke($id, $companyId);
-        $changes = [];
+        $changes = ArrayBuilder::generate();
+
         foreach ($days as $command) {
             $day = $event->findDayById(EventDayId::fromString($command->id()));
             if ($day === null) {
                 throw new EventDayNotFound();
             }
 
-            $changes[] = [
+            $changes->add([
                 $day,
                 EventDayDate::fromString($command->date()),
                 EventDayStartTime::fromString($command->startTime()),
@@ -39,10 +40,10 @@ class EventUpdater
                 EventDaySaleStartsAt::fromString($command->saleStartAt()),
                 EventDayDescription::fromString($command->description()),
                 EventDayStatus::fromInt($command->status()),
-            ];
+            ]);
         }
 
-        foreach ($changes as [$day, $date, $startTime, $endTime, $saleStartAt, $description, $status]) {
+        foreach ($changes->items() as [$day, $date, $startTime, $endTime, $saleStartAt, $description, $status]) {
             $day->changeDate($date);
             $day->changeStartTime($startTime);
             $day->changeEndTime($endTime);

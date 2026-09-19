@@ -46,7 +46,7 @@ class TicketCreator
             }
             $this->transaction->commit();
 
-            $this->eventBus->publish(new TicketCreatedDomainEvent($tickets->items(), $orderId, $userId));
+            $this->eventBus->publish(new TicketCreatedDomainEvent($tickets->items(), $userId));
         } catch (Throwable) {
             $this->transaction->rollback();
         }
