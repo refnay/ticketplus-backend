@@ -86,8 +86,12 @@ class MemberDoctrineRepository implements MemberRepository
             $this->entityManager->getRepository($this->mapper->entityClass())->createQueryBuilder(self::MEMBER_PREFIX)
         );
 
-        $queryBuilder->equals('member', $filters['user'] ?? null)
+        $queryBuilder->innerJoin('member', 'u')
+            ->likeMultiple(['name', 'lastName', 'email'], $filters['value'] ?? null, true, 'u')
+            ->equals('member', $filters['user'] ?? null)
             ->equals('company', $filters['company'] ?? null)
+            ->equals('role', $filters['role'] ?? null)
+            ->equals('status', $filters['status'] ?? null)
             ->applyOrder($orderBy, $order)
             ->paginate($limit, $offset);
 
@@ -103,8 +107,12 @@ class MemberDoctrineRepository implements MemberRepository
             $this->entityManager->getRepository($this->mapper->entityClass())->createQueryBuilder(self::MEMBER_PREFIX)
         );
 
-        $queryBuilder->equals('member', $filters['user'] ?? null)
-            ->equals('company', $filters['company'] ?? null);
+        $queryBuilder->innerJoin('member', 'u')
+            ->likeMultiple(['name', 'lastName', 'email'], $filters['value'] ?? null, true, 'u')
+            ->equals('member', $filters['user'] ?? null)
+            ->equals('company', $filters['company'] ?? null)
+            ->equals('role', $filters['role'] ?? null)
+            ->equals('status', $filters['status'] ?? null);
 
         return (int) $queryBuilder->queryBuilder()
             ->select('COUNT(' . self::MEMBER_PREFIX . '.id)')

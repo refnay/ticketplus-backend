@@ -8,6 +8,9 @@ use App\Shared\Application\Query\SearchQuery;
 class SearchMemberUserQuery extends SearchQuery
 {
     public function __construct(
+        private ?string $value,
+        private ?int $role,
+        private ?int $status,
         string $orderBy,
         string $order,
         ?int $limit,
@@ -21,6 +24,9 @@ class SearchMemberUserQuery extends SearchQuery
         $payload = PayloadMapper::fromData($data);
 
         return new self(
+            $payload->nullableString('value'),
+            $payload->nullableInt('role'),
+            $payload->nullableInt('status'),
             $payload->nullableString('orderBy') ?? 'createdAt',
             $payload->nullableString('order') ?? 'DESC',
             $payload->nullableInt('limit'),
