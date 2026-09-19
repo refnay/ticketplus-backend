@@ -9,7 +9,9 @@ use App\Sale\Ticket\Domain\Exceptions\TicketNotCreated;
 use App\Sale\Ticket\Domain\Exceptions\TicketNotDeleted;
 use App\Sale\Ticket\Domain\Exceptions\TicketNotUpdated;
 use App\Sale\Ticket\Domain\Ticket;
+use App\Sale\Ticket\Domain\TicketCode;
 use App\Sale\Ticket\Domain\TicketId;
+use App\Sale\Ticket\Domain\TicketQRCode;
 use App\Sale\Ticket\Domain\TicketRepository;
 use App\Sale\Reference\User\Domain\UserId;
 use App\Shared\Infrastructure\Persistence\Doctrine\NativeQueryBuilder;
@@ -79,13 +81,56 @@ class TicketDoctrineRepository implements TicketRepository
     }
 
     #[Override]
+    public function findByQrCode(TicketQRCode $qrCode, CompanyId $companyId): ?Ticket
+    {
+        $queryBuilder = QueryBuilder::from(
+            $this->entityManager->getRepository($this->mapper->entityClass())->createQueryBuilder(self::TICKET_PREFIX)
+        );
+
+        $queryBuilder->innerJoin('purchase', 'o')
+            ->innerJoin('event', 'e', 'o')
+            ->equals('QRCode', $qrCode->value())
+            ->equals('company', $companyId->value(), 'e');
+
+        $entity = $queryBuilder->queryBuilder()
+            ->getQuery()
+            ->getOneOrNullResult();
+
+        return !is_null($entity) ? $this->mapper->newDomain($entity) : null;
+    }
+
+    #[Override]
+    public function findByCode(TicketCode $code, CompanyId $companyId): ?Ticket
+    {
+        $queryBuilder = QueryBuilder::from(
+            $this->entityManager->getRepository($this->mapper->entityClass())->createQueryBuilder(self::TICKET_PREFIX)
+        );
+
+        $queryBuilder->innerJoin('purchase', 'o')
+            ->innerJoin('event', 'e', 'o')
+            ->equals('code', $code->value())
+            ->equals('company', $companyId->value(), 'e');
+
+        $entity = $queryBuilder->queryBuilder()
+            ->getQuery()
+            ->getOneOrNullResult();
+
+        return !is_null($entity) ? $this->mapper->newDomain($entity) : null;
+    }
+
+    #[Override]
     public function searchByFilters(array $filters, string $orderBy, string $order, ?int $limit, ?int $offset): array
     {
         $queryBuilder = QueryBuilder::from(
             $this->entityManager->getRepository($this->mapper->entityClass())->createQueryBuilder(self::TICKET_PREFIX)
         );
 
-        $queryBuilder->equals('purchase', $filters['order'] ?? null)
+        $queryBuilder->innerJoin('purchase', 'o')
+            ->innerJoin('event', 'e', 'o')
+            ->equals('purchase', $filters['order'] ?? null)
+            ->equals('id', $filters['event'] ?? null, 'e')
+            ->equals('company', $filters['company'] ?? null, 'e')
+            ->equals('status', $filters['status'] ?? null)
             ->applyOrder($orderBy, $order)
             ->paginate($limit, $offset);
 
@@ -101,7 +146,12 @@ class TicketDoctrineRepository implements TicketRepository
             $this->entityManager->getRepository($this->mapper->entityClass())->createQueryBuilder(self::TICKET_PREFIX)
         );
 
-        $queryBuilder->equals('purchase', $filters['order'] ?? null);
+        $queryBuilder->innerJoin('purchase', 'o')
+            ->innerJoin('event', 'e', 'o')
+            ->equals('purchase', $filters['order'] ?? null)
+            ->equals('id', $filters['event'] ?? null, 'e')
+            ->equals('company', $filters['company'] ?? null, 'e')
+            ->equals('status', $filters['status'] ?? null);
 
         return (int) $queryBuilder->queryBuilder()
             ->select('COUNT(' . self::TICKET_PREFIX . '.id)')

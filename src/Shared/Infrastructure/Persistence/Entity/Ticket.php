@@ -39,6 +39,12 @@ class Ticket
     #[ORM\Column]
     private ?int $status = null;
 
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    private ?\DateTimeImmutable $validatedAt = null;
+
+    #[ORM\Column(type: 'uuid', nullable: true)]
+    private ?Uuid $validatedBy = null;
+
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
@@ -160,6 +166,30 @@ class Ticket
     public function setStatus(int $status): static
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    public function getValidatedAt(): ?\DateTimeImmutable
+    {
+        return $this->validatedAt;
+    }
+
+    public function setValidatedAt(?\DateTimeImmutable $validatedAt): static
+    {
+        $this->validatedAt = $validatedAt;
+
+        return $this;
+    }
+
+    public function getValidatedBy(): ?Uuid
+    {
+        return $this->validatedBy;
+    }
+
+    public function setValidatedBy(?Uuid $validatedBy): static
+    {
+        $this->validatedBy = $validatedBy;
 
         return $this;
     }

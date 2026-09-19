@@ -16,4 +16,14 @@ class TicketStatus extends IntValueObject
     {
         return new self(TicketStatusList::ACTIVE->value);
     }
+
+    public static function used(): self
+    {
+        return new self(TicketStatusList::USED->value);
+    }
+
+    public function isActive(): bool
+    {
+        return $this->value === TicketStatusList::ACTIVE->value;
+    }
 }

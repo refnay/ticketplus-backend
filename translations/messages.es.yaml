@@ -92,6 +92,7 @@ ticket.ticket_not_found: 'No se encontró la entrada.'
 ticket.ticket_not_created: 'No se pudo crear la entrada.'
 ticket.ticket_not_updated: 'No se pudo actualizar la entrada.'
 ticket.ticket_not_deleted: 'No se pudo eliminar la entrada.'
+ticket.ticket_already_validated: 'El acceso ya fue validado.'
 
 review.review_not_found: 'No se encontró la reseña.'
 review.review_not_created: 'No se pudo crear la reseña.'

@@ -7,3 +7,18 @@ ticket-sold-summary-report:
     path: /api/ticket/report/sold-summary
     controller: App\Sale\Ticket\Infrastructure\Controller\TicketSoldSummaryReportController::report
     methods: GET
+
+ticket-find:
+    path: /api/ticket/find
+    controller: App\Sale\Ticket\Infrastructure\Controller\TicketFindController::find
+    methods: GET
+
+ticket-validate:
+    path: /api/ticket/validate
+    controller: App\Sale\Ticket\Infrastructure\Controller\TicketValidateController::validate
+    methods: POST
+
+ticket-search:
+    path: /api/ticket
+    controller: App\Sale\Ticket\Infrastructure\Controller\TicketSearchController::search
+    methods: GET

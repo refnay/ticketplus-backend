@@ -11,9 +11,7 @@ use DateTime;
 /** @phpstan-consistent-constructor */
 abstract class DateTimeValueObject
 {
-    public function __construct(protected ?DateTimeImmutable $value)
-    {
-    }
+    public function __construct(protected ?DateTimeImmutable $value) {}
 
     public static function now(): static
     {
@@ -133,6 +131,11 @@ abstract class DateTimeValueObject
     public function asDMYHM(): string
     {
         return $this->isNull() ? '' : $this->value->format('d/m/Y H:i');
+    }
+
+    public function asDMYHMS(): string
+    {
+        return $this->isNull() ? '' : $this->value->format('d/m/Y H:i:s');
     }
 
     public function toDateTime(): DateTime

@@ -12,6 +12,8 @@ use App\Sale\Ticket\Domain\TicketPrice;
 use App\Sale\Ticket\Domain\TicketQRCode;
 use App\Sale\Ticket\Domain\TicketInformation;
 use App\Sale\Ticket\Domain\TicketStatus;
+use App\Sale\Ticket\Domain\TicketValidatedAt;
+use App\Sale\Ticket\Domain\TicketValidatedBy;
 use App\Shared\Infrastructure\Persistence\Entity\Ticket as TicketEntity;
 use DateTime;
 
@@ -34,6 +36,8 @@ class TicketMapper
         $entity->setSeatCode($ticket->information()->seatCode());
         $entity->setPrice($ticket->price()->value());
         $entity->setStatus($ticket->status()->value());
+        $entity->setValidatedAt($ticket->validatedAt()->value());
+        $entity->setValidatedBy($ticket->validatedBy()->isNull() ? null : $ticket->validatedBy()->toUuid());
         $entity->setPurchase($this->fetcher->order($ticket->orderId()));
         $entity->setZone($this->fetcher->zone($ticket->zoneId()));
 
@@ -60,6 +64,10 @@ class TicketMapper
             TicketStatus::fromInt($entity->getStatus()),
             OrderId::fromString($entity->getPurchase()->getId()),
             ZoneId::fromString($entity->getZone()->getId()),
+            TicketValidatedAt::fromDateTime($entity->getValidatedAt()),
+            !is_null($entity->getValidatedBy())
+                ? TicketValidatedBy::fromString($entity->getValidatedBy()->toRfc4122())
+                : TicketValidatedBy::fromNull(),
         );
 
         $seatEntity = $entity->getSeat();
@@ -73,6 +81,8 @@ class TicketMapper
     public function update(TicketEntity $entity, Ticket $ticket): void
     {
         $entity->setStatus($ticket->status()->value());
+        $entity->setValidatedAt($ticket->validatedAt()->value());
+        $entity->setValidatedBy($ticket->validatedBy()->isNull() ? null : $ticket->validatedBy()->toUuid());
     }
 
     public function entityClass(): string

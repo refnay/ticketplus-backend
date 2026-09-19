@@ -41,4 +41,14 @@ class User
     {
         return $this->email;
     }
+
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'lastName' => $this->lastName,
+            'email' => $this->email,
+        ];
+    }
 }

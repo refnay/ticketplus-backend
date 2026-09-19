@@ -16,6 +16,10 @@ interface TicketRepository
 
     public function findById(TicketId $id, UserId $userId): ?Ticket;
 
+    public function findByQrCode(TicketQRCode $qrCode, CompanyId $companyId): ?Ticket;
+
+    public function findByCode(TicketCode $code, CompanyId $companyId): ?Ticket;
+
     public function searchByFilters(array $filters, string $orderBy, string $order, ?int $limit, ?int $offset): array;
 
     public function countByFilters(array $filters): int;

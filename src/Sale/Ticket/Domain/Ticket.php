@@ -17,6 +17,8 @@ class Ticket
     private ZoneId $zoneId;
     private OrderId $orderId;
     private ?SeatId $seatId = null;
+    private ?TicketValidatedAt $validatedAt = null;
+    private ?TicketValidatedBy $validatedBy = null;
 
     public function __construct(
         TicketId $id,
@@ -27,6 +29,8 @@ class Ticket
         TicketStatus $status,
         OrderId $orderId,
         ZoneId $zoneId,
+        ?TicketValidatedAt $validatedAt = null,
+        ?TicketValidatedBy $validatedBy = null,
     ) {
         $this->id = $id;
         $this->information = $information;
@@ -36,6 +40,8 @@ class Ticket
         $this->status = $status;
         $this->orderId = $orderId;
         $this->zoneId = $zoneId;
+        $this->validatedAt = $validatedAt;
+        $this->validatedBy = $validatedBy;
     }
 
     public static function create(
@@ -101,6 +107,16 @@ class Ticket
         return $this->seatId;
     }
 
+    public function validatedAt(): TicketValidatedAt
+    {
+        return $this->validatedAt ?? TicketValidatedAt::fromNull();
+    }
+
+    public function validatedBy(): TicketValidatedBy
+    {
+        return $this->validatedBy ?? TicketValidatedBy::fromNull();
+    }
+
     public function changePrice(TicketPrice $price): void
     {
         $this->price = $price;
@@ -126,6 +142,13 @@ class Ticket
         $this->seatId = $seatId;
     }
 
+    public function validate(TicketValidatedBy $validatedBy): void
+    {
+        $this->status = TicketStatus::used();
+        $this->validatedAt = TicketValidatedAt::now();
+        $this->validatedBy = $validatedBy;
+    }
+
     public function toArray(): array
     {
         return [
@@ -133,6 +156,8 @@ class Ticket
             'code' => $this->code()->value(),
             'price' => $this->price()->value(),
             'qrCode' => $this->qrCode()->value(),
+            'validatedAt' => $this->validatedAt()->asDMYHMS(),
+            'validatedBy' => $this->validatedBy()->value(),
         ];
     }
 
