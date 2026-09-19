@@ -3,6 +3,11 @@ member-company-search:
     controller: App\Account\Member\Infrastructure\Controller\MemberCompanySearchController::search
     methods: GET
 
+member-user-search:
+    path: /api/member/user
+    controller: App\Account\Member\Infrastructure\Controller\MemberUserSearchController::search
+    methods: GET
+
 member-find:
     path: /api/member
     controller: App\Account\Member\Infrastructure\Controller\MemberFindController::find
