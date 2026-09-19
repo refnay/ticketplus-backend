@@ -12,6 +12,7 @@ use App\Sale\Ticket\Domain\Ticket;
 use App\Sale\Ticket\Domain\TicketId;
 use App\Sale\Ticket\Domain\TicketRepository;
 use App\Sale\Reference\User\Domain\UserId;
+use App\Shared\Infrastructure\Persistence\Doctrine\NativeQueryBuilder;
 use App\Shared\Infrastructure\Persistence\Doctrine\QueryBuilder;
 use Doctrine\ORM\EntityManagerInterface;
 use Override;
@@ -21,9 +22,7 @@ class TicketDoctrineRepository implements TicketRepository
 {
     private const string TICKET_PREFIX = 't';
 
-    public function __construct(private EntityManagerInterface $entityManager, private TicketMapper $mapper)
-    {
-    }
+    public function __construct(private EntityManagerInterface $entityManager, private TicketMapper $mapper) {}
 
     #[Override]
     public function save(Ticket $ticket): void
@@ -64,15 +63,15 @@ class TicketDoctrineRepository implements TicketRepository
     #[Override]
     public function findById(TicketId $id, UserId $userId): ?Ticket
     {
-        $query = $this->entityManager
-            ->getRepository($this->mapper->entityClass())
-            ->createQueryBuilder(self::TICKET_PREFIX);
-        $entity = $query
-            ->innerJoin(self::TICKET_PREFIX . '.purchase', 'o')
-            ->andWhere(self::TICKET_PREFIX . '.id = :id')
-            ->andWhere('o.attendee = :userId')
-            ->setParameter('id', $id->value())
-            ->setParameter('userId', $userId->value())
+        $queryBuilder = QueryBuilder::from(
+            $this->entityManager->getRepository($this->mapper->entityClass())->createQueryBuilder(self::TICKET_PREFIX)
+        );
+
+        $queryBuilder->innerJoin('purchase', 'o')
+            ->equals('id', $id->value())
+            ->equals('attendee', $userId->value(), 'o');
+
+        $entity = $queryBuilder->queryBuilder()
             ->getQuery()
             ->getOneOrNullResult();
 
@@ -116,24 +115,16 @@ class TicketDoctrineRepository implements TicketRepository
         OrderPaidAt $from,
         OrderPaidAt $to,
     ): int {
-        $sql = sprintf(
-            "SELECT COUNT(t.id) AS quantity
-            FROM ticket t
-            INNER JOIN purchase o ON o.id = t.purchase_id
-            INNER JOIN event e ON e.id = o.event_id
-            WHERE e.company_id = :companyId
-              AND o.status = %d
-              AND o.paid_at >= :from
-              AND o.paid_at < :to",
-            OrderStatusList::PAID->value,
-        );
+        $result = NativeQueryBuilder::from($this->entityManager->getConnection(), 'ticket', self::TICKET_PREFIX)
+            ->select('COUNT(t.id) AS quantity')
+            ->innerJoin('purchase', 'o', 'o.id = t.purchase_id')
+            ->innerJoin('event', 'e', 'e.id = o.event_id', 'o')
+            ->equals('company_id', $companyId->value(), 'e')
+            ->equals('status', OrderStatusList::PAID->value, 'o')
+            ->greaterOrEqual('paid_at', $from->__toString(), 'o', 'from')
+            ->lessThan('paid_at', $to->__toString(), 'o', 'to')
+            ->fetchAssociative();
 
-        $result = $this->entityManager->getConnection()->executeQuery($sql, [
-            'companyId' => $companyId->value(),
-            'from' => $from->__toString(),
-            'to' => $to->__toString(),
-        ])->fetchAssociative();
-
-        return is_array($result) && isset($result['quantity']) ? (int) $result['quantity'] : 0;
+        return (int) ($result['quantity'] ?? 0);
     }
 }

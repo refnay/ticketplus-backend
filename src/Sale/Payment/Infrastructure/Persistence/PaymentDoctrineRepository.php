@@ -21,9 +21,7 @@ class PaymentDoctrineRepository implements PaymentRepository
 {
     private const string PAYMENT_PREFIX = 'p';
 
-    public function __construct(private EntityManagerInterface $entityManager, private PaymentMapper $mapper)
-    {
-    }
+    public function __construct(private EntityManagerInterface $entityManager, private PaymentMapper $mapper) {}
 
     #[Override]
     public function save(Payment $payment): void
@@ -74,15 +72,15 @@ class PaymentDoctrineRepository implements PaymentRepository
     #[Override]
     public function findById(PaymentId $id, UserId $userId): ?Payment
     {
-        $query = $this->entityManager
-            ->getRepository($this->mapper->entityClass())
-            ->createQueryBuilder(self::PAYMENT_PREFIX);
-        $entity = $query
-            ->innerJoin(self::PAYMENT_PREFIX . '.purchase', 'o')
-            ->andWhere(self::PAYMENT_PREFIX . '.id = :id')
-            ->andWhere('o.attendee = :userId')
-            ->setParameter('id', $id->value())
-            ->setParameter('userId', $userId->value())
+        $queryBuilder = QueryBuilder::from(
+            $this->entityManager->getRepository($this->mapper->entityClass())->createQueryBuilder(self::PAYMENT_PREFIX)
+        );
+
+        $queryBuilder->innerJoin('purchase', 'o')
+            ->equals('id', $id->value())
+            ->equals('attendee', $userId->value(), 'o');
+
+        $entity = $queryBuilder->queryBuilder()
             ->getQuery()
             ->getOneOrNullResult();
 

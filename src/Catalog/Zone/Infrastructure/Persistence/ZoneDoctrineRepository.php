@@ -2,7 +2,6 @@
 
 namespace App\Catalog\Zone\Infrastructure\Persistence;
 
-use App\Catalog\Event\Domain\EventDayId;
 use App\Catalog\Event\Domain\EventStatusList;
 use App\Catalog\Shared\Domain\CompanyId;
 use App\Catalog\Zone\Domain\Exceptions\ZoneNotCreated;
@@ -11,6 +10,7 @@ use App\Catalog\Zone\Domain\Exceptions\ZoneNotUpdated;
 use App\Catalog\Zone\Domain\Zone;
 use App\Catalog\Zone\Domain\ZoneId;
 use App\Catalog\Zone\Domain\ZoneRepository;
+use App\Shared\Infrastructure\Persistence\Doctrine\NativeQueryBuilder;
 use App\Shared\Infrastructure\Persistence\Doctrine\QueryBuilder;
 use Doctrine\ORM\EntityManagerInterface;
 use Override;
@@ -20,9 +20,7 @@ class ZoneDoctrineRepository implements ZoneRepository
 {
     private const string ZONE_PREFIX = 'z';
 
-    public function __construct(private EntityManagerInterface $entityManager, private ZoneMapper $mapper)
-    {
-    }
+    public function __construct(private EntityManagerInterface $entityManager, private ZoneMapper $mapper) {}
 
     #[Override]
     public function save(Zone $zone): void
@@ -73,16 +71,16 @@ class ZoneDoctrineRepository implements ZoneRepository
     #[Override]
     public function findById(ZoneId $id, CompanyId $companyId): ?Zone
     {
-        $query = $this->entityManager
-            ->getRepository($this->mapper->entityClass())
-            ->createQueryBuilder(self::ZONE_PREFIX);
-        $entity = $query
-            ->innerJoin(self::ZONE_PREFIX . '.day', 'd')
-            ->innerJoin('d.event', 'e')
-            ->andWhere(self::ZONE_PREFIX . '.id = :id')
-            ->andWhere('e.company = :companyId')
-            ->setParameter('id', $id->value())
-            ->setParameter('companyId', $companyId->value())
+        $queryBuilder = QueryBuilder::from(
+            $this->entityManager->getRepository($this->mapper->entityClass())->createQueryBuilder(self::ZONE_PREFIX)
+        );
+
+        $queryBuilder->innerJoin('day', 'd')
+            ->innerJoin('event', 'e', 'd')
+            ->equals('id', $id->value())
+            ->equals('company', $companyId->value(), 'e');
+
+        $entity = $queryBuilder->queryBuilder()
             ->getQuery()
             ->getOneOrNullResult();
 
@@ -92,16 +90,16 @@ class ZoneDoctrineRepository implements ZoneRepository
     #[Override]
     public function findPublishedById(ZoneId $id): ?Zone
     {
-        $query = $this->entityManager
-            ->getRepository($this->mapper->entityClass())
-            ->createQueryBuilder(self::ZONE_PREFIX);
-        $entity = $query
-            ->innerJoin(self::ZONE_PREFIX . '.day', 'd')
-            ->innerJoin('d.event', 'e')
-            ->andWhere(self::ZONE_PREFIX . '.id = :id')
-            ->andWhere('e.status = :status')
-            ->setParameter('id', $id->value())
-            ->setParameter('status', EventStatusList::PUBLISHED->value)
+        $queryBuilder = QueryBuilder::from(
+            $this->entityManager->getRepository($this->mapper->entityClass())->createQueryBuilder(self::ZONE_PREFIX)
+        );
+
+        $queryBuilder->innerJoin('day', 'd')
+            ->innerJoin('event', 'e', 'd')
+            ->equals('id', $id->value())
+            ->equals('status', EventStatusList::PUBLISHED->value, 'e');
+
+        $entity = $queryBuilder->queryBuilder()
             ->getQuery()
             ->getOneOrNullResult();
 
@@ -120,15 +118,13 @@ class ZoneDoctrineRepository implements ZoneRepository
             ->likeMultiple(['name'], $filters['name'] ?? null, true);
 
         if (isset($filters['company'])) {
-            $queryBuilder->queryBuilder()
-                ->innerJoin(self::ZONE_PREFIX . '.day', 'company_day')
-                ->innerJoin('company_day.event', 'company_event')
-                ->andWhere('company_event.company = :company')
-                ->setParameter('company', $filters['company']);
+            $queryBuilder->innerJoin('day', 'company_day')
+                ->innerJoin('event', 'company_event', 'company_day')
+                ->equals('company', $filters['company'], 'company_event');
         }
 
         if (($filters['availableOnly'] ?? false) === true) {
-            $queryBuilder->queryBuilder()->andWhere(
+            $queryBuilder->andWhere(
                 sprintf(
                     '%s.totalQuantity - %s.soldQuantity - %s.reservedQuantity > 0',
                     self::ZONE_PREFIX,
@@ -158,15 +154,13 @@ class ZoneDoctrineRepository implements ZoneRepository
             ->likeMultiple(['name'], $filters['name'] ?? null, true);
 
         if (isset($filters['company'])) {
-            $queryBuilder->queryBuilder()
-                ->innerJoin(self::ZONE_PREFIX . '.day', 'company_day')
-                ->innerJoin('company_day.event', 'company_event')
-                ->andWhere('company_event.company = :company')
-                ->setParameter('company', $filters['company']);
+            $queryBuilder->innerJoin('day', 'company_day')
+                ->innerJoin('event', 'company_event', 'company_day')
+                ->equals('company', $filters['company'], 'company_event');
         }
 
         if (($filters['availableOnly'] ?? false) === true) {
-            $queryBuilder->queryBuilder()->andWhere(
+            $queryBuilder->andWhere(
                 sprintf(
                     '%s.totalQuantity - %s.soldQuantity - %s.reservedQuantity > 0',
                     self::ZONE_PREFIX,
@@ -185,23 +179,21 @@ class ZoneDoctrineRepository implements ZoneRepository
     #[Override]
     public function occupancySummary(CompanyId $companyId): array
     {
-        $sql = "SELECT
-                COALESCE(SUM(z.total_quantity), 0) AS total,
-                COALESCE(SUM(z.sold_quantity), 0) AS sold,
-                COALESCE(SUM(z.reserved_quantity), 0) AS reserved
-            FROM zone z
-            INNER JOIN day d ON d.id = z.day_id
-            INNER JOIN event e ON e.id = d.event_id
-            WHERE e.company_id = :companyId";
-
-        $result = $this->entityManager->getConnection()->executeQuery($sql, [
-            'companyId' => $companyId->value(),
-        ])->fetchAssociative();
+        $result = NativeQueryBuilder::from($this->entityManager->getConnection(), 'zone', 'z')
+            ->select(
+                'COALESCE(SUM(z.total_quantity), 0) AS total',
+                'COALESCE(SUM(z.sold_quantity), 0) AS sold',
+                'COALESCE(SUM(z.reserved_quantity), 0) AS reserved',
+            )
+            ->innerJoin('day', 'd', 'd.id = z.day_id')
+            ->innerJoin('event', 'e', 'e.id = d.event_id', 'd')
+            ->equals('company_id', $companyId->value(), 'e')
+            ->fetchAssociative();
 
         return [
-            'total' => is_array($result) && isset($result['total']) ? (int) $result['total'] : 0,
-            'sold' => is_array($result) && isset($result['sold']) ? (int) $result['sold'] : 0,
-            'reserved' => is_array($result) && isset($result['reserved']) ? (int) $result['reserved'] : 0,
+            'total' => (int) ($result['total'] ?? 0),
+            'sold' => (int) ($result['sold'] ?? 0),
+            'reserved' => (int) ($result['reserved'] ?? 0),
         ];
     }
 }

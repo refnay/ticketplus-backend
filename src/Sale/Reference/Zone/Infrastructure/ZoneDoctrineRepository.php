@@ -5,33 +5,29 @@ namespace App\Sale\Reference\Zone\Infrastructure;
 use App\Sale\Reference\Zone\Domain\Zone;
 use App\Sale\Reference\Zone\Domain\ZoneId;
 use App\Sale\Reference\Zone\Domain\ZoneRepository;
+use App\Shared\Infrastructure\Persistence\Doctrine\NativeQueryBuilder;
 use Doctrine\ORM\EntityManagerInterface;
 use Override;
 
 class ZoneDoctrineRepository implements ZoneRepository
 {
-    public function __construct(private EntityManagerInterface $entityManager)
-    {
-    }
+    public function __construct(private EntityManagerInterface $entityManager) {}
 
     #[Override]
     public function findById(ZoneId $id): ?Zone
     {
-        $sql = "SELECT
-                z.name,
-                z.price,
-                (z.total_quantity - z.sold_quantity - z.reserved_quantity) AS quantity,
-                z.numbered_seating,
-                z.day_id
-            FROM zone z
-            WHERE z.id = :id";
-
-        $result = $this->entityManager
-            ->getConnection()
-            ->executeQuery($sql, ['id' => $id->value()])
+        $result = NativeQueryBuilder::from($this->entityManager->getConnection(), 'zone', 'z')
+            ->select(
+                'z.name',
+                'z.price',
+                '(z.total_quantity - z.sold_quantity - z.reserved_quantity) AS quantity',
+                'z.numbered_seating',
+                'z.day_id',
+            )
+            ->equals('id', $id->value())
             ->fetchAssociative();
 
-        if (!is_array($result)) {
+        if (is_null($result)) {
             return null;
         }
 

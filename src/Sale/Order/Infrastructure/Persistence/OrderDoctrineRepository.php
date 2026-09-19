@@ -15,6 +15,7 @@ use App\Sale\Order\Domain\OrderStatusList;
 use App\Sale\Reference\User\Domain\UserId;
 use App\Sale\Shared\Domain\CompanyId;
 use App\Shared\Domain\Enums\ReportIntervalList;
+use App\Shared\Infrastructure\Persistence\Doctrine\NativeQueryBuilder;
 use App\Shared\Infrastructure\Persistence\Doctrine\QueryBuilder;
 use Doctrine\ORM\EntityManagerInterface;
 use Override;
@@ -24,9 +25,7 @@ class OrderDoctrineRepository implements OrderRepository
 {
     private const string ORDER_PREFIX = 'o';
 
-    public function __construct(private EntityManagerInterface $entityManager, private OrderMapper $mapper)
-    {
-    }
+    public function __construct(private EntityManagerInterface $entityManager, private OrderMapper $mapper) {}
 
     #[Override]
     public function save(Order $order): void
@@ -137,35 +136,12 @@ class OrderDoctrineRepository implements OrderRepository
         OrderPaidAt $from,
         OrderPaidAt $to,
     ): float {
-        $sql = sprintf(
-            "SELECT
-                COALESCE(SUM(
-                    CASE
-                        WHEN o.currency = :currency THEN o.total
-                        WHEN :currency = 'PEN' AND o.currency = 'USD' AND o.exchange_rate > 0
-                            THEN o.total * o.exchange_rate
-                        WHEN :currency = 'USD' AND o.currency = 'PEN' AND o.exchange_rate > 0
-                            THEN o.total / o.exchange_rate
-                        ELSE 0
-                    END
-                ), 0) AS amount
-            FROM purchase o
-            INNER JOIN event e ON e.id = o.event_id
-            WHERE e.company_id = :companyId
-              AND o.status = %d
-              AND o.paid_at >= :from
-              AND o.paid_at < :to",
-            OrderStatusList::PAID->value,
-        );
+        $result = $this->approvedOrdersQuery($companyId, $from, $to)
+            ->select(sprintf('COALESCE(SUM(%s), 0) AS amount', $this->salesAmountExpression()))
+            ->setParameter('currency', $currency->value())
+            ->fetchAssociative();
 
-        $result = $this->entityManager->getConnection()->executeQuery($sql, [
-            'companyId' => $companyId->value(),
-            'currency' => $currency->value(),
-            'from' => $from->__toString(),
-            'to' => $to->__toString(),
-        ])->fetchAssociative();
-
-        return is_array($result) && isset($result['amount']) ? (float) $result['amount'] : 0.00;
+        return (float) ($result['amount'] ?? 0.00);
     }
 
     #[Override]
@@ -182,38 +158,15 @@ class OrderDoctrineRepository implements OrderRepository
             ReportIntervalList::MONTH => "DATE(DATE_TRUNC('month', o.paid_at))",
         };
 
-        $sql = sprintf(
-            "SELECT
-                %s AS date,
-                COALESCE(SUM(
-                    CASE
-                        WHEN o.currency = :currency THEN o.total
-                        WHEN :currency = 'PEN' AND o.currency = 'USD' AND o.exchange_rate > 0
-                            THEN o.total * o.exchange_rate
-                        WHEN :currency = 'USD' AND o.currency = 'PEN' AND o.exchange_rate > 0
-                            THEN o.total / o.exchange_rate
-                        ELSE 0
-                    END
-                ), 0) AS amount
-            FROM purchase o
-            INNER JOIN event e ON e.id = o.event_id
-            WHERE e.company_id = :companyId
-              AND o.status = %d
-              AND o.paid_at >= :from
-              AND o.paid_at < :to
-            GROUP BY %s
-            ORDER BY date ASC",
-            $dateExpression,
-            OrderStatusList::PAID->value,
-            $dateExpression,
-        );
-
-        $result = $this->entityManager->getConnection()->executeQuery($sql, [
-            'companyId' => $companyId->value(),
-            'currency' => $currency->value(),
-            'from' => $from->__toString(),
-            'to' => $to->__toString(),
-        ])->fetchAllAssociative();
+        $result = $this->approvedOrdersQuery($companyId, $from, $to)
+            ->select(
+                "{$dateExpression} AS date",
+                sprintf('COALESCE(SUM(%s), 0) AS amount', $this->salesAmountExpression()),
+            )
+            ->setParameter('currency', $currency->value())
+            ->groupBy($dateExpression)
+            ->orderBy('date', 'ASC')
+            ->fetchAllAssociative();
 
         return array_map(static fn(array $sale): array => [
             'date' => (string) $sale['date'],
@@ -229,49 +182,17 @@ class OrderDoctrineRepository implements OrderRepository
         OrderPaidAt $to,
         int $limit,
     ): array {
-        $sql = sprintf(
-            "SELECT
-                e.id,
-                e.name,
-                COALESCE(SUM(
-                    CASE
-                        WHEN o.currency = :currency THEN o.total
-                        WHEN :currency = 'PEN' AND o.currency = 'USD' AND o.exchange_rate > 0
-                            THEN o.total * o.exchange_rate
-                        WHEN :currency = 'USD' AND o.currency = 'PEN' AND o.exchange_rate > 0
-                            THEN o.total / o.exchange_rate
-                        ELSE 0
-                    END
-                ), 0) AS amount
-            FROM purchase o
-            INNER JOIN event e ON e.id = o.event_id
-            WHERE e.company_id = :companyId
-              AND o.status = %d
-              AND o.paid_at >= :from
-              AND o.paid_at < :to
-            GROUP BY e.id, e.name
-            HAVING COALESCE(SUM(
-                CASE
-                    WHEN o.currency = :currency THEN o.total
-                    WHEN :currency = 'PEN' AND o.currency = 'USD' AND o.exchange_rate > 0
-                        THEN o.total * o.exchange_rate
-                    WHEN :currency = 'USD' AND o.currency = 'PEN' AND o.exchange_rate > 0
-                        THEN o.total / o.exchange_rate
-                    ELSE 0
-                END
-            ), 0) > 0
-            ORDER BY amount DESC, e.name ASC
-            LIMIT %d",
-            OrderStatusList::PAID->value,
-            $limit,
-        );
+        $amountExpression = sprintf('COALESCE(SUM(%s), 0)', $this->salesAmountExpression());
 
-        $result = $this->entityManager->getConnection()->executeQuery($sql, [
-            'companyId' => $companyId->value(),
-            'currency' => $currency->value(),
-            'from' => $from->__toString(),
-            'to' => $to->__toString(),
-        ])->fetchAllAssociative();
+        $result = $this->approvedOrdersQuery($companyId, $from, $to)
+            ->select('e.id', 'e.name', "{$amountExpression} AS amount")
+            ->setParameter('currency', $currency->value())
+            ->groupBy('e.id', 'e.name')
+            ->having("{$amountExpression} > 0")
+            ->orderBy('amount', 'DESC')
+            ->addOrderBy('e.name', 'ASC')
+            ->maxResults($limit)
+            ->fetchAllAssociative();
 
         return array_map(static fn(array $event): array => [
             'id' => (string) $event['id'],
@@ -286,23 +207,35 @@ class OrderDoctrineRepository implements OrderRepository
         OrderPaidAt $from,
         OrderPaidAt $to,
     ): int {
-        $sql = sprintf(
-            "SELECT COUNT(o.id) AS quantity
-            FROM purchase o
-            INNER JOIN event e ON e.id = o.event_id
-            WHERE e.company_id = :companyId
-              AND o.status = %d
-              AND o.paid_at >= :from
-              AND o.paid_at < :to",
-            OrderStatusList::PAID->value,
-        );
+        $result = $this->approvedOrdersQuery($companyId, $from, $to)
+            ->select('COUNT(o.id) AS quantity')
+            ->fetchAssociative();
 
-        $result = $this->entityManager->getConnection()->executeQuery($sql, [
-            'companyId' => $companyId->value(),
-            'from' => $from->__toString(),
-            'to' => $to->__toString(),
-        ])->fetchAssociative();
+        return (int) ($result['quantity'] ?? 0);
+    }
 
-        return is_array($result) && isset($result['quantity']) ? (int) $result['quantity'] : 0;
+    private function approvedOrdersQuery(
+        CompanyId $companyId,
+        OrderPaidAt $from,
+        OrderPaidAt $to,
+    ): NativeQueryBuilder {
+        return NativeQueryBuilder::from($this->entityManager->getConnection(), 'purchase', self::ORDER_PREFIX)
+            ->innerJoin('event', 'e', 'e.id = o.event_id')
+            ->equals('company_id', $companyId->value(), 'e')
+            ->equals('status', OrderStatusList::PAID->value)
+            ->greaterOrEqual('paid_at', $from->__toString(), null, 'from')
+            ->lessThan('paid_at', $to->__toString(), null, 'to');
+    }
+
+    private function salesAmountExpression(): string
+    {
+        return "CASE
+            WHEN o.currency = :currency THEN o.total
+            WHEN :currency = 'PEN' AND o.currency = 'USD' AND o.exchange_rate > 0
+                THEN o.total * o.exchange_rate
+            WHEN :currency = 'USD' AND o.currency = 'PEN' AND o.exchange_rate > 0
+                THEN o.total / o.exchange_rate
+            ELSE 0
+        END";
     }
 }

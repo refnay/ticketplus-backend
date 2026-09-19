@@ -6,35 +6,24 @@ use App\Sale\Shared\Domain\CompanyId;
 use App\Sale\Reference\Event\Domain\Event;
 use App\Sale\Reference\Event\Domain\EventId;
 use App\Sale\Reference\Event\Domain\EventRepository;
+use App\Shared\Infrastructure\Persistence\Doctrine\NativeQueryBuilder;
 use Doctrine\ORM\EntityManagerInterface;
 use Override;
 
 class EventDoctrineRepository implements EventRepository
 {
-    public function __construct(private EntityManagerInterface $entityManager)
-    {
-    }
+    public function __construct(private EntityManagerInterface $entityManager) {}
 
     #[Override]
     public function findById(EventId $id, ?CompanyId $companyId = null): ?Event
     {
-        $sql = 'SELECT e.id, e.currency, e.name, e.tax_rate
-                FROM event e
-                WHERE e.id = :id';
-
-        $parameters = ['id' => $id->value()];
-
-        if (!is_null($companyId)) {
-            $sql .= ' AND e.company_id = :company';
-            $parameters['company'] = $companyId->value();
-        }
-
-        $result = $this->entityManager
-            ->getConnection()
-            ->executeQuery($sql, $parameters)
+        $result = NativeQueryBuilder::from($this->entityManager->getConnection(), 'event', 'e')
+            ->select('e.id', 'e.currency', 'e.name', 'e.tax_rate')
+            ->equals('id', $id->value())
+            ->equals('company_id', $companyId?->value())
             ->fetchAssociative();
 
-        if (!is_array($result)) {
+        if (is_null($result)) {
             return null;
         }
 

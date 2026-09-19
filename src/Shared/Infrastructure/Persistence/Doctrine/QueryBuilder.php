@@ -126,6 +126,18 @@ class QueryBuilder
         return $this;
     }
 
+    public function greaterThan(string $field, mixed $value, ?string $alias = null): self
+    {
+        $alias ??= $this->alias;
+
+        if (!empty($value)) {
+            $this->queryBuilder->andWhere("{$alias}.{$field} > :{$field}")
+                ->setParameter($field, $value);
+        }
+
+        return $this;
+    }
+
     public function lessOrEqual(string $field, mixed $value, ?string $alias = null): self
     {
         $alias ??= $this->alias;
@@ -134,6 +146,20 @@ class QueryBuilder
             $this->queryBuilder->andWhere("{$alias}.{$field} <= :{$field}")
                 ->setParameter($field, $value);
         }
+
+        return $this;
+    }
+
+    public function andWhere(string $condition): self
+    {
+        $this->queryBuilder->andWhere($condition);
+
+        return $this;
+    }
+
+    public function groupBy(string ...$fields): self
+    {
+        $this->queryBuilder->groupBy(...$fields);
 
         return $this;
     }
@@ -202,16 +228,19 @@ class QueryBuilder
     public function join(
         string $relation,
         string $alias,
-        string $type = 'inner'
+        string $type = 'inner',
+        ?string $fromAlias = null,
     ): self {
+        $fromAlias ??= $this->aliases['root'];
+
         if ($type === 'left') {
             $this->queryBuilder->leftJoin(
-                "{$this->aliases['root']}.{$relation}",
+                "{$fromAlias}.{$relation}",
                 $alias
             );
         } else {
             $this->queryBuilder->innerJoin(
-                "{$this->aliases['root']}.{$relation}",
+                "{$fromAlias}.{$relation}",
                 $alias
             );
         }
@@ -221,13 +250,13 @@ class QueryBuilder
         return $this;
     }
 
-    public function leftJoin(string $relation, string $alias): self
+    public function leftJoin(string $relation, string $alias, ?string $fromAlias = null): self
     {
-        return $this->join($relation, $alias, 'left');
+        return $this->join($relation, $alias, 'left', $fromAlias);
     }
 
-    public function innerJoin(string $relation, string $alias): self
+    public function innerJoin(string $relation, string $alias, ?string $fromAlias = null): self
     {
-        return $this->join($relation, $alias);
+        return $this->join($relation, $alias, 'inner', $fromAlias);
     }
 }

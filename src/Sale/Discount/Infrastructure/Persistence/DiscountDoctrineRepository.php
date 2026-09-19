@@ -18,9 +18,7 @@ class DiscountDoctrineRepository implements DiscountRepository
 {
     private const string DISCOUNT_PREFIX = 'd';
 
-    public function __construct(private EntityManagerInterface $entityManager, private DiscountMapper $mapper)
-    {
-    }
+    public function __construct(private EntityManagerInterface $entityManager, private DiscountMapper $mapper) {}
 
     #[Override]
     public function save(Discount $discount): void
@@ -71,15 +69,15 @@ class DiscountDoctrineRepository implements DiscountRepository
     #[Override]
     public function findById(DiscountId $id, CompanyId $companyId): ?Discount
     {
-        $query = $this->entityManager
-            ->getRepository($this->mapper->entityClass())
-            ->createQueryBuilder(self::DISCOUNT_PREFIX);
-        $entity = $query
-            ->innerJoin(self::DISCOUNT_PREFIX . '.event', 'e')
-            ->andWhere(self::DISCOUNT_PREFIX . '.id = :id')
-            ->andWhere('e.company = :companyId')
-            ->setParameter('id', $id->value())
-            ->setParameter('companyId', $companyId->value())
+        $queryBuilder = QueryBuilder::from(
+            $this->entityManager->getRepository($this->mapper->entityClass())->createQueryBuilder(self::DISCOUNT_PREFIX)
+        );
+
+        $queryBuilder->innerJoin('event', 'e')
+            ->equals('id', $id->value())
+            ->equals('company', $companyId->value(), 'e');
+
+        $entity = $queryBuilder->queryBuilder()
             ->getQuery()
             ->getOneOrNullResult();
 

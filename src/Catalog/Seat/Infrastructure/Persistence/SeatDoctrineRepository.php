@@ -71,17 +71,17 @@ class SeatDoctrineRepository implements SeatRepository
     #[Override]
     public function findById(SeatId $id, CompanyId $companyId): ?Seat
     {
-        $query = $this->entityManager
-            ->getRepository($this->mapper->entityClass())
-            ->createQueryBuilder(self::SEAT_PREFIX);
-        $entity = $query
-            ->innerJoin(self::SEAT_PREFIX . '.zone', 'z')
-            ->innerJoin('z.day', 'd')
-            ->innerJoin('d.event', 'e')
-            ->andWhere(self::SEAT_PREFIX . '.id = :id')
-            ->andWhere('e.company = :companyId')
-            ->setParameter('id', $id->value())
-            ->setParameter('companyId', $companyId->value())
+        $queryBuilder = QueryBuilder::from(
+            $this->entityManager->getRepository($this->mapper->entityClass())->createQueryBuilder(self::SEAT_PREFIX)
+        );
+
+        $queryBuilder->innerJoin('zone', 'z')
+            ->innerJoin('day', 'd', 'z')
+            ->innerJoin('event', 'e', 'd')
+            ->equals('id', $id->value())
+            ->equals('company', $companyId->value(), 'e');
+
+        $entity = $queryBuilder->queryBuilder()
             ->getQuery()
             ->getOneOrNullResult();
 
@@ -91,19 +91,19 @@ class SeatDoctrineRepository implements SeatRepository
     #[Override]
     public function findByCode(SeatCode $code, ZoneId $zoneId, CompanyId $companyId): ?Seat
     {
-        $entity = $this->entityManager
-            ->getRepository($this->mapper->entityClass())
-            ->createQueryBuilder(self::SEAT_PREFIX)
-            ->innerJoin(self::SEAT_PREFIX . '.zone', 'z')
-            ->innerJoin('z.day', 'd')
-            ->innerJoin('d.event', 'e')
-            ->andWhere(self::SEAT_PREFIX . '.code = :code')
-            ->andWhere('z.id = :zoneId')
-            ->andWhere('e.company = :companyId')
-            ->setParameter('code', $code->value())
-            ->setParameter('zoneId', $zoneId->value())
-            ->setParameter('companyId', $companyId->value())
-            ->setMaxResults(1)
+        $queryBuilder = QueryBuilder::from(
+            $this->entityManager->getRepository($this->mapper->entityClass())->createQueryBuilder(self::SEAT_PREFIX)
+        );
+
+        $queryBuilder->innerJoin('zone', 'z')
+            ->innerJoin('day', 'd', 'z')
+            ->innerJoin('event', 'e', 'd')
+            ->equals('code', $code->value())
+            ->equals('id', $zoneId->value(), 'z')
+            ->equals('company', $companyId->value(), 'e')
+            ->maxResults(1);
+
+        $entity = $queryBuilder->queryBuilder()
             ->getQuery()
             ->getOneOrNullResult();
 
@@ -123,12 +123,10 @@ class SeatDoctrineRepository implements SeatRepository
             ->likeMultiple(['code'], $filters['code'] ?? null, true);
 
         if (isset($filters['company'])) {
-            $queryBuilder->queryBuilder()
-                ->innerJoin(self::SEAT_PREFIX . '.zone', 'company_zone')
-                ->innerJoin('company_zone.day', 'company_day')
-                ->innerJoin('company_day.event', 'company_event')
-                ->andWhere('company_event.company = :company')
-                ->setParameter('company', $filters['company']);
+            $queryBuilder->innerJoin('zone', 'company_zone')
+                ->innerJoin('day', 'company_day', 'company_zone')
+                ->innerJoin('event', 'company_event', 'company_day')
+                ->equals('company', $filters['company'], 'company_event');
         }
 
         $queryBuilder->applyOrder($orderBy, $order)
@@ -152,12 +150,10 @@ class SeatDoctrineRepository implements SeatRepository
             ->likeMultiple(['code'], $filters['code'] ?? null, true);
 
         if (isset($filters['company'])) {
-            $queryBuilder->queryBuilder()
-                ->innerJoin(self::SEAT_PREFIX . '.zone', 'company_zone')
-                ->innerJoin('company_zone.day', 'company_day')
-                ->innerJoin('company_day.event', 'company_event')
-                ->andWhere('company_event.company = :company')
-                ->setParameter('company', $filters['company']);
+            $queryBuilder->innerJoin('zone', 'company_zone')
+                ->innerJoin('day', 'company_day', 'company_zone')
+                ->innerJoin('event', 'company_event', 'company_day')
+                ->equals('company', $filters['company'], 'company_event');
         }
 
         return (int) $queryBuilder->queryBuilder()

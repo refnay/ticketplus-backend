@@ -5,31 +5,23 @@ namespace App\Sale\Reference\Seat\Infrastructure;
 use App\Sale\Reference\Seat\Domain\Seat;
 use App\Sale\Reference\Seat\Domain\SeatId;
 use App\Sale\Reference\Seat\Domain\SeatRepository;
+use App\Shared\Infrastructure\Persistence\Doctrine\NativeQueryBuilder;
 use Doctrine\ORM\EntityManagerInterface;
 use Override;
 
 class SeatDoctrineRepository implements SeatRepository
 {
-    public function __construct(private EntityManagerInterface $entityManager)
-    {
-    }
+    public function __construct(private EntityManagerInterface $entityManager) {}
 
     #[Override]
     public function findById(SeatId $id): ?Seat
     {
-        $sql = "SELECT
-                s.code,
-                s.status,
-                s.zone_id
-            FROM seat s
-            WHERE s.id = :id";
-
-        $result = $this->entityManager
-            ->getConnection()
-            ->executeQuery($sql, ['id' => $id->value()])
+        $result = NativeQueryBuilder::from($this->entityManager->getConnection(), 'seat', 's')
+            ->select('s.code', 's.status', 's.zone_id')
+            ->equals('id', $id->value())
             ->fetchAssociative();
 
-        if (!is_array($result)) {
+        if (is_null($result)) {
             return null;
         }
 

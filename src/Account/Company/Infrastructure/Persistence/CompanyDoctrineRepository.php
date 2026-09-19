@@ -18,8 +18,7 @@ class CompanyDoctrineRepository implements CompanyRepository
     public function __construct(
         private EntityManagerInterface $entityManager,
         private CompanyMapper $mapper,
-    ) {
-    }
+    ) {}
 
     #[Override]
     public function save(Company $company): void

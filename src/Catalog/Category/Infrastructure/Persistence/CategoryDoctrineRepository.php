@@ -18,9 +18,7 @@ class CategoryDoctrineRepository implements CategoryRepository
 {
     private const string CATEGORY_PREFIX = 'c';
 
-    public function __construct(private EntityManagerInterface $entityManager, private CategoryMapper $mapper)
-    {
-    }
+    public function __construct(private EntityManagerInterface $entityManager, private CategoryMapper $mapper) {}
 
     #[Override]
     public function save(Category $category): void

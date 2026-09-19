@@ -21,9 +21,7 @@ class EventDoctrineRepository implements EventRepository
 {
     private const string EVENT_PREFIX = 'e';
 
-    public function __construct(private EntityManagerInterface $entityManager, private EventMapper $mapper)
-    {
-    }
+    public function __construct(private EntityManagerInterface $entityManager, private EventMapper $mapper) {}
 
     #[Override]
     public function save(Event $event): void
@@ -74,15 +72,15 @@ class EventDoctrineRepository implements EventRepository
     #[Override]
     public function findByDayId(EventDayId $dayId, CompanyId $companyId): ?Event
     {
-        $query = $this->entityManager
-            ->getRepository($this->mapper->entityClass())
-            ->createQueryBuilder(self::EVENT_PREFIX);
-        $entity = $query
-            ->innerJoin(self::EVENT_PREFIX . '.days', 'd')
-            ->andWhere('d.id = :dayId')
-            ->andWhere(self::EVENT_PREFIX . '.company = :companyId')
-            ->setParameter('dayId', $dayId->value())
-            ->setParameter('companyId', $companyId->value())
+        $queryBuilder = QueryBuilder::from(
+            $this->entityManager->getRepository($this->mapper->entityClass())->createQueryBuilder(self::EVENT_PREFIX)
+        );
+
+        $queryBuilder->innerJoin('days', 'd')
+            ->equals('id', $dayId->value(), 'd')
+            ->equals('company', $companyId->value());
+
+        $entity = $queryBuilder->queryBuilder()
             ->getQuery()
             ->getOneOrNullResult();
 
@@ -102,15 +100,15 @@ class EventDoctrineRepository implements EventRepository
     #[Override]
     public function findPublishedByDayId(EventDayId $dayId): ?Event
     {
-        $query = $this->entityManager
-            ->getRepository($this->mapper->entityClass())
-            ->createQueryBuilder(self::EVENT_PREFIX);
-        $entity = $query
-            ->innerJoin(self::EVENT_PREFIX . '.days', 'd')
-            ->andWhere('d.id = :dayId')
-            ->andWhere(self::EVENT_PREFIX . '.status = :status')
-            ->setParameter('dayId', $dayId->value())
-            ->setParameter('status', EventStatusList::PUBLISHED->value)
+        $queryBuilder = QueryBuilder::from(
+            $this->entityManager->getRepository($this->mapper->entityClass())->createQueryBuilder(self::EVENT_PREFIX)
+        );
+
+        $queryBuilder->innerJoin('days', 'd')
+            ->equals('id', $dayId->value(), 'd')
+            ->equals('status', EventStatusList::PUBLISHED->value);
+
+        $entity = $queryBuilder->queryBuilder()
             ->getQuery()
             ->getOneOrNullResult();
 
@@ -142,12 +140,9 @@ class EventDoctrineRepository implements EventRepository
             ->equals('status', $filters['status'] ?? null);
 
         if (isset($filters['date'])) {
-            $queryBuilder->innerJoin('days', 'd');
-            $queryBuilder->queryBuilder()
-                ->andWhere('d.date > :date')
-                ->setParameter('date', $filters['date']);
-
-            $queryBuilder->queryBuilder()->groupBy(self::EVENT_PREFIX . '.id');
+            $queryBuilder->innerJoin('days', 'd')
+                ->greaterThan('date', $filters['date'], 'd')
+                ->groupBy(self::EVENT_PREFIX . '.id');
         }
 
         $queryBuilder->applyOrder($orderBy, $order)
@@ -173,10 +168,8 @@ class EventDoctrineRepository implements EventRepository
             ->equals('status', $filters['status'] ?? null);
 
         if (isset($filters['date'])) {
-            $queryBuilder->innerJoin('days', 'd');
-            $queryBuilder->queryBuilder()
-                ->andWhere('d.date > :date')
-                ->setParameter('date', $filters['date']);
+            $queryBuilder->innerJoin('days', 'd')
+                ->greaterThan('date', $filters['date'], 'd');
         }
 
         return (int) $queryBuilder->queryBuilder()
@@ -184,5 +177,4 @@ class EventDoctrineRepository implements EventRepository
             ->getQuery()
             ->getSingleScalarResult();
     }
-
 }
